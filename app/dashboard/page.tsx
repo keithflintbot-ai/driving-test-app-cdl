@@ -3,11 +3,9 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { TestCard } from "@/components/TestCard";
-import { StatsCard } from "@/components/StatsCard";
-import { MasteryProgress } from "@/components/MasteryProgress";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle2, Target, Trophy, BookOpen, MapPin, Zap } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { MapPin, Zap } from "lucide-react";
 import Link from "next/link";
 import { useStore } from "@/store/useStore";
 import { useHydration } from "@/hooks/useHydration";
@@ -65,60 +63,16 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-12">
-        {/* Welcome Section */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <h1 className="text-4xl font-bold mb-2">Dashboard</h1>
-              <div className="flex items-center gap-2 text-gray-600">
-                <MapPin className="h-4 w-4" />
-                <span>Practicing for: {selectedState}</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Mastery Progress */}
-          <div className="mb-8">
-            <MasteryProgress totalBestScore={totalBestScore} totalPossible={totalPossible} />
-          </div>
-
-          {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-            <StatsCard
-              title="Tests Completed"
-              value={`${stats.testsCompleted}/4`}
-              description={`${(stats.testsCompleted / 4) * 100}% of all tests`}
-              icon={CheckCircle2}
-              iconColor="text-green-600"
-            />
-            <StatsCard
-              title="Questions Answered"
-              value={stats.questionsAnswered}
-              description="Total questions attempted"
-              icon={BookOpen}
-              iconColor="text-blue-600"
-            />
-            <StatsCard
-              title="Accuracy"
-              value={`${stats.accuracy}%`}
-              description="Overall correct answers"
-              icon={Target}
-              iconColor="text-purple-600"
-            />
-            <StatsCard
-              title="Average Score"
-              value={`${stats.averageScore}/50`}
-              description="Average test score"
-              icon={Trophy}
-              iconColor="text-yellow-600"
-            />
-          </div>
+      <div className="container mx-auto px-4 py-8">
+        {/* State Indicator */}
+        <div className="flex items-center gap-2 text-gray-600 mb-6">
+          <MapPin className="h-4 w-4" />
+          <span className="text-sm">Practicing for: {selectedState}</span>
         </div>
 
-        {/* Tests Section */}
-        <div className="mb-8">
-          <h2 className="text-2xl font-bold mb-6">Your Practice Tests</h2>
+        {/* Practice Tests */}
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold mb-4">Practice Tests</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[1, 2, 3, 4].map((testNumber) => {
               const status = getTestStatus(testNumber);
@@ -144,27 +98,50 @@ export default function DashboardPage() {
         </div>
 
         {/* Training Mode CTA */}
-        <Card className="mb-8 bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200">
-          <CardHeader>
-            <div className="flex items-center gap-3">
-              <Zap className="h-8 w-8 text-purple-600" />
-              <div>
-                <CardTitle className="text-purple-900">Training Mode</CardTitle>
-                <CardDescription>Practice specific categories with instant feedback</CardDescription>
+        <Card className="mb-6 bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <Zap className="h-10 w-10 text-purple-600" />
+                <div>
+                  <h3 className="font-bold text-lg text-purple-900">Training Mode</h3>
+                  <p className="text-sm text-gray-700">Practice with instant feedback</p>
+                </div>
               </div>
+              <Link href="/training">
+                <Button className="bg-purple-600 hover:bg-purple-700">
+                  Start Training
+                </Button>
+              </Link>
             </div>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-gray-700 mb-4">
-              Master individual question categories at your own pace. Get instant feedback and explanations after each question.
-            </p>
-            <Link href="/training">
-              <Button className="bg-purple-600 hover:bg-purple-700">
-                Start Training
-              </Button>
-            </Link>
           </CardContent>
         </Card>
+
+        {/* Compact Stats */}
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+          <div className="bg-white rounded-lg p-4 text-center border">
+            <div className="text-sm text-gray-600 mb-1">Mastery</div>
+            <div className="text-2xl font-bold text-blue-600">
+              {totalPossible > 0 ? Math.round((totalBestScore / totalPossible) * 100) : 0}%
+            </div>
+          </div>
+          <div className="bg-white rounded-lg p-4 text-center border">
+            <div className="text-sm text-gray-600 mb-1">Tests</div>
+            <div className="text-2xl font-bold text-green-600">{stats.testsCompleted}/4</div>
+          </div>
+          <div className="bg-white rounded-lg p-4 text-center border">
+            <div className="text-sm text-gray-600 mb-1">Questions</div>
+            <div className="text-2xl font-bold text-blue-600">{stats.questionsAnswered}</div>
+          </div>
+          <div className="bg-white rounded-lg p-4 text-center border">
+            <div className="text-sm text-gray-600 mb-1">Accuracy</div>
+            <div className="text-2xl font-bold text-purple-600">{stats.accuracy}%</div>
+          </div>
+          <div className="bg-white rounded-lg p-4 text-center border">
+            <div className="text-sm text-gray-600 mb-1">Avg Score</div>
+            <div className="text-2xl font-bold text-yellow-600">{stats.averageScore}/50</div>
+          </div>
+        </div>
       </div>
     </div>
   );
