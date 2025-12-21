@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { TestCard } from "@/components/TestCard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { MapPin, Zap } from "lucide-react";
+import { MapPin, Zap, TrendingUp } from "lucide-react";
 import Link from "next/link";
 import { useStore } from "@/store/useStore";
 import { useHydration } from "@/hooks/useHydration";
@@ -21,8 +21,11 @@ export default function DashboardPage() {
   const getCurrentTest = useStore((state) => state.getCurrentTest);
   const isTestUnlocked = useStore((state) => state.isTestUnlocked);
   const training = useStore((state) => state.training);
+  const getPassProbability = useStore((state) => state.getPassProbability);
 
   const [expandedTest, setExpandedTest] = useState<number | null>(null);
+
+  const passProbability = hydrated ? getPassProbability() : 0;
 
   // Redirect to onboarding if no state selected
   useEffect(() => {
@@ -57,15 +60,6 @@ export default function DashboardPage() {
     }
     return 0;
   };
-
-  // Calculate overall mastery (sum of best scores)
-  const totalBestScore = hydrated
-    ? [1, 2, 3, 4].reduce((sum, testNum) => {
-        const attemptStats = getTestAttemptStats(testNum);
-        return sum + (attemptStats?.bestScore || 0);
-      }, 0)
-    : 0;
-  const totalPossible = 4 * 50; // 4 tests × 50 questions each
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -136,31 +130,29 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* Compact Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-          <div className="bg-white rounded-lg p-4 text-center border">
-            <div className="text-sm text-gray-600 mb-1">Mastery</div>
-            <div className="text-2xl font-bold text-blue-600">
-              {totalPossible > 0 ? Math.round((totalBestScore / totalPossible) * 100) : 0}%
+        {/* Pass Probability */}
+        <Card className="bg-gradient-to-r from-green-50 to-emerald-50 border-green-200">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <TrendingUp className="h-10 w-10 text-green-600" />
+                <div>
+                  <p className="text-lg text-gray-700">
+                    {passProbability === 0
+                      ? "Start practicing to see your pass probability"
+                      : `There is a ${passProbability}% chance that you will pass your driving knowledge test.`
+                    }
+                  </p>
+                </div>
+              </div>
+              <Link href="/stats">
+                <Button variant="outline" className="bg-white hover:bg-gray-50">
+                  More Stats
+                </Button>
+              </Link>
             </div>
-          </div>
-          <div className="bg-white rounded-lg p-4 text-center border">
-            <div className="text-sm text-gray-600 mb-1">Tests</div>
-            <div className="text-2xl font-bold text-green-600">{stats.testsCompleted}/4</div>
-          </div>
-          <div className="bg-white rounded-lg p-4 text-center border">
-            <div className="text-sm text-gray-600 mb-1">Questions</div>
-            <div className="text-2xl font-bold text-blue-600">{stats.questionsAnswered}</div>
-          </div>
-          <div className="bg-white rounded-lg p-4 text-center border">
-            <div className="text-sm text-gray-600 mb-1">Accuracy</div>
-            <div className="text-2xl font-bold text-purple-600">{stats.accuracy}%</div>
-          </div>
-          <div className="bg-white rounded-lg p-4 text-center border">
-            <div className="text-sm text-gray-600 mb-1">Avg Score</div>
-            <div className="text-2xl font-bold text-yellow-600">{stats.averageScore}/50</div>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

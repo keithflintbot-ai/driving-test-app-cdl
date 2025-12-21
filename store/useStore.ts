@@ -52,6 +52,7 @@ interface AppState {
     accuracy: number;
     averageScore: number;
   };
+  getPassProbability: () => number;
 
   // Firebase sync
   userId: string | null;
@@ -321,6 +322,52 @@ export const useStore = create<AppState>()(
           accuracy: Math.round(accuracy),
           averageScore: Math.round(averageBestScore * 10) / 10,
         };
+      },
+
+      getPassProbability: () => {
+        const { testAttempts, training, selectedState } = get();
+        const stateAttempts = testAttempts.filter((a) => a.state === selectedState);
+
+        // If no tests completed, use training data
+        if (stateAttempts.length === 0) {
+          const totalTrainingQuestions = training.correctCount + training.incorrectCount;
+          if (totalTrainingQuestions === 0) {
+            return 0; // No data yet
+          }
+          const trainingAccuracy = (training.correctCount / totalTrainingQuestions) * 100;
+          // Training accuracy is a rough estimate, cap at 75% for untested users
+          return Math.min(trainingAccuracy, 75);
+        }
+
+        // Calculate average best score across all completed tests
+        const averageBestScore = stateAttempts.reduce((sum, a) => sum + a.bestScore, 0) / stateAttempts.length;
+        const averageBestPercentage = (averageBestScore / 50) * 100;
+
+        // Calculate pass probability based on performance
+        // If average best score >= 40 (80%), high probability
+        // Use a curve: below 40 exponentially decreases, above 40 increases
+        let probability;
+        if (averageBestScore >= 40) {
+          // Above passing: 85% + bonus for excellence
+          probability = 85 + Math.min((averageBestScore - 40) * 1.5, 15);
+        } else if (averageBestScore >= 35) {
+          // Close to passing: 60-85%
+          probability = 60 + ((averageBestScore - 35) / 5) * 25;
+        } else if (averageBestScore >= 30) {
+          // Needs improvement: 35-60%
+          probability = 35 + ((averageBestScore - 30) / 5) * 25;
+        } else {
+          // Needs significant improvement: 0-35%
+          probability = (averageBestScore / 30) * 35;
+        }
+
+        // Factor in consistency (number of tests taken)
+        if (stateAttempts.length >= 3) {
+          // Bonus for practicing multiple tests
+          probability = Math.min(probability + 5, 100);
+        }
+
+        return Math.round(probability);
       },
 
       // Firebase sync functions
