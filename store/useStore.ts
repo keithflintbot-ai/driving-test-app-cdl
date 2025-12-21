@@ -47,7 +47,18 @@ export const useStore = create<AppState>()(
       completedTests: [],
 
       // Actions
-      setSelectedState: (state: string) => set({ selectedState: state }),
+      setSelectedState: (state: string) => {
+        // Clear current test when switching states
+        set({
+          selectedState: state,
+          currentTest: {
+            testId: null,
+            questions: [],
+            answers: {},
+            startedAt: null,
+          },
+        });
+      },
 
       startTest: (testId: number, questions: Question[]) => {
         set({
@@ -84,6 +95,7 @@ export const useStore = create<AppState>()(
       },
 
       completeTest: (testId: number, score: number, questions: Question[], answers: { [key: number]: string }) => {
+        const currentState = get().selectedState || 'CA';
         const userAnswers: UserAnswer[] = questions.map((q, index) => ({
           questionId: q.questionId,
           userAnswer: answers[index] || '',
@@ -94,7 +106,7 @@ export const useStore = create<AppState>()(
         const session: TestSession = {
           id: `test-${testId}-${Date.now()}`,
           testNumber: testId,
-          state: get().selectedState || 'CA',
+          state: currentState,
           questions,
           answers: userAnswers,
           startedAt: get().currentTest.startedAt || new Date(),
@@ -105,7 +117,10 @@ export const useStore = create<AppState>()(
 
         set((state) => ({
           completedTests: [
-            ...state.completedTests.filter((t) => t.testNumber !== testId),
+            // Remove previous attempt of THIS test in THIS state only
+            ...state.completedTests.filter(
+              (t) => !(t.testNumber === testId && t.state === currentState)
+            ),
             session,
           ],
         }));
@@ -115,12 +130,18 @@ export const useStore = create<AppState>()(
       },
 
       getTestSession: (testId: number) => {
-        return get().completedTests.find((t) => t.testNumber === testId);
+        const { completedTests, selectedState } = get();
+        // Find test session for the current state
+        return completedTests.find(
+          (t) => t.testNumber === testId && t.state === selectedState
+        );
       },
 
       getProgress: () => {
-        const { completedTests } = get();
-        const testsCompleted = completedTests.length;
+        const { completedTests, selectedState } = get();
+        // Filter tests by current state only
+        const stateTests = completedTests.filter((t) => t.state === selectedState);
+        const testsCompleted = stateTests.length;
 
         if (testsCompleted === 0) {
           return {
@@ -132,8 +153,8 @@ export const useStore = create<AppState>()(
           };
         }
 
-        const totalCorrect = completedTests.reduce((sum, test) => sum + (test.score || 0), 0);
-        const questionsAnswered = completedTests.reduce((sum, test) => sum + test.totalQuestions, 0);
+        const totalCorrect = stateTests.reduce((sum, test) => sum + (test.score || 0), 0);
+        const questionsAnswered = stateTests.reduce((sum, test) => sum + test.totalQuestions, 0);
         const accuracy = questionsAnswered > 0 ? (totalCorrect / questionsAnswered) * 100 : 0;
         const averageScore = testsCompleted > 0 ? totalCorrect / testsCompleted : 0;
 
