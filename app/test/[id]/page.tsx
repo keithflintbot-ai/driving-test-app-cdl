@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { QuestionCard } from "@/components/QuestionCard";
 import { Button } from "@/components/ui/button";
@@ -17,6 +17,7 @@ export default function TestPage() {
   const router = useRouter();
   const testId = parseInt(params.id as string);
   const hydrated = useHydration();
+  const initialized = useRef(false);
 
   const selectedState = useStore((state) => state.selectedState);
   const currentTest = useStore((state) => state.currentTest);
@@ -29,32 +30,41 @@ export default function TestPage() {
   const [answers, setAnswers] = useState<{ [key: number]: string }>({});
   const [loading, setLoading] = useState(true);
 
+  // Reset when test changes
+  useEffect(() => {
+    initialized.current = false;
+    setLoading(true);
+    setCurrentQuestionIndex(0);
+  }, [testId]);
+
   // Load questions on mount (wait for hydration)
   useEffect(() => {
-    if (!hydrated) {
-      return; // Wait for hydration to complete
+    if (!hydrated || initialized.current) {
+      return; // Wait for hydration or already initialized
     }
 
     try {
       const state = selectedState || "CA";
-      const testQuestions = generateTest(testId, state);
-      setQuestions(testQuestions);
 
       // Check if we have a saved test session for this test
       if (currentTest.testId === testId && currentTest.questions.length > 0) {
         // Resume from saved state
+        setQuestions(currentTest.questions);
         setAnswers(currentTest.answers);
       } else {
-        // Start new test
+        // Generate new test
+        const testQuestions = generateTest(testId, state);
+        setQuestions(testQuestions);
         startTest(testId, testQuestions);
       }
 
+      initialized.current = true;
       setLoading(false);
     } catch (error) {
       console.error("Error loading questions:", error);
       setLoading(false);
     }
-  }, [testId, selectedState, currentTest, startTest, hydrated]);
+  }, [hydrated, testId, selectedState, currentTest, startTest]);
 
   const currentQuestion = questions[currentQuestionIndex];
   const totalQuestions = questions.length;
