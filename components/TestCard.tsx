@@ -3,8 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { CheckCircle2, Circle, PlayCircle, ArrowRight, Trophy, Target } from "lucide-react";
-import { ImprovementBadge } from "@/components/ImprovementBadge";
+import { CheckCircle2, Circle, PlayCircle, Trophy, Target } from "lucide-react";
 
 interface TestCardProps {
   testNumber: number;
@@ -15,9 +14,10 @@ interface TestCardProps {
   firstScore?: number;
   bestScore?: number;
   attemptCount?: number;
+  averageScore?: number;
 }
 
-export function TestCard({ testNumber, status, score, totalQuestions = 50, progress = 0, firstScore, bestScore, attemptCount }: TestCardProps) {
+export function TestCard({ testNumber, status, score, totalQuestions = 50, progress = 0, firstScore, bestScore, attemptCount, averageScore }: TestCardProps) {
   // Calculate best percentage for badge logic
   const bestPercentage = bestScore ? Math.round((bestScore / totalQuestions) * 100) : 0;
 
@@ -87,31 +87,22 @@ export function TestCard({ testNumber, status, score, totalQuestions = 50, progr
       <CardContent>
         {status === "completed" && (
           <div className="mb-4">
-            {bestScore !== undefined && firstScore !== undefined ? (
-              <div className="space-y-3">
-                {/* Score progression with arrow */}
-                <div className="flex items-center justify-center gap-2">
-                  <span className="text-xl font-semibold text-gray-700">
-                    {Math.round((firstScore / totalQuestions) * 100)}%
-                  </span>
-                  <ArrowRight className="h-5 w-5 text-gray-400" />
-                  <span className="text-2xl font-bold text-green-600">
-                    {Math.round((bestScore / totalQuestions) * 100)}%
-                  </span>
-                </div>
-
-                {/* Improvement badge */}
-                <div className="flex justify-center">
-                  <ImprovementBadge
-                    firstScore={firstScore}
-                    bestScore={bestScore}
-                    totalQuestions={totalQuestions}
-                  />
-                </div>
-
-                {/* Attempt count */}
-                <div className="text-xs text-gray-500 text-center">
-                  {attemptCount} {attemptCount === 1 ? 'attempt' : 'attempts'}
+            {bestScore !== undefined && attemptCount !== undefined && averageScore !== undefined ? (
+              <div className="space-y-2">
+                {/* Attempts and Average */}
+                <div className="grid grid-cols-2 gap-4 text-center">
+                  <div>
+                    <div className="text-sm text-gray-600 mb-1">Attempts</div>
+                    <div className="text-2xl font-bold text-gray-900">
+                      {attemptCount}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-sm text-gray-600 mb-1">Avg Score</div>
+                    <div className="text-2xl font-bold text-blue-600">
+                      {averageScore}/{totalQuestions}
+                    </div>
+                  </div>
                 </div>
               </div>
             ) : score !== undefined && (

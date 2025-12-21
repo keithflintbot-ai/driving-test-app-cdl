@@ -28,6 +28,7 @@ interface AppState {
   // Test attempt statistics (first/best scores)
   testAttempts: TestAttemptStats[];
   getTestAttemptStats: (testId: number) => TestAttemptStats | undefined;
+  getTestAverageScore: (testId: number) => number;
 
   // Training mode
   training: {
@@ -211,6 +212,18 @@ export const useStore = create<AppState>()(
         return testAttempts.find(
           (a) => a.testNumber === testId && a.state === selectedState
         );
+      },
+
+      getTestAverageScore: (testId: number) => {
+        const { completedTests, selectedState } = get();
+        const testSessions = completedTests.filter(
+          (t) => t.testNumber === testId && t.state === selectedState
+        );
+
+        if (testSessions.length === 0) return 0;
+
+        const totalScore = testSessions.reduce((sum, session) => sum + (session.score || 0), 0);
+        return Math.round(totalScore / testSessions.length);
       },
 
       // Training mode functions
