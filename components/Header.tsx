@@ -21,25 +21,24 @@ export function Header() {
 
   const displayPhotoURL = photoURL || user?.photoURL;
 
-  // Hide header on homepage, test and training pages
-  const hideHeader = pathname === "/" || pathname?.startsWith("/test") || pathname === "/training";
+  // Hide header on test and training pages
+  const hideHeader = pathname?.startsWith("/test") || pathname === "/training";
+
+  // Use white header on homepage
+  const isHomepage = pathname === "/";
 
   if (hideHeader) {
     return null;
   }
 
   return (
-    <header className="border-b bg-orange-600">
+    <header className={`border-b ${isHomepage ? "bg-white" : "bg-orange-600"}`}>
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <Link href={user ? "/dashboard" : "/"} className="flex items-center group">
-          <Image
-            src="/hero-logo.png"
-            alt="Tiger Tests"
-            width={180}
-            height={60}
-            className="h-10 w-auto"
-            priority
-          />
+        <Link href={user ? "/dashboard" : "/"} className="flex items-center gap-2 group">
+          <Image src="/tiger.png" alt="Tiger Tests" width={40} height={40} className="w-10 h-10" />
+          <span className={`text-2xl font-bold ${isHomepage ? "text-gray-900" : "text-white"} group-hover:opacity-80 transition-opacity`}>
+            Tiger Tests
+          </span>
         </Link>
 
         <div className="flex items-center gap-4">

@@ -12,26 +12,23 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Top Navigation */}
-      {!loading && !user && (
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex justify-end">
-            <Link href="/login">
-              <Button className="bg-white text-black hover:bg-gray-100 border-2 border-gray-300">
-                Log In
-              </Button>
-            </Link>
-          </div>
-        </div>
-      )}
-
       {/* Hero Section */}
       <div className="container mx-auto px-4 py-12">
         <div className="text-center mb-16">
+          <div className="flex justify-center mb-8">
+            <Image
+              src="/tiger.png"
+              alt="Tiger Tests Mascot"
+              width={200}
+              height={200}
+              className="w-48 h-48"
+              priority
+            />
+          </div>
           <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold text-gray-900 mb-8 max-w-5xl mx-auto leading-tight">
             Pass your US driving knowledge test
           </h1>
-          <p className="text-4xl font-bold text-gray-900 mb-4 max-w-3xl mx-auto">
+          <p className="text-2xl text-gray-700 mb-4 max-w-3xl mx-auto">
             Practice with 200 questions per state - completely free
           </p>
           <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
