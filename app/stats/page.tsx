@@ -45,6 +45,9 @@ export default function StatsPage() {
     stats: getTestAttemptStats(testNum),
   }));
 
+  // Calculate tests attempted (any test with at least one attempt)
+  const testsAttempted = testStats.filter(t => t.stats && t.stats.attemptCount > 0).length;
+
   // Calculate overall mastery
   const totalBestScore = testStats.reduce((sum, t) => sum + (t.stats?.bestScore || 0), 0);
   const totalPossible = 4 * 50;
@@ -187,8 +190,8 @@ export default function StatsPage() {
           <Card>
             <CardContent className="p-6 text-center">
               <CheckCircle className="h-8 w-8 text-green-600 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-green-600 mb-1">{stats.testsCompleted}/4</div>
-              <div className="text-sm text-gray-600">Tests Completed</div>
+              <div className="text-2xl font-bold text-green-600 mb-1">{testsAttempted}</div>
+              <div className="text-sm text-gray-600">Tests Attempted</div>
             </CardContent>
           </Card>
           <Card>
