@@ -3,7 +3,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { CheckCircle2, Circle, PlayCircle } from "lucide-react";
+import { CheckCircle2, Circle, PlayCircle, ArrowRight } from "lucide-react";
+import { ImprovementBadge } from "@/components/ImprovementBadge";
 
 interface TestCardProps {
   testNumber: number;
@@ -68,24 +69,31 @@ export function TestCard({ testNumber, status, score, totalQuestions = 50, progr
         {status === "completed" && (
           <div className="mb-4">
             {bestScore !== undefined && firstScore !== undefined ? (
-              <div className="space-y-2">
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600">Best Score:</span>
-                  <div className="text-xl font-bold text-green-600">
-                    {bestScore}/{totalQuestions}
-                  </div>
+              <div className="space-y-3">
+                {/* Score progression with arrow */}
+                <div className="flex items-center justify-center gap-2">
+                  <span className="text-xl font-semibold text-gray-700">
+                    {Math.round((firstScore / totalQuestions) * 100)}%
+                  </span>
+                  <ArrowRight className="h-5 w-5 text-gray-400" />
+                  <span className="text-2xl font-bold text-green-600">
+                    {Math.round((bestScore / totalQuestions) * 100)}%
+                  </span>
                 </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600">First Score:</span>
-                  <div className="text-lg text-gray-700">
-                    {firstScore}/{totalQuestions}
-                  </div>
+
+                {/* Improvement badge */}
+                <div className="flex justify-center">
+                  <ImprovementBadge
+                    firstScore={firstScore}
+                    bestScore={bestScore}
+                    totalQuestions={totalQuestions}
+                  />
                 </div>
-                {attemptCount && attemptCount > 1 && (
-                  <div className="text-xs text-gray-500 text-center mt-1">
-                    {attemptCount} attempts
-                  </div>
-                )}
+
+                {/* Attempt count */}
+                <div className="text-xs text-gray-500 text-center">
+                  {attemptCount} {attemptCount === 1 ? 'attempt' : 'attempts'}
+                </div>
               </div>
             ) : score !== undefined && (
               <div>

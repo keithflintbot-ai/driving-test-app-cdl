@@ -4,9 +4,10 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { TestCard } from "@/components/TestCard";
 import { StatsCard } from "@/components/StatsCard";
+import { MasteryProgress } from "@/components/MasteryProgress";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle2, Target, Trophy, BookOpen, MapPin } from "lucide-react";
+import { CheckCircle2, Target, Trophy, BookOpen, MapPin, Zap } from "lucide-react";
 import Link from "next/link";
 import { useStore } from "@/store/useStore";
 import { useHydration } from "@/hooks/useHydration";
@@ -52,6 +53,15 @@ export default function DashboardPage() {
     return 0;
   };
 
+  // Calculate overall mastery (sum of best scores)
+  const totalBestScore = hydrated
+    ? [1, 2, 3, 4].reduce((sum, testNum) => {
+        const attemptStats = getTestAttemptStats(testNum);
+        return sum + (attemptStats?.bestScore || 0);
+      }, 0)
+    : 0;
+  const totalPossible = 4 * 50; // 4 tests × 50 questions each
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-12">
@@ -65,6 +75,11 @@ export default function DashboardPage() {
                 <span>Practicing for: {selectedState}</span>
               </div>
             </div>
+          </div>
+
+          {/* Mastery Progress */}
+          <div className="mb-8">
+            <MasteryProgress totalBestScore={totalBestScore} totalPossible={totalPossible} />
           </div>
 
           {/* Stats Cards */}
@@ -124,6 +139,29 @@ export default function DashboardPage() {
             })}
           </div>
         </div>
+
+        {/* Training Mode CTA */}
+        <Card className="mb-8 bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200">
+          <CardHeader>
+            <div className="flex items-center gap-3">
+              <Zap className="h-8 w-8 text-purple-600" />
+              <div>
+                <CardTitle className="text-purple-900">Training Mode</CardTitle>
+                <CardDescription>Practice specific categories with instant feedback</CardDescription>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-gray-700 mb-4">
+              Master individual question categories at your own pace. Get instant feedback and explanations after each question.
+            </p>
+            <Link href="/training">
+              <Button className="bg-purple-600 hover:bg-purple-700">
+                Start Training
+              </Button>
+            </Link>
+          </CardContent>
+        </Card>
 
         {/* Quick Actions */}
         <Card>
