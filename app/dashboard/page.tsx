@@ -111,10 +111,7 @@ export default function DashboardPage() {
 
         {/* Training Mode */}
         <div className="mb-6">
-          <h2 className="text-2xl font-bold mb-2">Training Mode</h2>
-          <p className="text-sm text-gray-600 mb-4">
-            Learn at your own pace. Practice individual questions with instant feedback after each answer. Perfect for building knowledge and understanding why answers are correct.
-          </p>
+          <h2 className="text-2xl font-bold mb-4">Training Mode</h2>
           <Card className="bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
@@ -122,7 +119,7 @@ export default function DashboardPage() {
                   <Zap className="h-10 w-10 text-purple-600" />
                   <div>
                     <h3 className="font-bold text-lg text-purple-900">Start Training</h3>
-                    <p className="text-sm text-gray-700">Practice with instant feedback</p>
+                    <p className="text-sm text-gray-700">Learn at your own pace.</p>
                   </div>
                 </div>
                 <Link href="/training">
@@ -137,10 +134,7 @@ export default function DashboardPage() {
 
         {/* Practice Tests */}
         <div className="mb-6">
-          <h2 className="text-2xl font-bold mb-2">Practice Tests</h2>
-          <p className="text-sm text-gray-600 mb-4">
-            Simulate the real exam. Take full 50-question tests to measure your readiness. Score 40+ to unlock the next test and track your progress.
-          </p>
+          <h2 className="text-2xl font-bold mb-4">Simulate the real exam.</h2>
           <div className="space-y-3">
             {[1, 2, 3, 4].map((testNumber) => {
               const status = getTestStatus(testNumber);
