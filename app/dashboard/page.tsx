@@ -20,6 +20,7 @@ export default function DashboardPage() {
   const getTestAverageScore = useStore((state) => state.getTestAverageScore);
   const getCurrentTest = useStore((state) => state.getCurrentTest);
   const isTestUnlocked = useStore((state) => state.isTestUnlocked);
+  const training = useStore((state) => state.training);
 
   const [expandedTest, setExpandedTest] = useState<number | null>(null);
 

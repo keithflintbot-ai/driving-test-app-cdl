@@ -83,65 +83,18 @@ export default function TrainingPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50">
-      <div className="container mx-auto px-4 py-8">
-        {/* Header */}
-        <div className="mb-8">
+      <div className="container mx-auto px-4 py-4 max-w-3xl">
+        {/* Minimal Header */}
+        <div className="mb-4">
           <Link href="/dashboard">
-            <Button variant="ghost" className="mb-4">
+            <Button variant="ghost" size="sm">
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Dashboard
+              Back
             </Button>
           </Link>
-          <h1 className="text-4xl font-bold mb-2">Training Mode</h1>
-          <p className="text-gray-600">
-            Practice questions with instant feedback
-          </p>
         </div>
 
-        {/* Stats Bar */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          <Card>
-            <CardContent className="p-4 flex items-center gap-3">
-              <Target className="h-8 w-8 text-blue-600" />
-              <div>
-                <div className="text-sm text-gray-600">Questions</div>
-                <div className="text-2xl font-bold">{totalAnswered}</div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="p-4 flex items-center gap-3">
-              <Trophy className="h-8 w-8 text-green-600" />
-              <div>
-                <div className="text-sm text-gray-600">Accuracy</div>
-                <div className="text-2xl font-bold">{accuracy}%</div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="p-4 flex items-center gap-3">
-              <Flame className="h-8 w-8 text-orange-600" />
-              <div>
-                <div className="text-sm text-gray-600">Current Streak</div>
-                <div className="text-2xl font-bold">{training.currentStreak}</div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="p-4 flex items-center gap-3">
-              <Flame className="h-8 w-8 text-yellow-600" />
-              <div>
-                <div className="text-sm text-gray-600">Best Streak</div>
-                <div className="text-2xl font-bold">{training.bestStreak}</div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Question Card */}
+        {/* Question Card - Front and Center */}
         {currentQuestion ? (
           <TrainingCard
             key={currentQuestion.questionId}
@@ -152,7 +105,7 @@ export default function TrainingPage() {
             questionNumber={totalAnswered + 1}
           />
         ) : (
-          <Card className="w-full max-w-3xl mx-auto">
+          <Card className="w-full">
             <CardContent className="p-8 text-center">
               <p className="text-gray-600 mb-4">No more questions available</p>
               <Button onClick={() => router.push("/dashboard")}>
@@ -162,11 +115,56 @@ export default function TrainingPage() {
           </Card>
         )}
 
-        {/* End Training Button */}
-        <div className="mt-8 text-center">
-          <Button variant="outline" onClick={handleEndTraining}>
-            End Training Session
-          </Button>
+        {/* Stats at Bottom - Compact */}
+        <div className="mt-6 space-y-4">
+          <div className="grid grid-cols-2 gap-3">
+            <Card className="bg-white/80">
+              <CardContent className="p-3 text-center">
+                <div className="flex items-center justify-center gap-2 mb-1">
+                  <Target className="h-4 w-4 text-blue-600" />
+                  <div className="text-xs text-gray-600">Questions</div>
+                </div>
+                <div className="text-xl font-bold">{totalAnswered}</div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-white/80">
+              <CardContent className="p-3 text-center">
+                <div className="flex items-center justify-center gap-2 mb-1">
+                  <Trophy className="h-4 w-4 text-green-600" />
+                  <div className="text-xs text-gray-600">Accuracy</div>
+                </div>
+                <div className="text-xl font-bold">{accuracy}%</div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-white/80">
+              <CardContent className="p-3 text-center">
+                <div className="flex items-center justify-center gap-2 mb-1">
+                  <Flame className="h-4 w-4 text-orange-600" />
+                  <div className="text-xs text-gray-600">Current</div>
+                </div>
+                <div className="text-xl font-bold">{training.currentStreak}</div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-white/80">
+              <CardContent className="p-3 text-center">
+                <div className="flex items-center justify-center gap-2 mb-1">
+                  <Flame className="h-4 w-4 text-yellow-600" />
+                  <div className="text-xs text-gray-600">Best</div>
+                </div>
+                <div className="text-xl font-bold">{training.bestStreak}</div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* End Training Button */}
+          <div className="text-center">
+            <Button variant="outline" onClick={handleEndTraining} className="w-full">
+              End Training Session
+            </Button>
+          </div>
         </div>
       </div>
     </div>
