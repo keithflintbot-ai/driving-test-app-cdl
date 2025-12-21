@@ -18,7 +18,7 @@ export default function DashboardPage() {
   const getTestSession = useStore((state) => state.getTestSession);
   const getTestAttemptStats = useStore((state) => state.getTestAttemptStats);
   const getTestAverageScore = useStore((state) => state.getTestAverageScore);
-  const currentTest = useStore((state) => state.currentTest);
+  const getCurrentTest = useStore((state) => state.getCurrentTest);
 
   // Redirect to onboarding if no state selected
   useEffect(() => {
@@ -39,12 +39,14 @@ export default function DashboardPage() {
   const getTestStatus = (testNumber: number): "not-started" | "in-progress" | "completed" => {
     const session = getTestSession(testNumber);
     if (session) return "completed";
-    if (currentTest.testId === testNumber) return "in-progress";
+    const currentTest = getCurrentTest(testNumber);
+    if (currentTest && currentTest.questions.length > 0) return "in-progress";
     return "not-started";
   };
 
   const getTestProgress = (testNumber: number): number => {
-    if (currentTest.testId === testNumber) {
+    const currentTest = getCurrentTest(testNumber);
+    if (currentTest) {
       const answeredCount = Object.keys(currentTest.answers).length;
       const totalQuestions = currentTest.questions.length;
       return totalQuestions > 0 ? Math.round((answeredCount / totalQuestions) * 100) : 0;

@@ -19,7 +19,7 @@ export default function TestPage() {
   const initialized = useRef(false);
 
   const selectedState = useStore((state) => state.selectedState);
-  const currentTest = useStore((state) => state.currentTest);
+  const getCurrentTest = useStore((state) => state.getCurrentTest);
   const startTest = useStore((state) => state.startTest);
   const setAnswer = useStore((state) => state.setAnswer);
   const completeTest = useStore((state) => state.completeTest);
@@ -46,10 +46,11 @@ export default function TestPage() {
       const state = selectedState || "CA";
 
       // Check if we have a saved test session for this test
-      if (currentTest.testId === testId && currentTest.questions.length > 0) {
+      const savedTest = getCurrentTest(testId);
+      if (savedTest && savedTest.questions.length > 0) {
         // Resume from saved state
-        setQuestions(currentTest.questions);
-        setAnswers(currentTest.answers);
+        setQuestions(savedTest.questions);
+        setAnswers(savedTest.answers);
       } else {
         // Generate new test
         const testQuestions = generateTest(testId, state);
@@ -63,7 +64,7 @@ export default function TestPage() {
       console.error("Error loading questions:", error);
       setLoading(false);
     }
-  }, [hydrated, testId, selectedState, currentTest, startTest]);
+  }, [hydrated, testId, selectedState, getCurrentTest, startTest]);
 
   const currentQuestion = questions[currentQuestionIndex];
   const totalQuestions = questions.length;
@@ -81,7 +82,7 @@ export default function TestPage() {
       [currentQuestionIndex]: answer,
     }));
     // Save to store
-    setAnswer(currentQuestionIndex, answer);
+    setAnswer(testId, currentQuestionIndex, answer);
 
     // Auto-advance to next question after brief delay
     setTimeout(() => {

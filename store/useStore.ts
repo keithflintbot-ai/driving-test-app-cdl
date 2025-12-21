@@ -9,16 +9,18 @@ interface AppState {
   selectedState: string | null;
   setSelectedState: (state: string) => void;
 
-  // Current test session
-  currentTest: {
-    testId: number | null;
-    questions: Question[];
-    answers: { [key: number]: string };
-    startedAt: Date | null;
+  // Current test sessions (supports multiple in-progress tests)
+  currentTests: {
+    [testId: number]: {
+      questions: Question[];
+      answers: { [key: number]: string };
+      startedAt: Date | null;
+    };
   };
+  getCurrentTest: (testId: number) => { questions: Question[]; answers: { [key: number]: string }; startedAt: Date | null } | undefined;
   startTest: (testId: number, questions: Question[]) => void;
-  setAnswer: (questionIndex: number, answer: string) => void;
-  clearCurrentTest: () => void;
+  setAnswer: (testId: number, questionIndex: number, answer: string) => void;
+  clearCurrentTest: (testId: number) => void;
 
   // Completed tests (full history)
   completedTests: TestSession[];
@@ -62,12 +64,7 @@ export const useStore = create<AppState>()(
     (set, get) => ({
       // Initial state
       selectedState: null,
-      currentTest: {
-        testId: null,
-        questions: [],
-        answers: {},
-        startedAt: null,
-      },
+      currentTests: {},
       completedTests: [],
       testAttempts: [],
       training: {
@@ -85,53 +82,53 @@ export const useStore = create<AppState>()(
       },
 
       setSelectedState: (state: string) => {
-        // Clear current test when switching states
+        // Clear all current tests when switching states
         set({
           selectedState: state,
-          currentTest: {
-            testId: null,
-            questions: [],
-            answers: {},
-            startedAt: null,
-          },
+          currentTests: {},
         });
         // Save to Firestore
         get().saveToFirestore();
       },
 
-      startTest: (testId: number, questions: Question[]) => {
-        set({
-          currentTest: {
-            testId,
-            questions,
-            answers: {},
-            startedAt: new Date(),
-          },
-        });
-        get().saveToFirestore();
+      getCurrentTest: (testId: number) => {
+        return get().currentTests[testId];
       },
 
-      setAnswer: (questionIndex: number, answer: string) => {
+      startTest: (testId: number, questions: Question[]) => {
         set((state) => ({
-          currentTest: {
-            ...state.currentTest,
-            answers: {
-              ...state.currentTest.answers,
-              [questionIndex]: answer,
+          currentTests: {
+            ...state.currentTests,
+            [testId]: {
+              questions,
+              answers: {},
+              startedAt: new Date(),
             },
           },
         }));
         get().saveToFirestore();
       },
 
-      clearCurrentTest: () => {
-        set({
-          currentTest: {
-            testId: null,
-            questions: [],
-            answers: {},
-            startedAt: null,
+      setAnswer: (testId: number, questionIndex: number, answer: string) => {
+        set((state) => ({
+          currentTests: {
+            ...state.currentTests,
+            [testId]: {
+              ...state.currentTests[testId],
+              answers: {
+                ...state.currentTests[testId]?.answers,
+                [questionIndex]: answer,
+              },
+            },
           },
+        }));
+        get().saveToFirestore();
+      },
+
+      clearCurrentTest: (testId: number) => {
+        set((state) => {
+          const { [testId]: removed, ...remaining } = state.currentTests;
+          return { currentTests: remaining };
         });
         get().saveToFirestore();
       },
@@ -151,7 +148,7 @@ export const useStore = create<AppState>()(
           state: currentState,
           questions,
           answers: userAnswers,
-          startedAt: get().currentTest.startedAt || new Date(),
+          startedAt: get().currentTests[testId]?.startedAt || new Date(),
           completedAt: new Date(),
           score,
           totalQuestions: questions.length,
@@ -193,7 +190,7 @@ export const useStore = create<AppState>()(
         }));
 
         // Clear current test
-        get().clearCurrentTest();
+        get().clearCurrentTest(testId);
         get().saveToFirestore();
       },
 
@@ -304,12 +301,7 @@ export const useStore = create<AppState>()(
             const data = userDoc.data();
             set({
               selectedState: data.selectedState || null,
-              currentTest: data.currentTest || {
-                testId: null,
-                questions: [],
-                answers: {},
-                startedAt: null,
-              },
+              currentTests: data.currentTests || {},
               completedTests: data.completedTests || [],
               testAttempts: data.testAttempts || [],
               training: data.training || {
@@ -331,17 +323,23 @@ export const useStore = create<AppState>()(
       },
 
       saveToFirestore: async () => {
-        const { userId, selectedState, currentTest, completedTests, testAttempts, training } = get();
+        const { userId, selectedState, currentTests, completedTests, testAttempts, training } = get();
         if (!userId) return; // Don't save if no user is logged in
 
         try {
+          // Convert currentTests dates to timestamps for Firestore
+          const currentTestsForFirestore = Object.keys(currentTests).reduce((acc, testId) => {
+            const test = currentTests[parseInt(testId)];
+            acc[testId] = {
+              ...test,
+              startedAt: test.startedAt instanceof Date ? test.startedAt.toISOString() : test.startedAt,
+            };
+            return acc;
+          }, {} as any);
+
           await setDoc(doc(db, 'users', userId), {
             selectedState,
-            currentTest: {
-              ...currentTest,
-              // Convert Date to timestamp for Firestore
-              startedAt: currentTest.startedAt?.toISOString() || null,
-            },
+            currentTests: currentTestsForFirestore,
             completedTests: completedTests.map(test => ({
               ...test,
               startedAt: test.startedAt instanceof Date ? test.startedAt.toISOString() : test.startedAt,
