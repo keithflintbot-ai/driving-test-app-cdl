@@ -129,7 +129,7 @@ export default function ResultsPage() {
           <CardContent>
             {/* Main Score */}
             <div className="text-center mb-6">
-              <div className="text-6xl font-bold text-blue-600 mb-2">
+              <div className="text-6xl font-bold text-orange-600 mb-2">
                 {score}/{totalQuestions}
               </div>
               <div className="text-3xl font-semibold mb-2">
@@ -157,7 +157,7 @@ export default function ResultsPage() {
                   </div>
                   <div>
                     <div className="text-sm text-gray-600 mb-1">This Attempt</div>
-                    <div className="text-2xl font-semibold text-blue-600">
+                    <div className="text-2xl font-semibold text-orange-600">
                       {score}/{totalQuestions}
                     </div>
                     <div className="text-sm text-gray-500">{percentage}%</div>

@@ -226,7 +226,7 @@ export default function TestPage() {
                 className={`
                   aspect-square rounded-lg border-2 text-sm font-semibold transition-colors flex items-center justify-center
                   ${currentQuestionIndex === index
-                    ? "border-blue-500 bg-blue-500 text-white"
+                    ? "border-orange-500 bg-orange-500 text-white"
                     : answers[index]
                     ? "border-green-500 bg-green-50 text-green-700"
                     : "border-gray-300 bg-white text-gray-400"
