@@ -89,7 +89,7 @@ export default function TrainingPage() {
           <Link href="/dashboard">
             <Button variant="ghost" size="sm">
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Back
+              Back to Dashboard
             </Button>
           </Link>
         </div>

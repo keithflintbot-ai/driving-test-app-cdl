@@ -6,6 +6,8 @@ import { QuestionCard } from "@/components/QuestionCard";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Card, CardContent } from "@/components/ui/card";
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
 import { generateTest } from "@/lib/testGenerator";
 import { Question } from "@/types";
 import { useStore } from "@/store/useStore";
@@ -159,7 +161,17 @@ export default function TestPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8 max-w-6xl">
+        {/* Back Button */}
+        <div className="mb-6">
+          <Link href="/dashboard">
+            <Button variant="ghost" className="mb-4">
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Back to Dashboard
+            </Button>
+          </Link>
+        </div>
+
         {/* Header */}
         <div className="mb-6">
           <div className="flex items-center justify-between mb-4">

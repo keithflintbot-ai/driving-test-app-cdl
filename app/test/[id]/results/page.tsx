@@ -6,7 +6,8 @@ import { QuestionCard } from "@/components/QuestionCard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Trophy, XCircle, ChevronDown, ChevronUp, TrendingUp, Sparkles } from "lucide-react";
+import { Trophy, XCircle, ChevronDown, ChevronUp, TrendingUp, Sparkles, ArrowLeft } from "lucide-react";
+import Link from "next/link";
 import { useStore } from "@/store/useStore";
 import { useHydration } from "@/hooks/useHydration";
 
@@ -91,7 +92,17 @@ export default function ResultsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8 max-w-6xl">
+        {/* Back Button */}
+        <div className="mb-6">
+          <Link href="/dashboard">
+            <Button variant="ghost" className="mb-4">
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Back to Dashboard
+            </Button>
+          </Link>
+        </div>
+
         {/* Results Header */}
         <Card className="mb-8">
           <CardHeader>

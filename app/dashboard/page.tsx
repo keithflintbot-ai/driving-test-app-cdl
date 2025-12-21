@@ -63,7 +63,7 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8 max-w-6xl">
         {/* State Indicator */}
         <div className="flex items-center gap-2 text-gray-600 mb-6">
           <MapPin className="h-4 w-4" />
