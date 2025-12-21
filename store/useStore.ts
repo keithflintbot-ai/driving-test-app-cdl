@@ -29,6 +29,17 @@ interface AppState {
   testAttempts: TestAttemptStats[];
   getTestAttemptStats: (testId: number) => TestAttemptStats | undefined;
 
+  // Training mode
+  training: {
+    questionsAnswered: string[];
+    correctCount: number;
+    incorrectCount: number;
+    currentStreak: number;
+    bestStreak: number;
+  };
+  answerTrainingQuestion: (questionId: string, isCorrect: boolean) => void;
+  resetTrainingSession: () => void;
+
   // Progress stats
   getProgress: () => {
     testsCompleted: number;
@@ -58,6 +69,13 @@ export const useStore = create<AppState>()(
       },
       completedTests: [],
       testAttempts: [],
+      training: {
+        questionsAnswered: [],
+        correctCount: 0,
+        incorrectCount: 0,
+        currentStreak: 0,
+        bestStreak: 0,
+      },
       userId: null,
 
       // Actions
@@ -195,6 +213,38 @@ export const useStore = create<AppState>()(
         );
       },
 
+      // Training mode functions
+      answerTrainingQuestion: (questionId: string, isCorrect: boolean) => {
+        set((state) => {
+          const newStreak = isCorrect ? state.training.currentStreak + 1 : 0;
+          return {
+            training: {
+              ...state.training,
+              questionsAnswered: [...state.training.questionsAnswered, questionId],
+              correctCount: state.training.correctCount + (isCorrect ? 1 : 0),
+              incorrectCount: state.training.incorrectCount + (isCorrect ? 0 : 1),
+              currentStreak: newStreak,
+              bestStreak: Math.max(state.training.bestStreak, newStreak),
+            },
+          };
+        });
+        get().saveToFirestore();
+      },
+
+      resetTrainingSession: () => {
+        set((state) => ({
+          training: {
+            ...state.training,
+            questionsAnswered: [],
+            correctCount: 0,
+            incorrectCount: 0,
+            currentStreak: 0,
+            // Keep bestStreak
+          },
+        }));
+        get().saveToFirestore();
+      },
+
       getProgress: () => {
         const { completedTests, testAttempts, selectedState } = get();
         // Filter tests and attempts by current state only
@@ -249,6 +299,13 @@ export const useStore = create<AppState>()(
               },
               completedTests: data.completedTests || [],
               testAttempts: data.testAttempts || [],
+              training: data.training || {
+                questionsAnswered: [],
+                correctCount: 0,
+                incorrectCount: 0,
+                currentStreak: 0,
+                bestStreak: 0,
+              },
               userId,
             });
           } else {
@@ -261,7 +318,7 @@ export const useStore = create<AppState>()(
       },
 
       saveToFirestore: async () => {
-        const { userId, selectedState, currentTest, completedTests, testAttempts } = get();
+        const { userId, selectedState, currentTest, completedTests, testAttempts, training } = get();
         if (!userId) return; // Don't save if no user is logged in
 
         try {
@@ -285,6 +342,7 @@ export const useStore = create<AppState>()(
               ...attempt,
               lastAttemptDate: attempt.lastAttemptDate instanceof Date ? attempt.lastAttemptDate.toISOString() : attempt.lastAttemptDate,
             })),
+            training,
             lastUpdated: new Date().toISOString(),
           });
         } catch (error) {
