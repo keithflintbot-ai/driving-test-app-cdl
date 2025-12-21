@@ -1,17 +1,14 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { ArrowLeft, Upload, Loader2, User, Link as LinkIcon } from "lucide-react";
+import { ArrowLeft, Loader2, User } from "lucide-react";
 import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
 import { useStore } from "@/store/useStore";
-import { storage } from "@/lib/firebase";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useHydration } from "@/hooks/useHydration";
 
 export default function SettingsPage() {
@@ -21,11 +18,7 @@ export default function SettingsPage() {
   const photoURL = useStore((state) => state.photoURL);
   const setPhotoURL = useStore((state) => state.setPhotoURL);
 
-  const [uploading, setUploading] = useState(false);
   const [loadingGooglePhoto, setLoadingGooglePhoto] = useState(false);
-  const [showUrlInput, setShowUrlInput] = useState(false);
-  const [urlInput, setUrlInput] = useState("");
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Redirect if not logged in
   useEffect(() => {
@@ -34,49 +27,13 @@ export default function SettingsPage() {
     }
   }, [hydrated, user, router]);
 
-  const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file || !user) return;
-
-    // Validate file type
-    if (!file.type.startsWith("image/")) {
-      alert("Please select an image file");
-      return;
-    }
-
-    // Validate file size (max 5MB)
-    if (file.size > 5 * 1024 * 1024) {
-      alert("Image must be less than 5MB");
-      return;
-    }
-
-    setUploading(true);
-    try {
-      // Upload to Firebase Storage
-      const storageRef = ref(storage, `profile-photos/${user.uid}`);
-      await uploadBytes(storageRef, file);
-
-      // Get download URL
-      const downloadURL = await getDownloadURL(storageRef);
-
-      // Update store
-      setPhotoURL(downloadURL);
-      alert("Photo uploaded successfully!");
-    } catch (error: any) {
-      console.error("Error uploading photo:", error);
-      alert(`Failed to upload photo: ${error.message || "Unknown error"}. Please try using your Google photo instead.`);
-    } finally {
-      setUploading(false);
-    }
-  };
-
   const handleUseGooglePhoto = async () => {
     if (!user) return;
 
     // Check if user has a Google photo URL
     const googlePhotoURL = user.photoURL;
     if (!googlePhotoURL) {
-      alert("No Google profile photo found. Please sign in with Google or upload a custom photo.");
+      alert("No Google profile photo found. Please sign in with Google to use your Google photo.");
       return;
     }
 
@@ -93,20 +50,7 @@ export default function SettingsPage() {
     }
   };
 
-  const handleUrlSubmit = () => {
-    if (!urlInput.trim()) {
-      alert("Please enter a valid image URL");
-      return;
-    }
-
-    setPhotoURL(urlInput.trim());
-    setUrlInput("");
-    setShowUrlInput(false);
-    alert("Photo URL set successfully!");
-  };
-
   const displayPhotoURL = photoURL || user?.photoURL;
-  const initials = user?.email?.substring(0, 2).toUpperCase() || "U";
 
   if (!hydrated || !user) {
     return null;
@@ -136,7 +80,7 @@ export default function SettingsPage() {
               {/* Current Photo */}
               <Avatar className="h-32 w-32">
                 <AvatarImage src={displayPhotoURL || undefined} alt="Profile" />
-                <AvatarFallback className="text-3xl">{initials}</AvatarFallback>
+                <AvatarFallback className="text-6xl">😊</AvatarFallback>
               </Avatar>
 
               {/* User Email */}
@@ -145,39 +89,9 @@ export default function SettingsPage() {
                 <div className="font-medium">{user.email}</div>
               </div>
 
-              {/* Upload Options */}
-              <div className="w-full space-y-3">
-                {/* Upload Custom Photo */}
-                <div>
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFileSelect}
-                    className="hidden"
-                  />
-                  <Button
-                    onClick={() => fileInputRef.current?.click()}
-                    disabled={uploading}
-                    className="w-full"
-                    variant="outline"
-                  >
-                    {uploading ? (
-                      <>
-                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                        Uploading...
-                      </>
-                    ) : (
-                      <>
-                        <Upload className="h-4 w-4 mr-2" />
-                        Upload Custom Photo
-                      </>
-                    )}
-                  </Button>
-                </div>
-
-                {/* Use Google Photo */}
-                {user.photoURL && (
+              {/* Google Photo Option */}
+              {user.photoURL && (
+                <div className="w-full">
                   <Button
                     onClick={handleUseGooglePhoto}
                     disabled={loadingGooglePhoto}
@@ -196,48 +110,14 @@ export default function SettingsPage() {
                       </>
                     )}
                   </Button>
-                )}
+                </div>
+              )}
 
-                {/* Use Image URL */}
-                {!showUrlInput ? (
-                  <Button
-                    onClick={() => setShowUrlInput(true)}
-                    className="w-full"
-                    variant="outline"
-                  >
-                    <LinkIcon className="h-4 w-4 mr-2" />
-                    Use Image URL
-                  </Button>
-                ) : (
-                  <div className="space-y-2">
-                    <Input
-                      type="url"
-                      placeholder="https://example.com/photo.jpg"
-                      value={urlInput}
-                      onChange={(e) => setUrlInput(e.target.value)}
-                      onKeyDown={(e) => e.key === "Enter" && handleUrlSubmit()}
-                    />
-                    <div className="flex gap-2">
-                      <Button onClick={handleUrlSubmit} className="flex-1">
-                        Set Photo
-                      </Button>
-                      <Button
-                        onClick={() => {
-                          setShowUrlInput(false);
-                          setUrlInput("");
-                        }}
-                        variant="outline"
-                      >
-                        Cancel
-                      </Button>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              <div className="text-xs text-gray-500 text-center">
-                Upload: JPG, PNG, GIF (max 5MB) • URL: Any public image link
-              </div>
+              {!user.photoURL && (
+                <div className="text-sm text-gray-500 text-center">
+                  Sign in with Google to use your Google profile photo
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>

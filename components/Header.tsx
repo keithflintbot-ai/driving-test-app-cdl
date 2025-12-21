@@ -18,7 +18,6 @@ export function Header() {
   };
 
   const displayPhotoURL = photoURL || user?.photoURL;
-  const initials = user?.email?.substring(0, 2).toUpperCase() || "U";
 
   return (
     <header className="border-b bg-white">
@@ -33,7 +32,7 @@ export function Header() {
               <Link href="/settings">
                 <Avatar className="h-9 w-9 cursor-pointer hover:opacity-80 transition-opacity">
                   <AvatarImage src={displayPhotoURL || undefined} alt="Profile" />
-                  <AvatarFallback className="text-sm">{initials}</AvatarFallback>
+                  <AvatarFallback className="text-lg">😊</AvatarFallback>
                 </Avatar>
               </Link>
               <Button variant="outline" onClick={handleLogout}>
