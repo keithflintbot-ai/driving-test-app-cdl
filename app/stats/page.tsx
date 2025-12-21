@@ -49,8 +49,8 @@ export default function StatsPage() {
     stats: getTestAttemptStats(testNum),
   }));
 
-  // Calculate tests attempted (any test with at least one attempt)
-  const testsAttempted = testStats.filter(t => t.stats && t.stats.attemptCount > 0).length;
+  // Calculate total test attempts across all tests
+  const testsAttempted = testStats.reduce((sum, t) => sum + (t.stats?.attemptCount || 0), 0);
 
   // Calculate overall mastery
   const totalBestScore = testStats.reduce((sum, t) => sum + (t.stats?.bestScore || 0), 0);
