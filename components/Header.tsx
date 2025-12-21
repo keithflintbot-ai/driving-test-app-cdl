@@ -32,9 +32,7 @@ export function Header() {
     <header className="border-b bg-white">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <Link href={user ? "/dashboard" : "/"} className="flex items-center gap-2 group">
-          {/* Logo - You can add your tiger logo here */}
-          {/* Uncomment and add your logo path: */}
-          {/* <Image src="/tiger-logo.png" alt="Tiger Tests" width={32} height={32} className="w-8 h-8" /> */}
+          <Image src="/tiger.png" alt="Tiger Tests" width={32} height={32} className="w-8 h-8" />
           <span className="text-2xl font-bold text-orange-600 group-hover:text-orange-700 transition-colors">
             Tiger Tests
           </span>
