@@ -47,7 +47,7 @@ export default function Home() {
                     </Button>
                   </Link>
                   <Link href="/login">
-                    <Button size="lg" variant="outline" className="text-lg px-8 py-6 border-2 border-orange-600 text-orange-600 hover:bg-orange-50 shadow-lg hover:shadow-xl transition-all">
+                    <Button size="lg" className="text-lg px-8 py-6 bg-orange-600 text-white hover:bg-orange-700 shadow-lg hover:shadow-xl transition-all">
                       Log In
                     </Button>
                   </Link>
