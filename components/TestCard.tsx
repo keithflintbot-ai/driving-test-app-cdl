@@ -34,7 +34,7 @@ export function TestCard({ testNumber, status, score, totalQuestions = 50, progr
       if (bestPercentage === 100) {
         return <Badge className="bg-green-500">Mastered</Badge>;
       } else if (bestPercentage >= 70) {
-        return <Badge className="bg-blue-500">Passed</Badge>;
+        return <Badge className="bg-orange-500">Passed</Badge>;
       } else {
         return <Badge className="bg-orange-500">Keep Practicing</Badge>;
       }
@@ -57,7 +57,7 @@ export function TestCard({ testNumber, status, score, totalQuestions = 50, progr
       if (bestPercentage === 100) {
         return <Trophy className="h-12 w-12 text-yellow-500" />;
       } else if (bestPercentage >= 70) {
-        return <CheckCircle2 className="h-12 w-12 text-blue-500" />;
+        return <CheckCircle2 className="h-12 w-12 text-orange-500" />;
       } else {
         return <Target className="h-12 w-12 text-orange-500" />;
       }
@@ -121,7 +121,7 @@ export function TestCard({ testNumber, status, score, totalQuestions = 50, progr
                   </div>
                   <div>
                     <div className="text-sm text-gray-600 mb-1">Avg Score</div>
-                    <div className="text-2xl font-bold text-blue-600">
+                    <div className="text-2xl font-bold text-orange-600">
                       {averageScore}/{totalQuestions}
                     </div>
                   </div>

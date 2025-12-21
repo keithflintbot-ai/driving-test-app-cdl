@@ -125,7 +125,7 @@ export default function SettingsPage() {
             <div className="space-y-4">
               <div>
                 <div className="text-sm text-gray-600 mb-2">Currently practicing for:</div>
-                <div className="text-2xl font-bold text-blue-600 mb-4">
+                <div className="text-2xl font-bold text-orange-600 mb-4">
                   {currentStateName}
                 </div>
               </div>
