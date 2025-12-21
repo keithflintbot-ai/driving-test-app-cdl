@@ -5,6 +5,14 @@ import { useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { ArrowLeft, Loader2, User, AlertTriangle, MapPin } from "lucide-react";
 import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
@@ -24,6 +32,9 @@ export default function SettingsPage() {
   const getCurrentTest = useStore((state) => state.getCurrentTest);
 
   const [loadingGooglePhoto, setLoadingGooglePhoto] = useState(false);
+  const [stateChangeDialog, setStateChangeDialog] = useState(false);
+  const [resetDialog, setResetDialog] = useState(false);
+  const [pendingStateCode, setPendingStateCode] = useState<string | null>(null);
 
   // Redirect if not logged in
   useEffect(() => {
@@ -58,34 +69,31 @@ export default function SettingsPage() {
   const displayPhotoURL = photoURL || user?.photoURL;
 
   const handleResetData = () => {
-    if (confirm("⚠️ WARNING: This will permanently delete all your test progress, scores, and training data. This action cannot be undone.\n\nAre you sure you want to reset all data?")) {
-      resetAllData();
-      alert("All data has been reset successfully!");
-      router.push("/dashboard");
-    }
+    setResetDialog(true);
+  };
+
+  const confirmReset = () => {
+    resetAllData();
+    setResetDialog(false);
+    router.push("/dashboard");
   };
 
   const handleStateChange = (newStateCode: string) => {
     if (newStateCode === selectedState) return;
+    setPendingStateCode(newStateCode);
+    setStateChangeDialog(true);
+  };
 
-    // Check if there are any in-progress tests
-    const hasInProgressTests = [1, 2, 3, 4].some(testId => {
-      const test = getCurrentTest(testId);
-      return test && test.questions.length > 0;
-    });
-
-    const warningMessage = hasInProgressTests
-      ? "⚠️ WARNING: Switching states will clear any in-progress tests.\n\nYour completed test history is saved per state, so you can switch back anytime to see your progress.\n\nDo you want to continue?"
-      : "Switching states will show progress for the new state. Your current state's progress is saved and you can switch back anytime.\n\nDo you want to continue?";
-
-    if (confirm(warningMessage)) {
-      setSelectedState(newStateCode);
-      alert(`State changed to ${states.find(s => s.code === newStateCode)?.name}!`);
-      router.push("/dashboard");
-    }
+  const confirmStateChange = () => {
+    if (!pendingStateCode) return;
+    setSelectedState(pendingStateCode);
+    setStateChangeDialog(false);
+    setPendingStateCode(null);
+    router.push("/dashboard");
   };
 
   const currentStateName = states.find(s => s.code === selectedState)?.name || selectedState;
+  const pendingStateName = states.find(s => s.code === pendingStateCode)?.name || pendingStateCode;
 
   if (!hydrated || !user) {
     return null;
@@ -138,7 +146,7 @@ export default function SettingsPage() {
                   ))}
                 </select>
                 <p className="text-xs text-gray-500 mt-2">
-                  Your progress is saved per state. Switching states will clear in-progress tests but preserve your completed test history.
+                  <strong className="text-orange-600">Warning:</strong> Switching states will permanently delete your current state&apos;s progress.
                 </p>
               </div>
             </div>
@@ -226,6 +234,79 @@ export default function SettingsPage() {
           </CardContent>
         </Card>
       </div>
+
+      {/* State Change Confirmation Dialog */}
+      <Dialog open={stateChangeDialog} onOpenChange={setStateChangeDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2 text-orange-600">
+              <AlertTriangle className="h-5 w-5" />
+              Switch State?
+            </DialogTitle>
+            <DialogDescription className="space-y-3 pt-2 text-left">
+              <p className="font-semibold text-gray-900 text-base">
+                You&apos;re about to switch from {currentStateName} to {pendingStateName}.
+              </p>
+              <p className="text-gray-700">
+                <strong className="text-orange-600">Important:</strong> Your progress for {currentStateName} will <strong>NOT be saved</strong> and will be <strong>permanently lost</strong>. This includes:
+              </p>
+              <ul className="list-disc list-inside space-y-1 text-gray-700 ml-2">
+                <li>All test scores and attempts</li>
+                <li>In-progress tests</li>
+                <li>Training mode statistics</li>
+              </ul>
+              <p className="text-gray-700">
+                You&apos;ll start fresh with {pendingStateName} and <strong>cannot recover</strong> your {currentStateName} progress.
+              </p>
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="gap-2 sm:gap-0">
+            <Button variant="outline" onClick={() => setStateChangeDialog(false)}>
+              Cancel
+            </Button>
+            <Button variant="destructive" onClick={confirmStateChange}>
+              Yes, Switch State
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Reset Data Confirmation Dialog */}
+      <Dialog open={resetDialog} onOpenChange={setResetDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2 text-red-600">
+              <AlertTriangle className="h-5 w-5" />
+              Reset All Data?
+            </DialogTitle>
+            <DialogDescription className="space-y-3 pt-2 text-left">
+              <p className="font-semibold text-gray-900 text-base">
+                This will permanently delete ALL your data across ALL states.
+              </p>
+              <p className="text-gray-700">
+                You will lose:
+              </p>
+              <ul className="list-disc list-inside space-y-1 text-gray-700 ml-2">
+                <li>All test progress and scores</li>
+                <li>All training mode statistics</li>
+                <li>All attempt history</li>
+                <li>Data for every state you&apos;ve practiced</li>
+              </ul>
+              <p className="text-red-600 font-semibold">
+                This action cannot be undone.
+              </p>
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="gap-2 sm:gap-0">
+            <Button variant="outline" onClick={() => setResetDialog(false)}>
+              Cancel
+            </Button>
+            <Button variant="destructive" onClick={confirmReset}>
+              Yes, Reset Everything
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
