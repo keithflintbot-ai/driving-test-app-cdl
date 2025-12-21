@@ -186,22 +186,22 @@ export default function StatsPage() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
           <Card>
             <CardContent className="p-6 text-center">
-              <Award className="h-8 w-8 text-blue-600 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-blue-600 mb-1">{masteryPercentage}%</div>
+              <Award className="h-8 w-8 text-orange-600 mx-auto mb-2" />
+              <div className="text-2xl font-bold text-orange-600 mb-1">{masteryPercentage}%</div>
               <div className="text-sm text-gray-600">Overall Mastery</div>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="p-6 text-center">
-              <CheckCircle className="h-8 w-8 text-green-600 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-green-600 mb-1">{testsAttempted}</div>
+              <CheckCircle className="h-8 w-8 text-orange-600 mx-auto mb-2" />
+              <div className="text-2xl font-bold text-orange-600 mb-1">{testsAttempted}</div>
               <div className="text-sm text-gray-600">Tests Attempted</div>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="p-6 text-center">
-              <Target className="h-8 w-8 text-purple-600 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-purple-600 mb-1">{stats.accuracy}%</div>
+              <Target className="h-8 w-8 text-orange-600 mx-auto mb-2" />
+              <div className="text-2xl font-bold text-orange-600 mb-1">{stats.accuracy}%</div>
               <div className="text-sm text-gray-600">Test Accuracy</div>
             </CardContent>
           </Card>
@@ -229,10 +229,10 @@ export default function StatsPage() {
                       {stats ? (
                         <>
                           <span className="text-gray-600">
-                            First: <span className="font-bold text-blue-600">{stats.firstScore}/50</span>
+                            First: <span className="font-bold text-orange-600">{stats.firstScore}/50</span>
                           </span>
                           <span className="text-gray-600">
-                            Best: <span className="font-bold text-green-600">{stats.bestScore}/50</span>
+                            Best: <span className="font-bold text-orange-600">{stats.bestScore}/50</span>
                           </span>
                           <span className="text-gray-600">
                             Attempts: <span className="font-bold">{stats.attemptCount}</span>
@@ -260,15 +260,15 @@ export default function StatsPage() {
           <CardContent>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="text-center">
-                <div className="text-2xl font-bold text-blue-600">{totalTraining}</div>
+                <div className="text-2xl font-bold text-orange-600">{totalTraining}</div>
                 <div className="text-sm text-gray-600">Questions Practiced</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-green-600">{trainingAccuracy}%</div>
+                <div className="text-2xl font-bold text-orange-600">{trainingAccuracy}%</div>
                 <div className="text-sm text-gray-600">Accuracy</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-purple-600">{training.currentStreak}</div>
+                <div className="text-2xl font-bold text-orange-600">{training.currentStreak}</div>
                 <div className="text-sm text-gray-600">Current Streak</div>
               </div>
               <div className="text-center">

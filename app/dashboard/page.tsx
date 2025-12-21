@@ -120,13 +120,13 @@ export default function DashboardPage() {
         {/* Training Mode */}
         <div className="mb-6">
           <h2 className="text-2xl font-bold mb-4">Training Mode</h2>
-          <Card className="bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200">
+          <Card className="bg-gradient-to-r from-orange-50 to-amber-50 border-orange-200">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                  <Zap className="h-10 w-10 text-purple-600" />
+                  <Zap className="h-10 w-10 text-orange-600" />
                   <div>
-                    <h3 className="font-bold text-lg text-purple-900">Learn at your own pace.</h3>
+                    <h3 className="font-bold text-lg text-orange-900">Learn at your own pace.</h3>
                   </div>
                 </div>
                 <Link href="/training">
