@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle2, BookOpen, Target, Trophy, Zap, Lock, BarChart3, Cloud } from "lucide-react";
+import { CheckCircle2, BookOpen, Target, Trophy, Zap, BarChart3, Cloud } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 
 export default function Home() {
@@ -18,10 +18,10 @@ export default function Home() {
             Master Your<br />Driving Test
           </h1>
           <p className="text-xl md:text-2xl mb-4 text-blue-100 max-w-3xl mx-auto">
-            The smartest way to prepare for your DMV exam
+            Practice with 200 questions per state - completely free
           </p>
           <p className="text-lg text-blue-200 mb-8 max-w-2xl mx-auto">
-            Train with instant feedback, track your progress, and unlock tests as you improve
+            The more questions you answer, the better you&apos;ll get. Track your progress and watch your pass probability increase with every practice session.
           </p>
           {!loading && (
             <div className="flex gap-4 justify-center">
@@ -56,12 +56,12 @@ export default function Home() {
             <div className="text-blue-100 text-lg">States Covered</div>
           </div>
           <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
-            <div className="text-5xl font-bold mb-2">2,650+</div>
-            <div className="text-blue-100 text-lg">Practice Questions</div>
+            <div className="text-5xl font-bold mb-2">200</div>
+            <div className="text-blue-100 text-lg">Questions per State</div>
           </div>
           <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
-            <div className="text-5xl font-bold mb-2">2</div>
-            <div className="text-blue-100 text-lg">Learning Modes</div>
+            <div className="text-5xl font-bold mb-2">100%</div>
+            <div className="text-blue-100 text-lg">Free Forever</div>
           </div>
         </div>
 
@@ -127,8 +127,8 @@ export default function Home() {
 
         {/* Features Section */}
         <div>
-          <h2 className="text-4xl font-bold text-white text-center mb-4">Premium Features</h2>
-          <p className="text-blue-100 text-center mb-12 text-lg">Everything you need to pass with confidence</p>
+          <h2 className="text-4xl font-bold text-white text-center mb-4">Everything You Need</h2>
+          <p className="text-blue-100 text-center mb-12 text-lg">All features included - no hidden costs, no premium tiers</p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
             <Card className="hover:shadow-xl transition-shadow">
@@ -148,13 +148,13 @@ export default function Home() {
             <Card className="hover:shadow-xl transition-shadow">
               <CardHeader>
                 <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
-                  <Lock className="w-6 h-6 text-purple-600" />
+                  <Trophy className="w-6 h-6 text-purple-600" />
                 </div>
-                <CardTitle>Progressive Unlocking</CardTitle>
+                <CardTitle>Get Better Every Day</CardTitle>
               </CardHeader>
               <CardContent>
                 <CardDescription>
-                  Master each test to unlock the next - ensuring steady progress and confidence
+                  Your pass probability increases with every question you answer. Watch your progress grow in real-time.
                 </CardDescription>
               </CardContent>
             </Card>
