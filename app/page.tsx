@@ -11,10 +11,10 @@ export default function Home() {
   const { user, loading } = useAuth();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-600 via-orange-700 to-amber-900">
+    <div className="min-h-screen bg-white">
       {/* Hero Section */}
       <div className="container mx-auto px-4 py-20">
-        <div className="text-center text-white mb-16">
+        <div className="text-center mb-16">
           <div className="flex justify-center mb-6">
             <Image
               src="/hero-logo.png"
@@ -25,29 +25,29 @@ export default function Home() {
               priority
             />
           </div>
-          <p className="text-xl md:text-2xl mb-4 text-orange-100 max-w-3xl mx-auto">
+          <p className="text-xl md:text-2xl mb-4 text-gray-700 max-w-3xl mx-auto">
             Practice with 200 questions per state - completely free
           </p>
-          <p className="text-lg text-orange-200 mb-8 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
             The more questions you answer, the better you&apos;ll get. Track your progress and watch your pass probability increase with every practice session.
           </p>
           {!loading && (
             <div className="flex gap-4 justify-center">
               {user ? (
                 <Link href="/dashboard">
-                  <Button size="lg" className="text-lg px-8 py-6 bg-white text-orange-600 hover:bg-orange-50 shadow-lg hover:shadow-xl transition-all">
+                  <Button size="lg" className="text-lg px-8 py-6 bg-orange-600 text-white hover:bg-orange-700 shadow-lg hover:shadow-xl transition-all">
                     Go to Dashboard
                   </Button>
                 </Link>
               ) : (
                 <>
                   <Link href="/signup">
-                    <Button size="lg" className="text-lg px-8 py-6 bg-white text-orange-600 hover:bg-orange-50 shadow-lg hover:shadow-xl transition-all">
+                    <Button size="lg" className="text-lg px-8 py-6 bg-orange-600 text-white hover:bg-orange-700 shadow-lg hover:shadow-xl transition-all">
                       Get Started Free
                     </Button>
                   </Link>
                   <Link href="/login">
-                    <Button size="lg" variant="outline" className="text-lg px-8 py-6 bg-transparent text-white border-2 border-white hover:bg-white/10 shadow-lg hover:shadow-xl transition-all">
+                    <Button size="lg" variant="outline" className="text-lg px-8 py-6 border-2 border-orange-600 text-orange-600 hover:bg-orange-50 shadow-lg hover:shadow-xl transition-all">
                       Log In
                     </Button>
                   </Link>
@@ -58,16 +58,16 @@ export default function Home() {
         </div>
 
         {/* Stats Section */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20 text-center text-white">
-          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20 text-center">
+          <div className="bg-gradient-to-br from-orange-600 to-orange-700 rounded-xl p-6 shadow-lg text-white">
             <div className="text-5xl font-bold mb-2">50</div>
             <div className="text-orange-100 text-lg">States Covered</div>
           </div>
-          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+          <div className="bg-gradient-to-br from-orange-600 to-orange-700 rounded-xl p-6 shadow-lg text-white">
             <div className="text-5xl font-bold mb-2">200</div>
             <div className="text-orange-100 text-lg">Questions per State</div>
           </div>
-          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+          <div className="bg-gradient-to-br from-orange-600 to-orange-700 rounded-xl p-6 shadow-lg text-white">
             <div className="text-5xl font-bold mb-2">100%</div>
             <div className="text-orange-100 text-lg">Free Forever</div>
           </div>
@@ -75,8 +75,8 @@ export default function Home() {
 
         {/* Learning Modes Section */}
         <div className="mb-20">
-          <h2 className="text-4xl font-bold text-white text-center mb-4">Two Ways to Learn</h2>
-          <p className="text-orange-100 text-center mb-12 text-lg">Choose the right mode for your learning style</p>
+          <h2 className="text-4xl font-bold text-gray-900 text-center mb-4">Two Ways to Learn</h2>
+          <p className="text-gray-600 text-center mb-12 text-lg">Choose the right mode for your learning style</p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             <Card className="border-2 border-purple-200 bg-gradient-to-br from-purple-50 to-pink-50">
@@ -135,8 +135,8 @@ export default function Home() {
 
         {/* Features Section */}
         <div>
-          <h2 className="text-4xl font-bold text-white text-center mb-4">Everything You Need</h2>
-          <p className="text-orange-100 text-center mb-12 text-lg">All features included - no hidden costs, no premium tiers</p>
+          <h2 className="text-4xl font-bold text-gray-900 text-center mb-4">Everything You Need</h2>
+          <p className="text-gray-600 text-center mb-12 text-lg">All features included - no hidden costs, no premium tiers</p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
             <Card className="hover:shadow-xl transition-shadow">
@@ -200,7 +200,7 @@ export default function Home() {
         {/* CTA Section */}
         {!user && (
           <div className="mt-20 text-center">
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-12 border border-white/20">
+            <div className="bg-gradient-to-br from-orange-600 to-orange-700 rounded-2xl p-12 shadow-xl">
               <h2 className="text-4xl font-bold text-white mb-4">Ready to get started?</h2>
               <p className="text-xl text-orange-100 mb-8">Join thousands preparing for their driving test</p>
               <Link href="/signup">
