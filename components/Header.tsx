@@ -29,11 +29,11 @@ export function Header() {
   }
 
   return (
-    <header className="border-b bg-white">
+    <header className="border-b bg-orange-600">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <Link href={user ? "/dashboard" : "/"} className="flex items-center gap-2 group">
           <Image src="/tiger.png" alt="Tiger Tests" width={32} height={32} className="w-8 h-8" />
-          <span className="text-2xl font-bold text-orange-600 group-hover:text-orange-700 transition-colors">
+          <span className="text-2xl font-bold text-white group-hover:text-orange-100 transition-colors">
             Tiger Tests
           </span>
         </Link>
@@ -47,13 +47,13 @@ export function Header() {
                   <AvatarFallback className="text-lg">😊</AvatarFallback>
                 </Avatar>
               </Link>
-              <Button variant="outline" onClick={handleLogout}>
+              <Button variant="outline" onClick={handleLogout} className="border-white text-white hover:bg-orange-700">
                 Log Out
               </Button>
             </>
           ) : (
             <Link href="/login">
-              <Button variant="outline">Sign In</Button>
+              <Button variant="outline" className="border-white text-white hover:bg-orange-700">Sign In</Button>
             </Link>
           )}
         </div>
