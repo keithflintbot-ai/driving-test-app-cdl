@@ -1,7 +1,19 @@
+"use client";
+
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/contexts/AuthContext";
 
 export function Header() {
+  const { user, logout } = useAuth();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    await logout();
+    router.push("/");
+  };
+
   return (
     <header className="border-b bg-white">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
@@ -9,22 +21,30 @@ export function Header() {
           DrivingTest
         </Link>
 
-        <nav className="hidden md:flex items-center gap-6">
-          <Link href="/select-state" className="text-gray-600 hover:text-gray-900">
-            Select State
-          </Link>
-          <Link href="/dashboard" className="text-gray-600 hover:text-gray-900">
-            Dashboard
-          </Link>
-          <Link href="/progress" className="text-gray-600 hover:text-gray-900">
-            Progress
-          </Link>
-        </nav>
+        {user && (
+          <nav className="hidden md:flex items-center gap-6">
+            <Link href="/select-state" className="text-gray-600 hover:text-gray-900">
+              Select State
+            </Link>
+            <Link href="/dashboard" className="text-gray-600 hover:text-gray-900">
+              Dashboard
+            </Link>
+          </nav>
+        )}
 
         <div className="flex items-center gap-4">
-          <Link href="/dashboard">
-            <Button variant="outline">Sign In</Button>
-          </Link>
+          {user ? (
+            <>
+              <span className="text-sm text-gray-600">{user.email}</span>
+              <Button variant="outline" onClick={handleLogout}>
+                Log Out
+              </Button>
+            </>
+          ) : (
+            <Link href="/login">
+              <Button variant="outline">Sign In</Button>
+            </Link>
+          )}
         </div>
       </div>
     </header>

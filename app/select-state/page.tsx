@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Search } from "lucide-react";
 import { useStore } from "@/store/useStore";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
 
 export default function SelectStatePage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -24,6 +25,7 @@ export default function SelectStatePage() {
   );
 
   return (
+    <ProtectedRoute>
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-4xl mx-auto">
@@ -72,5 +74,6 @@ export default function SelectStatePage() {
         </div>
       </div>
     </div>
+    </ProtectedRoute>
   );
 }

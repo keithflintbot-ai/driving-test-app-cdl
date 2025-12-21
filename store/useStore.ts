@@ -1,6 +1,8 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { Question, TestSession, UserAnswer } from '@/types';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 
 interface AppState {
   // Selected state
@@ -31,6 +33,12 @@ interface AppState {
     accuracy: number;
     averageScore: number;
   };
+
+  // Firebase sync
+  userId: string | null;
+  setUserId: (userId: string | null) => void;
+  loadUserData: (userId: string) => Promise<void>;
+  saveToFirestore: () => Promise<void>;
 }
 
 export const useStore = create<AppState>()(
@@ -45,8 +53,13 @@ export const useStore = create<AppState>()(
         startedAt: null,
       },
       completedTests: [],
+      userId: null,
 
       // Actions
+      setUserId: (userId: string | null) => {
+        set({ userId });
+      },
+
       setSelectedState: (state: string) => {
         // Clear current test when switching states
         set({
@@ -58,6 +71,8 @@ export const useStore = create<AppState>()(
             startedAt: null,
           },
         });
+        // Save to Firestore
+        get().saveToFirestore();
       },
 
       startTest: (testId: number, questions: Question[]) => {
@@ -69,6 +84,7 @@ export const useStore = create<AppState>()(
             startedAt: new Date(),
           },
         });
+        get().saveToFirestore();
       },
 
       setAnswer: (questionIndex: number, answer: string) => {
@@ -81,6 +97,7 @@ export const useStore = create<AppState>()(
             },
           },
         }));
+        get().saveToFirestore();
       },
 
       clearCurrentTest: () => {
@@ -92,6 +109,7 @@ export const useStore = create<AppState>()(
             startedAt: null,
           },
         });
+        get().saveToFirestore();
       },
 
       completeTest: (testId: number, score: number, questions: Question[], answers: { [key: number]: string }) => {
@@ -127,6 +145,7 @@ export const useStore = create<AppState>()(
 
         // Clear current test
         get().clearCurrentTest();
+        get().saveToFirestore();
       },
 
       getTestSession: (testId: number) => {
@@ -165,6 +184,60 @@ export const useStore = create<AppState>()(
           accuracy: Math.round(accuracy),
           averageScore: Math.round(averageScore * 10) / 10,
         };
+      },
+
+      // Firebase sync functions
+      loadUserData: async (userId: string) => {
+        try {
+          const userDoc = await getDoc(doc(db, 'users', userId));
+          if (userDoc.exists()) {
+            const data = userDoc.data();
+            set({
+              selectedState: data.selectedState || null,
+              currentTest: data.currentTest || {
+                testId: null,
+                questions: [],
+                answers: {},
+                startedAt: null,
+              },
+              completedTests: data.completedTests || [],
+              userId,
+            });
+          } else {
+            // New user - set userId
+            set({ userId });
+          }
+        } catch (error) {
+          console.error('Error loading user data:', error);
+        }
+      },
+
+      saveToFirestore: async () => {
+        const { userId, selectedState, currentTest, completedTests } = get();
+        if (!userId) return; // Don't save if no user is logged in
+
+        try {
+          await setDoc(doc(db, 'users', userId), {
+            selectedState,
+            currentTest: {
+              ...currentTest,
+              // Convert Date to timestamp for Firestore
+              startedAt: currentTest.startedAt?.toISOString() || null,
+            },
+            completedTests: completedTests.map(test => ({
+              ...test,
+              startedAt: test.startedAt.toISOString(),
+              completedAt: test.completedAt.toISOString(),
+              answers: test.answers.map(a => ({
+                ...a,
+                answeredAt: a.answeredAt.toISOString(),
+              })),
+            })),
+            lastUpdated: new Date().toISOString(),
+          });
+        } catch (error) {
+          console.error('Error saving to Firestore:', error);
+        }
       },
     }),
     {

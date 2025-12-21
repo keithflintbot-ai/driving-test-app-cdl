@@ -1,9 +1,14 @@
+"use client";
+
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle2, BookOpen, Target, Trophy } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function Home() {
+  const { user, loading } = useAuth();
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-500 to-blue-700">
       {/* Hero Section */}
@@ -15,11 +20,30 @@ export default function Home() {
           <p className="text-xl md:text-2xl mb-8 text-blue-100">
             200 practice questions tailored to your state
           </p>
-          <Link href="/select-state">
-            <Button size="lg" className="text-lg px-8 py-6 bg-white text-blue-600 hover:bg-blue-50">
-              Get Started
-            </Button>
-          </Link>
+          {!loading && (
+            <div className="flex gap-4 justify-center">
+              {user ? (
+                <Link href="/select-state">
+                  <Button size="lg" className="text-lg px-8 py-6 bg-white text-blue-600 hover:bg-blue-50">
+                    Go to Dashboard
+                  </Button>
+                </Link>
+              ) : (
+                <>
+                  <Link href="/signup">
+                    <Button size="lg" className="text-lg px-8 py-6 bg-white text-blue-600 hover:bg-blue-50">
+                      Sign Up
+                    </Button>
+                  </Link>
+                  <Link href="/login">
+                    <Button size="lg" variant="outline" className="text-lg px-8 py-6 bg-transparent text-white border-white hover:bg-white/10">
+                      Log In
+                    </Button>
+                  </Link>
+                </>
+              )}
+            </div>
+          )}
         </div>
 
         {/* Stats Section */}
