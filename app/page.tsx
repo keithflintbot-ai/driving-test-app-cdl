@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle2, BookOpen, Target, Trophy, Zap, BarChart3, Cloud } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import Image from "next/image";
 
 export default function Home() {
   const { user, loading } = useAuth();
@@ -14,9 +15,16 @@ export default function Home() {
       {/* Hero Section */}
       <div className="container mx-auto px-4 py-20">
         <div className="text-center text-white mb-16">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-            Master Your<br />Driving Test
-          </h1>
+          <div className="flex justify-center mb-6">
+            <Image
+              src="/hero-logo.png"
+              alt="Tiger Tests"
+              width={600}
+              height={200}
+              className="max-w-full h-auto"
+              priority
+            />
+          </div>
           <p className="text-xl md:text-2xl mb-4 text-orange-100 max-w-3xl mx-auto">
             Practice with 200 questions per state - completely free
           </p>
