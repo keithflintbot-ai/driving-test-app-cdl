@@ -12,8 +12,21 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white">
+      {/* Top Navigation */}
+      {!loading && !user && (
+        <div className="container mx-auto px-4 py-6">
+          <div className="flex justify-end">
+            <Link href="/login">
+              <Button variant="ghost" className="text-gray-700 hover:text-orange-600 hover:bg-orange-50">
+                Log In
+              </Button>
+            </Link>
+          </div>
+        </div>
+      )}
+
       {/* Hero Section */}
-      <div className="container mx-auto px-4 py-20">
+      <div className="container mx-auto px-4 py-12">
         <div className="text-center mb-16">
           <div className="flex justify-center mb-8">
             <Image
@@ -36,23 +49,16 @@ export default function Home() {
             <div className="flex gap-4 justify-center">
               {user ? (
                 <Link href="/dashboard">
-                  <Button size="lg" className="text-lg px-8 py-6 bg-orange-600 text-white hover:bg-orange-700 shadow-lg hover:shadow-xl transition-all">
+                  <Button size="lg" className="text-xl px-12 py-8 bg-orange-600 text-white hover:bg-orange-700 shadow-xl hover:shadow-2xl transition-all font-bold rounded-xl border-4 border-orange-700">
                     Go to Dashboard
                   </Button>
                 </Link>
               ) : (
-                <>
-                  <Link href="/signup">
-                    <Button size="lg" className="text-lg px-8 py-6 bg-orange-600 text-white hover:bg-orange-700 shadow-lg hover:shadow-xl transition-all">
-                      Get Started Free
-                    </Button>
-                  </Link>
-                  <Link href="/login">
-                    <Button size="lg" className="text-lg px-8 py-6 bg-orange-600 text-white hover:bg-orange-700 shadow-lg hover:shadow-xl transition-all">
-                      Log In
-                    </Button>
-                  </Link>
-                </>
+                <Link href="/signup">
+                  <Button size="lg" className="text-xl px-12 py-8 bg-orange-600 text-white hover:bg-orange-700 shadow-xl hover:shadow-2xl transition-all font-bold rounded-xl border-4 border-orange-700">
+                    Get Started Free
+                  </Button>
+                </Link>
               )}
             </div>
           )}
@@ -205,7 +211,7 @@ export default function Home() {
               <h2 className="text-4xl font-bold text-white mb-4">Ready to get started?</h2>
               <p className="text-xl text-orange-100 mb-8">Join thousands preparing for their driving test</p>
               <Link href="/signup">
-                <Button size="lg" className="text-lg px-10 py-6 bg-white text-orange-600 hover:bg-orange-50 shadow-lg hover:shadow-xl transition-all">
+                <Button size="lg" className="text-xl px-12 py-8 bg-white text-orange-600 hover:bg-orange-50 shadow-xl hover:shadow-2xl transition-all font-bold rounded-xl border-4 border-orange-200">
                   Start Practicing Free
                 </Button>
               </Link>
