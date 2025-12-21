@@ -10,31 +10,31 @@ export default function Home() {
   const { user, loading } = useAuth();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-600 via-blue-700 to-purple-800">
+    <div className="min-h-screen bg-gradient-to-br from-orange-600 via-orange-700 to-amber-900">
       {/* Hero Section */}
       <div className="container mx-auto px-4 py-20">
         <div className="text-center text-white mb-16">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
             Master Your<br />Driving Test
           </h1>
-          <p className="text-xl md:text-2xl mb-4 text-blue-100 max-w-3xl mx-auto">
+          <p className="text-xl md:text-2xl mb-4 text-orange-100 max-w-3xl mx-auto">
             Practice with 200 questions per state - completely free
           </p>
-          <p className="text-lg text-blue-200 mb-8 max-w-2xl mx-auto">
+          <p className="text-lg text-orange-200 mb-8 max-w-2xl mx-auto">
             The more questions you answer, the better you&apos;ll get. Track your progress and watch your pass probability increase with every practice session.
           </p>
           {!loading && (
             <div className="flex gap-4 justify-center">
               {user ? (
                 <Link href="/dashboard">
-                  <Button size="lg" className="text-lg px-8 py-6 bg-white text-blue-600 hover:bg-blue-50 shadow-lg hover:shadow-xl transition-all">
+                  <Button size="lg" className="text-lg px-8 py-6 bg-white text-orange-600 hover:bg-orange-50 shadow-lg hover:shadow-xl transition-all">
                     Go to Dashboard
                   </Button>
                 </Link>
               ) : (
                 <>
                   <Link href="/signup">
-                    <Button size="lg" className="text-lg px-8 py-6 bg-white text-blue-600 hover:bg-blue-50 shadow-lg hover:shadow-xl transition-all">
+                    <Button size="lg" className="text-lg px-8 py-6 bg-white text-orange-600 hover:bg-orange-50 shadow-lg hover:shadow-xl transition-all">
                       Get Started Free
                     </Button>
                   </Link>
@@ -53,22 +53,22 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20 text-center text-white">
           <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
             <div className="text-5xl font-bold mb-2">50</div>
-            <div className="text-blue-100 text-lg">States Covered</div>
+            <div className="text-orange-100 text-lg">States Covered</div>
           </div>
           <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
             <div className="text-5xl font-bold mb-2">200</div>
-            <div className="text-blue-100 text-lg">Questions per State</div>
+            <div className="text-orange-100 text-lg">Questions per State</div>
           </div>
           <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
             <div className="text-5xl font-bold mb-2">100%</div>
-            <div className="text-blue-100 text-lg">Free Forever</div>
+            <div className="text-orange-100 text-lg">Free Forever</div>
           </div>
         </div>
 
         {/* Learning Modes Section */}
         <div className="mb-20">
           <h2 className="text-4xl font-bold text-white text-center mb-4">Two Ways to Learn</h2>
-          <p className="text-blue-100 text-center mb-12 text-lg">Choose the right mode for your learning style</p>
+          <p className="text-orange-100 text-center mb-12 text-lg">Choose the right mode for your learning style</p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             <Card className="border-2 border-purple-200 bg-gradient-to-br from-purple-50 to-pink-50">
@@ -97,26 +97,26 @@ export default function Home() {
               </CardContent>
             </Card>
 
-            <Card className="border-2 border-blue-200 bg-gradient-to-br from-blue-50 to-cyan-50">
+            <Card className="border-2 border-orange-200 bg-gradient-to-br from-orange-50 to-amber-50">
               <CardHeader>
-                <div className="w-16 h-16 bg-blue-600 rounded-xl flex items-center justify-center mb-4">
+                <div className="w-16 h-16 bg-orange-600 rounded-xl flex items-center justify-center mb-4">
                   <Target className="w-8 h-8 text-white" />
                 </div>
-                <CardTitle className="text-2xl text-blue-900">Practice Tests</CardTitle>
+                <CardTitle className="text-2xl text-orange-900">Practice Tests</CardTitle>
                 <CardDescription className="text-base">Simulate the real exam</CardDescription>
               </CardHeader>
               <CardContent>
                 <ul className="space-y-3 text-gray-700">
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-orange-600 mt-0.5 flex-shrink-0" />
                     <span>4 full-length 50-question tests</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-orange-600 mt-0.5 flex-shrink-0" />
                     <span>Track scores and improvement over time</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-orange-600 mt-0.5 flex-shrink-0" />
                     <span>Unlock tests as you score 40+</span>
                   </li>
                 </ul>
@@ -128,13 +128,13 @@ export default function Home() {
         {/* Features Section */}
         <div>
           <h2 className="text-4xl font-bold text-white text-center mb-4">Everything You Need</h2>
-          <p className="text-blue-100 text-center mb-12 text-lg">All features included - no hidden costs, no premium tiers</p>
+          <p className="text-orange-100 text-center mb-12 text-lg">All features included - no hidden costs, no premium tiers</p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
             <Card className="hover:shadow-xl transition-shadow">
               <CardHeader>
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                  <BookOpen className="w-6 h-6 text-blue-600" />
+                <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
+                  <BookOpen className="w-6 h-6 text-orange-600" />
                 </div>
                 <CardTitle>State-Specific</CardTitle>
               </CardHeader>
@@ -194,9 +194,9 @@ export default function Home() {
           <div className="mt-20 text-center">
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-12 border border-white/20">
               <h2 className="text-4xl font-bold text-white mb-4">Ready to get started?</h2>
-              <p className="text-xl text-blue-100 mb-8">Join thousands preparing for their driving test</p>
+              <p className="text-xl text-orange-100 mb-8">Join thousands preparing for their driving test</p>
               <Link href="/signup">
-                <Button size="lg" className="text-lg px-10 py-6 bg-white text-blue-600 hover:bg-blue-50 shadow-lg hover:shadow-xl transition-all">
+                <Button size="lg" className="text-lg px-10 py-6 bg-white text-orange-600 hover:bg-orange-50 shadow-lg hover:shadow-xl transition-all">
                   Start Practicing Free
                 </Button>
               </Link>
