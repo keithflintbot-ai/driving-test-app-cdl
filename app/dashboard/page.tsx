@@ -44,10 +44,11 @@ export default function DashboardPage() {
 
   // Get status for each test
   const getTestStatus = (testNumber: number): "not-started" | "in-progress" | "completed" => {
+    const currentTest = getCurrentTest(testNumber);
+    // If there's a test in progress (even if previously completed), show in-progress
+    if (currentTest && currentTest.questions.length > 0) return "in-progress";
     const session = getTestSession(testNumber);
     if (session) return "completed";
-    const currentTest = getCurrentTest(testNumber);
-    if (currentTest && currentTest.questions.length > 0) return "in-progress";
     return "not-started";
   };
 
