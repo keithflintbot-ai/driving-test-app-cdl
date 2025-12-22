@@ -12,49 +12,49 @@ function shuffle<T>(array: T[]): T[] {
 }
 
 // Get questions for a specific test
+// Each test has a FIXED set of questions, but the order is randomized on each attempt
 export function generateTest(testNumber: number, state: string): Question[] {
   const allQuestions = questionsData as Question[];
 
   // Get universal questions (type: "Universal", state: "ALL")
-  const universalQuestions = allQuestions.filter(
-    (q) => q.type === "Universal" && q.state === "ALL"
-  );
+  // Sort by questionId for deterministic assignment to tests
+  const universalQuestions = allQuestions
+    .filter((q) => q.type === "Universal" && q.state === "ALL")
+    .sort((a, b) => a.questionId.localeCompare(b.questionId));
 
   // Get state-specific questions
-  const stateQuestions = allQuestions.filter(
-    (q) => q.type === "State-Specific" && q.state === state
-  );
-
-  // Shuffle both sets
-  const shuffledUniversal = shuffle(universalQuestions);
-  const shuffledState = shuffle(stateQuestions);
+  // Sort by questionId for deterministic assignment to tests
+  const stateQuestions = allQuestions
+    .filter((q) => q.type === "State-Specific" && q.state === state)
+    .sort((a, b) => a.questionId.localeCompare(b.questionId));
 
   // Distribution based on test number (as per spec)
-  const distributions = [
-    { universal: 37, state: 13 }, // Test 1
-    { universal: 38, state: 12 }, // Test 2
-    { universal: 37, state: 13 }, // Test 3
-    { universal: 38, state: 12 }, // Test 4
-  ];
+  // Test 1-4: 40 universal + 10 state = 50 each
+  // Total: 160 universal + 40 state = 200 questions
+  const UNIVERSAL_PER_TEST = 40;
+  const STATE_PER_TEST = 10;
 
-  const distribution = distributions[testNumber - 1] || distributions[0];
+  // Calculate start indices for fixed question assignment per test
+  // Universal: Test 1 gets 0-39, Test 2 gets 40-79, Test 3 gets 80-119, Test 4 gets 120-159
+  // State: Test 1 gets 0-9, Test 2 gets 10-19, Test 3 gets 20-29, Test 4 gets 30-39
+  const startUniversal = (testNumber - 1) * UNIVERSAL_PER_TEST;
+  const startState = (testNumber - 1) * STATE_PER_TEST;
 
-  // Calculate start indices to avoid question overlap between tests
-  const startUniversal = (testNumber - 1) * 37;
-  const startState = (testNumber - 1) * 12;
-
-  // Get slices for this test
-  const testUniversal = shuffledUniversal.slice(
+  // Get fixed slices for this test (always the same questions)
+  const testUniversal = universalQuestions.slice(
     startUniversal,
-    startUniversal + distribution.universal
+    startUniversal + UNIVERSAL_PER_TEST
   );
-  const testState = shuffledState.slice(
+  const testState = stateQuestions.slice(
     startState,
-    startState + distribution.state
+    startState + STATE_PER_TEST
   );
 
-  // Intersperse state questions among universal questions
-  return intersperseQuestions(testUniversal, testState);
+  // Combine all questions for this test
+  const allTestQuestions = [...testUniversal, ...testState];
+
+  // Shuffle the order for this attempt (questions are fixed, order is random)
+  return shuffle(allTestQuestions);
 }
 
 // Intersperse state questions evenly among universal questions
