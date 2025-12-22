@@ -33,22 +33,9 @@ export function Header() {
   }
 
   return (
-    <>
-      {/* Guest signup banner - only show on dashboard and inner pages */}
-      {isGuest && !useWhiteHeader && (
-        <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-2 px-4 text-center">
-          <span className="text-sm md:text-base">
-            Your progress is saved locally.{" "}
-            <Link href="/signup" className="font-bold underline hover:no-underline">
-              Sign up
-            </Link>
-            {" "}to save it to the cloud!
-          </span>
-        </div>
-      )}
-      <header className={`border-b ${useWhiteHeader ? "bg-white" : "bg-orange-600"}`}>
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href={user || isGuest ? "/dashboard" : "/"} className="flex items-center gap-2 group">
+    <header className={`border-b ${useWhiteHeader ? "bg-white" : "bg-orange-600"}`}>
+      <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+        <Link href={user || isGuest ? "/dashboard" : "/"} className="flex items-center gap-2 group">
             <Image src="/tiger.png" alt="tigertest.io" width={40} height={40} className="w-10 h-10" />
             <span className={`text-2xl font-bold ${useWhiteHeader ? "text-gray-900" : "text-white"} group-hover:opacity-80 transition-opacity`}>
               tigertest.io
@@ -81,7 +68,6 @@ export function Header() {
             )}
           </div>
         </div>
-      </header>
-    </>
+    </header>
   );
 }
