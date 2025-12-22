@@ -25,6 +25,8 @@ export default function LoginPage() {
 
     try {
       await login(email, password);
+      // Wait for user data to load before redirecting
+      await new Promise(resolve => setTimeout(resolve, 800));
       router.push("/dashboard");
     } catch (err: any) {
       setError(err.message || "Failed to log in");
@@ -39,7 +41,8 @@ export default function LoginPage() {
 
     try {
       await loginWithGoogle();
-      // Note: Redirect logic will be handled by checking selectedState in useEffect
+      // Wait for user data to load before redirecting
+      await new Promise(resolve => setTimeout(resolve, 800));
       router.push("/dashboard");
     } catch (err: any) {
       setError(err.message || "Failed to sign in with Google");

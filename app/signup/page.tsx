@@ -32,7 +32,8 @@ export default function SignupPage() {
 
     try {
       await loginWithGoogle();
-      // Google users will be handled by R2 (onboarding flow)
+      // Wait for user data to load before redirecting
+      await new Promise(resolve => setTimeout(resolve, 800));
       router.push("/dashboard");
     } catch (err: any) {
       setError(err.message || "Failed to sign in with Google");
