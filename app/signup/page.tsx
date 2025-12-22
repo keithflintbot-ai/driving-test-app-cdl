@@ -26,15 +26,35 @@ export default function SignupPage() {
   const router = useRouter();
   const setStoreState = useStore((state) => state.setSelectedState);
 
+  const handleStateSelect = () => {
+    if (!selectedState) {
+      setError("Please select a state");
+      return;
+    }
+    setError("");
+    // Move to step 2 (credentials)
+    setStep(2);
+  };
+
   const handleGoogleSignIn = async () => {
+    if (!selectedState) {
+      setError("Please select a state first");
+      return;
+    }
+
     setError("");
     setLoading(true);
 
     try {
       await loginWithGoogle();
+      // Save the selected state (we've already validated it's not null above)
+      setStoreState(selectedState!);
       // Wait for user data to load before redirecting
       await new Promise(resolve => setTimeout(resolve, 800));
-      router.push("/dashboard");
+
+      // Redirect to state selection if somehow state wasn't saved
+      const hasState = useStore.getState().selectedState;
+      router.push(hasState ? "/dashboard" : "/onboarding/select-state");
     } catch (err: any) {
       setError(err.message || "Failed to sign in with Google");
     } finally {
@@ -42,7 +62,7 @@ export default function SignupPage() {
     }
   };
 
-  const handleStep1Submit = async (e: React.FormEvent) => {
+  const handleStep2Submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
 
@@ -54,45 +74,38 @@ export default function SignupPage() {
       return setError("Password must be at least 6 characters");
     }
 
-    // Move to step 2 (state selection)
-    setStep(2);
-  };
-
-  const handleCompleteSignup = async () => {
-    if (!selectedState) {
-      setError("Please select a state");
-      return;
-    }
-
     setLoading(true);
-    setError("");
 
     try {
       // Create user account
       await signup(email, password);
+      // Save the selected state (validated in step 1)
+      setStoreState(selectedState!);
 
-      // Note: The actual state saving will happen in AuthContext after user is created
-      // For now, we'll save it to the store
-      setStoreState(selectedState);
+      // Small delay to ensure state is saved
+      await new Promise(resolve => setTimeout(resolve, 100));
 
-      router.push("/dashboard");
+      // Redirect to state selection if somehow state wasn't saved
+      const hasState = useStore.getState().selectedState;
+      router.push(hasState ? "/dashboard" : "/onboarding/select-state");
     } catch (err: any) {
       setError(err.message || "Failed to create account");
       setLoading(false);
     }
   };
 
+
   return (
     <div className="bg-white flex items-center justify-center py-12 px-4">
       <Card className="w-full max-w-2xl">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center">
-            {step === 1 ? "Create Account" : "Select Your State"}
+            {step === 1 ? "Select Your State" : "Create Account"}
           </CardTitle>
           <CardDescription className="text-center">
             {step === 1
-              ? "Sign up to start practicing for your driving test"
-              : "Which state are you preparing for?"}
+              ? "Which state are you preparing for?"
+              : "Sign up to start practicing for your driving test"}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -103,7 +116,32 @@ export default function SignupPage() {
           )}
 
           {step === 1 ? (
+            <div className="space-y-6">
+              {/* Step 1: State Selection */}
+              <StateSelector
+                onSelect={setSelectedState}
+                selectedState={selectedState}
+              />
+
+              <Button
+                onClick={handleStateSelect}
+                disabled={!selectedState || loading}
+                className="w-full bg-black text-white hover:bg-gray-800"
+              >
+                Continue
+              </Button>
+
+              <div className="text-center text-sm text-gray-600">
+                Already have an account?{" "}
+                <Link href="/login" className="text-orange-600 hover:underline font-semibold">
+                  Log in
+                </Link>
+              </div>
+            </div>
+          ) : (
             <div className="space-y-4">
+              {/* Step 2: Create Account */}
+
               {/* Google Sign-In */}
               <Button
                 type="button"
@@ -142,7 +180,7 @@ export default function SignupPage() {
               </div>
 
               {/* Email/Password Form */}
-              <form onSubmit={handleStep1Submit} className="space-y-4">
+              <form onSubmit={handleStep2Submit} className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="email">Email</Label>
                   <Input
@@ -182,42 +220,20 @@ export default function SignupPage() {
                   />
                 </div>
 
-                <Button type="submit" className="w-full bg-black text-white hover:bg-gray-800" disabled={loading}>
-                  Continue
-                </Button>
-
-                <div className="text-center text-sm text-gray-600">
-                  Already have an account?{" "}
-                  <Link href="/login" className="text-blue-600 hover:underline font-semibold">
-                    Log in
-                  </Link>
+                <div className="flex gap-3">
+                  <Button
+                    type="button"
+                    onClick={() => setStep(1)}
+                    disabled={loading}
+                    className="w-full bg-white text-black hover:bg-gray-100 border-2 border-gray-300"
+                  >
+                    Back
+                  </Button>
+                  <Button type="submit" className="w-full bg-black text-white hover:bg-gray-800" disabled={loading}>
+                    {loading ? "Creating account..." : "Create Account"}
+                  </Button>
                 </div>
               </form>
-            </div>
-          ) : (
-            <div className="space-y-6">
-              {/* Step 2: State Selection */}
-              <StateSelector
-                onSelect={setSelectedState}
-                selectedState={selectedState}
-              />
-
-              <div className="flex gap-3">
-                <Button
-                  onClick={() => setStep(1)}
-                  disabled={loading}
-                  className="w-full bg-white text-black hover:bg-gray-100 border-2 border-gray-300"
-                >
-                  Back
-                </Button>
-                <Button
-                  onClick={handleCompleteSignup}
-                  disabled={!selectedState || loading}
-                  className="w-full bg-black text-white hover:bg-gray-800"
-                >
-                  {loading ? "Creating account..." : "Complete Signup"}
-                </Button>
-              </div>
             </div>
           )}
         </CardContent>
