@@ -19,6 +19,7 @@ export default function TrainingPage() {
   const training = useStore((state) => state.training);
   const answerTrainingQuestion = useStore((state) => state.answerTrainingQuestion);
   const resetMasteredQuestions = useStore((state) => state.resetMasteredQuestions);
+  const isOnboardingComplete = useStore((state) => state.isOnboardingComplete);
 
   const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
@@ -180,7 +181,9 @@ export default function TrainingPage() {
         <div className="mt-6 text-center">
           <p className="text-lg text-gray-700">
             <span className="font-bold text-2xl text-orange-600">{training.totalCorrectAllTime}</span>
-            <span className="text-gray-500"> / 200 answered correctly</span>
+            <span className="text-gray-500">
+              /200 {!isOnboardingComplete() && `— answer ${10 - training.totalCorrectAllTime} more to unlock practice tests`}
+            </span>
           </p>
           <div className="w-full bg-orange-200 rounded-full h-2 mt-2 max-w-md mx-auto">
             <div
