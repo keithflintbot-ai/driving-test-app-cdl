@@ -187,13 +187,8 @@ export default function DashboardPage() {
                   <Zap className="h-10 w-10 text-orange-600" />
                   <div>
                     <h3 className="font-bold text-lg text-orange-900">
-                      {trainingProgress}/200 questions answered correctly
+                      {trainingProgress}/200 {!onboardingComplete && "— answer 10 to unlock practice tests"}
                     </h3>
-                    {!onboardingComplete && (
-                      <p className="text-sm text-orange-700 mt-1">
-                        Answer {10 - trainingProgress} more to unlock practice tests
-                      </p>
-                    )}
                     <div className="w-full bg-orange-200 rounded-full h-2 mt-2 max-w-xs">
                       <div
                         className="bg-orange-600 h-2 rounded-full transition-all"
