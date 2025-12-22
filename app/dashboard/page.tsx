@@ -5,8 +5,9 @@ import { useRouter } from "next/navigation";
 import { TestCard } from "@/components/TestCard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Zap, Target } from "lucide-react";
+import { Zap } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { useStore } from "@/store/useStore";
 import { useHydration } from "@/hooks/useHydration";
 import { useAuth } from "@/contexts/AuthContext";
@@ -36,6 +37,18 @@ export default function DashboardPage() {
 
   // Get state name from code
   const stateName = states.find((s) => s.code === selectedState)?.name || selectedState;
+
+  // Get tiger face image based on pass probability
+  const getTigerFace = (probability: number): string => {
+    if (probability >= 100) return "/tiger_face_01.png";
+    if (probability >= 90) return "/tiger_face_02.png";
+    if (probability >= 80) return "/tiger_face_03.png";
+    if (probability >= 70) return "/tiger_face_04.png";
+    if (probability >= 60) return "/tiger_face_05.png";
+    if (probability >= 50) return "/tiger_face_06.png";
+    if (probability >= 40) return "/tiger_face_07.png";
+    return "/tiger_face_08.png";
+  };
 
   // Redirect to onboarding if no state selected
   useEffect(() => {
@@ -143,22 +156,17 @@ export default function DashboardPage() {
               }`}>
                 <CardContent className="p-6">
                   <div className="flex items-center gap-4">
-                    <div className="text-4xl">
-                      {passProbability === 0
-                        ? "❓"
-                        : passProbability >= 90
-                          ? "🎉"
-                          : passProbability >= 80
-                            ? "😄"
-                            : passProbability >= 70
-                              ? "🙂"
-                              : passProbability >= 60
-                                ? "😐"
-                                : passProbability >= 40
-                                  ? "😕"
-                                  : "😰"
-                      }
-                    </div>
+                    {passProbability === 0 ? (
+                      <div className="text-4xl">❓</div>
+                    ) : (
+                      <Image
+                        src={getTigerFace(passProbability)}
+                        alt="Tiger mascot"
+                        width={48}
+                        height={48}
+                        className="w-12 h-12"
+                      />
+                    )}
                     <div className="flex-1">
                       <p className="text-lg text-gray-700">
                         {passProbability === 0
@@ -177,39 +185,6 @@ export default function DashboardPage() {
           )
         )}
 
-        {/* Onboarding CTA - Show when onboarding is not complete */}
-        {!onboardingComplete && (
-          <Card className="mb-6 bg-gradient-to-r from-orange-100 to-amber-100 border-orange-300">
-            <CardContent className="p-6 md:p-8">
-              <div className="text-center">
-                <Target className="h-12 w-12 text-orange-600 mx-auto mb-4" />
-                <h2 className="text-2xl font-bold text-orange-900 mb-2">
-                  Get Started with Training Mode
-                </h2>
-                <p className="text-orange-800 mb-4 max-w-lg mx-auto">
-                  Answer 10 questions correctly in Training Mode to unlock Practice Tests and track your pass probability.
-                </p>
-                <div className="mb-4">
-                  <div className="text-sm text-orange-700 mb-2">
-                    Progress: {trainingProgress}/10 correct answers
-                  </div>
-                  <div className="w-full bg-orange-200 rounded-full h-3 max-w-xs mx-auto">
-                    <div
-                      className="bg-orange-600 h-3 rounded-full transition-all"
-                      style={{ width: `${Math.min(100, (trainingProgress / 10) * 100)}%` }}
-                    />
-                  </div>
-                </div>
-                <Link href="/training">
-                  <Button size="lg" className="bg-black text-white hover:bg-gray-800 text-lg px-8 py-6">
-                    Start Training
-                  </Button>
-                </Link>
-              </div>
-            </CardContent>
-          </Card>
-        )}
-
         {/* Training Mode */}
         <div className="mb-6">
           <h2 className="text-2xl font-bold mb-4">Training Mode</h2>
@@ -222,6 +197,11 @@ export default function DashboardPage() {
                     <h3 className="font-bold text-lg text-orange-900">
                       {trainingProgress}/200 questions answered correctly
                     </h3>
+                    {!onboardingComplete && (
+                      <p className="text-sm text-orange-700 mt-1">
+                        Answer {10 - trainingProgress} more to unlock practice tests
+                      </p>
+                    )}
                     <div className="w-full bg-orange-200 rounded-full h-2 mt-2 max-w-xs">
                       <div
                         className="bg-orange-600 h-2 rounded-full transition-all"
@@ -232,7 +212,7 @@ export default function DashboardPage() {
                 </div>
                 <Link href="/training" className="w-full sm:w-auto">
                   <Button className="bg-black text-white hover:bg-gray-800 w-full">
-                    {onboardingComplete ? "Continue Training" : "Start Training"}
+                    {trainingProgress > 0 ? "Continue Training" : "Start Training"}
                   </Button>
                 </Link>
               </div>
