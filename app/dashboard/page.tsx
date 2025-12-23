@@ -128,7 +128,7 @@ export default function DashboardPage() {
         {onboardingComplete && (
           isGuest ? (
             // Guest users see a prompt to sign up for stats
-            <Card className="mb-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
+            <Card className="mb-6 bg-gradient-to-r from-orange-50 to-amber-50 border-orange-200">
               <CardContent className="p-6">
                 <div className="flex items-center gap-4">
                   <div className="text-4xl">📊</div>
@@ -136,7 +136,7 @@ export default function DashboardPage() {
                     <p className="text-lg text-gray-700">
                       <span className="font-bold">Sign up</span> to track your pass probability and detailed statistics
                     </p>
-                    <Link href="/signup" className="text-sm text-blue-600 hover:text-blue-800 font-medium mt-1 inline-block">
+                    <Link href="/signup" className="text-sm text-orange-600 hover:text-orange-800 font-medium mt-1 inline-block">
                       Create free account →
                     </Link>
                   </div>
