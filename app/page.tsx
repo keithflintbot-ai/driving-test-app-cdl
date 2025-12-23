@@ -44,26 +44,26 @@ const jsonLd = {
       mainEntity: [
         {
           "@type": "Question",
-          name: "Is TigerTest free to use?",
+          name: "How many questions are on the DMV written test?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Yes, TigerTest is 100% free forever. All features are included with no hidden costs or premium tiers.",
+            text: "Most states have between 20-50 questions on the DMV written test. TigerTest offers 200 practice questions per state so you're fully prepared.",
           },
         },
         {
           "@type": "Question",
-          name: "How many states does TigerTest cover?",
+          name: "Is TigerTest really free?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "TigerTest covers all 50 US states with 200 state-specific questions tailored to each state's driving laws and regulations.",
+            text: "Yes, TigerTest is 100% free forever. All 50 states, all questions, no premium tiers or hidden costs.",
           },
         },
         {
           "@type": "Question",
-          name: "What learning modes are available?",
+          name: "What score do I need to pass the DMV test?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "TigerTest offers two learning modes: Training Mode for learning at your own pace with instant feedback, and Practice Tests that simulate the real DMV exam with 50-question tests.",
+            text: "Most states require a score of 80% or higher to pass. TigerTest tracks your progress and shows your pass probability as you practice.",
           },
         },
       ],
@@ -92,7 +92,7 @@ export default function Home() {
       <div className="container mx-auto px-4 py-12">
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-gray-900 mb-6 md:mb-8 max-w-5xl mx-auto leading-tight">
-            Pass your US driving knowledge test
+            Free DMV Practice Test for All 50 States
           </h1>
           <p className="text-xl md:text-2xl text-gray-700 mb-4 max-w-3xl mx-auto">
             Practice with 200 questions per state - completely free

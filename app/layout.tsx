@@ -9,11 +9,11 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://tigertest.io";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Free US Driving Test Practice | TigerTest",
+    default: "Free DMV Practice Test 2025 | Pass Your State Driving Test | TigerTest",
     template: "%s | TigerTest",
   },
   description:
-    "Pass your US driving knowledge test with 200 state-specific practice questions. Free training mode, practice tests, and detailed analytics for all 50 states.",
+    "Free DMV practice tests for all 50 states. 200+ questions per state with instant feedback and detailed explanations. Track your progress and pass your driving test on the first try.",
   keywords: [
     "driving test practice",
     "DMV practice test",
@@ -45,9 +45,9 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: siteUrl,
     siteName: "TigerTest",
-    title: "Free US Driving Test Practice | TigerTest",
+    title: "Free DMV Practice Test 2025 | TigerTest",
     description:
-      "Pass your US driving knowledge test with 200 state-specific practice questions. Free training mode, practice tests, and detailed analytics for all 50 states.",
+      "Free DMV practice tests for all 50 states. 200+ questions per state with instant feedback and detailed explanations.",
     images: [
       {
         url: "/tiger.png",
@@ -59,9 +59,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Free US Driving Test Practice | TigerTest",
+    title: "Free DMV Practice Test 2025 | TigerTest",
     description:
-      "Pass your US driving knowledge test with 200 state-specific practice questions. Free for all 50 states.",
+      "Free DMV practice tests for all 50 states. 200+ questions with instant feedback.",
     images: ["/tiger.png"],
   },
   icons: {
