@@ -178,21 +178,33 @@ export default function Home() {
         {/* Testimonials Section */}
         <div className="mb-20 max-w-3xl mx-auto">
           <div className="space-y-4">
-            <div className="border-l-2 border-gray-200 pl-4 py-2">
+            <a href="https://www.reddit.com/r/driving/comments/1ep1644/comment/m6ndsvp/" target="_blank" rel="noopener noreferrer" className="block border-l-2 border-gray-200 pl-4 py-2 hover:border-gray-400 transition-colors">
               <p className="text-gray-600 text-sm">&quot;i passed in 3 minutes&quot;</p>
               <p className="text-gray-400 text-xs mt-1">— u/Curdled_Cave</p>
+            </a>
+            <a href="https://www.reddit.com/r/driving/comments/1ep1644/comment/lxra5co/" target="_blank" rel="noopener noreferrer" className="block border-l-2 border-gray-200 pl-4 py-2 hover:border-gray-400 transition-colors">
+              <p className="text-gray-600 text-sm">&quot;Used this to help me study. Passed today! Thank you :)&quot;</p>
+              <p className="text-gray-400 text-xs mt-1">— u/Naive_Usual1910</p>
+            </a>
+            <div className="border-l-2 border-gray-200 pl-4 py-2">
+              <p className="text-gray-600 text-sm">&quot;passed within seven minutes&quot;</p>
+              <p className="text-gray-400 text-xs mt-1">— vivacious-vi</p>
             </div>
             <div className="border-l-2 border-gray-200 pl-4 py-2">
               <p className="text-gray-600 text-sm">&quot;felt confident after just studying the previous day&quot;</p>
               <p className="text-gray-400 text-xs mt-1">— JayjayX12</p>
             </div>
             <div className="border-l-2 border-gray-200 pl-4 py-2">
-              <p className="text-gray-600 text-sm">&quot;passed within seven minutes&quot;</p>
-              <p className="text-gray-400 text-xs mt-1">— vivacious-vi</p>
+              <p className="text-gray-600 text-sm">&quot;it really helped me prepare, and I passed my exam today&quot;</p>
+              <p className="text-gray-400 text-xs mt-1">— Big-Burrito-8765</p>
             </div>
             <div className="border-l-2 border-gray-200 pl-4 py-2">
-              <p className="text-gray-600 text-sm">&quot;Passed today! Thank you :)&quot;</p>
-              <p className="text-gray-400 text-xs mt-1">— u/Naive_Usual1910</p>
+              <p className="text-gray-600 text-sm">&quot;it was very helpful... I passed the written test this morning&quot;</p>
+              <p className="text-gray-400 text-xs mt-1">— ideapad101</p>
+            </div>
+            <div className="border-l-2 border-gray-200 pl-4 py-2">
+              <p className="text-gray-600 text-sm">&quot;helped a lot&quot;</p>
+              <p className="text-gray-400 text-xs mt-1">— WorthEducational523</p>
             </div>
           </div>
         </div>
