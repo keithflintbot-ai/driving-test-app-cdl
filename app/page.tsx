@@ -9,22 +9,42 @@ import { Smartphone, Monitor } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useStore } from "@/store/useStore";
 
-const phrases = [
+const allPhrases = [
   "in bed",
   "while watching TV",
   "on the toilet",
   "in the waiting room",
   "on your lunch break",
   "the night before",
+  "in line at the grocery store",
+  "during a commercial break",
+  "between meetings",
+  "on the train",
+  "in the back of an Uber",
+  "while dinner's in the oven",
+  "while brushing your teeth",
+  "when you should be working",
+  "on the treadmill",
+  "when you can't sleep",
 ];
 
+function shuffleArray<T>(array: T[]): T[] {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
 function useTypewriter(phrases: string[], typingSpeed = 80, deletingSpeed = 50, pauseDuration = 2000) {
+  const [shuffledPhrases] = useState(() => shuffleArray(phrases));
   const [displayText, setDisplayText] = useState("");
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
-    const currentPhrase = phrases[phraseIndex];
+    const currentPhrase = shuffledPhrases[phraseIndex];
 
     const timeout = setTimeout(() => {
       if (!isDeleting) {
@@ -38,13 +58,13 @@ function useTypewriter(phrases: string[], typingSpeed = 80, deletingSpeed = 50, 
           setDisplayText(displayText.slice(0, -1));
         } else {
           setIsDeleting(false);
-          setPhraseIndex((prev) => (prev + 1) % phrases.length);
+          setPhraseIndex((prev) => (prev + 1) % shuffledPhrases.length);
         }
       }
     }, isDeleting ? deletingSpeed : typingSpeed);
 
     return () => clearTimeout(timeout);
-  }, [displayText, isDeleting, phraseIndex, phrases, typingSpeed, deletingSpeed, pauseDuration]);
+  }, [displayText, isDeleting, phraseIndex, shuffledPhrases, typingSpeed, deletingSpeed, pauseDuration]);
 
   return displayText;
 }
@@ -117,7 +137,7 @@ export default function Home() {
   const router = useRouter();
   const startGuestSession = useStore((state) => state.startGuestSession);
   const isGuest = useStore((state) => state.isGuest);
-  const animatedText = useTypewriter(phrases);
+  const animatedText = useTypewriter(allPhrases);
 
   const handleTryFree = () => {
     startGuestSession();
