@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { Smartphone, Monitor } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useStore } from "@/store/useStore";
 
@@ -184,22 +185,38 @@ export default function Home() {
           How it works
         </h2>
 
-        <div className="grid md:grid-cols-2 gap-12 md:gap-16">
-          <div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-3">
-              Training mode for learning
-            </h3>
-            <p className="text-gray-600">
-              Go through questions at your own pace. Get instant feedback after each answer with explanations of why you got it right or wrong.
+        <div className="grid md:grid-cols-2 gap-8 md:gap-12">
+          <div className="bg-gray-50 rounded-2xl p-8">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center">
+                <Smartphone className="w-6 h-6 text-orange-600" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900">
+                Training mode
+              </h3>
+            </div>
+            <p className="text-gray-600 mb-4">
+              Learn the questions on your phone while you&apos;re in bed, on the couch, or waiting around. Instant feedback after each answer helps you memorize faster.
+            </p>
+            <p className="text-sm text-gray-500">
+              Best on mobile
             </p>
           </div>
 
-          <div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-3">
-              Practice tests when you&apos;re ready
-            </h3>
-            <p className="text-gray-600">
-              Take full 50-question tests that simulate the real DMV exam. Track your scores and see your pass probability increase over time.
+          <div className="bg-gray-50 rounded-2xl p-8">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 bg-gray-200 rounded-xl flex items-center justify-center">
+                <Monitor className="w-6 h-6 text-gray-600" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900">
+                Practice tests
+              </h3>
+            </div>
+            <p className="text-gray-600 mb-4">
+              When you&apos;re ready, take a full 50-question test. Sit down, focus, and simulate the real exam - just like you&apos;ll do at the DMV.
+            </p>
+            <p className="text-sm text-gray-500">
+              Best on desktop
             </p>
           </div>
         </div>
