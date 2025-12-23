@@ -91,14 +91,11 @@ export default function Home() {
       {/* Hero Section */}
       <div className="container mx-auto px-4 py-12">
         <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-gray-900 mb-6 md:mb-8 max-w-5xl mx-auto leading-tight">
-            Free DMV Practice Test for All 50 States
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 md:mb-8 max-w-4xl mx-auto leading-tight">
+            Pass your driving test. First try.
           </h1>
-          <p className="text-xl md:text-2xl text-gray-700 mb-4 max-w-3xl mx-auto">
-            Practice with 200 questions per state - completely free
-          </p>
-          <p className="text-base md:text-lg text-gray-600 mb-6 md:mb-8 max-w-2xl mx-auto">
-            The more questions you answer, the better you&apos;ll get. Track your progress and watch your pass probability increase with every practice session.
+          <p className="text-lg md:text-xl text-gray-600 mb-8 md:mb-10 max-w-2xl mx-auto">
+            Reddit&apos;s favorite DMV practice app. No tricks, no timers, no upsells.
           </p>
           {!loading && (
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -109,46 +106,20 @@ export default function Home() {
                   </Button>
                 </Link>
               ) : (
-                <>
-                  <Button
-                    onClick={handleTryFree}
-                    size="lg"
-                    className="text-lg md:text-xl px-8 md:px-12 py-6 md:py-8 bg-black text-white hover:bg-gray-800 shadow-xl hover:shadow-2xl transition-all font-bold rounded-xl border-4 border-gray-900"
-                  >
-                    Try it Free
-                  </Button>
-                  <Link href="/signup">
-                    <Button size="lg" variant="outline" className="text-lg md:text-xl px-8 md:px-12 py-6 md:py-8 bg-white text-black hover:bg-gray-100 shadow-lg transition-all font-bold rounded-xl border-2 border-gray-300">
-                      Sign Up
-                    </Button>
-                  </Link>
-                </>
+                <Button
+                  onClick={handleTryFree}
+                  size="lg"
+                  className="text-lg md:text-xl px-8 md:px-12 py-6 md:py-8 bg-black text-white hover:bg-gray-800 shadow-xl hover:shadow-2xl transition-all font-bold rounded-xl border-4 border-gray-900"
+                >
+                  Start practicing
+                </Button>
               )}
             </div>
           )}
         </div>
 
-        {/* Stats Section */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20 text-center">
-          <div className="bg-gradient-to-br from-orange-600 to-orange-700 rounded-xl p-6 shadow-lg text-white">
-            <div className="text-5xl font-bold mb-2">50</div>
-            <div className="text-orange-100 text-lg">States Covered</div>
-          </div>
-          <div className="bg-gradient-to-br from-orange-600 to-orange-700 rounded-xl p-6 shadow-lg text-white">
-            <div className="text-5xl font-bold mb-2">200</div>
-            <div className="text-orange-100 text-lg">Questions per State</div>
-          </div>
-          <div className="bg-gradient-to-br from-orange-600 to-orange-700 rounded-xl p-6 shadow-lg text-white">
-            <div className="text-5xl font-bold mb-2">100%</div>
-            <div className="text-orange-100 text-lg">Free Forever</div>
-          </div>
-        </div>
-
         {/* Learning Modes Section */}
         <div className="mb-20">
-          <h2 className="text-4xl font-bold text-gray-900 text-center mb-4">Two Ways to Learn</h2>
-          <p className="text-gray-600 text-center mb-12 text-lg">Choose the right mode for your learning style</p>
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             <Card className="border-2 border-orange-200 bg-gradient-to-br from-orange-50 to-amber-50">
               <CardHeader className="text-center md:text-left">
@@ -201,6 +172,28 @@ export default function Home() {
                 </ul>
               </CardContent>
             </Card>
+          </div>
+        </div>
+
+        {/* Testimonials Section */}
+        <div className="mb-20 max-w-3xl mx-auto">
+          <div className="space-y-4">
+            <div className="border-l-2 border-gray-200 pl-4 py-2">
+              <p className="text-gray-600 text-sm">&quot;i passed in 3 minutes&quot;</p>
+              <p className="text-gray-400 text-xs mt-1">— u/Curdled_Cave</p>
+            </div>
+            <div className="border-l-2 border-gray-200 pl-4 py-2">
+              <p className="text-gray-600 text-sm">&quot;felt confident after just studying the previous day&quot;</p>
+              <p className="text-gray-400 text-xs mt-1">— JayjayX12</p>
+            </div>
+            <div className="border-l-2 border-gray-200 pl-4 py-2">
+              <p className="text-gray-600 text-sm">&quot;passed within seven minutes&quot;</p>
+              <p className="text-gray-400 text-xs mt-1">— vivacious-vi</p>
+            </div>
+            <div className="border-l-2 border-gray-200 pl-4 py-2">
+              <p className="text-gray-600 text-sm">&quot;Passed today! Thank you :)&quot;</p>
+              <p className="text-gray-400 text-xs mt-1">— u/Naive_Usual1910</p>
+            </div>
           </div>
         </div>
 
@@ -271,24 +264,13 @@ export default function Home() {
         {/* CTA Section */}
         {!user && !isGuest && (
           <div className="mt-20 text-center">
-            <div className="bg-gradient-to-br from-orange-600 to-orange-700 rounded-2xl p-12 shadow-xl">
-              <h2 className="text-4xl font-bold text-white mb-4">Ready to get started?</h2>
-              <p className="text-xl text-orange-100 mb-8">Join thousands preparing for their driving test</p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <Button
-                  onClick={handleTryFree}
-                  size="lg"
-                  className="text-xl px-12 py-8 bg-black text-white hover:bg-gray-800 shadow-xl hover:shadow-2xl transition-all font-bold rounded-xl border-4 border-gray-900"
-                >
-                  Try it Free
-                </Button>
-                <Link href="/signup">
-                  <Button size="lg" variant="outline" className="text-xl px-12 py-8 bg-white text-orange-700 hover:bg-orange-50 shadow-lg transition-all font-bold rounded-xl border-2 border-white">
-                    Sign Up
-                  </Button>
-                </Link>
-              </div>
-            </div>
+            <Button
+              onClick={handleTryFree}
+              size="lg"
+              className="text-lg md:text-xl px-8 md:px-12 py-6 md:py-8 bg-black text-white hover:bg-gray-800 shadow-xl hover:shadow-2xl transition-all font-bold rounded-xl border-4 border-gray-900"
+            >
+              Start practicing
+            </Button>
           </div>
         )}
       </div>
