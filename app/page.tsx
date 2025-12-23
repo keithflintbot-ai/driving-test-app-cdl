@@ -7,7 +7,69 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { CheckCircle2, BookOpen, Target, Trophy, Zap, BarChart3, Cloud } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useStore } from "@/store/useStore";
-import Image from "next/image";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      name: "TigerTest - US Driving Test Practice",
+      description:
+        "Pass your US driving knowledge test with 200 state-specific practice questions. Free training mode, practice tests, and detailed analytics for all 50 states.",
+      url: "https://tigertest.io",
+      applicationCategory: "EducationalApplication",
+      operatingSystem: "Any",
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD",
+      },
+      featureList: [
+        "200 questions per state",
+        "All 50 US states covered",
+        "Training mode with instant feedback",
+        "Practice tests simulating real exams",
+        "Detailed analytics and progress tracking",
+        "Auto-save progress",
+      ],
+    },
+    {
+      "@type": "Organization",
+      name: "TigerTest",
+      url: "https://tigertest.io",
+      logo: "https://tigertest.io/tiger.png",
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "How many questions are on the DMV written test?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Most states have between 20-50 questions on the DMV written test. TigerTest offers 200 practice questions per state so you're fully prepared.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Is TigerTest really free?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes, TigerTest is 100% free forever. All 50 states, all questions, no premium tiers or hidden costs.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "What score do I need to pass the DMV test?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Most states require a score of 80% or higher to pass. TigerTest tracks your progress and shows your pass probability as you practice.",
+          },
+        },
+      ],
+    },
+  ],
+};
 
 export default function Home() {
   const { user, loading } = useAuth();
@@ -22,11 +84,15 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Hero Section */}
       <div className="container mx-auto px-4 py-12">
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-gray-900 mb-6 md:mb-8 max-w-5xl mx-auto leading-tight">
-            Pass your US driving knowledge test
+            Free DMV Practice Test for All 50 States
           </h1>
           <p className="text-xl md:text-2xl text-gray-700 mb-4 max-w-3xl mx-auto">
             Practice with 200 questions per state - completely free
