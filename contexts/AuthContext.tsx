@@ -92,6 +92,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const logout = async () => {
+    // Clear localStorage to remove all user progress data
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('driving-test-storage');
+    }
     await signOut(auth);
   };
 
