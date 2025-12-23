@@ -176,7 +176,7 @@ export default function Home() {
                   className="w-[200px] md:w-[240px]"
                 />
               </div>
-              <p className="text-sm text-gray-500 mt-3 text-center">Train on mobile</p>
+              <p className="text-sm text-gray-500 mt-6 text-center">Train on mobile</p>
             </div>
 
             {/* Desktop Screenshot */}
@@ -190,7 +190,7 @@ export default function Home() {
                   className="w-[320px] md:w-[500px]"
                 />
               </div>
-              <p className="text-sm text-gray-500 mt-3 text-center">Test on desktop</p>
+              <p className="text-sm text-gray-500 mt-6 text-center">Test on desktop</p>
             </div>
           </div>
         </div>
