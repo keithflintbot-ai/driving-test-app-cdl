@@ -201,38 +201,38 @@ export default function Home() {
         </h2>
 
         <div className="grid md:grid-cols-2 gap-8 md:gap-12">
-          <div className="bg-gray-50 rounded-2xl p-8">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center">
-                <Smartphone className="w-6 h-6 text-orange-600" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900">
+          <div className="relative pt-8">
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-16 bg-white border-2 border-orange-200 rounded-full flex items-center justify-center shadow-sm">
+              <Smartphone className="w-7 h-7 text-orange-500" />
+            </div>
+            <div className="bg-gray-50 rounded-2xl p-8 pt-12 text-center">
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">
                 Training mode
               </h3>
+              <p className="text-gray-600 mb-4">
+                Learn the questions on your phone while you&apos;re in bed, on the couch, or waiting around. Instant feedback after each answer helps you memorize faster.
+              </p>
+              <p className="text-sm text-gray-500">
+                Best on mobile
+              </p>
             </div>
-            <p className="text-gray-600 mb-4">
-              Learn the questions on your phone while you&apos;re in bed, on the couch, or waiting around. Instant feedback after each answer helps you memorize faster.
-            </p>
-            <p className="text-sm text-gray-500">
-              Best on mobile
-            </p>
           </div>
 
-          <div className="bg-gray-50 rounded-2xl p-8">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 bg-gray-200 rounded-xl flex items-center justify-center">
-                <Monitor className="w-6 h-6 text-gray-600" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900">
+          <div className="relative pt-8">
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-16 bg-white border-2 border-gray-200 rounded-full flex items-center justify-center shadow-sm">
+              <Monitor className="w-7 h-7 text-gray-500" />
+            </div>
+            <div className="bg-gray-50 rounded-2xl p-8 pt-12 text-center">
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">
                 Practice tests
               </h3>
+              <p className="text-gray-600 mb-4">
+                When you&apos;re ready, take a full 50-question test. Sit down, focus, and simulate the real exam - just like you&apos;ll do at the DMV.
+              </p>
+              <p className="text-sm text-gray-500">
+                Best on desktop
+              </p>
             </div>
-            <p className="text-gray-600 mb-4">
-              When you&apos;re ready, take a full 50-question test. Sit down, focus, and simulate the real exam - just like you&apos;ll do at the DMV.
-            </p>
-            <p className="text-sm text-gray-500">
-              Best on desktop
-            </p>
           </div>
         </div>
       </div>
