@@ -276,38 +276,12 @@ export default function Home() {
       </div>
 
       {/* Testimonial 3 */}
-      <div className="max-w-2xl mx-auto px-6 py-12 text-center">
-        <p className="text-xl md:text-2xl text-gray-700 italic mb-4">
-          &quot;it really helped me prepare, and I passed my exam today&quot;
-        </p>
-        <p className="text-gray-500 text-sm">Big-Burrito-8765</p>
-      </div>
-
-      {/* No tricks */}
-      <div className="bg-gray-50 py-16 md:py-24">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="flex flex-col-reverse md:flex-row items-center gap-8 md:gap-16">
-            <div className="flex-shrink-0">
-              <Image
-                src="/tiger_face_03.png"
-                alt="Tiger mascot"
-                width={180}
-                height={180}
-                className="w-32 md:w-44"
-              />
-            </div>
-            <div className="flex-1 text-center md:text-right">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                No tricks, no timers,<br className="hidden sm:block" /> no upsells
-              </h2>
-              <p className="text-lg text-gray-600 mb-4">
-                Other apps lock features behind paywalls or pressure you with countdown timers. TigerTest is 100% free - all states, all questions, forever.
-              </p>
-              <p className="text-gray-500">
-                Just practice tests that work.
-              </p>
-            </div>
-          </div>
+      <div className="bg-gray-50 py-12">
+        <div className="max-w-2xl mx-auto px-6 text-center">
+          <p className="text-xl md:text-2xl text-gray-700 italic mb-4">
+            &quot;it really helped me prepare, and I passed my exam today&quot;
+          </p>
+          <p className="text-gray-500 text-sm">Big-Burrito-8765</p>
         </div>
       </div>
 
