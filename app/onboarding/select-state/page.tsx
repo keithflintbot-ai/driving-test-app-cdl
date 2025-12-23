@@ -3,10 +3,16 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { StateSelector } from "@/components/StateSelector";
 import { useStore } from "@/store/useStore";
+import { states } from "@/data/states";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function OnboardingSelectStatePage() {
   const [selectedState, setSelectedState] = useState<string | null>(null);
@@ -42,35 +48,34 @@ export default function OnboardingSelectStatePage() {
     return null;
   }
 
-  const welcomeName = user?.displayName || user?.email || "there";
-
   return (
-    <div className="bg-white relative flex items-center justify-center py-12 px-4">
-      <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-orange-50 to-white pointer-events-none" />
-      <Card className="relative w-full max-w-2xl">
-        <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold text-center">
-            Welcome{isGuest ? "" : `, ${welcomeName}`}!
-          </CardTitle>
-          <CardDescription className="text-center">
-            Which state are you preparing for?
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <StateSelector
-            onSelect={setSelectedState}
-            selectedState={selectedState}
-          />
+    <div className="bg-white min-h-[80vh] flex items-center justify-center px-4">
+      <div className="text-center space-y-8">
+        <div className="flex flex-wrap items-center justify-center gap-2 text-2xl md:text-3xl font-medium text-gray-800">
+          <span>I need to pass the</span>
+          <Select onValueChange={setSelectedState} value={selectedState || undefined}>
+            <SelectTrigger className="w-[200px] inline-flex text-xl md:text-2xl font-semibold text-orange-600 border-orange-300 focus:ring-orange-500">
+              <SelectValue placeholder="select state" />
+            </SelectTrigger>
+            <SelectContent>
+              {states.map((state) => (
+                <SelectItem key={state.code} value={state.code}>
+                  {state.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <span>driving test.</span>
+        </div>
 
-          <Button
-            onClick={handleComplete}
-            disabled={!selectedState || loading}
-            className="w-full bg-black text-white hover:bg-gray-800"
-          >
-            {loading ? "Saving..." : "Continue to Dashboard"}
-          </Button>
-        </CardContent>
-      </Card>
+        <Button
+          onClick={handleComplete}
+          disabled={!selectedState || loading}
+          className="bg-black text-white hover:bg-gray-800 px-8 py-3 text-lg"
+        >
+          {loading ? "Loading..." : "Let's go"}
+        </Button>
+      </div>
     </div>
   );
 }
