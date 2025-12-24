@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { Question, TestSession, UserAnswer, TestAttemptStats } from '@/types';
-import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { doc, setDoc, getDoc, collection, query, where, getDocs, updateDoc, increment } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
 interface AppState {
@@ -19,6 +19,7 @@ interface AppState {
   referredBy: string | null;
   generateReferralCode: () => string;
   recordReferral: (referrerCode: string) => Promise<void>;
+  trackReferral: (referrerCode: string, newUserId: string) => Promise<boolean>;
   hasUnlockedTest4: () => boolean;
 
   // Current test sessions (supports multiple in-progress tests)
@@ -144,13 +145,43 @@ export const useStore = create<AppState>()(
       },
 
       recordReferral: async (referrerCode: string) => {
-        // Find the user with this referral code and increment their count
-        // This is called when a new user signs up with a referral code
+        // Record who referred this user
         set({ referredBy: referrerCode });
         get().saveToFirestore();
+      },
 
-        // Note: The actual incrementing of the referrer's count happens via
-        // a separate API call or cloud function to avoid race conditions
+      trackReferral: async (referrerCode: string, newUserId: string) => {
+        // Find the user with this referral code and increment their count
+        // This uses client-side Firebase SDK
+        try {
+          const usersRef = collection(db, 'users');
+          const q = query(usersRef, where('referralCode', '==', referrerCode));
+          const snapshot = await getDocs(q);
+
+          if (snapshot.empty) {
+            console.error('Invalid referral code:', referrerCode);
+            return false;
+          }
+
+          const referrerDoc = snapshot.docs[0];
+          const referrerId = referrerDoc.id;
+
+          // Don't allow self-referral
+          if (referrerId === newUserId) {
+            console.error('Cannot use your own referral code');
+            return false;
+          }
+
+          // Increment the referrer's referral count
+          await updateDoc(referrerDoc.ref, {
+            referralCount: increment(1),
+          });
+
+          return true;
+        } catch (error) {
+          console.error('Error tracking referral:', error);
+          return false;
+        }
       },
 
       hasUnlockedTest4: () => {
