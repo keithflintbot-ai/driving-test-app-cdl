@@ -9,6 +9,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { generateTest } from "@/lib/testGenerator";
+import { getTestName } from "@/lib/testNames";
 import { Question } from "@/types";
 import { useStore } from "@/store/useStore";
 import { useHydration } from "@/hooks/useHydration";
@@ -175,7 +176,7 @@ export default function TestPage() {
         {/* Header */}
         <div className="mb-6">
           <div className="flex items-center justify-between mb-4">
-            <h1 className="text-3xl font-bold">Test {testId}</h1>
+            <h1 className="text-3xl font-bold">{getTestName(testId)}</h1>
             <div className="text-sm text-gray-600">
               {answeredCount} of {totalQuestions} answered
             </div>

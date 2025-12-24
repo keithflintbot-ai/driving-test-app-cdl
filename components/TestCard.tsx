@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { CheckCircle2, Circle, PlayCircle, Trophy, Target, Lock, ChevronDown, ChevronUp } from "lucide-react";
+import { getTestName } from "@/lib/testNames";
 
 interface TestCardProps {
   testNumber: number;
@@ -89,7 +90,7 @@ export function TestCard({ testNumber, status, score, totalQuestions = 50, progr
           <div className="flex items-center gap-3">
             {getStatusIcon()}
             <div>
-              <CardTitle>Test {testNumber}</CardTitle>
+              <CardTitle>{getTestName(testNumber)}</CardTitle>
             </div>
           </div>
           <div className="flex items-center gap-2">
