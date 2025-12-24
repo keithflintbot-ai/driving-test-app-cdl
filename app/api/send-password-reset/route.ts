@@ -21,8 +21,31 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Email is required' }, { status: 400 });
     }
 
+    // Check if Firebase Admin credentials are configured
+    if (!process.env.FIREBASE_SERVICE_ACCOUNT_KEY) {
+      console.error('FIREBASE_SERVICE_ACCOUNT_KEY is not set');
+      return NextResponse.json({
+        error: 'Server configuration error. Please contact support.'
+      }, { status: 500 });
+    }
+
+    // Check if Resend API key is configured
+    if (!process.env.RESEND_API_KEY) {
+      console.error('RESEND_API_KEY is not set');
+      return NextResponse.json({
+        error: 'Server configuration error. Please contact support.'
+      }, { status: 500 });
+    }
+
     // Initialize admin to ensure the app is ready
-    getAdminDb();
+    try {
+      getAdminDb();
+    } catch (initError) {
+      console.error('Firebase Admin initialization error:', initError);
+      return NextResponse.json({
+        error: 'Server configuration error. Please contact support.'
+      }, { status: 500 });
+    }
 
     // Generate password reset link using Firebase Admin SDK
     const auth = getAuth();
@@ -33,10 +56,16 @@ export async function POST(request: NextRequest) {
         url: 'https://tigertest.io/login',
       });
     } catch (error: any) {
+      console.error('Firebase auth error:', error.code, error.message);
       if (error.code === 'auth/user-not-found') {
         return NextResponse.json({ error: 'No account found with this email' }, { status: 404 });
       }
-      throw error;
+      if (error.code === 'auth/invalid-email') {
+        return NextResponse.json({ error: 'Invalid email address' }, { status: 400 });
+      }
+      return NextResponse.json({
+        error: 'Unable to generate reset link. Please try again.'
+      }, { status: 500 });
     }
 
     // Send beautifully branded password reset email via Resend
