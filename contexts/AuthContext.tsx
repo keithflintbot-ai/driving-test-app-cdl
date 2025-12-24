@@ -114,6 +114,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           // Load user data from Firestore (normal login)
           await loadUserData(user.uid);
 
+          // Ensure existing user has their referral code saved (for users who existed before referral system)
+          await saveReferralCode(user.uid);
+
           // If user has a Google photo and no custom photo is set, use Google photo
           if (user.photoURL && !photoURL) {
             setPhotoURL(user.photoURL);
