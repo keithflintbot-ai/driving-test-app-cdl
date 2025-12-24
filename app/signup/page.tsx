@@ -38,6 +38,7 @@ function SignupPageContent() {
   const isGuest = useStore((state) => state.isGuest);
   const generateReferralCode = useStore((state) => state.generateReferralCode);
   const recordReferral = useStore((state) => state.recordReferral);
+  const trackReferral = useStore((state) => state.trackReferral);
 
   // If guest already has a state selected, skip step 1
   const guestHasState = isGuest && storeSelectedState;
@@ -92,15 +93,7 @@ function SignupPageContent() {
           const userId = useStore.getState().userId;
           if (userId) {
             await recordReferral(referralCode);
-            try {
-              await fetch('/api/track-referral', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ referralCode, newUserId: userId }),
-              });
-            } catch (err) {
-              console.error('Failed to track referral:', err);
-            }
+            await trackReferral(referralCode, userId);
           }
         }
 
@@ -164,16 +157,7 @@ function SignupPageContent() {
         const userId = useStore.getState().userId;
         if (userId) {
           await recordReferral(referralCode);
-          // Track the referral on the server to increment the referrer's count
-          try {
-            await fetch('/api/track-referral', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ referralCode, newUserId: userId }),
-            });
-          } catch (err) {
-            console.error('Failed to track referral:', err);
-          }
+          await trackReferral(referralCode, userId);
         }
       }
 
