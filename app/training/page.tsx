@@ -80,15 +80,16 @@ function TrainingPageContent() {
     }
   }, [hydrated, selectedState, currentQuestion]);
 
-  const loadNextQuestion = () => {
+  const loadNextQuestion = (skipQuestionId?: string) => {
     if (!selectedState) return;
 
     let question: Question | null = null;
 
     if (isSetMode) {
       // Set-based training: get next unmastered question from the set
+      // Skip the provided question ID to avoid immediate repeats after wrong answers
       const currentMasteredIds = trainingSets[setNumber]?.masteredIds || [];
-      question = getNextTrainingSetQuestion(setNumber, selectedState, currentMasteredIds);
+      question = getNextTrainingSetQuestion(setNumber, selectedState, currentMasteredIds, skipQuestionId);
 
       // If all questions are mastered, show completion
       if (!question) {
@@ -140,7 +141,9 @@ function TrainingPageContent() {
   };
 
   const handleNext = () => {
-    loadNextQuestion();
+    // If the answer was wrong, skip this question to avoid immediate repeat
+    const wasWrong = selectedAnswer && currentQuestion && selectedAnswer !== currentQuestion.correctAnswer;
+    loadNextQuestion(wasWrong ? currentQuestion.questionId : undefined);
   };
 
   if (!hydrated || !selectedState) {

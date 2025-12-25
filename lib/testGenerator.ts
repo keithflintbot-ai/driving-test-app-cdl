@@ -113,17 +113,32 @@ export function getTrainingSetQuestions(setNumber: number, state: string): Quest
 }
 
 // Get the next unanswered question from a training set
+// skipQuestionId: skip this question (e.g., one just answered wrong) to avoid immediate repeat
 export function getNextTrainingSetQuestion(
   setNumber: number,
   state: string,
-  masteredIds: string[]
+  masteredIds: string[],
+  skipQuestionId?: string | null
 ): Question | null {
   const questions = getTrainingSetQuestions(setNumber, state);
 
-  // Find first question not yet mastered
-  const nextQuestion = questions.find(q => !masteredIds.includes(q.questionId));
+  // Find questions not yet mastered
+  const unmasteredQuestions = questions.filter(q => !masteredIds.includes(q.questionId));
 
-  return nextQuestion || null;
+  if (unmasteredQuestions.length === 0) {
+    return null;
+  }
+
+  // Try to skip the specified question (unless it's the only one left)
+  if (skipQuestionId && unmasteredQuestions.length > 1) {
+    const nextQuestion = unmasteredQuestions.find(q => q.questionId !== skipQuestionId);
+    if (nextQuestion) {
+      return nextQuestion;
+    }
+  }
+
+  // Return the first unmastered question
+  return unmasteredQuestions[0];
 }
 
 // Get random question for training mode with mastery system
