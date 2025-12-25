@@ -1,13 +1,11 @@
 import Link from "next/link";
-import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle2 } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 
 export interface TrainingSet {
   id: number;
   name: string;
-  icon: "signs" | "rules" | "safety" | "state";
   correctCount: number;
   targetCount: number;
 }
@@ -20,19 +18,6 @@ interface TrainingSetCardProps {
 export function TrainingSetCard({ set, locked = false }: TrainingSetCardProps) {
   const isComplete = set.correctCount >= set.targetCount;
   const progress = Math.min(100, Math.round((set.correctCount / set.targetCount) * 100));
-
-  const getIconSrc = () => {
-    switch (set.icon) {
-      case "signs":
-        return "/signs-&-signals.png";
-      case "rules":
-        return "/rules-of-the-road.png";
-      case "safety":
-        return "/safety-&-emergencies.png";
-      case "state":
-        return "/state-laws.png";
-    }
-  };
 
   const getBadge = () => {
     if (locked) {
@@ -53,39 +38,23 @@ export function TrainingSetCard({ set, locked = false }: TrainingSetCardProps) {
         ? "bg-gray-50 border-gray-200 opacity-60"
         : "hover:shadow-md hover:border-orange-300 cursor-pointer"
     }`}>
-      <CardContent className="p-4 flex flex-col items-center text-center">
-        {/* Badge */}
-        <div className="h-5 mb-2">
-          {getBadge()}
+      <CardContent className="p-4 flex items-center justify-between">
+        <div className="flex flex-col">
+          <div className="flex items-center gap-2 mb-1">
+            <h3 className="font-semibold text-sm leading-tight">{set.name}</h3>
+            {getBadge()}
+          </div>
+          <p className="text-xs">
+            {locked ? (
+              <span className="text-gray-400">Locked</span>
+            ) : (
+              <span className={isComplete ? 'text-green-600' : 'text-gray-500'}>
+                {set.correctCount}/{set.targetCount}
+              </span>
+            )}
+          </p>
         </div>
-
-        {/* Icon */}
-        <div className="mb-2 relative">
-          <Image
-            src={getIconSrc()}
-            alt={set.name}
-            width={80}
-            height={80}
-            className={locked ? "opacity-30 grayscale" : ""}
-          />
-          {isComplete && !locked && (
-            <CheckCircle2 className="h-4 w-4 text-green-500 absolute -bottom-1 -right-1 bg-white rounded-full" />
-          )}
-        </div>
-
-        {/* Title */}
-        <h3 className="font-semibold text-sm mb-1 leading-tight">{set.name}</h3>
-
-        {/* Progress */}
-        <p className="text-xs">
-          {locked ? (
-            <span className="text-gray-400">Locked</span>
-          ) : (
-            <span className={isComplete ? 'text-green-600' : 'text-gray-500'}>
-              {set.correctCount}/{set.targetCount}
-            </span>
-          )}
-        </p>
+        {!locked && <ChevronRight className="h-5 w-5 text-gray-400" />}
       </CardContent>
     </Card>
   );
