@@ -192,7 +192,7 @@ export default function DashboardPage() {
           <div className="mb-8">
             <h2 className="text-xl font-bold mb-3">Training</h2>
             <p className="text-sm text-gray-500 mb-4">Get all 50 questions correct to complete each set</p>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div className="flex flex-col gap-3">
               {trainingSets.map((set) => (
                 <TrainingSetCard
                   key={set.id}
@@ -209,7 +209,7 @@ export default function DashboardPage() {
           <p className="text-sm text-gray-500 mb-4">
             {onboardingComplete ? "Simulate the real exam experience" : "Complete onboarding to unlock"}
           </p>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div className="flex flex-col gap-3">
             {[1, 2, 3, 4].map((testNumber) => {
               const status = getTestStatus(testNumber);
               const session = getTestSession(testNumber);
