@@ -119,9 +119,11 @@ export default function TrainingPage() {
           <div className="bg-white rounded-2xl p-8 mx-4 max-w-md text-center shadow-2xl animate-in zoom-in-95 duration-300">
             {/* Happy Tiger */}
             <div className="mb-4">
-              <span className="text-8xl" role="img" aria-label="happy tiger">
-                🐯
-              </span>
+              <img
+                src="/tiger_face_02.png"
+                alt="Happy celebrating tiger"
+                className="w-32 h-32 mx-auto"
+              />
             </div>
 
             <h2 className="text-3xl font-bold text-gray-900 mb-2">

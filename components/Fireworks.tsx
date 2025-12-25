@@ -111,8 +111,8 @@ export function Fireworks({ duration = 3000, onComplete }: FireworksProps) {
     }, 300);
 
     const animate = () => {
-      ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      // Clear canvas for transparency (UI shows through)
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       // Update and draw fireworks
       fireworksRef.current = fireworksRef.current.filter((firework) => {
