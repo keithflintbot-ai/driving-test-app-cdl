@@ -5,12 +5,13 @@ import { useRouter } from "next/navigation";
 import { TrainingCard } from "@/components/TrainingCard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Trophy, ArrowLeft, PartyPopper, Sparkles } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { useStore } from "@/store/useStore";
 import { getTrainingQuestion } from "@/lib/testGenerator";
 import { Question } from "@/types";
 import { useHydration } from "@/hooks/useHydration";
 import { useSound } from "@/hooks/useSound";
+import { Fireworks } from "@/components/Fireworks";
 import Link from "next/link";
 
 export default function TrainingPage() {
@@ -25,6 +26,7 @@ export default function TrainingPage() {
 
   const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+  const [showFireworks, setShowFireworks] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
   const [prevCorrectCount, setPrevCorrectCount] = useState(training.totalCorrectAllTime);
 
@@ -38,10 +40,15 @@ export default function TrainingPage() {
   // Detect when user unlocks practice tests (crosses 10 correct answers)
   useEffect(() => {
     if (training.totalCorrectAllTime >= 10 && prevCorrectCount < 10) {
-      setShowCelebration(true);
+      setShowFireworks(true);
     }
     setPrevCorrectCount(training.totalCorrectAllTime);
   }, [training.totalCorrectAllTime, prevCorrectCount]);
+
+  const handleFireworksComplete = () => {
+    setShowFireworks(false);
+    setShowCelebration(true);
+  };
 
   // Load first question on mount or after session reset
   useEffect(() => {
@@ -101,30 +108,22 @@ export default function TrainingPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-amber-50">
+      {/* Fireworks Animation */}
+      {showFireworks && (
+        <Fireworks duration={3000} onComplete={handleFireworksComplete} />
+      )}
+
       {/* Celebration Modal */}
       {showCelebration && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm animate-in fade-in duration-300">
           <div className="bg-white rounded-2xl p-8 mx-4 max-w-md text-center shadow-2xl animate-in zoom-in-95 duration-300">
-            {/* Confetti Animation */}
-            <div className="relative mb-4">
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 flex gap-2">
-                {[...Array(8)].map((_, i) => (
-                  <div
-                    key={i}
-                    className="w-3 h-3 rounded-full animate-bounce"
-                    style={{
-                      backgroundColor: ['#f97316', '#eab308', '#22c55e', '#3b82f6', '#a855f7', '#ec4899'][i % 6],
-                      animationDelay: `${i * 0.1}s`,
-                      animationDuration: '0.6s',
-                    }}
-                  />
-                ))}
-              </div>
-              <div className="flex justify-center gap-4 pt-4">
-                <PartyPopper className="h-12 w-12 text-orange-500 animate-pulse" />
-                <Trophy className="h-16 w-16 text-yellow-500 animate-bounce" />
-                <Sparkles className="h-12 w-12 text-orange-500 animate-pulse" />
-              </div>
+            {/* Happy Tiger */}
+            <div className="mb-4">
+              <img
+                src="/tiger_face_02.png"
+                alt="Happy celebrating tiger"
+                className="w-32 h-32 mx-auto"
+              />
             </div>
 
             <h2 className="text-3xl font-bold text-gray-900 mb-2">
