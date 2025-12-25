@@ -1,7 +1,8 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle2, Circle, Hexagon, Triangle, Shield, ScrollText } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 
 export interface TrainingSet {
   id: number;
@@ -20,22 +21,16 @@ export function TrainingSetCard({ set, locked = false }: TrainingSetCardProps) {
   const isComplete = set.correctCount >= set.targetCount;
   const progress = Math.min(100, Math.round((set.correctCount / set.targetCount) * 100));
 
-  const getIcon = () => {
-    const iconClass = locked
-      ? "h-10 w-10 text-gray-300"
-      : isComplete
-        ? "h-10 w-10 text-green-500"
-        : "h-10 w-10 text-orange-500";
-
+  const getIconSrc = () => {
     switch (set.icon) {
       case "signs":
-        return <Hexagon className={iconClass} />;
+        return "/signs-&-signals.png";
       case "rules":
-        return <Triangle className={iconClass} />;
+        return "/rules-of-the-road.png";
       case "safety":
-        return <Shield className={iconClass} />;
+        return "/safety-&-emergencies.png";
       case "state":
-        return <ScrollText className={iconClass} />;
+        return "/state-laws.png";
     }
   };
 
@@ -66,7 +61,13 @@ export function TrainingSetCard({ set, locked = false }: TrainingSetCardProps) {
 
         {/* Icon */}
         <div className="mb-2 relative">
-          {getIcon()}
+          <Image
+            src={getIconSrc()}
+            alt={set.name}
+            width={40}
+            height={40}
+            className={locked ? "opacity-30 grayscale" : ""}
+          />
           {isComplete && !locked && (
             <CheckCircle2 className="h-4 w-4 text-green-500 absolute -bottom-1 -right-1 bg-white rounded-full" />
           )}
