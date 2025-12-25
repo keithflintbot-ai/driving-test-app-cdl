@@ -8,7 +8,7 @@ import { Progress } from "@/components/ui/progress";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import { generateTest } from "@/lib/testGenerator";
+import { generateTest, shuffleQuestionOptions } from "@/lib/testGenerator";
 import { Question } from "@/types";
 import { useStore } from "@/store/useStore";
 import { useHydration } from "@/hooks/useHydration";
@@ -75,7 +75,7 @@ export default function TestPage() {
         }
       } else {
         // Generate new test
-        const testQuestions = generateTest(testId, state);
+        const testQuestions = generateTest(testId, state).map(shuffleQuestionOptions);
         setQuestions(testQuestions);
         startTest(testId, testQuestions);
       }
