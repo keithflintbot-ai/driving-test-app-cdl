@@ -37,7 +37,7 @@ interface AppState {
   getTestAverageScore: (testId: number) => number;
   isTestUnlocked: (testId: number) => boolean;
 
-  // Training mode
+  // Training mode (for onboarding)
   training: {
     questionsAnswered: string[];
     correctCount: number;
@@ -51,6 +51,16 @@ interface AppState {
   answerTrainingQuestion: (questionId: string, isCorrect: boolean) => void;
   resetTrainingSession: () => void;
   resetMasteredQuestions: () => void;
+
+  // Training sets (post-onboarding)
+  trainingSets: {
+    [setId: number]: {
+      masteredIds: string[];
+      wrongQueue: string[];  // Questions answered wrong, to be asked later
+    };
+  };
+  answerTrainingSetQuestion: (setId: number, questionId: string, isCorrect: boolean) => void;
+  getTrainingSetProgress: (setId: number) => { correct: number; total: number; complete: boolean };
 
   // Onboarding
   isOnboardingComplete: () => boolean;
@@ -99,6 +109,7 @@ export const useStore = create<AppState>()(
         masteredQuestionIds: [],
         lastQuestionId: null,
       },
+      trainingSets: {},
       userId: null,
       photoURL: null,
 
@@ -133,6 +144,7 @@ export const useStore = create<AppState>()(
             masteredQuestionIds: [],
             lastQuestionId: null,
           },
+          trainingSets: {},
         });
         // Save to Firestore
         get().saveToFirestore();
@@ -338,6 +350,57 @@ export const useStore = create<AppState>()(
         get().saveToFirestore();
       },
 
+      // Training sets functions
+      answerTrainingSetQuestion: (setId: number, questionId: string, isCorrect: boolean) => {
+        set((state) => {
+          const currentSet = state.trainingSets[setId] || { masteredIds: [], wrongQueue: [] };
+          let newMasteredIds = [...currentSet.masteredIds];
+          let newWrongQueue = [...(currentSet.wrongQueue || [])];
+
+          if (isCorrect) {
+            // Add to mastered if not already there
+            if (!newMasteredIds.includes(questionId)) {
+              newMasteredIds.push(questionId);
+            }
+            // Remove from wrong queue
+            newWrongQueue = newWrongQueue.filter(id => id !== questionId);
+          } else {
+            // Remove from mastered if answered wrong
+            newMasteredIds = newMasteredIds.filter(id => id !== questionId);
+            // Add to wrong queue (at the end) if not already there
+            if (!newWrongQueue.includes(questionId)) {
+              newWrongQueue.push(questionId);
+            }
+          }
+
+          return {
+            trainingSets: {
+              ...state.trainingSets,
+              [setId]: { masteredIds: newMasteredIds, wrongQueue: newWrongQueue },
+            },
+          };
+        });
+        get().saveToFirestore();
+      },
+
+      getTrainingSetProgress: (setId: number) => {
+        const { trainingSets, training } = get();
+        const setData = trainingSets[setId] || { masteredIds: [] };
+        let correct = setData.masteredIds.length;
+        const total = 50;
+
+        // For set 1, include onboarding progress if no set-specific progress yet
+        if (setId === 1 && correct === 0 && training.totalCorrectAllTime > 0) {
+          correct = Math.min(50, training.totalCorrectAllTime);
+        }
+
+        return {
+          correct,
+          total,
+          complete: correct >= total,
+        };
+      },
+
       // Onboarding check - returns true if user has completed onboarding
       // (10+ correct training answers OR any existing app usage for backwards compatibility)
       isOnboardingComplete: () => {
@@ -402,27 +465,37 @@ export const useStore = create<AppState>()(
       },
 
       getPassProbability: () => {
-        const { testAttempts, selectedState } = get();
+        const { testAttempts, trainingSets, training, selectedState } = get();
         const stateAttempts = testAttempts.filter((a) => a.state === selectedState);
 
-        // If no tests completed, return 0
-        if (stateAttempts.length === 0) {
-          return 0;
-        }
-
-        // Each of the 4 tests contributes 25% to the total pass probability
-        // Uncompleted tests contribute 0% (100% fail for that portion)
-        // Completed tests contribute their best score percentage * 25%
+        // 8 components: 4 training sets + 4 practice tests
+        // Each worth 12.5% (total = 100%)
+        const WEIGHT_PER_COMPONENT = 12.5;
         let totalPassProbability = 0;
 
+        // Training sets (4 × 12.5% = 50%)
+        for (let setNum = 1; setNum <= 4; setNum++) {
+          const setData = trainingSets[setNum];
+          let masteredCount = setData?.masteredIds?.length || 0;
+
+          // For set 1, include onboarding progress if no set-specific progress yet
+          if (setNum === 1 && masteredCount === 0 && training.totalCorrectAllTime > 0) {
+            masteredCount = Math.min(50, training.totalCorrectAllTime);
+          }
+
+          if (masteredCount > 0) {
+            const setScore = (masteredCount / 50) * 100;
+            totalPassProbability += setScore * (WEIGHT_PER_COMPONENT / 100);
+          }
+        }
+
+        // Practice tests (4 × 12.5% = 50%)
         for (let testNum = 1; testNum <= 4; testNum++) {
           const attempt = stateAttempts.find(a => a.testNumber === testNum);
           if (attempt) {
-            // Test completed - contribute based on best score (out of 50)
-            const testPassRate = (attempt.bestScore / 50) * 100;
-            totalPassProbability += testPassRate * 0.25;
+            const testScore = (attempt.bestScore / 50) * 100;
+            totalPassProbability += testScore * (WEIGHT_PER_COMPONENT / 100);
           }
-          // If not completed, this test contributes 0% to pass probability
         }
 
         return Math.round(totalPassProbability);
@@ -449,6 +522,7 @@ export const useStore = create<AppState>()(
                 masteredQuestionIds: data.training?.masteredQuestionIds || [],
                 lastQuestionId: data.training?.lastQuestionId || null,
               },
+              trainingSets: data.trainingSets || {},
               photoURL: data.photoURL || null,
               userId,
             });
@@ -480,7 +554,7 @@ export const useStore = create<AppState>()(
       },
 
       saveToFirestore: async () => {
-        const { userId, isGuest, selectedState, currentTests, completedTests, testAttempts, training, photoURL } = get();
+        const { userId, isGuest, selectedState, currentTests, completedTests, testAttempts, training, trainingSets, photoURL } = get();
         if (!userId || isGuest) return; // Don't save if no user is logged in or guest mode
 
         try {
@@ -512,6 +586,7 @@ export const useStore = create<AppState>()(
               lastAttemptDate: attempt.lastAttemptDate instanceof Date ? attempt.lastAttemptDate.toISOString() : attempt.lastAttemptDate,
             })),
             training,
+            trainingSets,
             lastUpdated: new Date().toISOString(),
           });
         } catch (error) {
@@ -534,6 +609,7 @@ export const useStore = create<AppState>()(
             masteredQuestionIds: [],
             lastQuestionId: null,
           },
+          trainingSets: {},
         });
         get().saveToFirestore();
       },
@@ -555,6 +631,7 @@ export const useStore = create<AppState>()(
             masteredQuestionIds: [],
             lastQuestionId: null,
           },
+          trainingSets: {},
           userId: null,
           photoURL: null,
         });

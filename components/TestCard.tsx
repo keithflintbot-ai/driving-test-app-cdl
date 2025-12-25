@@ -1,9 +1,7 @@
 import Link from "next/link";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { CheckCircle2, Circle, PlayCircle, Trophy, Target, Lock, ChevronDown, ChevronUp } from "lucide-react";
+import { CheckCircle2, Circle, PlayCircle, Trophy, Target, Lock } from "lucide-react";
 
 interface TestCardProps {
   testNumber: number;
@@ -11,158 +9,120 @@ interface TestCardProps {
   score?: number;
   totalQuestions?: number;
   progress?: number;
-  firstScore?: number;
   bestScore?: number;
   attemptCount?: number;
-  averageScore?: number;
   locked?: boolean;
   lockMessage?: string;
-  expanded?: boolean;
-  onToggle?: () => void;
 }
 
-export function TestCard({ testNumber, status, score, totalQuestions = 50, progress = 0, firstScore, bestScore, attemptCount, averageScore, locked = false, lockMessage, expanded = false, onToggle }: TestCardProps) {
-  // Calculate best percentage for badge logic
+export function TestCard({
+  testNumber,
+  status,
+  totalQuestions = 50,
+  progress = 0,
+  bestScore,
+  locked = false,
+}: TestCardProps) {
   const bestPercentage = bestScore ? Math.round((bestScore / totalQuestions) * 100) : 0;
 
   const getStatusBadge = () => {
     if (locked) {
-      return <Badge variant="outline" className="bg-gray-100 hover:bg-gray-100">Locked</Badge>;
+      return <Badge variant="outline" className="bg-gray-100 hover:bg-gray-100 text-xs">Locked</Badge>;
     }
 
     if (status === "completed" && bestScore !== undefined) {
       if (bestPercentage === 100) {
-        return <Badge className="bg-green-500 hover:bg-green-500">Mastered</Badge>;
+        return <Badge className="bg-green-500 hover:bg-green-500 text-xs">Mastered</Badge>;
       } else if (bestPercentage >= 70) {
-        return <Badge className="bg-green-500 hover:bg-green-500">Passed</Badge>;
+        return <Badge className="bg-green-500 hover:bg-green-500 text-xs">Passed</Badge>;
       } else {
-        return <Badge className="bg-orange-500 hover:bg-orange-500">Keep Practicing</Badge>;
+        return <Badge className="bg-orange-500 hover:bg-orange-500 text-xs">Keep Practicing</Badge>;
       }
     }
 
     switch (status) {
       case "in-progress":
-        return <Badge className="bg-yellow-500 hover:bg-yellow-500">In Progress</Badge>;
+        return <Badge className="bg-yellow-500 hover:bg-yellow-500 text-xs">In Progress</Badge>;
       default:
-        return <Badge variant="outline" className="hover:bg-white">Not Started</Badge>;
+        return null;
     }
   };
 
   const getStatusIcon = () => {
     if (locked) {
-      return <Lock className="h-12 w-12 text-gray-400" />;
+      return <Lock className="h-10 w-10 text-gray-300" />;
     }
 
     if (status === "completed" && bestScore !== undefined) {
       if (bestPercentage === 100) {
-        return <Trophy className="h-12 w-12 text-yellow-500" />;
+        return <Trophy className="h-10 w-10 text-yellow-500" />;
       } else if (bestPercentage >= 70) {
-        return <CheckCircle2 className="h-12 w-12 text-green-500" />;
+        return <CheckCircle2 className="h-10 w-10 text-green-500" />;
       } else {
-        return <Target className="h-12 w-12 text-orange-500" />;
+        return <Target className="h-10 w-10 text-orange-500" />;
       }
     }
 
     switch (status) {
       case "in-progress":
-        return <PlayCircle className="h-12 w-12 text-yellow-500" />;
+        return <PlayCircle className="h-10 w-10 text-yellow-500" />;
       default:
-        return <Circle className="h-12 w-12 text-gray-300" />;
+        return <Circle className="h-10 w-10 text-gray-300" />;
     }
   };
 
-  const getButtonText = () => {
-    switch (status) {
-      case "completed":
-        return attemptCount && attemptCount > 0 ? "Retake Test" : "Review Test";
-      case "in-progress":
-        return "Continue Test";
-      default:
-        return "Start Test";
+  const getSubtext = () => {
+    if (locked) {
+      return <span className="text-gray-400">Locked</span>;
     }
+    if (status === "in-progress") {
+      return <span className="text-yellow-600">{progress}% done</span>;
+    }
+    if (status === "completed" && bestScore !== undefined) {
+      return (
+        <span className={bestPercentage >= 70 ? 'text-green-600' : 'text-orange-600'}>
+          {bestScore}/{totalQuestions}
+        </span>
+      );
+    }
+    return <span className="text-gray-400">50 questions</span>;
   };
+
+  const cardContent = (
+    <Card className={`h-full transition-all ${
+      locked
+        ? "bg-gray-50 border-gray-200 opacity-60"
+        : "hover:shadow-md hover:border-gray-300 cursor-pointer"
+    }`}>
+      <CardContent className="p-4 flex flex-col items-center text-center">
+        {/* Badge */}
+        <div className="h-5 mb-2">
+          {getStatusBadge()}
+        </div>
+
+        {/* Icon */}
+        <div className="mb-2">
+          {getStatusIcon()}
+        </div>
+
+        {/* Title */}
+        <h3 className="font-semibold text-base mb-1">Test {testNumber}</h3>
+
+        {/* Subtext */}
+        <p className="text-xs">
+          {getSubtext()}
+        </p>
+      </CardContent>
+    </Card>
+  );
+
+  if (locked) {
+    return cardContent;
+  }
 
   return (
-    <Card className="cursor-pointer hover:bg-gray-50 transition-colors" onClick={onToggle}>
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            {getStatusIcon()}
-            <div>
-              <CardTitle>Test {testNumber}</CardTitle>
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            {getStatusBadge()}
-            {expanded ? (
-              <ChevronUp className="h-5 w-5 text-gray-400" />
-            ) : (
-              <ChevronDown className="h-5 w-5 text-gray-400" />
-            )}
-          </div>
-        </div>
-      </CardHeader>
-      {expanded && (
-        <CardContent>
-        {status === "completed" && (
-          <div className="mb-4">
-            {bestScore !== undefined && attemptCount !== undefined ? (
-              <div className="space-y-2">
-                {/* Attempts and Top Score */}
-                <div className="grid grid-cols-2 gap-4 text-center">
-                  <div>
-                    <div className="text-sm text-gray-600 mb-1">Attempts</div>
-                    <div className="text-2xl font-bold text-gray-900">
-                      {attemptCount}
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-sm text-gray-600 mb-1">Top Score</div>
-                    <div className={`text-2xl font-bold ${bestPercentage >= 70 ? 'text-green-600' : 'text-orange-600'}`}>
-                      {bestScore}/{totalQuestions}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ) : score !== undefined && (
-              <div>
-                <div className="text-2xl font-bold text-green-600 mb-1">
-                  {score}/{totalQuestions}
-                </div>
-                <div className="text-sm text-gray-600">
-                  {Math.round((score / totalQuestions) * 100)}% correct
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-
-        {status === "in-progress" && (
-          <div className="mb-4">
-            <div className="flex justify-between text-sm mb-2">
-              <span>Progress</span>
-              <span>{progress}%</span>
-            </div>
-            <Progress value={progress} className="[&>div]:bg-orange-600" />
-          </div>
-        )}
-
-        {locked ? (
-          <div className="text-center py-3 px-4 bg-gray-50 rounded-lg border border-gray-200">
-            <Lock className="h-5 w-5 text-gray-400 mx-auto mb-2" />
-            <p className="text-sm text-gray-600 font-medium">
-              {lockMessage || "Score 40+ on previous tests to unlock"}
-            </p>
-          </div>
-        ) : (
-          <Link href={`/test/${testNumber}`} onClick={(e) => e.stopPropagation()}>
-            <Button className="w-full bg-black text-white hover:bg-gray-800">
-              {getButtonText()}
-            </Button>
-          </Link>
-        )}
-        </CardContent>
-      )}
-    </Card>
+    <Link href={`/test/${testNumber}`} className="block h-full">
+      {cardContent}
+    </Link>
   );
 }

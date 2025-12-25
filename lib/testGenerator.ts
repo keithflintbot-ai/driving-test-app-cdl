@@ -11,6 +11,33 @@ function shuffle<T>(array: T[]): T[] {
   return shuffled;
 }
 
+// Shuffle the answer options for a question (returns new question with shuffled options)
+export function shuffleQuestionOptions(question: Question): Question {
+  const options = [
+    { letter: 'A', text: question.optionA },
+    { letter: 'B', text: question.optionB },
+    { letter: 'C', text: question.optionC },
+    { letter: 'D', text: question.optionD },
+  ];
+
+  const shuffled = shuffle(options);
+
+  // Find new position of correct answer
+  const correctOptionText = question[`option${question.correctAnswer}` as keyof Question] as string;
+  const newCorrectIndex = shuffled.findIndex(opt => opt.text === correctOptionText);
+  const newCorrectLetter = ['A', 'B', 'C', 'D'][newCorrectIndex];
+
+  return {
+    ...question,
+    optionA: shuffled[0].text,
+    optionB: shuffled[1].text,
+    optionC: shuffled[2].text,
+    optionD: shuffled[3].text,
+    correctAnswer: newCorrectLetter,
+    correctIndex: newCorrectIndex,
+  };
+}
+
 // Get questions for a specific test
 // Each test has a FIXED set of questions, but the order is randomized on each attempt
 export function generateTest(testNumber: number, state: string): Question[] {
@@ -76,6 +103,76 @@ function intersperseQuestions(universal: Question[], state: Question[]): Questio
   }
 
   return result;
+}
+
+// Get the fixed 50 questions for a training set
+// Training set N has the same questions as Test N, in a fixed order
+export function getTrainingSetQuestions(setNumber: number, state: string): Question[] {
+  const allQuestions = questionsData as Question[];
+
+  // Get universal questions (type: "Universal", state: "ALL")
+  const universalQuestions = allQuestions
+    .filter((q) => q.type === "Universal" && q.state === "ALL")
+    .sort((a, b) => a.questionId.localeCompare(b.questionId));
+
+  // Get state-specific questions
+  const stateQuestions = allQuestions
+    .filter((q) => q.type === "State-Specific" && q.state === state)
+    .sort((a, b) => a.questionId.localeCompare(b.questionId));
+
+  const UNIVERSAL_PER_SET = 40;
+  const STATE_PER_SET = 10;
+
+  const startUniversal = (setNumber - 1) * UNIVERSAL_PER_SET;
+  const startState = (setNumber - 1) * STATE_PER_SET;
+
+  const setUniversal = universalQuestions.slice(
+    startUniversal,
+    startUniversal + UNIVERSAL_PER_SET
+  );
+  const setStateQuestions = stateQuestions.slice(
+    startState,
+    startState + STATE_PER_SET
+  );
+
+  // Return in fixed order (not shuffled) for consistent training experience
+  return [...setUniversal, ...setStateQuestions];
+}
+
+// Get the next unanswered question from a training set
+// wrongQueue: questions answered wrong that should be asked later (after all others)
+export function getNextTrainingSetQuestion(
+  setNumber: number,
+  state: string,
+  masteredIds: string[],
+  wrongQueue: string[] = []
+): Question | null {
+  const questions = getTrainingSetQuestions(setNumber, state);
+
+  // Find questions not yet mastered
+  const unmasteredQuestions = questions.filter(q => !masteredIds.includes(q.questionId));
+
+  if (unmasteredQuestions.length === 0) {
+    return null;
+  }
+
+  // First priority: unmastered questions NOT in the wrong queue
+  const freshQuestions = unmasteredQuestions.filter(q => !wrongQueue.includes(q.questionId));
+  if (freshQuestions.length > 0) {
+    return freshQuestions[0];
+  }
+
+  // All remaining questions are in the wrong queue - take the first one (oldest wrong answer)
+  // Find the first question from wrongQueue that's still unmastered
+  for (const qId of wrongQueue) {
+    const question = unmasteredQuestions.find(q => q.questionId === qId);
+    if (question) {
+      return question;
+    }
+  }
+
+  // Fallback (shouldn't happen)
+  return unmasteredQuestions[0];
 }
 
 // Get random question for training mode with mastery system
