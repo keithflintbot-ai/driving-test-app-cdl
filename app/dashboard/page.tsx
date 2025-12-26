@@ -152,10 +152,14 @@ export default function DashboardPage() {
                 passProbability === 0
                   ? "bg-gradient-to-r from-gray-50 to-gray-100 border-gray-200"
                   : passProbability >= 80
-                    ? "bg-gradient-to-r from-green-50 to-emerald-50 border-green-200"
+                    ? "bg-gradient-to-r from-emerald-50 to-green-50 border-emerald-200"
                     : passProbability >= 60
-                      ? "bg-gradient-to-r from-orange-50 to-amber-50 border-orange-200"
-                      : "bg-gradient-to-r from-red-50 to-rose-50 border-red-200"
+                      ? "bg-gradient-to-r from-lime-50 to-green-50 border-lime-200"
+                      : passProbability >= 40
+                        ? "bg-gradient-to-r from-amber-50 to-yellow-50 border-amber-200"
+                        : passProbability >= 20
+                          ? "bg-gradient-to-r from-orange-50 to-amber-50 border-orange-200"
+                          : "bg-gradient-to-r from-red-50 to-rose-50 border-red-200"
               }`}>
                 <CardContent className="p-6">
                   <div className="flex items-center gap-4">
@@ -173,9 +177,9 @@ export default function DashboardPage() {
                     <div className="flex-1">
                       <p className="text-lg text-gray-700">
                         {passProbability === 0
-                          ? "Complete a practice test to see your fail probability"
-                          : passProbability >= 80
-                            ? <>There is a <span className="font-bold text-xl">{passProbability}%</span> chance that you will pass the {stateName} driving knowledge test.</>
+                          ? "Complete a practice test to see your pass rate"
+                          : passProbability > 50
+                            ? <>You have a <span className="font-bold text-xl">{passProbability}%</span> pass rate for the {stateName} driving knowledge test.</>
                             : <>There is a <span className="font-bold text-xl">{100 - passProbability}%</span> chance that you will fail the {stateName} driving knowledge test.</>
                         }
                       </p>
@@ -185,10 +189,14 @@ export default function DashboardPage() {
                       passProbability === 0
                         ? "text-gray-400"
                         : passProbability >= 80
-                          ? "text-green-400"
+                          ? "text-emerald-400"
                           : passProbability >= 60
-                            ? "text-orange-400"
-                            : "text-red-400"
+                            ? "text-lime-400"
+                            : passProbability >= 40
+                              ? "text-amber-400"
+                              : passProbability >= 20
+                                ? "text-orange-400"
+                                : "text-red-400"
                     }`} />
                   </div>
                 </CardContent>
