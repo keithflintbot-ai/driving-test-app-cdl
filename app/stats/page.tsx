@@ -155,15 +155,19 @@ export default function StatsPage() {
           <p className="text-gray-600">Detailed performance analysis and recommendations</p>
         </div>
 
-        {/* Fail Probability Card */}
+        {/* Pass/Fail Probability Card */}
         <Card className={`mb-6 ${
           passProbability === 0
             ? "bg-gradient-to-r from-gray-50 to-gray-100 border-gray-200"
             : passProbability >= 80
-              ? "bg-gradient-to-r from-green-50 to-emerald-50 border-green-200"
+              ? "bg-gradient-to-r from-emerald-50 to-green-50 border-emerald-200"
               : passProbability >= 60
-                ? "bg-gradient-to-r from-orange-50 to-amber-50 border-orange-200"
-                : "bg-gradient-to-r from-red-50 to-rose-50 border-red-200"
+                ? "bg-gradient-to-r from-lime-50 to-green-50 border-lime-200"
+                : passProbability >= 40
+                  ? "bg-gradient-to-r from-amber-50 to-yellow-50 border-amber-200"
+                  : passProbability >= 20
+                    ? "bg-gradient-to-r from-orange-50 to-amber-50 border-orange-200"
+                    : "bg-gradient-to-r from-red-50 to-rose-50 border-red-200"
         }`}>
           <CardContent className="p-8">
             <div className="text-center">
@@ -183,20 +187,20 @@ export default function StatsPage() {
               <h2 className="text-3xl font-bold mb-2">
                 {passProbability === 0
                   ? "No Data Yet"
-                  : passProbability >= 80
-                    ? <><span className="text-4xl">{passProbability}%</span> chance of passing</>
+                  : passProbability > 50
+                    ? <><span className="text-4xl">{passProbability}%</span> pass rate</>
                     : <><span className="text-4xl">{100 - passProbability}%</span> chance of failing</>
                 }
               </h2>
               <p className="text-lg text-gray-700 mb-2">
                 {passProbability === 0
                   ? "Complete practice tests to see your probability"
-                  : passProbability >= 80
+                  : passProbability > 50
                     ? `Estimated chance of passing the ${stateName} driving knowledge test`
                     : `Estimated chance of failing the ${stateName} driving knowledge test`
                 }
               </p>
-              {passProbability > 0 && passProbability < 80 && (
+              {passProbability > 0 && passProbability <= 50 && (
                 <p className="text-sm text-gray-600">
                   Want to lower this?{" "}
                   <a
@@ -210,8 +214,18 @@ export default function StatsPage() {
               )}
               {passProbability > 0 && (
                 <Progress
-                  value={passProbability >= 80 ? passProbability : 100 - passProbability}
-                  className={`h-3 mt-4 ${passProbability >= 80 ? '[&>div]:bg-green-500' : '[&>div]:bg-orange-600'}`}
+                  value={passProbability}
+                  className={`h-3 mt-4 ${
+                    passProbability >= 80
+                      ? '[&>div]:bg-emerald-500'
+                      : passProbability >= 60
+                        ? '[&>div]:bg-lime-500'
+                        : passProbability >= 40
+                          ? '[&>div]:bg-amber-500'
+                          : passProbability >= 20
+                            ? '[&>div]:bg-orange-500'
+                            : '[&>div]:bg-red-500'
+                  }`}
                 />
               )}
             </div>
