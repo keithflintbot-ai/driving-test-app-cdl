@@ -70,11 +70,9 @@ export function QuestionCard({
                 onClick={() => !showResult && onAnswerChange(option.value)}
                 className={`border-2 rounded-lg p-4 transition-all ${getOptionClasses(option.value)}`}
               >
-                <div className="flex items-center justify-between">
-                  <div className="flex-1">
-                    <span className="font-bold text-lg mr-2">{option.value}.</span>
-                    <span>{option.label}</span>
-                  </div>
+                <div className="flex items-center justify-between gap-2">
+                  <span className="font-bold text-lg w-6 shrink-0">{option.value})</span>
+                  <span className="flex-1">{option.label}</span>
                   {showResult && isThisCorrect && (
                     <CheckCircle2 className="h-6 w-6 text-green-600" />
                   )}

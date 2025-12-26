@@ -121,7 +121,7 @@ export default function DashboardPage() {
                       {10 - onboardingProgress} more to unlock training & tests
                     </p>
                   </div>
-                  <ChevronRight className="h-6 w-6 text-orange-400 sm:hidden" />
+                  <ChevronRight className="h-6 w-6 text-orange-400" />
                 </div>
               </CardContent>
             </Card>
@@ -181,7 +181,7 @@ export default function DashboardPage() {
                       </p>
                       <p className="text-sm text-gray-500 mt-1">Tap to see detailed stats</p>
                     </div>
-                    <ChevronRight className={`h-6 w-6 sm:hidden ${
+                    <ChevronRight className={`h-6 w-6 ${
                       passProbability === 0
                         ? "text-gray-400"
                         : passProbability >= 80

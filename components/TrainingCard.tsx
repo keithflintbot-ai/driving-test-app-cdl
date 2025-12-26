@@ -57,7 +57,7 @@ export function TrainingCard({
               className={`border-2 rounded-lg p-3 md:p-4 transition-all ${getOptionClasses(option.letter)}`}
             >
               <div className="flex items-start gap-2 md:gap-3">
-                <span className="font-bold text-base md:text-lg">{option.letter})</span>
+                <span className="font-bold text-base md:text-lg w-6 shrink-0">{option.letter})</span>
                 <span className="flex-1 text-sm md:text-base">{option.text}</span>
                 {answered && option.letter === question.correctAnswer && (
                   <CheckCircle2 className="h-5 w-5 md:h-6 md:w-6 text-green-600 flex-shrink-0" />
