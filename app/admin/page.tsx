@@ -62,9 +62,20 @@ export default function AdminPage() {
 
         // Calculate test questions answered from completed tests
         const completedTests = data.completedTests || [];
-        const testQuestionsAnswered = completedTests.reduce((sum: number, test: { totalQuestions?: number }) => {
-          return sum + (test.totalQuestions || 0);
+        let testQuestionsAnswered = completedTests.reduce((sum: number, test: { totalQuestions?: number; answers?: unknown[] }) => {
+          // Use answers.length if available, otherwise totalQuestions
+          return sum + (test.answers?.length || test.totalQuestions || 0);
         }, 0);
+
+        // Add questions from in-progress tests (currentTests)
+        const currentTests = data.currentTests || {};
+        for (const testId of Object.keys(currentTests)) {
+          const testData = currentTests[testId];
+          if (testData?.answers) {
+            // answers is an object with question index as key
+            testQuestionsAnswered += Object.keys(testData.answers).length;
+          }
+        }
 
         return {
           uid: doc.id,
