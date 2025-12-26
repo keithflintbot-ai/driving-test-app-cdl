@@ -45,78 +45,107 @@ export default function AdminPage() {
   const [error, setError] = useState<string | null>(null);
   const [deleting, setDeleting] = useState<string | null>(null);
 
+  // Helper function to process Firestore data
+  const processFirestoreDoc = (docId: string, data: ReturnType<typeof Object>) => {
+    // Calculate training questions from trainingSets (masteredIds + wrongQueue per set)
+    const trainingSets = data.trainingSets || {};
+    let trainingQuestionsAnswered = 0;
+    for (const setId of [1, 2, 3, 4]) {
+      const setData = trainingSets[setId] || {};
+      const masteredIds = setData.masteredIds || [];
+      const wrongQueue = setData.wrongQueue || [];
+      trainingQuestionsAnswered += masteredIds.length + wrongQueue.length;
+    }
+
+    // Calculate test questions answered from completed tests
+    const completedTests = data.completedTests || [];
+    let testQuestionsAnswered = completedTests.reduce((sum: number, test: { totalQuestions?: number; answers?: unknown[] }) => {
+      return sum + (test.answers?.length || test.totalQuestions || 0);
+    }, 0);
+
+    // Add questions from in-progress tests (currentTests)
+    const currentTests = data.currentTests || {};
+    for (const testId of Object.keys(currentTests)) {
+      const testData = currentTests[testId];
+      if (testData?.answers) {
+        testQuestionsAnswered += Object.keys(testData.answers).length;
+      }
+    }
+
+    return {
+      uid: docId,
+      email: data.email || "Unknown",
+      selectedState: data.selectedState || null,
+      lastUpdated: data.lastUpdated || null,
+      createdAt: data.createdAt || null,
+      testsCompleted: completedTests.length,
+      trainingQuestionsAnswered,
+      testQuestionsAnswered,
+    };
+  };
+
   const fetchUsers = async () => {
     setLoading(true);
     setError(null);
 
     try {
-      // Get the current user's ID token for API authentication
-      const idToken = await user?.getIdToken();
-      if (!idToken) {
-        throw new Error("Not authenticated");
-      }
+      let userData: UserData[] = [];
+      let useApiData = false;
 
-      // Fetch users from API (includes all Firebase Auth users)
-      const response = await fetch("/api/admin/users", {
-        headers: {
-          Authorization: `Bearer ${idToken}`,
-        },
-      });
+      // Try to fetch from API first (includes all Firebase Auth users)
+      try {
+        const idToken = await user?.getIdToken();
+        if (idToken) {
+          const response = await fetch("/api/admin/users", {
+            headers: {
+              Authorization: `Bearer ${idToken}`,
+            },
+          });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to fetch users");
-      }
+          if (response.ok) {
+            const { users: apiUsers } = await response.json();
+            useApiData = true;
 
-      const { users: apiUsers } = await response.json();
+            // Also fetch detailed Firestore data for stats calculation
+            const usersSnapshot = await getDocs(collection(db, "users"));
+            const firestoreDataMap = new Map<string, ReturnType<typeof usersSnapshot.docs[0]["data"]>>();
+            usersSnapshot.docs.forEach(doc => {
+              firestoreDataMap.set(doc.id, doc.data());
+            });
 
-      // Also fetch detailed Firestore data for stats calculation
-      const usersSnapshot = await getDocs(collection(db, "users"));
-      const firestoreDataMap = new Map<string, ReturnType<typeof usersSnapshot.docs[0]["data"]>>();
-      usersSnapshot.docs.forEach(doc => {
-        firestoreDataMap.set(doc.id, doc.data());
-      });
-
-      // Map API users to UserData with detailed stats from Firestore
-      const userData: UserData[] = apiUsers.map((apiUser: { uid: string; email: string; selectedState: string | null; lastUpdated: string | null; createdAt: string | null; testsCompleted: number }) => {
-        const firestoreData = firestoreDataMap.get(apiUser.uid);
-
-        // Calculate training questions from trainingSets (masteredIds + wrongQueue per set)
-        const trainingSets = firestoreData?.trainingSets || {};
-        let trainingQuestionsAnswered = 0;
-        for (const setId of [1, 2, 3, 4]) {
-          const setData = trainingSets[setId] || {};
-          const masteredIds = setData.masteredIds || [];
-          const wrongQueue = setData.wrongQueue || [];
-          trainingQuestionsAnswered += masteredIds.length + wrongQueue.length;
-        }
-
-        // Calculate test questions answered from completed tests
-        const completedTests = firestoreData?.completedTests || [];
-        let testQuestionsAnswered = completedTests.reduce((sum: number, test: { totalQuestions?: number; answers?: unknown[] }) => {
-          return sum + (test.answers?.length || test.totalQuestions || 0);
-        }, 0);
-
-        // Add questions from in-progress tests (currentTests)
-        const currentTests = firestoreData?.currentTests || {};
-        for (const testId of Object.keys(currentTests)) {
-          const testData = currentTests[testId];
-          if (testData?.answers) {
-            testQuestionsAnswered += Object.keys(testData.answers).length;
+            // Map API users to UserData with detailed stats from Firestore
+            userData = apiUsers.map((apiUser: { uid: string; email: string; selectedState: string | null; lastUpdated: string | null; createdAt: string | null; testsCompleted: number }) => {
+              const firestoreData = firestoreDataMap.get(apiUser.uid);
+              if (firestoreData) {
+                const processed = processFirestoreDoc(apiUser.uid, firestoreData);
+                return {
+                  ...processed,
+                  email: apiUser.email,
+                  createdAt: apiUser.createdAt,
+                };
+              }
+              return {
+                uid: apiUser.uid,
+                email: apiUser.email,
+                selectedState: apiUser.selectedState,
+                lastUpdated: apiUser.lastUpdated,
+                createdAt: apiUser.createdAt,
+                testsCompleted: 0,
+                trainingQuestionsAnswered: 0,
+                testQuestionsAnswered: 0,
+              };
+            });
           }
         }
+      } catch (apiError) {
+        console.warn("API fetch failed, falling back to Firestore:", apiError);
+      }
 
-        return {
-          uid: apiUser.uid,
-          email: apiUser.email,
-          selectedState: apiUser.selectedState,
-          lastUpdated: apiUser.lastUpdated,
-          createdAt: apiUser.createdAt,
-          testsCompleted: completedTests.length,
-          trainingQuestionsAnswered,
-          testQuestionsAnswered,
-        };
-      });
+      // Fallback to direct Firestore query if API failed
+      if (!useApiData) {
+        const usersSnapshot = await getDocs(collection(db, "users"));
+        userData = usersSnapshot.docs.map(doc => processFirestoreDoc(doc.id, doc.data()));
+      }
 
       // Sort by createdAt (newest first), fall back to lastUpdated
       userData.sort((a, b) => {
