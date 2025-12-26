@@ -14,8 +14,10 @@ import { Button } from "@/components/ui/button";
 
 interface UserData {
   uid: string;
+  email: string;
   selectedState: string | null;
   lastUpdated: string | null;
+  createdAt: string | null;
   testsCompleted: number;
   trainingQuestionsAnswered: number;
   testQuestionsAnswered: number;
@@ -48,13 +50,39 @@ export default function AdminPage() {
     setError(null);
 
     try {
-      const usersSnapshot = await getDocs(collection(db, "users"));
+      // Get the current user's ID token for API authentication
+      const idToken = await user?.getIdToken();
+      if (!idToken) {
+        throw new Error("Not authenticated");
+      }
 
-      const userData: UserData[] = usersSnapshot.docs.map(doc => {
-        const data = doc.data();
+      // Fetch users from API (includes all Firebase Auth users)
+      const response = await fetch("/api/admin/users", {
+        headers: {
+          Authorization: `Bearer ${idToken}`,
+        },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to fetch users");
+      }
+
+      const { users: apiUsers } = await response.json();
+
+      // Also fetch detailed Firestore data for stats calculation
+      const usersSnapshot = await getDocs(collection(db, "users"));
+      const firestoreDataMap = new Map<string, ReturnType<typeof usersSnapshot.docs[0]["data"]>>();
+      usersSnapshot.docs.forEach(doc => {
+        firestoreDataMap.set(doc.id, doc.data());
+      });
+
+      // Map API users to UserData with detailed stats from Firestore
+      const userData: UserData[] = apiUsers.map((apiUser: { uid: string; email: string; selectedState: string | null; lastUpdated: string | null; createdAt: string | null; testsCompleted: number }) => {
+        const firestoreData = firestoreDataMap.get(apiUser.uid);
 
         // Calculate training questions from trainingSets (masteredIds + wrongQueue per set)
-        const trainingSets = data.trainingSets || {};
+        const trainingSets = firestoreData?.trainingSets || {};
         let trainingQuestionsAnswered = 0;
         for (const setId of [1, 2, 3, 4]) {
           const setData = trainingSets[setId] || {};
@@ -64,37 +92,39 @@ export default function AdminPage() {
         }
 
         // Calculate test questions answered from completed tests
-        const completedTests = data.completedTests || [];
+        const completedTests = firestoreData?.completedTests || [];
         let testQuestionsAnswered = completedTests.reduce((sum: number, test: { totalQuestions?: number; answers?: unknown[] }) => {
-          // Use answers.length if available, otherwise totalQuestions
           return sum + (test.answers?.length || test.totalQuestions || 0);
         }, 0);
 
         // Add questions from in-progress tests (currentTests)
-        const currentTests = data.currentTests || {};
+        const currentTests = firestoreData?.currentTests || {};
         for (const testId of Object.keys(currentTests)) {
           const testData = currentTests[testId];
           if (testData?.answers) {
-            // answers is an object with question index as key
             testQuestionsAnswered += Object.keys(testData.answers).length;
           }
         }
 
         return {
-          uid: doc.id,
-          selectedState: data.selectedState || null,
-          lastUpdated: data.lastUpdated || null,
+          uid: apiUser.uid,
+          email: apiUser.email,
+          selectedState: apiUser.selectedState,
+          lastUpdated: apiUser.lastUpdated,
+          createdAt: apiUser.createdAt,
           testsCompleted: completedTests.length,
           trainingQuestionsAnswered,
           testQuestionsAnswered,
         };
       });
 
-      // Sort by lastUpdated (newest first)
+      // Sort by createdAt (newest first), fall back to lastUpdated
       userData.sort((a, b) => {
-        if (!a.lastUpdated) return 1;
-        if (!b.lastUpdated) return -1;
-        return new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime();
+        const aDate = a.createdAt || a.lastUpdated;
+        const bDate = b.createdAt || b.lastUpdated;
+        if (!aDate) return 1;
+        if (!bDate) return -1;
+        return new Date(bDate).getTime() - new Date(aDate).getTime();
       });
 
       // Calculate stats by state and totals
@@ -367,8 +397,9 @@ export default function AdminPage() {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b">
-                    <th className="text-left py-3 px-4 font-medium text-gray-500">User ID</th>
+                    <th className="text-left py-3 px-4 font-medium text-gray-500">Email</th>
                     <th className="text-left py-3 px-4 font-medium text-gray-500">State</th>
+                    <th className="text-left py-3 px-4 font-medium text-gray-500">Created</th>
                     <th className="text-left py-3 px-4 font-medium text-gray-500">Last Active</th>
                     <th className="text-left py-3 px-4 font-medium text-gray-500">Training Qs</th>
                     <th className="text-left py-3 px-4 font-medium text-gray-500">Test Qs</th>
@@ -379,7 +410,8 @@ export default function AdminPage() {
                   {users.map((userData) => (
                     <tr key={userData.uid} className="border-b hover:bg-gray-50">
                       <td className="py-3 px-4">
-                        <div className="text-xs text-gray-600 font-mono">{userData.uid}</div>
+                        <div className="text-sm text-gray-900">{userData.email}</div>
+                        <div className="text-xs text-gray-400 font-mono">{userData.uid.substring(0, 8)}...</div>
                       </td>
                       <td className="py-3 px-4">
                         {userData.selectedState ? (
@@ -391,7 +423,10 @@ export default function AdminPage() {
                         )}
                       </td>
                       <td className="py-3 px-4 text-gray-600">
-                        {formatDate(userData.lastUpdated)}
+                        {formatDate(userData.createdAt)}
+                      </td>
+                      <td className="py-3 px-4 text-gray-600">
+                        {userData.lastUpdated ? formatDate(userData.lastUpdated) : <span className="text-gray-400">Never</span>}
                       </td>
                       <td className="py-3 px-4">
                         <span className="font-medium">{userData.trainingQuestionsAnswered}</span>
