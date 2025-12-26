@@ -8,7 +8,7 @@ import { db } from "@/lib/firebase";
 import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { states } from "@/data/states";
-import { ArrowLeft, Users, MapPin, RefreshCw, Trash2 } from "lucide-react";
+import { ArrowLeft, Users, MapPin, RefreshCw, Trash2, HelpCircle } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
@@ -17,13 +17,17 @@ interface UserData {
   selectedState: string | null;
   lastUpdated: string | null;
   testsCompleted: number;
-  trainingProgress: number;
+  trainingQuestionsAnswered: number;
+  testQuestionsAnswered: number;
 }
 
 interface Stats {
   totalUsers: number;
   usersWithState: number;
   byState: Record<string, number>;
+  totalQuestionsAnswered: number;
+  totalTrainingQuestions: number;
+  totalTestQuestions: number;
 }
 
 export default function AdminPage() {
@@ -45,12 +49,41 @@ export default function AdminPage() {
 
       const userData: UserData[] = usersSnapshot.docs.map(doc => {
         const data = doc.data();
+
+        // Calculate training questions from trainingSets (masteredIds + wrongQueue per set)
+        const trainingSets = data.trainingSets || {};
+        let trainingQuestionsAnswered = 0;
+        for (const setId of [1, 2, 3, 4]) {
+          const setData = trainingSets[setId] || {};
+          const masteredIds = setData.masteredIds || [];
+          const wrongQueue = setData.wrongQueue || [];
+          trainingQuestionsAnswered += masteredIds.length + wrongQueue.length;
+        }
+
+        // Calculate test questions answered from completed tests
+        const completedTests = data.completedTests || [];
+        let testQuestionsAnswered = completedTests.reduce((sum: number, test: { totalQuestions?: number; answers?: unknown[] }) => {
+          // Use answers.length if available, otherwise totalQuestions
+          return sum + (test.answers?.length || test.totalQuestions || 0);
+        }, 0);
+
+        // Add questions from in-progress tests (currentTests)
+        const currentTests = data.currentTests || {};
+        for (const testId of Object.keys(currentTests)) {
+          const testData = currentTests[testId];
+          if (testData?.answers) {
+            // answers is an object with question index as key
+            testQuestionsAnswered += Object.keys(testData.answers).length;
+          }
+        }
+
         return {
           uid: doc.id,
           selectedState: data.selectedState || null,
           lastUpdated: data.lastUpdated || null,
-          testsCompleted: data.completedTests?.length || 0,
-          trainingProgress: data.training?.totalCorrectAllTime || 0,
+          testsCompleted: completedTests.length,
+          trainingQuestionsAnswered,
+          testQuestionsAnswered,
         };
       });
 
@@ -61,12 +94,17 @@ export default function AdminPage() {
         return new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime();
       });
 
-      // Calculate stats by state
+      // Calculate stats by state and totals
       const stateCounts: Record<string, number> = {};
+      let totalTrainingQuestions = 0;
+      let totalTestQuestions = 0;
+
       userData.forEach(u => {
         if (u.selectedState) {
           stateCounts[u.selectedState] = (stateCounts[u.selectedState] || 0) + 1;
         }
+        totalTrainingQuestions += u.trainingQuestionsAnswered;
+        totalTestQuestions += u.testQuestionsAnswered;
       });
 
       setUsers(userData);
@@ -74,6 +112,9 @@ export default function AdminPage() {
         totalUsers: userData.length,
         usersWithState: userData.filter(u => u.selectedState).length,
         byState: stateCounts,
+        totalQuestionsAnswered: totalTrainingQuestions + totalTestQuestions,
+        totalTrainingQuestions,
+        totalTestQuestions,
       });
     } catch (err) {
       console.error("Error fetching users:", err);
@@ -106,6 +147,9 @@ export default function AdminPage() {
           totalUsers: stats.totalUsers - 1,
           usersWithState: deletedUser.selectedState ? stats.usersWithState - 1 : stats.usersWithState,
           byState: newByState,
+          totalQuestionsAnswered: stats.totalQuestionsAnswered - deletedUser.trainingQuestionsAnswered - deletedUser.testQuestionsAnswered,
+          totalTrainingQuestions: stats.totalTrainingQuestions - deletedUser.trainingQuestionsAnswered,
+          totalTestQuestions: stats.totalTestQuestions - deletedUser.testQuestionsAnswered,
         });
       }
     } catch (err) {
@@ -200,7 +244,7 @@ export default function AdminPage() {
         </div>
 
         {/* Summary Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
           <Card>
             <CardContent className="p-6">
               <div className="flex items-center gap-4">
@@ -208,6 +252,20 @@ export default function AdminPage() {
                 <div>
                   <p className="text-2xl font-bold">{stats?.totalUsers || 0}</p>
                   <p className="text-sm text-gray-500">Total Users</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="p-6">
+              <div className="flex items-center gap-4">
+                <HelpCircle className="h-8 w-8 text-purple-500" />
+                <div>
+                  <p className="text-2xl font-bold">{(stats?.totalQuestionsAnswered || 0).toLocaleString()}</p>
+                  <p className="text-sm text-gray-500">Questions Answered</p>
+                  <p className="text-xs text-gray-400">
+                    {stats?.totalTrainingQuestions || 0} training · {stats?.totalTestQuestions || 0} tests
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -273,8 +331,8 @@ export default function AdminPage() {
                     <th className="text-left py-3 px-4 font-medium text-gray-500">User ID</th>
                     <th className="text-left py-3 px-4 font-medium text-gray-500">State</th>
                     <th className="text-left py-3 px-4 font-medium text-gray-500">Last Active</th>
-                    <th className="text-left py-3 px-4 font-medium text-gray-500">Training</th>
-                    <th className="text-left py-3 px-4 font-medium text-gray-500">Tests</th>
+                    <th className="text-left py-3 px-4 font-medium text-gray-500">Training Qs</th>
+                    <th className="text-left py-3 px-4 font-medium text-gray-500">Test Qs</th>
                     <th className="text-right py-3 px-4 font-medium text-gray-500"></th>
                   </tr>
                 </thead>
@@ -297,11 +355,11 @@ export default function AdminPage() {
                         {formatDate(userData.lastUpdated)}
                       </td>
                       <td className="py-3 px-4">
-                        <span className="font-medium">{userData.trainingProgress}</span>
-                        <span className="text-gray-400">/200</span>
+                        <span className="font-medium">{userData.trainingQuestionsAnswered}</span>
                       </td>
                       <td className="py-3 px-4">
-                        <span className="font-medium">{userData.testsCompleted}</span>
+                        <span className="font-medium">{userData.testQuestionsAnswered}</span>
+                        <span className="text-gray-400 text-xs ml-1">({userData.testsCompleted} tests)</span>
                       </td>
                       <td className="py-3 px-4 text-right">
                         <Button
