@@ -8,7 +8,7 @@ import { db } from "@/lib/firebase";
 import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { states } from "@/data/states";
-import { ArrowLeft, Users, MapPin, RefreshCw, Trash2, HelpCircle } from "lucide-react";
+import { ArrowLeft, Users, RefreshCw, Trash2, HelpCircle, Activity, ClipboardCheck } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
@@ -28,6 +28,9 @@ interface Stats {
   totalQuestionsAnswered: number;
   totalTrainingQuestions: number;
   totalTestQuestions: number;
+  activeUsers7d: number;
+  totalTestsCompleted: number;
+  avgQuestionsPerUser: number;
 }
 
 export default function AdminPage() {
@@ -98,6 +101,9 @@ export default function AdminPage() {
       const stateCounts: Record<string, number> = {};
       let totalTrainingQuestions = 0;
       let totalTestQuestions = 0;
+      let totalTestsCompleted = 0;
+      const sevenDaysAgo = new Date();
+      sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
       userData.forEach(u => {
         if (u.selectedState) {
@@ -105,16 +111,31 @@ export default function AdminPage() {
         }
         totalTrainingQuestions += u.trainingQuestionsAnswered;
         totalTestQuestions += u.testQuestionsAnswered;
+        totalTestsCompleted += u.testsCompleted;
       });
+
+      // Count active users in last 7 days
+      const activeUsers7d = userData.filter(u => {
+        if (!u.lastUpdated) return false;
+        return new Date(u.lastUpdated) >= sevenDaysAgo;
+      }).length;
+
+      const totalQuestionsAnswered = totalTrainingQuestions + totalTestQuestions;
+      const avgQuestionsPerUser = userData.length > 0
+        ? Math.round(totalQuestionsAnswered / userData.length)
+        : 0;
 
       setUsers(userData);
       setStats({
         totalUsers: userData.length,
         usersWithState: userData.filter(u => u.selectedState).length,
         byState: stateCounts,
-        totalQuestionsAnswered: totalTrainingQuestions + totalTestQuestions,
+        totalQuestionsAnswered,
         totalTrainingQuestions,
         totalTestQuestions,
+        activeUsers7d,
+        totalTestsCompleted,
+        avgQuestionsPerUser,
       });
     } catch (err) {
       console.error("Error fetching users:", err);
@@ -143,13 +164,22 @@ export default function AdminPage() {
             delete newByState[deletedUser.selectedState];
           }
         }
+        const newTotalUsers = stats.totalUsers - 1;
+        const newTotalQuestions = stats.totalQuestionsAnswered - deletedUser.trainingQuestionsAnswered - deletedUser.testQuestionsAnswered;
+        const sevenDaysAgo = new Date();
+        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+        const wasActive = deletedUser.lastUpdated && new Date(deletedUser.lastUpdated) >= sevenDaysAgo;
+
         setStats({
-          totalUsers: stats.totalUsers - 1,
+          totalUsers: newTotalUsers,
           usersWithState: deletedUser.selectedState ? stats.usersWithState - 1 : stats.usersWithState,
           byState: newByState,
-          totalQuestionsAnswered: stats.totalQuestionsAnswered - deletedUser.trainingQuestionsAnswered - deletedUser.testQuestionsAnswered,
+          totalQuestionsAnswered: newTotalQuestions,
           totalTrainingQuestions: stats.totalTrainingQuestions - deletedUser.trainingQuestionsAnswered,
           totalTestQuestions: stats.totalTestQuestions - deletedUser.testQuestionsAnswered,
+          activeUsers7d: wasActive ? stats.activeUsers7d - 1 : stats.activeUsers7d,
+          totalTestsCompleted: stats.totalTestsCompleted - deletedUser.testsCompleted,
+          avgQuestionsPerUser: newTotalUsers > 0 ? Math.round(newTotalQuestions / newTotalUsers) : 0,
         });
       }
     } catch (err) {
@@ -252,6 +282,23 @@ export default function AdminPage() {
                 <div>
                   <p className="text-2xl font-bold">{stats?.totalUsers || 0}</p>
                   <p className="text-sm text-gray-500">Total Users</p>
+                  <p className="text-xs text-gray-400">
+                    {stats?.avgQuestionsPerUser || 0} avg qs/user
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="p-6">
+              <div className="flex items-center gap-4">
+                <Activity className="h-8 w-8 text-green-500" />
+                <div>
+                  <p className="text-2xl font-bold">{stats?.activeUsers7d || 0}</p>
+                  <p className="text-sm text-gray-500">Active (7 days)</p>
+                  <p className="text-xs text-gray-400">
+                    {stats?.totalUsers ? Math.round((stats.activeUsers7d / stats.totalUsers) * 100) : 0}% of users
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -273,21 +320,13 @@ export default function AdminPage() {
           <Card>
             <CardContent className="p-6">
               <div className="flex items-center gap-4">
-                <MapPin className="h-8 w-8 text-blue-500" />
+                <ClipboardCheck className="h-8 w-8 text-blue-500" />
                 <div>
-                  <p className="text-2xl font-bold">{stats?.usersWithState || 0}</p>
-                  <p className="text-sm text-gray-500">Selected a State</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center gap-4">
-                <MapPin className="h-8 w-8 text-green-500" />
-                <div>
-                  <p className="text-2xl font-bold">{Object.keys(stats?.byState || {}).length}</p>
-                  <p className="text-sm text-gray-500">Unique States</p>
+                  <p className="text-2xl font-bold">{stats?.totalTestsCompleted || 0}</p>
+                  <p className="text-sm text-gray-500">Tests Completed</p>
+                  <p className="text-xs text-gray-400">
+                    {stats?.totalUsers ? (stats.totalTestsCompleted / stats.totalUsers).toFixed(1) : 0} avg/user
+                  </p>
                 </div>
               </div>
             </CardContent>
