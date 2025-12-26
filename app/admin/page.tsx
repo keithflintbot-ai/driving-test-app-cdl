@@ -49,8 +49,16 @@ export default function AdminPage() {
 
       const userData: UserData[] = usersSnapshot.docs.map(doc => {
         const data = doc.data();
-        const training = data.training || {};
-        const trainingQuestionsAnswered = (training.correctCount || 0) + (training.incorrectCount || 0);
+
+        // Calculate training questions from trainingSets (masteredIds + wrongQueue per set)
+        const trainingSets = data.trainingSets || {};
+        let trainingQuestionsAnswered = 0;
+        for (const setId of [1, 2, 3, 4]) {
+          const setData = trainingSets[setId] || {};
+          const masteredIds = setData.masteredIds || [];
+          const wrongQueue = setData.wrongQueue || [];
+          trainingQuestionsAnswered += masteredIds.length + wrongQueue.length;
+        }
 
         // Calculate test questions answered from completed tests
         const completedTests = data.completedTests || [];
