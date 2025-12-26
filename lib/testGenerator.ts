@@ -11,8 +11,26 @@ function shuffle<T>(array: T[]): T[] {
   return shuffled;
 }
 
+// Check if a question has position-dependent answers (e.g., "A and B", "Both B and C")
+// These questions should not have their answers randomized
+function hasPositionDependentAnswers(question: Question): boolean {
+  const options = [question.optionA, question.optionB, question.optionC, question.optionD];
+
+  // Pattern to detect references to other answer options
+  // Matches: "A and B", "B and C", "Both A and B", "A, B, and C", etc.
+  const positionReferencePattern = /\b(A|B|C|D)\s+(and|or|,)\s+(A|B|C|D)\b|\bBoth\s+(A|B|C|D)\s+and\s+(A|B|C|D)\b|\bAll of the above\b|\bNone of the above\b/i;
+
+  return options.some(option => positionReferencePattern.test(option));
+}
+
 // Shuffle the answer options for a question (returns new question with shuffled options)
+// Skips shuffling for questions with position-dependent answers
 export function shuffleQuestionOptions(question: Question): Question {
+  // Don't shuffle if any option references other options by letter
+  if (hasPositionDependentAnswers(question)) {
+    return question;
+  }
+
   const options = [
     { letter: 'A', text: question.optionA },
     { letter: 'B', text: question.optionB },
