@@ -19,9 +19,9 @@
     "question": "Who can supervise a Stage I learner's permit holder in Alabama?",
     "answers": [
       "Any licensed driver over 18",
-      "Parent, guardian, or licensed driver 21 or older",
-      "Any family member with a license",
-      "Only certified driving instructors"
+      "Parent, guardian, or driver 21+",
+      "Any family member licensed",
+      "Certified driving instructors"
     ],
     "correctIndex": 1
   },
@@ -31,10 +31,10 @@
     "category": "gdlLicensing",
     "question": "How long must you hold a Stage I permit before applying for a Stage II license in Alabama?",
     "answers": [
-      "3 months",
-      "1 year",
-      "At least 6 months",
-      "9 months"
+      "3 months minimum",
+      "1 year minimum",
+      "6 months minimum",
+      "9 months minimum"
     ],
     "correctIndex": 2
   },
@@ -45,9 +45,9 @@
     "question": "What is the midnight to 6 AM curfew exception for Stage II license holders in Alabama?",
     "answers": [
       "School sports events only",
-      "Any recreational activities",
-      "Only emergencies",
-      "Work, school events, or with parent"
+      "Recreational activities only",
+      "Emergency situations only",
+      "Work, school, or parent"
     ],
     "correctIndex": 3
   },
@@ -57,7 +57,7 @@
     "category": "gdlLicensing",
     "question": "What happens if a Stage II license holder violates GDL restrictions in Alabama?",
     "answers": [
-      "Restrictive period extended 6 months or until age 18",
+      "Extended 6 months or to 18",
       "License permanently revoked",
       "Must restart from Stage I",
       "Criminal record is created"
@@ -97,9 +97,9 @@
     "question": "What driving practice is required to progress from Stage I to Stage II in Alabama?",
     "answers": [
       "30 hours of practice",
-      "Only a road test",
+      "Only a road test required",
       "100 hours of practice",
-      "50 hours or driver education course"
+      "50 hours or driver ed"
     ],
     "correctIndex": 3
   },
@@ -109,10 +109,10 @@
     "category": "gdlLicensing",
     "question": "When can a Stage II driver obtain an unrestricted license in Alabama?",
     "answers": [
-      "Age 17 with 6 months violation-free driving",
+      "Age 17, 6 months clean",
       "Immediately at age 18",
-      "Age 16 with driver education",
-      "Age 19 regardless of violations"
+      "Age 16 with driver ed",
+      "Age 19 regardless"
     ],
     "correctIndex": 0
   },
@@ -122,10 +122,10 @@
     "category": "gdlLicensing",
     "question": "What documentation is required for drivers under 19 applying for a permit in Alabama?",
     "answers": [
-      "Only birth certificate",
-      "Proof of school enrollment or graduation",
+      "Birth certificate only",
+      "School enrollment proof",
       "Employment verification",
-      "Parental consent form only"
+      "Parental consent only"
     ],
     "correctIndex": 1
   },
@@ -161,9 +161,9 @@
     "category": "cellPhone",
     "question": "What does Alabama's Hands-Free Law prohibit while driving?",
     "answers": [
-      "Physically holding or manually using a phone",
+      "Holding or manually using phone",
       "Only texting while driving",
-      "Only video recording",
+      "Only video recording while driving",
       "Using Bluetooth devices"
     ],
     "correctIndex": 0
@@ -174,8 +174,8 @@
     "category": "cellPhone",
     "question": "Can you use voice-operated talk-to-text while driving in Alabama?",
     "answers": [
-      "No, all phone use is banned",
-      "Yes, voice-operated texting is allowed",
+      "No, all phone use banned",
+      "Yes, voice texting allowed",
       "Only with hands-free device",
       "Only for emergencies"
     ],
@@ -189,7 +189,7 @@
     "answers": [
       "Up to three buttons",
       "Two buttons maximum",
-      "Single button or single swipe",
+      "Single button or swipe",
       "No touching allowed"
     ],
     "correctIndex": 2
@@ -213,10 +213,10 @@
     "category": "cellPhone",
     "question": "When can you legally contact emergency services with a phone while driving in Alabama?",
     "answers": [
-      "Anytime to report emergencies",
+      "Anytime for emergencies",
       "Only when fully stopped",
       "Only with voice commands",
-      "Never while vehicle is on"
+      "Never while vehicle on"
     ],
     "correctIndex": 0
   },
@@ -227,9 +227,9 @@
     "question": "What devices are permitted for phone conversations while driving in Alabama?",
     "answers": [
       "Handheld phones only",
-      "Bluetooth and speakerphones",
+      "Bluetooth or speaker",
       "No devices allowed",
-      "Only wired headsets"
+      "Wired headsets only"
     ],
     "correctIndex": 1
   },
@@ -265,7 +265,7 @@
     "category": "duiStateLaws",
     "question": "What does implied consent mean for Alabama drivers?",
     "answers": [
-      "Agreement to BAC testing when lawfully stopped",
+      "Agree to BAC testing if stopped",
       "Permission to search vehicle",
       "Consent to field sobriety only",
       "Waiver of legal representation"
@@ -279,9 +279,9 @@
     "question": "What happens to minimum jail time if your BAC is 0.15 or higher in Alabama?",
     "answers": [
       "It stays the same",
-      "Mandatory minimum sentence doubles",
+      "Minimum sentence doubles",
       "Only fines increase",
-      "License suspension extends only"
+      "License suspension extends"
     ],
     "correctIndex": 1
   },
@@ -291,10 +291,10 @@
     "category": "duiStateLaws",
     "question": "How long must you maintain SR-22 insurance after a DUI conviction in Alabama?",
     "answers": [
-      "One year",
-      "Two years",
-      "Three years",
-      "Five years"
+      "One year required",
+      "Two years required",
+      "Three years required",
+      "Five years required"
     ],
     "correctIndex": 2
   },
@@ -317,9 +317,9 @@
     "category": "duiStateLaws",
     "question": "What is the consequence of refusing a BAC test for the first time in Alabama?",
     "answers": [
-      "90-day license suspension",
+      "90-day suspension",
       "Automatic DUI conviction",
-      "No penalty",
+      "No penalty at all",
       "One year jail time"
     ],
     "correctIndex": 0
@@ -358,8 +358,8 @@
     "answers": [
       "Your vehicle damage only",
       "Your medical bills only",
-      "Rental car expenses",
-      "Damages you cause to others"
+      "Rental car expenses only",
+      "Damages you cause others"
     ],
     "correctIndex": 3
   },
@@ -369,9 +369,9 @@
     "category": "insurance",
     "question": "What coverage protects you if hit by an uninsured driver in Alabama?",
     "answers": [
-      "Uninsured motorist coverage",
+      "Uninsured motorist",
       "Comprehensive coverage",
-      "Collision coverage",
+      "Collision coverage only",
       "Personal injury protection"
     ],
     "correctIndex": 0
@@ -395,10 +395,10 @@
     "category": "stateUnique",
     "question": "When must you turn on headlights while driving in Alabama?",
     "answers": [
-      "Only at night",
+      "Only at night time",
       "During rain only",
-      "When using windshield wipers",
-      "Only in fog"
+      "When wipers are on",
+      "Only in fog conditions"
     ],
     "correctIndex": 2
   },
@@ -408,10 +408,10 @@
     "category": "stateUnique",
     "question": "What is required when passing a stopped emergency vehicle on a four-lane road in Alabama?",
     "answers": [
-      "Honk your horn",
-      "Stop completely",
-      "Flash your lights",
-      "Move over one lane or slow down"
+      "Honk your horn loudly",
+      "Stop completely first",
+      "Flash your headlights",
+      "Move over or slow down"
     ],
     "correctIndex": 3
   },
@@ -473,10 +473,10 @@
     "category": "stateUnique",
     "question": "When must you stop for a school bus with flashing lights in Alabama?",
     "answers": [
-      "From any direction of approach",
+      "From any direction",
       "Only if directly behind",
       "Only on two-lane roads",
-      "Never if on opposite side"
+      "Never if opposite side"
     ],
     "correctIndex": 0
   },
@@ -501,7 +501,7 @@
     "answers": [
       "Only at crosswalks",
       "Only with walk signals",
-      "Always, even when crossing illegally",
+      "Always, even illegally",
       "Never in roadways"
     ],
     "correctIndex": 2
@@ -512,10 +512,10 @@
     "category": "stateUnique",
     "question": "When are right turns on red allowed in Alabama?",
     "answers": [
-      "Never permitted",
+      "Never permitted here",
       "Always without stopping",
       "Only during daytime",
-      "After full stop when safe"
+      "After stop when safe"
     ],
     "correctIndex": 3
   }

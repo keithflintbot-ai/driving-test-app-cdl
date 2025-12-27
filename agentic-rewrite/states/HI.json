@@ -87,10 +87,10 @@
     "id": "HI-008",
     "question": "What must you complete before applying for a provisional license in Hawaii?",
     "answers": [
-      "Only a written test",
+      "Only written test is required",
       "Only behind-the-wheel training",
-      "Only classroom instruction",
-      "Both classroom and behind-the-wheel driver's education"
+      "Only classroom instruction course",
+      "Classroom and behind-wheel education"
     ],
     "correctIndex": 3,
     "category": "gdlLicensing"
@@ -99,8 +99,8 @@
     "id": "HI-009",
     "question": "Who must supervise permit holders outside of nighttime hours in Hawaii?",
     "answers": [
-      "Any licensed driver 21 or older",
-      "Only parents",
+      "Licensed driver 21 or older",
+      "Only parents or guardians",
       "Only driving instructors",
       "Only family members"
     ],
@@ -111,10 +111,10 @@
     "id": "HI-010",
     "question": "What happens to your permit progression if it is suspended in Hawaii?",
     "answers": [
-      "Nothing changes",
-      "You must restart the 180-day waiting period",
+      "Nothing changes at all",
+      "Must restart 180-day period",
       "You lose it permanently",
-      "You pay a reinstatement fee only"
+      "You pay reinstatement fee only"
     ],
     "correctIndex": 1,
     "category": "gdlLicensing"
@@ -135,10 +135,10 @@
     "id": "HI-012",
     "question": "Can drivers 18 or older skip the permit stage in Hawaii?",
     "answers": [
-      "No, permits are required for all",
+      "No, permits required for all",
       "Only with driver's education",
       "Only with parental consent",
-      "Yes, they can apply directly for a license"
+      "Yes, apply directly for license"
     ],
     "correctIndex": 3,
     "category": "gdlLicensing"
@@ -147,10 +147,10 @@
     "id": "HI-013",
     "question": "What type of cell phone use is prohibited for all drivers in Hawaii?",
     "answers": [
-      "Using handheld mobile devices while driving",
+      "Handheld mobile devices",
       "Using hands-free devices",
       "Using GPS navigation",
-      "Emergency calls"
+      "Making emergency calls"
     ],
     "correctIndex": 0,
     "category": "cellPhone"
@@ -159,9 +159,9 @@
     "id": "HI-014",
     "question": "What type of cell phone use is allowed for adult drivers in Hawaii?",
     "answers": [
-      "All handheld use",
+      "All handheld device use",
       "Hands-free devices only",
-      "Texting only",
+      "Texting only allowed",
       "No cell phone use allowed"
     ],
     "correctIndex": 1,
@@ -172,8 +172,8 @@
     "question": "What restriction applies to drivers under 18 regarding cell phones in Hawaii?",
     "answers": [
       "Handheld devices only prohibited",
-      "Texting only prohibited",
-      "All electronic device use prohibited, including hands-free",
+      "Texting only is prohibited here",
+      "Device use banned, even hands-free",
       "No restrictions for under 18"
     ],
     "correctIndex": 2,
@@ -186,7 +186,7 @@
       "Yes, always legal at red lights",
       "No, unless emergency services",
       "Yes, in school zones only",
-      "Yes, but only if the vehicle is fully stopped"
+      "Yes, if vehicle fully stopped"
     ],
     "correctIndex": 3,
     "category": "cellPhone"
@@ -196,7 +196,7 @@
     "question": "When is using a handheld cell phone permitted for any driver in Hawaii?",
     "answers": [
       "When calling emergency services",
-      "When using GPS",
+      "When using GPS navigation",
       "When hands-free is unavailable",
       "Never under any circumstances"
     ],
@@ -208,8 +208,8 @@
     "question": "What unique pedestrian law does Honolulu have regarding electronic devices?",
     "answers": [
       "Drivers must put phones away near crosswalks",
-      "Pedestrians cannot use phones while crossing streets",
-      "All phones must be silenced",
+      "Pedestrians can't use phones while crossing",
+      "All phones must be silenced in zones",
       "Electronic billboards are banned"
     ],
     "correctIndex": 1,
@@ -243,10 +243,10 @@
     "id": "HI-021",
     "question": "What does Hawaii's implied consent law mean for drivers?",
     "answers": [
-      "You automatically consent to chemical testing when arrested for DUI",
+      "Auto consent to testing when arrested",
       "You can refuse testing without penalty",
       "Only commercial drivers must consent",
-      "You must sign a consent form"
+      "You must first sign a consent form"
     ],
     "correctIndex": 0,
     "category": "duiStateLaws"
@@ -279,10 +279,10 @@
     "id": "HI-024",
     "question": "What is Hawaii's alcohol policy for drivers under 21?",
     "answers": [
-      "0.02% limit",
+      "0.02% BAC limit applies",
       "Same as adults",
-      "0.04% limit",
-      "Zero tolerance for any detectable amount"
+      "0.04% BAC limit applies",
+      "Zero tolerance policy"
     ],
     "correctIndex": 3,
     "category": "duiStateLaws"
@@ -291,10 +291,10 @@
     "id": "HI-025",
     "question": "When is an ignition interlock device required in Hawaii?",
     "answers": [
-      "For all DUI offenses, even first offense",
+      "All DUI offenses, even first",
       "Only for third offense or higher",
       "Only for commercial drivers",
-      "Never required in Hawaii"
+      "Never required in Hawaii state"
     ],
     "correctIndex": 0,
     "category": "duiStateLaws"
@@ -339,10 +339,10 @@
     "id": "HI-029",
     "question": "What does Personal Injury Protection primarily cover in Hawaii?",
     "answers": [
-      "Medical costs for you and your passengers",
-      "Property damage only",
-      "Other drivers' injuries",
-      "Vehicle repairs"
+      "Medical costs for you and passengers",
+      "Property damage repair costs only",
+      "Other drivers' injury costs",
+      "Your vehicle repair costs only"
     ],
     "correctIndex": 0,
     "category": "insurance"
@@ -351,10 +351,10 @@
     "id": "HI-030",
     "question": "What threshold must medical expenses exceed before you can sue in Hawaii?",
     "answers": [
-      "No threshold exists",
-      "Medical expenses must exceed a certain amount",
+      "No threshold exists at all",
+      "Medical costs exceed threshold",
       "Any amount allows lawsuit",
-      "Permanent injury only"
+      "Permanent injury only applies"
     ],
     "correctIndex": 1,
     "category": "insurance"
@@ -365,7 +365,7 @@
     "answers": [
       "Only at marked crosswalks",
       "Only when pedestrian waves",
-      "When pedestrian is on your half or approaching closely",
+      "When on your half or approaching",
       "Only at intersections with signals"
     ],
     "correctIndex": 2,
@@ -375,10 +375,10 @@
     "id": "HI-032",
     "question": "Are U-turns legal at signalized intersections in Hawaii?",
     "answers": [
-      "Yes, always allowed",
+      "Yes, always allowed everywhere",
       "Yes, unless posted otherwise",
       "Yes, during off-peak hours only",
-      "No, prohibited at all signalized intersections"
+      "No, banned at signal intersections"
     ],
     "correctIndex": 3,
     "category": "stateUnique"
@@ -399,9 +399,9 @@
     "id": "HI-034",
     "question": "What must pedestrians do when crossing outside of a crosswalk in Hawaii?",
     "answers": [
-      "Cross quickly",
-      "Yield right-of-way to all vehicles",
-      "Wave to drivers",
+      "Cross quickly and safely",
+      "Yield to all vehicles",
+      "Wave to all drivers",
       "Nothing, they always have right-of-way"
     ],
     "correctIndex": 1,
@@ -423,10 +423,10 @@
     "id": "HI-036",
     "question": "Can you pass a vehicle stopped at a crosswalk for a pedestrian in Hawaii?",
     "answers": [
-      "Yes, if safe",
+      "Yes, if safe to do so",
       "Yes, in the left lane only",
       "Yes, if no pedestrian is visible",
-      "No, you must not overtake and pass"
+      "No, must not overtake"
     ],
     "correctIndex": 3,
     "category": "stateUnique"
@@ -435,10 +435,10 @@
     "id": "HI-037",
     "question": "What should pedestrians do if suddenly needing to cross and vehicles are close in Hawaii?",
     "answers": [
-      "Wait, do not enter the path of close vehicles",
-      "Cross quickly",
+      "Wait, don't enter path of vehicles",
+      "Cross quickly and hurry across",
       "Wave to get driver's attention",
-      "Step out slowly"
+      "Step out slowly into roadway"
     ],
     "correctIndex": 0,
     "category": "stateUnique"
@@ -448,9 +448,9 @@
     "question": "What does Hawaii's comparative negligence rule mean for pedestrian accidents?",
     "answers": [
       "Pedestrians always recover full compensation",
-      "Pedestrians can recover if less than 50% at fault",
+      "Can recover if less than 50% at fault",
       "Pedestrians cannot recover if any fault",
-      "Only drivers can be at fault"
+      "Only drivers can be at fault here"
     ],
     "correctIndex": 1,
     "category": "stateUnique"
@@ -461,7 +461,7 @@
     "answers": [
       "If no cars are visible",
       "During off-peak hours",
-      "Never, they must wait for Walk signal",
+      "Never, must wait for Walk signal",
       "If they can complete crossing quickly"
     ],
     "correctIndex": 2,
@@ -471,10 +471,10 @@
     "id": "HI-040",
     "question": "What must pedestrians do who have started crossing on a Walk signal when it changes?",
     "answers": [
-      "Run back to the curb",
-      "Stop in the middle",
-      "Speed up significantly",
-      "Continue to sidewalk or safety island"
+      "Run back to the curb quickly",
+      "Stop in the middle of road",
+      "Speed up significantly now",
+      "Continue to sidewalk or island"
     ],
     "correctIndex": 3,
     "category": "stateUnique"

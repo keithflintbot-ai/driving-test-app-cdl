@@ -16,9 +16,9 @@
     "id": "GA-002",
     "question": "During the first six months with a Georgia Class D license, who can ride as passengers?",
     "options": [
-      "Anyone the driver chooses",
+      "Anyone the driver chooses to bring",
       "Only immediate family members",
-      "Up to three friends",
+      "Up to three friends maximum",
       "Only adults over age 21"
     ],
     "correctIndex": 1,
@@ -29,10 +29,10 @@
     "id": "GA-003",
     "question": "What must a Georgia learner's permit holder do while driving?",
     "options": [
-      "Display a special decal on the vehicle",
-      "Only drive during daylight hours",
-      "Be accompanied by a licensed driver age 21 or older",
-      "Limit speed to 10 mph below posted limits"
+      "Display special decal on the vehicle",
+      "Drive only during daylight hours only",
+      "Be accompanied by licensed driver 21+",
+      "Keep speed 10 mph below posted limits"
     ],
     "correctIndex": 2,
     "category": "gdlLicensing",
@@ -55,10 +55,10 @@
     "id": "GA-005",
     "question": "Under Joshua's Law, what behind-the-wheel training options satisfy the requirement?",
     "options": [
-      "Six hours professional or 40 hours parent-taught",
-      "Ten hours with any adult driver",
-      "Twenty hours at a driving school only",
-      "Thirty hours with a family member"
+      "6 hrs professional or 40 hrs parent-taught",
+      "Ten hours with any licensed adult driver",
+      "Twenty hours at driving school only",
+      "Thirty hours with any family member"
     ],
     "correctIndex": 0,
     "category": "gdlLicensing",
@@ -107,10 +107,10 @@
     "id": "GA-009",
     "question": "When can a Georgia driver upgrade from a Class D to a full Class C license?",
     "options": [
-      "At age 18 after holding Class D for 12 months",
+      "At age 18 after holding Class D 12 months",
       "At age 17 after completing advanced training",
-      "At age 19 with no violations",
-      "Immediately after passing a road test"
+      "At age 19 with clean driving record",
+      "Immediately after passing road test"
     ],
     "correctIndex": 0,
     "category": "gdlLicensing",
@@ -159,7 +159,7 @@
     "id": "GA-013",
     "question": "What is the core principle of Georgia's Hands-Free Law?",
     "options": [
-      "No part of the driver's body can touch the phone",
+      "Driver's body cannot touch the phone",
       "Phones must be turned off while driving",
       "Only emergency calls are permitted",
       "Bluetooth devices are prohibited"
@@ -187,8 +187,8 @@
     "options": [
       "Texting at red lights only",
       "One-handed calling if brief",
-      "Hands-free voice-activated technology",
-      "Holding phone for GPS directions"
+      "Hands-free voice-activated tech",
+      "Holding phone for GPS navigation"
     ],
     "correctIndex": 2,
     "category": "cellPhone",
@@ -224,8 +224,8 @@
     "id": "GA-018",
     "question": "What must drivers do if they need to use their phone while driving in Georgia?",
     "options": [
-      "Pull over and stop briefly",
-      "Use voice commands or pull over and park legally",
+      "Pull over and stop briefly on roadside",
+      "Use voice commands or park legally",
       "Wait until reaching their destination",
       "Switch to speaker mode immediately"
     ],
@@ -250,10 +250,10 @@
     "id": "GA-020",
     "question": "What does Georgia's implied consent law require from drivers?",
     "options": [
-      "Consent to vehicle searches",
+      "Consent to vehicle searches at stops",
       "Permission for license suspension",
       "Consent to roadside questioning",
-      "Agreement to chemical testing when arrested for DUI"
+      "Chemical testing when arrested for DUI"
     ],
     "correctIndex": 3,
     "category": "duiStateLaws",
@@ -276,10 +276,10 @@
     "id": "GA-022",
     "question": "What additional consequence do Georgia drivers aged 15-21 face for DUI conviction?",
     "options": [
-      "Immediate vehicle impoundment",
-      "Delayed eligibility for graduated license advancement",
+      "Immediate vehicle impoundment for DUI",
+      "Delayed graduated license advancement",
       "Mandatory alcohol education classes",
-      "Extended probation period"
+      "Extended probation period of 1 year"
     ],
     "correctIndex": 1,
     "category": "duiStateLaws",
@@ -316,9 +316,9 @@
     "question": "Why does Georgia enforce zero tolerance laws for underage drivers?",
     "options": [
       "To prevent underage drinking and driving",
-      "To reduce insurance costs",
-      "To increase state revenue",
-      "To simplify traffic enforcement"
+      "To reduce insurance costs for families",
+      "To increase state revenue from fines",
+      "To simplify traffic enforcement efforts"
     ],
     "correctIndex": 0,
     "category": "duiStateLaws",
@@ -367,8 +367,8 @@
     "id": "GA-029",
     "question": "Why does Georgia require minimum liability insurance coverage?",
     "options": [
-      "To ensure drivers can pay for harm they cause",
-      "To fund state highway maintenance",
+      "To ensure drivers pay for harm they cause",
+      "To fund state highway maintenance work",
       "To reduce vehicle registration fees",
       "To lower overall insurance premiums"
     ],
@@ -419,10 +419,10 @@
     "id": "GA-033",
     "question": "What does Georgia's Slowpoke Law require on multi-lane highways?",
     "options": [
-      "Exiting the left lane when faster traffic approaches",
-      "Maintaining minimum highway speeds",
-      "Using right lane for all truck traffic",
-      "Keeping left lane clear during rush hour"
+      "Exit left lane for faster traffic",
+      "Maintain minimum highway speeds always",
+      "Use right lane for all truck traffic",
+      "Keep left lane clear during rush hour"
     ],
     "correctIndex": 0,
     "category": "stateUnique",
@@ -432,10 +432,10 @@
     "id": "GA-034",
     "question": "When must drivers stop for a school bus in Georgia?",
     "options": [
-      "Only when children are visible",
+      "Only when children are visible boarding",
       "When red lights flash and stop arm extends",
-      "When the bus is slowing down",
-      "Only on school property"
+      "When the bus is slowing down gradually",
+      "Only on school property and grounds"
     ],
     "correctIndex": 1,
     "category": "stateUnique",
@@ -445,10 +445,10 @@
     "id": "GA-035",
     "question": "What did Georgia's Addy's Law establish regarding school buses?",
     "options": [
-      "Mandatory seat belts on all buses",
-      "Camera systems on every bus",
+      "Mandatory seat belts on all buses statewide",
+      "Camera systems on every bus for monitoring",
       "Enhanced penalties for illegally passing buses",
-      "Reduced speed limits near schools"
+      "Reduced speed limits near schools and stops"
     ],
     "correctIndex": 2,
     "category": "stateUnique",
@@ -471,10 +471,10 @@
     "id": "GA-037",
     "question": "Which vehicles are covered under Georgia's Move Over Law?",
     "options": [
-      "Emergency, tow, utility, and highway maintenance vehicles",
-      "Police and fire vehicles only",
-      "Any vehicle with hazard lights on",
-      "Commercial vehicles and buses"
+      "Emergency, tow, utility, highway maintenance",
+      "Police and fire vehicles only on highways",
+      "Any vehicle with hazard lights on roadways",
+      "Commercial vehicles and buses with lights"
     ],
     "correctIndex": 0,
     "category": "stateUnique",
@@ -484,10 +484,10 @@
     "id": "GA-038",
     "question": "What do flashing yellow lights on a Georgia school bus indicate?",
     "options": [
-      "The bus is broken down",
+      "The bus is broken down on road",
       "The bus is preparing to stop soon",
-      "Children are boarding",
-      "The bus is in reverse"
+      "Children are boarding the bus",
+      "The bus is in reverse gear"
     ],
     "correctIndex": 1,
     "category": "stateUnique",
@@ -497,10 +497,10 @@
     "id": "GA-039",
     "question": "When does Georgia's Slowpoke Law NOT apply to left lane drivers?",
     "options": [
-      "When driving at the speed limit",
-      "During weekend travel",
-      "When traffic congestion requires using all lanes",
-      "On roads with three or more lanes"
+      "When driving at the posted speed limit",
+      "During weekend travel on all highways",
+      "When traffic congestion requires all lanes",
+      "On roads with three or more lanes total"
     ],
     "correctIndex": 2,
     "category": "stateUnique",
@@ -510,10 +510,10 @@
     "id": "GA-040",
     "question": "When can drivers continue without stopping for a school bus on a divided highway?",
     "options": [
-      "When traveling over 45 mph",
-      "During non-school hours only",
-      "Never on any divided highway",
-      "When traveling opposite direction with median separation"
+      "When traveling over 45 mph speed limit",
+      "During non-school hours only on weekdays",
+      "Never on any divided highway in Georgia",
+      "When traveling opposite with median separation"
     ],
     "correctIndex": 3,
     "category": "stateUnique",

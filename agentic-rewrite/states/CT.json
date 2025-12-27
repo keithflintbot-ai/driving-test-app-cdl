@@ -147,10 +147,10 @@
     "category": "gdlLicensing",
     "question": "What exception allows teen drivers to drive during Connecticut's night curfew?",
     "options": [
-      "Social events only",
-      "Any family trip",
-      "Visiting friends",
-      "Employment or school activities"
+      "Social or recreational events",
+      "Any family trip or outing",
+      "Visiting friends or relatives",
+      "Work or school activities"
     ],
     "correctIndex": 3,
     "explanation": "Connecticut allows exceptions for employment, school, religious activities, medical emergencies, and safe ride programs."
@@ -160,10 +160,10 @@
     "category": "cellPhone",
     "question": "Can Connecticut drivers age 18 and over use hands-free cell phones while driving?",
     "options": [
-      "Yes, if using hands-free accessories",
-      "No, all phone use is prohibited",
-      "Only on highways",
-      "Only for GPS navigation"
+      "Yes, with hands-free accessories",
+      "No, all phone use prohibited",
+      "Only on highways and interstates",
+      "Only for GPS navigation purposes"
     ],
     "correctIndex": 0,
     "explanation": "Drivers 18 and older may use cell phones with hands-free accessories while driving in Connecticut."
@@ -186,10 +186,10 @@
     "category": "cellPhone",
     "question": "When does Connecticut's hands-free law apply to drivers?",
     "options": [
-      "Only when the vehicle is moving",
-      "Only on highways and interstates",
-      "When stopped at traffic lights or in traffic",
-      "Only during school hours"
+      "Only when vehicle is actively moving",
+      "Only on highways and interstate roads",
+      "When stopped at lights or in traffic",
+      "Only during designated school hours"
     ],
     "correctIndex": 2,
     "explanation": "Connecticut's distracted driving law applies even when temporarily stopped in traffic, at lights, or stop signs."
@@ -199,10 +199,10 @@
     "category": "cellPhone",
     "question": "Where can Connecticut drivers legally use handheld phones while in their vehicle?",
     "options": [
-      "In parking lots only",
-      "At red lights",
-      "In driveways only",
-      "Parked safely on the shoulder"
+      "In parking lots or garages",
+      "At red traffic lights",
+      "In private driveways only",
+      "Parked safely on shoulder"
     ],
     "correctIndex": 3,
     "explanation": "Drivers can use handheld phones when safely parked on the side of or shoulder of the road."
@@ -213,9 +213,9 @@
     "question": "What type of devices does Connecticut's distracted driving law cover?",
     "options": [
       "All mobile electronic devices",
-      "Only cell phones",
-      "Only smartphones",
-      "Only texting devices"
+      "Only cell phones and tablets",
+      "Only smartphones and iPhones",
+      "Only texting-capable devices"
     ],
     "correctIndex": 0,
     "explanation": "Connecticut's law covers all mobile electronic devices including laptops, PDAs, pagers, and game consoles."
@@ -303,10 +303,10 @@
     "category": "duiStateLaws",
     "question": "How long is the license suspension for a 16-17 year old who refuses a chemical test?",
     "options": [
-      "6 months",
-      "1 year",
-      "2 years",
-      "18 months"
+      "6 months total",
+      "1 full year total",
+      "2 full years total",
+      "18 months total"
     ],
     "correctIndex": 3,
     "explanation": "Connecticut imposes an enhanced 18-month suspension for 16-17 year olds who refuse chemical testing."
@@ -316,10 +316,10 @@
     "category": "duiStateLaws",
     "question": "Who must install an ignition interlock device in Connecticut after a DUI?",
     "options": [
-      "All offenders including first-time",
-      "Only repeat offenders",
-      "Only commercial drivers",
-      "Only those with high BAC"
+      "All offenders including first",
+      "Only repeat DUI offenders",
+      "Only commercial CDL drivers",
+      "Only those with elevated BAC"
     ],
     "correctIndex": 0,
     "explanation": "Connecticut requires ignition interlock devices for all DUI offenses, including first-time convictions."
@@ -368,10 +368,10 @@
     "category": "insurance",
     "question": "What type of motorist coverage does Connecticut require besides liability insurance?",
     "options": [
-      "Uninsured and underinsured motorist coverage",
-      "Collision coverage",
-      "Comprehensive coverage",
-      "Gap insurance"
+      "Uninsured/underinsured motorist",
+      "Collision damage coverage",
+      "Comprehensive damage coverage",
+      "Gap insurance coverage type"
     ],
     "correctIndex": 0,
     "explanation": "Connecticut requires uninsured and underinsured motorist coverage in addition to liability insurance."
@@ -381,10 +381,10 @@
     "category": "insurance",
     "question": "What must Connecticut drivers carry in their vehicle at all times?",
     "options": [
-      "Only registration",
+      "Only vehicle registration card",
       "Insurance card and registration",
-      "Only proof of ownership",
-      "Bill of sale only"
+      "Only proof of vehicle ownership",
+      "Bill of sale documentation only"
     ],
     "correctIndex": 1,
     "explanation": "Connecticut law requires drivers to carry both the insurance identification card and vehicle registration at all times."
@@ -394,10 +394,10 @@
     "category": "stateUnique",
     "question": "What vehicles does Connecticut's Move Over law apply to?",
     "options": [
-      "Only police vehicles",
-      "Only emergency vehicles",
-      "All stopped vehicles on the roadside",
-      "Only tow trucks"
+      "Only marked police vehicles",
+      "Only emergency response vehicles",
+      "All stopped roadside vehicles",
+      "Only tow trucks and wreckers"
     ],
     "correctIndex": 2,
     "explanation": "Connecticut's expanded Move Over law applies to any vehicle stopped on the shoulder or roadside, not just emergency vehicles."
@@ -421,9 +421,9 @@
     "question": "What must you do on a multi-lane road when approaching a stopped vehicle in Connecticut?",
     "options": [
       "Move over one lane if safe",
-      "Stop completely",
-      "Turn on hazard lights",
-      "Sound your horn"
+      "Stop completely in your lane",
+      "Turn on your hazard lights",
+      "Sound horn as you approach"
     ],
     "correctIndex": 0,
     "explanation": "On multi-lane roads, Connecticut drivers must move over one lane if it is safe and reasonable to do so."
@@ -433,10 +433,10 @@
     "category": "stateUnique",
     "question": "What should you do if you cannot move over for a stopped vehicle in Connecticut?",
     "options": [
-      "Maintain current speed",
+      "Maintain your current speed level",
       "Slow down and proceed with caution",
-      "Stop in your lane",
-      "Speed up to pass quickly"
+      "Stop completely in your own lane",
+      "Speed up to pass by them quickly"
     ],
     "correctIndex": 1,
     "explanation": "If unable to move over, Connecticut drivers must slow down to a reasonable speed and proceed cautiously."
@@ -446,10 +446,10 @@
     "category": "stateUnique",
     "question": "When should Connecticut drivers use the left lane on multi-lane highways?",
     "options": [
-      "For cruise control driving",
-      "Anytime they prefer",
-      "Passing, exiting left, or avoiding obstacles",
-      "Only during rush hour"
+      "For cruise control driving purposes",
+      "Anytime they prefer to use it",
+      "Passing, left exits, or obstacles",
+      "Only during rush hour traffic"
     ],
     "correctIndex": 2,
     "explanation": "Connecticut's left lane law restricts use to passing, preparing for left exits, or avoiding obstructions."
@@ -485,10 +485,10 @@
     "category": "stateUnique",
     "question": "What happens if a Connecticut driver under 18 drives another person's non-IID vehicle while restricted?",
     "options": [
-      "Warning only",
+      "Warning citation only",
       "Fine and possible jail time",
-      "Community service",
-      "License points only"
+      "Community service hours only",
+      "License points added only"
     ],
     "correctIndex": 1,
     "explanation": "Driving another vehicle while IID-restricted carries fines and up to one year jail, including mandatory 30 days."
@@ -498,10 +498,10 @@
     "category": "stateUnique",
     "question": "How often must ignition interlock devices be calibrated in Connecticut?",
     "options": [
-      "Every week",
-      "Every 60 days",
+      "Every week or 7 days",
+      "Every 60 days period",
       "Every 25 to 30 days",
-      "Every 90 days"
+      "Every 90 days period"
     ],
     "correctIndex": 2,
     "explanation": "Connecticut requires IID calibration every 25 to 30 days by bringing the device to the installer."
@@ -511,10 +511,10 @@
     "category": "stateUnique",
     "question": "During the first year of IID installation, where can Connecticut first-time offenders drive?",
     "options": [
-      "Anywhere without restriction",
-      "Only within their county",
-      "Only to neighboring states",
-      "Work, school, treatment, and service appointments"
+      "Anywhere without any restrictions",
+      "Only within their own home county",
+      "Only to neighboring border states",
+      "Work, school, treatment, and service"
     ],
     "correctIndex": 3,
     "explanation": "First-year IID restrictions limit driving to work, school, treatment, IID service centers, and probation appointments."

@@ -21,8 +21,8 @@
     "answers": [
       "4-hour driver awareness class",
       "30-hour driver education course",
-      "No requirement",
-      "12-hour online course"
+      "No formal requirement needed",
+      "12-hour online course option"
     ],
     "correctIndex": 1,
     "explanation": "Colorado requires drivers aged 15 to 15½ to complete a 30-hour driver education course before applying for a learner's permit."
@@ -33,10 +33,10 @@
     "state": "CO",
     "question": "How many hours of supervised driving practice must Colorado teens log before getting a license?",
     "answers": [
-      "40 hours total",
-      "60 hours total",
+      "40 hours total practice time",
+      "60 hours total practice time",
       "50 hours, including 10 at night",
-      "30 hours total"
+      "30 hours total practice time"
     ],
     "correctIndex": 2,
     "explanation": "Colorado requires 50 hours of supervised driving, with at least 10 hours completed at night, before teens can apply for their driver's license."
@@ -47,9 +47,9 @@
     "state": "CO",
     "question": "During which hours are Colorado minor license holders prohibited from driving alone?",
     "answers": [
-      "11 PM to 5 AM",
-      "10 PM to 6 AM",
-      "9 PM to 5 AM",
+      "11 PM to 5 AM daily",
+      "10 PM to 6 AM daily",
+      "9 PM to 5 AM nightly",
       "Midnight to 5 AM"
     ],
     "correctIndex": 3,
@@ -62,9 +62,9 @@
     "question": "Until what age is a Colorado minor driver's license valid?",
     "answers": [
       "20 days after turning 21",
-      "Their 21st birthday",
-      "Their 20th birthday",
-      "Their 18th birthday"
+      "Until their 21st birthday",
+      "Until their 20th birthday",
+      "Until their 18th birthday"
     ],
     "correctIndex": 0,
     "explanation": "Colorado minor licenses remain valid until 20 days after the driver turns 21, at which point they must visit the DMV for an adult license."
@@ -75,10 +75,10 @@
     "state": "CO",
     "question": "Who must supervise Colorado permit holders during their logged driving hours?",
     "answers": [
-      "Any licensed driver",
-      "The parent or guardian who signed the affidavit or their appointed alternate",
-      "Any adult over 25",
-      "A professional driving instructor"
+      "Any currently licensed driver over age 21",
+      "Parent/guardian who signed affidavit or alternate",
+      "Any licensed adult driver over age 25 years",
+      "Professional driving instructor only approved"
     ],
     "correctIndex": 1,
     "explanation": "The 50 hours must be supervised by the Colorado-licensed parent/legal guardian who signed the Affidavit of Liability or an alternate permit supervisor they appointed."
@@ -89,10 +89,10 @@
     "state": "CO",
     "question": "What must Colorado teens under 16½ complete to get their driver's license?",
     "answers": [
-      "100 hours of practice",
-      "Advanced driving course",
-      "Approved behind-the-wheel training program",
-      "Defensive driving course"
+      "100 hours of supervised practice",
+      "Advanced driving course program",
+      "Approved behind-the-wheel training",
+      "Defensive driving course program"
     ],
     "correctIndex": 2,
     "explanation": "Colorado requires teens under 16½ to provide proof they've completed an approved behind-the-wheel training program before getting their license."
@@ -103,9 +103,9 @@
     "state": "CO",
     "question": "What education option can Colorado teens aged 15½ to 16 choose instead of the full driver education course?",
     "answers": [
-      "Online practice tests only",
-      "Parent-taught program",
-      "No alternative available",
+      "Online practice tests option only",
+      "Parent-taught program alternative",
+      "No alternative option available",
       "4-hour driver awareness class"
     ],
     "correctIndex": 3,
@@ -131,10 +131,10 @@
     "state": "CO",
     "question": "What must Colorado teens bring to the DMV when applying for a learner's permit?",
     "answers": [
-      "Only their birth certificate",
-      "Parent or legal guardian to sign an Affidavit of Liability",
-      "Proof of vehicle ownership",
-      "High school transcripts"
+      "Only their birth certificate document only",
+      "Parent/guardian to sign Affidavit of Liability",
+      "Proof of vehicle ownership documents required",
+      "High school transcripts and academic records"
     ],
     "correctIndex": 1,
     "explanation": "Colorado requires teens to bring a parent or legal guardian to the DMV to sign an Affidavit of Liability and Guardianship when applying for a permit."
@@ -187,10 +187,10 @@
     "state": "CO",
     "question": "How can Colorado drivers legally use their phones while driving?",
     "answers": [
-      "By holding it at red lights",
-      "Only with hands-free accessories like Bluetooth",
-      "By placing it on their lap",
-      "By using speakerphone"
+      "By holding phone at red lights only",
+      "With hands-free accessories like Bluetooth",
+      "By placing phone on their lap to dial",
+      "By using built-in speakerphone mode"
     ],
     "correctIndex": 1,
     "explanation": "Colorado's hands-free law requires drivers to use hands-free accessories such as Bluetooth technology or dashboard-mounted phones to make calls while driving."
@@ -201,10 +201,10 @@
     "state": "CO",
     "question": "Is holding a phone to your ear while stopped at a red light legal in Colorado?",
     "answers": [
-      "Yes, when stopped it's allowed",
-      "Yes, but only briefly",
-      "No, holding phones at traffic signals is prohibited",
-      "Only if the call is urgent"
+      "Yes, when stopped it's allowed for calls",
+      "Yes, but only briefly for quick calls",
+      "No, holding phones at signals is prohibited",
+      "Only if the call is urgent or emergency"
     ],
     "correctIndex": 2,
     "explanation": "Colorado's hands-free law prohibits holding a phone while driving, including when stopped at traffic signals or in traffic."
@@ -230,9 +230,9 @@
     "question": "When is it legal to use a handheld phone while driving in Colorado?",
     "answers": [
       "To report emergencies to 911",
-      "In parking lots",
-      "At stop signs",
-      "During light traffic"
+      "In private parking lots only",
+      "At stop signs while stopped",
+      "During light traffic periods"
     ],
     "correctIndex": 0,
     "explanation": "Colorado law includes exceptions for first responders at work and when people need to report emergencies to 911 or law enforcement."
@@ -243,10 +243,10 @@
     "state": "CO",
     "question": "How can Colorado drivers avoid penalties for a first-time hands-free violation?",
     "answers": [
-      "Complete traffic school",
-      "Show proof of purchasing a hands-free accessory",
-      "Pay a reduced fine",
-      "Promise not to repeat"
+      "Complete traffic school course for drivers",
+      "Show proof of purchasing hands-free accessory",
+      "Pay a reduced fine to the court clerk",
+      "Promise not to repeat the offense again"
     ],
     "correctIndex": 1,
     "explanation": "First-time offenders in Colorado can avoid penalties by showing a judge a receipt proving they purchased a hands-free accessory like a dash mount."
@@ -299,10 +299,10 @@
     "state": "CO",
     "question": "What happens if you refuse a BAC test after a DUI arrest in Colorado?",
     "answers": [
-      "Warning only",
-      "Automatic license suspension for at least one year",
-      "Small fine only",
-      "Mandatory court appearance"
+      "Warning only for first refusal offense today",
+      "Automatic license suspension for at least 1 year",
+      "Small fine only without other penalties applied",
+      "Mandatory court appearance is scheduled for you"
     ],
     "correctIndex": 1,
     "explanation": "Colorado's express consent law means refusing to submit to a BAC test after arrest results in automatic license suspension for at least one year."
@@ -313,10 +313,10 @@
     "state": "CO",
     "question": "What is the BAC limit for underage drivers in Colorado?",
     "answers": [
-      "0.00%",
-      "0.01%",
+      "0.00% or higher",
+      "0.01% or higher",
       "0.02% or higher",
-      "0.05%"
+      "0.05% or higher"
     ],
     "correctIndex": 2,
     "explanation": "Colorado's UDD (Underage Drinking and Driving) law makes it illegal for anyone under 21 to drive with a BAC of 0.02% or greater."
@@ -327,9 +327,9 @@
     "state": "CO",
     "question": "At what point does a DUI become a felony in Colorado?",
     "answers": [
-      "Second offense",
-      "Third offense",
-      "Any DUI causing injury",
+      "Second offense conviction",
+      "Third offense conviction",
+      "Any DUI causing injury to others",
       "Fourth or subsequent offense"
     ],
     "correctIndex": 3,
@@ -383,10 +383,10 @@
     "state": "CO",
     "question": "What does liability insurance cover in Colorado?",
     "answers": [
-      "Your own vehicle damage",
+      "Your own vehicle damage and repairs",
       "Injuries and damages you cause to others",
-      "Your own medical bills only",
-      "Theft and vandalism"
+      "Your own medical bills only if injured",
+      "Theft and vandalism of your vehicle"
     ],
     "correctIndex": 1,
     "explanation": "Colorado's required liability insurance covers bodily injuries and property damage that you cause to other people in accidents where you are at fault."
@@ -397,10 +397,10 @@
     "state": "CO",
     "question": "Is Medical Payments coverage required in Colorado?",
     "answers": [
-      "Yes, it's mandatory",
-      "Yes, for new drivers only",
+      "Yes, it's mandatory coverage",
+      "Yes, for new drivers only now",
       "No, but insurers must offer it",
-      "No, it's not available"
+      "No, it's not available in CO"
     ],
     "correctIndex": 2,
     "explanation": "Colorado insurers must offer Medical Payments coverage at a minimum level, but drivers can reject it in writing."
@@ -411,10 +411,10 @@
     "state": "CO",
     "question": "What is a potential consequence of a second uninsured driving offense in Colorado?",
     "answers": [
-      "Warning letter",
-      "Four-month license suspension and significant fine",
-      "Traffic school only",
-      "Increased registration fees"
+      "Warning letter sent by DMV to driver",
+      "Four-month suspension and significant fine",
+      "Traffic school only with no other penalty",
+      "Increased registration fees for vehicle"
     ],
     "correctIndex": 1,
     "explanation": "Colorado's second uninsured driving offense results in a four-month license suspension and a substantial fine, escalating penalties from first offenses."
@@ -439,9 +439,9 @@
     "state": "CO",
     "question": "What must two-wheel drive vehicles carry on I-70 during traction law season in Colorado?",
     "answers": [
-      "Emergency flares",
-      "Extra fuel",
-      "Snow shovel",
+      "Emergency flares and reflective triangles",
+      "Extra fuel in approved containers only",
+      "Snow shovel and ice scraper equipment",
       "Tire chains or approved traction devices"
     ],
     "correctIndex": 3,
@@ -467,10 +467,10 @@
     "state": "CO",
     "question": "Can motorcyclists use Colorado express lanes for free?",
     "answers": [
-      "No, they must pay tolls",
-      "Yes, motorcyclists travel free on express lanes",
-      "Only during peak hours",
-      "Only with a passenger"
+      "No, they must pay tolls like cars do",
+      "Yes, motorcyclists travel free on express",
+      "Only during peak hours on weekdays only",
+      "Only with a passenger riding with them"
     ],
     "correctIndex": 1,
     "explanation": "Colorado allows motorcyclists to travel for free on express lanes including I-25, C-470, US 36, and Central 70, without needing an ExpressToll pass."
@@ -495,9 +495,9 @@
     "state": "CO",
     "question": "What happens if you illegally cross solid express lane lines in Colorado?",
     "answers": [
-      "Warning only",
-      "No penalty unless caught by an officer",
-      "Verbal warning from toll booth",
+      "Warning only for first-time violations",
+      "No penalty unless caught by officer now",
+      "Verbal warning from toll booth operator",
       "Automated citation from camera enforcement"
     ],
     "correctIndex": 3,
@@ -510,9 +510,9 @@
     "question": "Can 4WD or AWD vehicles comply with Colorado's Traction Law using winter tires alone?",
     "answers": [
       "Yes, if tires meet tread and rating requirements",
-      "No, chains are always required",
-      "Only on certain roads",
-      "Only in light snow"
+      "No, chains are always required for all vehicles",
+      "Only on certain roads designated by CDOT now",
+      "Only in light snow conditions on highways"
     ],
     "correctIndex": 0,
     "explanation": "Colorado allows 4WD and AWD vehicles to comply with the Traction Law using only winter-rated tires if they meet the 3/16-inch tread requirement."
@@ -523,10 +523,10 @@
     "state": "CO",
     "question": "What happens during severe winter storms under Colorado's Passenger Vehicle Chain Law?",
     "answers": [
-      "Highways are closed immediately",
-      "Every vehicle must have chains or approved traction devices",
-      "Only commercial vehicles need chains",
-      "Speed limits are reduced"
+      "Highways are closed immediately to all traffic",
+      "All vehicles must have chains or traction devices",
+      "Only commercial vehicles need chains installed",
+      "Speed limits are reduced to minimum allowed"
     ],
     "correctIndex": 1,
     "explanation": "When Colorado activates the Passenger Vehicle Chain Law during severe conditions, every vehicle must have chains or approved alternative traction devices installed."
@@ -537,10 +537,10 @@
     "state": "CO",
     "question": "What can happen to drivers who block Colorado mountain roadways due to inadequate traction equipment?",
     "answers": [
-      "Warning only for first offense",
-      "Vehicle towed at owner's expense",
+      "Warning only for first offense today",
+      "Vehicle towed at owner's expense only",
       "Significant fine plus towing costs",
-      "License suspension"
+      "License suspension for repeat offense"
     ],
     "correctIndex": 2,
     "explanation": "Colorado drivers who become stuck and block roadways because they lack proper traction equipment face significant fines plus potential towing costs."
@@ -551,9 +551,9 @@
     "state": "CO",
     "question": "What is unique about Colorado's traction requirements for two-wheel drive vehicles compared to 4WD vehicles?",
     "answers": [
-      "2WD can use any tires",
-      "2WD pay higher fines",
-      "2WD have no requirements",
+      "2WD can use any tires without restrictions",
+      "2WD pay higher fines if caught in violation",
+      "2WD have no requirements during season now",
       "2WD must carry chains regardless of tire type"
     ],
     "correctIndex": 3,
