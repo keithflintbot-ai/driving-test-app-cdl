@@ -161,7 +161,7 @@
     "question": "Can Delaware learner permit holders use cell phones in hands-free mode while driving?",
     "answers": [
       "Yes, if over age 17",
-      "No, all phone use is prohibited",
+      "No, all phone use prohibited",
       "Yes, for navigation only",
       "Yes, but only for emergency calls"
     ],
@@ -187,7 +187,7 @@
       "Only during student pickup and dropoff",
       "During all driving hours",
       "Only on highways",
-      "When at least one child is aboard"
+      "When at least 1 child aboard"
     ],
     "correctIndex": 3
   },
@@ -340,7 +340,7 @@
     "category": "insurance",
     "question": "What coverage must Delaware insurance companies offer but can be rejected by the policyholder?",
     "answers": [
-      "Uninsured/underinsured motorist",
+      "Unins./underins. motorist",
       "Collision damage coverage",
       "Medical payments coverage",
       "Comprehensive loss coverage"

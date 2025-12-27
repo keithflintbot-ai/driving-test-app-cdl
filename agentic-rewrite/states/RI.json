@@ -18,10 +18,10 @@
     "category": "gdlLicensing",
     "question": "Who can supervise a permit holder while driving in Rhode Island?",
     "answers": [
-      "Any licensed driver over 18",
-      "Licensed driver 21 or older with 5 years experience",
+      "Any licensed driver over age 18",
+      "Driver 21+ w/ 5 yrs experience",
       "Only certified driving instructors",
-      "Any family member with a license"
+      "Any family member w/ valid license"
     ],
     "correctIndex": 1
   },
@@ -31,10 +31,10 @@
     "category": "gdlLicensing",
     "question": "How long must you hold a permit before taking the road test in Rhode Island?",
     "answers": [
-      "3 months",
-      "1 year",
+      "3 months minimum",
+      "1 year minimum",
       "At least 6 months",
-      "9 months"
+      "9 months minimum"
     ],
     "correctIndex": 2
   },
@@ -44,10 +44,10 @@
     "category": "gdlLicensing",
     "question": "What are the nighttime driving restrictions for permit holders in Rhode Island?",
     "answers": [
-      "No driving after 10 PM",
-      "No driving after midnight",
-      "No restrictions with supervisor",
-      "No driving 11 PM to 5 AM unless with parent"
+      "No driving after 10 PM on weekends",
+      "No driving after midnight on any day",
+      "No restrictions when w/ supervisor",
+      "No driving 11 PM-5 AM w/o parent"
     ],
     "correctIndex": 3
   },
@@ -57,10 +57,10 @@
     "category": "gdlLicensing",
     "question": "How many hours of supervised driving practice are required in Rhode Island?",
     "answers": [
-      "50 hours total, with 10 at night",
-      "30 hours total",
-      "60 hours total",
-      "40 hours total"
+      "50 hrs total, 10 at night",
+      "30 hrs total required",
+      "60 hrs total required",
+      "40 hrs total required"
     ],
     "correctIndex": 0
   },
@@ -70,10 +70,10 @@
     "category": "gdlLicensing",
     "question": "What are the nighttime restrictions for provisional license holders in Rhode Island?",
     "answers": [
-      "No driving after midnight",
-      "No driving 1 AM to 5 AM unless work or school",
-      "No nighttime restrictions",
-      "No driving after 11 PM"
+      "No driving after midnight on weekdays",
+      "No driving 1 AM-5 AM w/o work/school",
+      "No nighttime restrictions at all",
+      "No driving after 11 PM on weekdays"
     ],
     "correctIndex": 1
   },
@@ -96,9 +96,9 @@
     "category": "gdlLicensing",
     "question": "What happens if you receive a moving violation during your permit period in Rhode Island?",
     "answers": [
-      "Warning only",
-      "Must retake written test",
-      "License suspended",
+      "Warning only issued by DMV",
+      "Must retake the written exam",
+      "License suspended immediately by state",
       "Holding period extended 6 months"
     ],
     "correctIndex": 3
@@ -135,10 +135,10 @@
     "category": "gdlLicensing",
     "question": "How long is a Rhode Island instructional permit valid?",
     "answers": [
-      "6 months",
-      "2 years",
-      "One year or until age 18, whichever comes first",
-      "Until the road test is passed"
+      "6 months from issue date",
+      "2 years from issue date",
+      "Valid 1 yr or until age 18",
+      "Until road test is passed successfully"
     ],
     "correctIndex": 2
   },
@@ -150,8 +150,8 @@
     "answers": [
       "School transcript only",
       "Birth certificate only",
-      "Employment verification",
-      "Parent or guardian signature"
+      "Employment verification form",
+      "Parent/guardian signature"
     ],
     "correctIndex": 3
   },
@@ -161,10 +161,10 @@
     "category": "cellPhone",
     "question": "What does Rhode Island's hands-free law prohibit while driving?",
     "answers": [
-      "Holding or manually using a wireless device",
-      "Only texting",
-      "Only video calls",
-      "All phone use"
+      "Holding/using wireless device",
+      "Only texting while driving",
+      "Only video calls while driving",
+      "All phone use while driving"
     ],
     "correctIndex": 0
   },
@@ -175,9 +175,9 @@
     "question": "Can drivers under 18 use hands-free devices while driving in Rhode Island?",
     "answers": [
       "Yes, hands-free is allowed",
-      "No, all mobile device use is prohibited",
-      "Only for navigation",
-      "Only with parental permission"
+      "No, all device use prohibited",
+      "Only for navigation purposes",
+      "Only w/ parental permission"
     ],
     "correctIndex": 1
   },
@@ -187,10 +187,10 @@
     "category": "cellPhone",
     "question": "When does Rhode Island's hands-free law apply?",
     "answers": [
-      "Only while vehicle is moving",
-      "Only on highways",
-      "Even when stopped at red lights or stop signs",
-      "Only in school zones"
+      "Only while vehicle is moving forward",
+      "Only on highways and freeways",
+      "Even at red lights/stop signs",
+      "Only in school zones during hours"
     ],
     "correctIndex": 2
   },
@@ -200,10 +200,10 @@
     "category": "cellPhone",
     "question": "What audio device restriction applies while driving in Rhode Island?",
     "answers": [
-      "Single earphone allowed",
-      "Any headphones allowed",
-      "Only car speakers allowed",
-      "Cannot wear earphones covering both ears"
+      "Single earphone allowed only",
+      "Any headphones allowed while driving",
+      "Only car speakers allowed for audio",
+      "Can't wear earphones on both ears"
     ],
     "correctIndex": 3
   },
@@ -214,9 +214,9 @@
     "question": "What phone use is always permitted while driving in Rhode Island?",
     "answers": [
       "Calling emergency services",
-      "Quick text messages",
-      "Social media scrolling",
-      "Taking photos"
+      "Quick text messages only",
+      "Social media scrolling briefly",
+      "Taking photos of scenery"
     ],
     "correctIndex": 0
   },
@@ -226,10 +226,10 @@
     "category": "cellPhone",
     "question": "How can you legally use GPS navigation while driving in Rhode Island?",
     "answers": [
-      "Type while driving slowly",
-      "Use voice commands or enter address before driving",
-      "Have passenger enter address",
-      "GPS use is prohibited"
+      "Type while driving slowly and carefully",
+      "Voice commands or enter before driving",
+      "Have passenger enter address for you",
+      "GPS use is prohibited while moving"
     ],
     "correctIndex": 1
   },
@@ -265,10 +265,10 @@
     "category": "duiStateLaws",
     "question": "What does Rhode Island's implied consent law require?",
     "answers": [
-      "Agreement to chemical testing when lawfully stopped",
-      "Consent to vehicle search",
-      "Permission for roadside questioning",
-      "Waiver of attorney rights"
+      "Agree to chemical test when stopped",
+      "Consent to vehicle search by police",
+      "Permission for roadside questioning by officer",
+      "Waiver of attorney rights during arrest"
     ],
     "correctIndex": 0
   },
@@ -278,10 +278,10 @@
     "category": "duiStateLaws",
     "question": "What is the consequence of refusing a chemical test for the first time in Rhode Island?",
     "answers": [
-      "Warning only",
-      "License suspension for 6 to 12 months",
-      "Automatic DUI conviction",
-      "Court appearance required"
+      "Warning only issued",
+      "License suspended 6-12 months",
+      "Automatic DUI conviction recorded",
+      "Court appearance required by law"
     ],
     "correctIndex": 1
   },
@@ -292,9 +292,9 @@
     "question": "How does Rhode Island classify penalties based on BAC levels?",
     "answers": [
       "Single penalty for all BAC levels",
-      "Two-tier system",
-      "Three-tier system based on BAC ranges",
-      "No BAC-based tier system"
+      "Two-tier system for penalties",
+      "Three-tier system by BAC range",
+      "No BAC-based tier system used"
     ],
     "correctIndex": 2
   },
@@ -304,9 +304,9 @@
     "category": "duiStateLaws",
     "question": "When does a third DUI become a felony in Rhode Island?",
     "answers": [
-      "Never becomes a felony",
-      "Only if injury occurs",
-      "If within 3 years",
+      "Never becomes felony in Rhode Island",
+      "Only if injury occurs to another person",
+      "If within 3 years of previous offense",
       "Third DUI is automatically a felony"
     ],
     "correctIndex": 3
@@ -317,10 +317,10 @@
     "category": "duiStateLaws",
     "question": "What is the lookback period for prior DUI offenses in Rhode Island as of 2025?",
     "answers": [
-      "5 years, extending to 10 years on July 1, 2025",
-      "3 years",
-      "7 years",
-      "Lifetime"
+      "5 yrs, extending to 10 yrs in 2025",
+      "3 yrs for all prior offenses",
+      "7 yrs for all prior offenses",
+      "Lifetime for all prior offenses"
     ],
     "correctIndex": 0
   },
@@ -330,10 +330,10 @@
     "category": "duiStateLaws",
     "question": "Can underage drivers face adult DUI penalties in Rhode Island?",
     "answers": [
-      "Never",
-      "Yes, if their BAC is 0.08 percent or higher",
-      "Only if causing an accident",
-      "Only if in a commercial vehicle"
+      "Never in Rhode Island",
+      "Yes, if their BAC is 0.08% or higher",
+      "Only if causing accident w/ injury",
+      "Only if in commercial vehicle at time"
     ],
     "correctIndex": 1
   },
@@ -343,10 +343,10 @@
     "category": "insurance",
     "question": "What type of insurance system does Rhode Island use?",
     "answers": [
-      "No-fault system",
-      "Hybrid system",
+      "No-fault system only",
+      "Hybrid system model",
       "Fault-based system",
-      "Choice system"
+      "Choice system option"
     ],
     "correctIndex": 2
   },
@@ -356,10 +356,10 @@
     "category": "insurance",
     "question": "What does liability insurance primarily cover in Rhode Island?",
     "answers": [
-      "Your vehicle damage",
-      "Theft of your vehicle",
-      "Your medical bills only",
-      "Damages and injuries you cause to others"
+      "Your vehicle damage from accidents",
+      "Theft of your vehicle or parts",
+      "Your medical bills only if injured",
+      "Damages/injuries you cause to others"
     ],
     "correctIndex": 3
   },
@@ -369,10 +369,10 @@
     "category": "insurance",
     "question": "What additional coverage is required with auto insurance in Rhode Island?",
     "answers": [
-      "Uninsured and underinsured motorist coverage",
-      "Comprehensive coverage",
-      "Collision coverage",
-      "Rental car coverage"
+      "Uninsured/underinsured motorist",
+      "Comprehensive coverage for damage",
+      "Collision coverage for accidents",
+      "Rental car coverage during repairs"
     ],
     "correctIndex": 0
   },
@@ -395,10 +395,10 @@
     "category": "stateUnique",
     "question": "When must you turn on headlights while driving in Rhode Island?",
     "answers": [
-      "Only after sunset",
-      "Only in tunnels",
+      "Only after sunset on all roads",
+      "Only in tunnels and underpasses",
       "When windshield wipers are in use",
-      "Only in heavy traffic"
+      "Only in heavy traffic conditions"
     ],
     "correctIndex": 2
   },
@@ -408,10 +408,10 @@
     "category": "stateUnique",
     "question": "What does Rhode Island's move over law require when approaching stopped emergency vehicles?",
     "answers": [
-      "Flash headlights",
-      "Honk horn",
-      "Stop completely",
-      "Slow down and move over if possible"
+      "Flash headlights to warn them",
+      "Honk horn to alert them",
+      "Stop completely until safe",
+      "Slow down & move over if safe"
     ],
     "correctIndex": 3
   },
@@ -421,10 +421,10 @@
     "category": "stateUnique",
     "question": "When must you stop for a school bus with flashing red lights in Rhode Island?",
     "answers": [
-      "From both directions unless on divided highway",
-      "Only if directly behind",
-      "Only on residential streets",
-      "Never on multi-lane roads"
+      "Both directions unless divided highway",
+      "Only if directly behind the bus",
+      "Only on residential streets in town",
+      "Never on multi-lane roads or highways"
     ],
     "correctIndex": 0
   },
@@ -434,10 +434,10 @@
     "category": "stateUnique",
     "question": "What must you do when stopped by police at night in Rhode Island?",
     "answers": [
-      "Exit the vehicle",
+      "Exit the vehicle safely",
       "Turn on interior lights",
-      "Flash hazard lights",
-      "Honk horn"
+      "Flash hazard lights on",
+      "Honk horn to signal"
     ],
     "correctIndex": 1
   },
@@ -447,10 +447,10 @@
     "category": "stateUnique",
     "question": "What is required when approaching a horse on the highway in Rhode Island?",
     "answers": [
-      "Honk to warn the rider",
-      "Flash headlights",
+      "Honk to warn the rider ahead",
+      "Flash headlights to alert rider",
       "Reduce speed and avoid loud noises",
-      "Maintain normal speed"
+      "Maintain normal speed for safety"
     ],
     "correctIndex": 2
   },
@@ -460,10 +460,10 @@
     "category": "stateUnique",
     "question": "Where does the school bus stopping requirement apply in Rhode Island?",
     "answers": [
-      "Only on public highways",
-      "Only in school zones",
-      "Only during school hours",
-      "Public highways, private roads, and parking lots"
+      "Only on public highways in state",
+      "Only in school zones during hours",
+      "Only during school hours on weekdays",
+      "Highways, private roads & parking lots"
     ],
     "correctIndex": 3
   },
@@ -473,10 +473,10 @@
     "category": "stateUnique",
     "question": "What exemption exists for the divided highway school bus rule in Rhode Island?",
     "answers": [
-      "Don't stop if bus is on opposite side of divided highway",
-      "Stop only during morning hours",
-      "Stop only for elementary students",
-      "No exemptions exist"
+      "Don't stop if opposite side of divided hwy",
+      "Stop only during morning hours before noon",
+      "Stop only for elementary students under 12",
+      "No exemptions exist in Rhode Island law"
     ],
     "correctIndex": 0
   },
@@ -486,10 +486,10 @@
     "category": "stateUnique",
     "question": "When does the headlight requirement apply in Rhode Island besides nighttime?",
     "answers": [
-      "In parking lots",
-      "When visibility is reduced or wipers are needed",
-      "Only in construction zones",
-      "Only on highways"
+      "In parking lots at all times",
+      "When visibility reduced or wipers on",
+      "Only in construction zones statewide",
+      "Only on highways and major roads"
     ],
     "correctIndex": 1
   },
@@ -499,10 +499,10 @@
     "category": "stateUnique",
     "question": "What is prohibited while operating a motor vehicle in Rhode Island?",
     "answers": [
-      "Eating food",
-      "Drinking beverages",
+      "Eating food while driving",
+      "Drinking beverages in car",
       "Wearing earphones or headsets",
-      "Adjusting mirrors"
+      "Adjusting mirrors or seats"
     ],
     "correctIndex": 2
   },
@@ -512,10 +512,10 @@
     "category": "stateUnique",
     "question": "When can you use GPS apps while driving in Rhode Island?",
     "answers": [
-      "Never while vehicle is on",
-      "Only with passenger help",
-      "Anytime for quick checks",
-      "After entering destination before driving or pulling over"
+      "Never while vehicle is on at all",
+      "Only w/ passenger help entering info",
+      "Anytime for quick checks of route",
+      "Enter before driving or pull over"
     ],
     "correctIndex": 3
   }

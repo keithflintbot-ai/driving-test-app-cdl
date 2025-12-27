@@ -1,0 +1,522 @@
+[
+  {
+    "id": "WI-001",
+    "state": "WI",
+    "category": "gdlLicensing",
+    "question": "At what minimum age can you apply for an instruction permit in Wisconsin?",
+    "answers": [
+      "15 yrs, 6 months",
+      "16 years of age",
+      "14 years of age",
+      "17 years of age"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "WI-002",
+    "state": "WI",
+    "category": "gdlLicensing",
+    "question": "Who can supervise a permit holder during practice driving in Wisconsin?",
+    "answers": [
+      "Any licensed adult family member",
+      "Licensed driver 21+ in front seat",
+      "Any driver with 5+ years experience",
+      "Only certified driving instructors"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "WI-003",
+    "state": "WI",
+    "category": "gdlLicensing",
+    "question": "How long must you hold an instruction permit before taking the road test in Wisconsin?",
+    "answers": [
+      "3 months minimum",
+      "1 year minimum",
+      "6 months minimum",
+      "9 months minimum"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "WI-004",
+    "state": "WI",
+    "category": "gdlLicensing",
+    "question": "What are the nighttime driving restrictions for probationary license holders under 16 in Wisconsin?",
+    "answers": [
+      "No driving midnight to 6 AM",
+      "No driving 10 PM to 6 AM",
+      "No driving 11 PM to 5 AM",
+      "No driving midnight to 5 AM"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "WI-005",
+    "state": "WI",
+    "category": "gdlLicensing",
+    "question": "What are the exceptions to nighttime curfew for probationary license holders in Wisconsin?",
+    "answers": [
+      "Work, school, emergency",
+      "Religious activities only",
+      "Family events only",
+      "Sports activities only"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "WI-006",
+    "state": "WI",
+    "category": "gdlLicensing",
+    "question": "How many passengers under 19 can a probationary license holder have in the first 9 months in Wisconsin?",
+    "answers": [
+      "Up to three passengers",
+      "One unless family members",
+      "Two unless family members",
+      "No restrictions on passengers"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "WI-007",
+    "state": "WI",
+    "category": "gdlLicensing",
+    "question": "How many hours of supervised driving practice are required for drivers under 18 in Wisconsin?",
+    "answers": [
+      "30 hours total",
+      "60 hours total",
+      "50 hours total",
+      "40 hours total"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "WI-008",
+    "state": "WI",
+    "category": "gdlLicensing",
+    "question": "What must young drivers complete before getting a probationary license in Wisconsin?",
+    "answers": [
+      "30 hrs classroom instruction",
+      "Advanced defensive driving course",
+      "Written test only",
+      "Driver ed or extra practice"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "WI-009",
+    "state": "WI",
+    "category": "gdlLicensing",
+    "question": "At what age does a probationary license automatically convert to a regular license in Wisconsin?",
+    "answers": [
+      "18 years old",
+      "21 years old",
+      "19 years old",
+      "17 years old"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "WI-010",
+    "state": "WI",
+    "category": "gdlLicensing",
+    "question": "What happens if a probationary license holder gets a conviction in Wisconsin?",
+    "answers": [
+      "License suspended 30 days",
+      "License extension 6 months",
+      "Must retake road test",
+      "Probation period reset"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "WI-011",
+    "state": "WI",
+    "category": "gdlLicensing",
+    "question": "What is required to obtain an instruction permit at age 15.5 in Wisconsin?",
+    "answers": [
+      "Parental consent form required",
+      "School enrollment verification required",
+      "Employment verification",
+      "Vision test only required"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "WI-012",
+    "state": "WI",
+    "category": "gdlLicensing",
+    "question": "Can a permit holder drive alone to school or work in Wisconsin?",
+    "answers": [
+      "Yes, after 6 months practice",
+      "Yes, with special permit",
+      "No, always need supervision",
+      "No supervision needed, never"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "WI-013",
+    "state": "WI",
+    "category": "cellPhone",
+    "question": "What does Wisconsin law prohibit for all drivers regarding mobile devices?",
+    "answers": [
+      "Texting while driving",
+      "All phone use",
+      "Only video recording",
+      "Using GPS navigation"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "WI-014",
+    "state": "WI",
+    "category": "cellPhone",
+    "question": "Can adult drivers use handheld phones for voice calls in Wisconsin?",
+    "answers": [
+      "No, completely banned",
+      "Yes, calls permitted",
+      "Only in emergencies",
+      "Only with Bluetooth"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "WI-015",
+    "state": "WI",
+    "category": "cellPhone",
+    "question": "What phone restrictions apply to probationary license holders in Wisconsin?",
+    "answers": [
+      "Only texting is banned",
+      "Only video calls banned",
+      "All wireless use banned",
+      "No phone restrictions"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "WI-016",
+    "state": "WI",
+    "category": "cellPhone",
+    "question": "What phone use is allowed during emergencies while driving in Wisconsin?",
+    "answers": [
+      "Only texting allowed",
+      "Only social media allowed",
+      "Only navigation allowed",
+      "Calling 911 is allowed"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "WI-017",
+    "state": "WI",
+    "category": "cellPhone",
+    "question": "Can you compose or send emails while driving in Wisconsin?",
+    "answers": [
+      "No, same as texting",
+      "Yes, if brief",
+      "Yes, if using voice",
+      "Yes, at stoplights"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "WI-018",
+    "state": "WI",
+    "category": "cellPhone",
+    "question": "What is the law for reading text messages while stopped at a red light in Wisconsin?",
+    "answers": [
+      "Allowed when fully stopped",
+      "Illegal, still driving",
+      "Allowed if in park",
+      "Allowed with hazards on"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "WI-019",
+    "state": "WI",
+    "category": "duiStateLaws",
+    "question": "What is the legal BAC limit for drivers under 21 in Wisconsin?",
+    "answers": [
+      "0.08 percent",
+      "0.04 percent",
+      "0.02 percent",
+      "0.00 percent"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "WI-020",
+    "state": "WI",
+    "category": "duiStateLaws",
+    "question": "What is the BAC limit for commercial vehicle operators in Wisconsin?",
+    "answers": [
+      "0.08 percent",
+      "0.02 percent",
+      "0.06 percent",
+      "0.04 percent"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "WI-021",
+    "state": "WI",
+    "category": "duiStateLaws",
+    "question": "What does Wisconsin's implied consent law require of drivers?",
+    "answers": [
+      "Submit to chemical testing",
+      "Field sobriety test only",
+      "Breath test only required",
+      "Blood test consent only"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "WI-022",
+    "state": "WI",
+    "category": "duiStateLaws",
+    "question": "What happens if you refuse a chemical test in Wisconsin for the first time?",
+    "answers": [
+      "No penalties at all",
+      "License revoked 1 yr",
+      "Jail time imposed",
+      "Community service only"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "WI-023",
+    "state": "WI",
+    "category": "duiStateLaws",
+    "question": "How does Wisconsin treat a first OWI offense legally?",
+    "answers": [
+      "Felony level offense",
+      "Misdemeanor offense",
+      "Civil forfeiture",
+      "No criminal record"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "WI-024",
+    "state": "WI",
+    "category": "duiStateLaws",
+    "question": "When does an OWI become a criminal offense in Wisconsin?",
+    "answers": [
+      "Always criminal from first offense",
+      "Only with injury involved",
+      "Only with property damage",
+      "Second offense and beyond"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "WI-025",
+    "state": "WI",
+    "category": "duiStateLaws",
+    "question": "What device may be required after an OWI conviction in Wisconsin?",
+    "answers": [
+      "Ignition interlock",
+      "GPS ankle monitor",
+      "Dashcam recording device",
+      "Speed governor device"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "WI-026",
+    "state": "WI",
+    "category": "duiStateLaws",
+    "question": "What is the lookback period for OWI offenses in Wisconsin?",
+    "answers": [
+      "5 yr lookback",
+      "Lifetime",
+      "10 yr lookback",
+      "7 yr lookback"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "WI-027",
+    "state": "WI",
+    "category": "insurance",
+    "question": "What type of insurance system does Wisconsin use for auto accidents?",
+    "answers": [
+      "No-fault insurance system",
+      "Comparative negligence system",
+      "Fault-based liability",
+      "Hybrid no-fault system"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "WI-028",
+    "state": "WI",
+    "category": "insurance",
+    "question": "What must you provide to law enforcement if stopped in Wisconsin?",
+    "answers": [
+      "License only is required",
+      "Registration only is required",
+      "License and registration only",
+      "License, registration, insurance"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "WI-029",
+    "state": "WI",
+    "category": "insurance",
+    "question": "What coverage protects you if hit by an uninsured driver in Wisconsin?",
+    "answers": [
+      "Uninsured motorist",
+      "Comprehensive coverage only",
+      "Collision coverage only",
+      "PIP coverage only"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "WI-030",
+    "state": "WI",
+    "category": "insurance",
+    "question": "What happens if you drive without insurance in Wisconsin?",
+    "answers": [
+      "Warning for first offense",
+      "License & reg suspended",
+      "Only vehicle gets impounded",
+      "Only monetary penalties"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "WI-031",
+    "state": "WI",
+    "category": "stateUnique",
+    "question": "When must you use headlights in Wisconsin?",
+    "answers": [
+      "30 min after sunset",
+      "Only in complete darkness",
+      "Only during rain or snow",
+      "Only on highways at night"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "WI-032",
+    "state": "WI",
+    "category": "stateUnique",
+    "question": "What is required when passing a stopped emergency vehicle in Wisconsin?",
+    "answers": [
+      "Honk and proceed cautiously",
+      "Stop completely first",
+      "Flash headlights as warning",
+      "Move over or slow down"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "WI-033",
+    "state": "WI",
+    "category": "stateUnique",
+    "question": "At what age must children use a booster seat in Wisconsin?",
+    "answers": [
+      "Under 8 or under 57 inches",
+      "Under 6 or under 50 inches",
+      "Under 10 or under 60 inches",
+      "Under 12 or under 65 inches"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "WI-034",
+    "state": "WI",
+    "category": "stateUnique",
+    "question": "Are motorcycle helmets required for all riders in Wisconsin?",
+    "answers": [
+      "Yes, for all riders",
+      "Only for riders under 18",
+      "Only for riders under 21",
+      "Only for permit holders"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "WI-035",
+    "state": "WI",
+    "category": "stateUnique",
+    "question": "What is Wisconsin's law regarding right turns on red lights?",
+    "answers": [
+      "Never allowed in Wisconsin",
+      "Only allowed on highways",
+      "Allowed after complete stop",
+      "Allowed without stopping"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "WI-036",
+    "state": "WI",
+    "category": "stateUnique",
+    "question": "When must you stop for a school bus with flashing red lights in Wisconsin?",
+    "answers": [
+      "Only if directly behind bus",
+      "Only on two-lane roads",
+      "Only during school hours",
+      "Both directions, undivided"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "WI-037",
+    "state": "WI",
+    "category": "stateUnique",
+    "question": "What is the speed limit in Wisconsin school zones when children are present?",
+    "answers": [
+      "15 mph when posted",
+      "25 mph standard",
+      "20 mph when posted",
+      "10 mph standard"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "WI-038",
+    "state": "WI",
+    "category": "stateUnique",
+    "question": "How far from a fire hydrant must you park in Wisconsin?",
+    "answers": [
+      "10 feet minimum",
+      "15 feet minimum",
+      "20 feet minimum",
+      "5 feet minimum"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "WI-039",
+    "state": "WI",
+    "category": "stateUnique",
+    "question": "What is Wisconsin's law on studded tires?",
+    "answers": [
+      "Allowed year-round",
+      "Allowed November 1-April 1",
+      "Prohibited at all times",
+      "Allowed only for commercial"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "WI-040",
+    "state": "WI",
+    "category": "stateUnique",
+    "question": "When following a motorcycle in Wisconsin, what following distance should you maintain?",
+    "answers": [
+      "One second minimum",
+      "Two seconds minimum",
+      "Three seconds minimum",
+      "Same as car, 2 seconds"
+    ],
+    "correctIndex": 3
+  }
+]

@@ -1,0 +1,322 @@
+[
+  {
+    "id": "TN-001",
+    "state": "TN",
+    "category": "gdlLicensing",
+    "question": "What is the minimum age to obtain a learner permit in Tennessee?",
+    "answers": ["15 years old", "16 years old", "14 years old", "17 years old"],
+    "correctIndex": 0
+  },
+  {
+    "id": "TN-002",
+    "state": "TN",
+    "category": "gdlLicensing",
+    "question": "How long must a Tennessee teen hold a learner permit before advancing to an intermediate license?",
+    "answers": ["90 days", "180 days", "120 days", "240 days"],
+    "correctIndex": 1
+  },
+  {
+    "id": "TN-003",
+    "state": "TN",
+    "category": "gdlLicensing",
+    "question": "During which hours may a learner permit holder NOT drive in Tennessee?",
+    "answers": ["11 PM to 5 AM", "9 PM to 7 AM", "10 PM to 6 AM", "12 AM to 6 AM"],
+    "correctIndex": 2
+  },
+  {
+    "id": "TN-004",
+    "state": "TN",
+    "category": "gdlLicensing",
+    "question": "What minimum age must the supervising driver be when accompanying a learner permit holder in Tennessee?",
+    "answers": ["18 years old", "25 years old", "20 years old", "21 years old"],
+    "correctIndex": 3
+  },
+  {
+    "id": "TN-005",
+    "state": "TN",
+    "category": "gdlLicensing",
+    "question": "How many total practice hours must a Tennessee teen complete before getting an intermediate license?",
+    "answers": ["50 hours", "40 hours", "60 hours", "30 hours"],
+    "correctIndex": 0
+  },
+  {
+    "id": "TN-006",
+    "state": "TN",
+    "category": "gdlLicensing",
+    "question": "Of the required practice hours, how many must be completed at night in Tennessee?",
+    "answers": ["5 hours", "10 hours", "15 hours", "20 hours"],
+    "correctIndex": 1
+  },
+  {
+    "id": "TN-007",
+    "state": "TN",
+    "category": "gdlLicensing",
+    "question": "What is the minimum age to obtain an intermediate restricted license in Tennessee?",
+    "answers": ["15 years old", "17 years old", "16 years old", "18 years old"],
+    "correctIndex": 2
+  },
+  {
+    "id": "TN-008",
+    "state": "TN",
+    "category": "gdlLicensing",
+    "question": "Where must the supervising driver sit when accompanying a Tennessee learner permit holder?",
+    "answers": ["In the back seat", "Anywhere in vehicle", "In passenger seat", "In the front seat"],
+    "correctIndex": 3
+  },
+  {
+    "id": "TN-009",
+    "state": "TN",
+    "category": "gdlLicensing",
+    "question": "What must a parent or guardian verify before a teen can get an intermediate license in Tennessee?",
+    "answers": ["Completed practice hours", "Passing all school classes", "Completed driver's ed", "No traffic violations"],
+    "correctIndex": 0
+  },
+  {
+    "id": "TN-010",
+    "state": "TN",
+    "category": "gdlLicensing",
+    "question": "Which document must Tennessee teens provide from their school when applying for a learner permit?",
+    "answers": ["Report card only", "Attendance SF1010", "Transcript copy", "Principal's letter"],
+    "correctIndex": 1
+  },
+  {
+    "id": "TN-011",
+    "state": "TN",
+    "category": "gdlLicensing",
+    "question": "What test can Tennessee teens aged 15-17 take online for their learner permit?",
+    "answers": ["Road skills test", "Vision screening exam", "Knowledge test", "Hearing test"],
+    "correctIndex": 2
+  },
+  {
+    "id": "TN-012",
+    "state": "TN",
+    "category": "gdlLicensing",
+    "question": "What happens if a teen with a GDL license violates cell phone laws in Tennessee?",
+    "answers": ["License suspended", "Must retake test", "Driving curfew added", "90-day advance delay"],
+    "correctIndex": 3
+  },
+  {
+    "id": "TN-013",
+    "state": "TN",
+    "category": "cellPhone",
+    "question": "Under Tennessee's hands-free law, what body parts may NOT hold a cell phone while driving?",
+    "answers": ["All parts", "Hands only", "Fingers only", "Arms only"],
+    "correctIndex": 0
+  },
+  {
+    "id": "TN-014",
+    "state": "TN",
+    "category": "cellPhone",
+    "question": "Can Tennessee drivers use their cell phone while stopped at a red light?",
+    "answers": ["Yes, if in park", "No, it's prohibited", "Yes, if hands-free", "Only for emergencies"],
+    "correctIndex": 1
+  },
+  {
+    "id": "TN-015",
+    "state": "TN",
+    "category": "cellPhone",
+    "question": "How may drivers legally use GPS navigation on their phone in Tennessee?",
+    "answers": ["Hold it in hand", "Place on passenger seat", "Mount on dashboard", "Keep in lap"],
+    "correctIndex": 2
+  },
+  {
+    "id": "TN-016",
+    "state": "TN",
+    "category": "cellPhone",
+    "question": "What type of device is allowed for phone calls while driving in Tennessee?",
+    "answers": ["Speaker phone held up", "Phone on lap", "Handheld device", "Hands-free earpiece"],
+    "correctIndex": 3
+  },
+  {
+    "id": "TN-017",
+    "state": "TN",
+    "category": "cellPhone",
+    "question": "What action is permitted when using a mounted phone in Tennessee?",
+    "answers": ["Single tap or swipe", "Multi-finger gestures", "Typing messages", "Recording video"],
+    "correctIndex": 0
+  },
+  {
+    "id": "TN-018",
+    "state": "TN",
+    "category": "cellPhone",
+    "question": "Who is exempt from Tennessee's hands-free law?",
+    "answers": ["All commercial drivers", "Emergency responders", "School bus drivers", "Delivery drivers"],
+    "correctIndex": 1
+  },
+  {
+    "id": "TN-019",
+    "state": "TN",
+    "category": "duiStateLaws",
+    "question": "What is the legal BAC limit for adult drivers in Tennessee?",
+    "answers": ["0.08%", "0.10%", "0.05%", "0.06%"],
+    "correctIndex": 0
+  },
+  {
+    "id": "TN-020",
+    "state": "TN",
+    "category": "duiStateLaws",
+    "question": "What is the BAC limit for commercial vehicle operators in Tennessee?",
+    "answers": ["0.08%", "0.10%", "0.06%", "0.04%"],
+    "correctIndex": 3
+  },
+  {
+    "id": "TN-021",
+    "state": "TN",
+    "category": "duiStateLaws",
+    "question": "What is the BAC limit for drivers under 21 years old in Tennessee?",
+    "answers": ["0.02%", "0.04%", "0.01%", "0.00%"],
+    "correctIndex": 0
+  },
+  {
+    "id": "TN-022",
+    "state": "TN",
+    "category": "duiStateLaws",
+    "question": "At what BAC level does Tennessee require mandatory minimum jail time?",
+    "answers": ["0.10% or higher", "0.15% or higher", "0.20% or higher", "0.12% or higher"],
+    "correctIndex": 1
+  },
+  {
+    "id": "TN-023",
+    "state": "TN",
+    "category": "duiStateLaws",
+    "question": "What does Tennessee's implied consent law require drivers to do?",
+    "answers": ["Carry insurance proof", "Register vehicles annually", "Submit to chemical testing", "Attend safety classes"],
+    "correctIndex": 2
+  },
+  {
+    "id": "TN-024",
+    "state": "TN",
+    "category": "duiStateLaws",
+    "question": "How long is the license suspension for a first chemical test refusal in Tennessee?",
+    "answers": ["90 days", "6 months", "180 days", "One year"],
+    "correctIndex": 3
+  },
+  {
+    "id": "TN-025",
+    "state": "TN",
+    "category": "duiStateLaws",
+    "question": "What device is required for all DUI convictions in Tennessee?",
+    "answers": ["Ignition interlock device", "Ankle monitoring bracelet", "Breath analyzer portable", "GPS tracking system"],
+    "correctIndex": 0
+  },
+  {
+    "id": "TN-026",
+    "state": "TN",
+    "category": "duiStateLaws",
+    "question": "How long is the license suspension for a second test refusal in Tennessee?",
+    "answers": ["One year only", "Six months only", "Eighteen months", "Two years"],
+    "correctIndex": 3
+  },
+  {
+    "id": "TN-027",
+    "state": "TN",
+    "category": "insurance",
+    "question": "What type of insurance coverage is mandatory in Tennessee?",
+    "answers": ["Liability coverage only", "Comprehensive coverage", "Collision coverage", "Uninsured motorist coverage"],
+    "correctIndex": 0
+  },
+  {
+    "id": "TN-028",
+    "state": "TN",
+    "category": "insurance",
+    "question": "What must Tennessee drivers always carry while operating a vehicle?",
+    "answers": ["Vehicle registration", "Proof of insurance", "Driver's license only", "Maintenance records"],
+    "correctIndex": 1
+  },
+  {
+    "id": "TN-029",
+    "state": "TN",
+    "category": "insurance",
+    "question": "What type of violation is driving without insurance in Tennessee?",
+    "answers": ["Traffic infraction only", "Civil violation only", "Class C misdemeanor", "Class A misdemeanor"],
+    "correctIndex": 2
+  },
+  {
+    "id": "TN-030",
+    "state": "TN",
+    "category": "insurance",
+    "question": "What can happen if you're caught driving uninsured in Tennessee?",
+    "answers": ["Warning only", "Mandatory driving class", "Community service hours", "License suspension"],
+    "correctIndex": 3
+  },
+  {
+    "id": "TN-031",
+    "state": "TN",
+    "category": "stateUnique",
+    "question": "When must headlights be turned on according to Tennessee's \"wipers on, lights on\" law?",
+    "answers": ["When wipers in use", "Only during heavy rain", "Only at night", "When visibility poor"],
+    "correctIndex": 0
+  },
+  {
+    "id": "TN-032",
+    "state": "TN",
+    "category": "stateUnique",
+    "question": "What headlight colors are legal for non-emergency vehicles in Tennessee?",
+    "answers": ["White only", "Any color allowed", "White or yellow", "White/amber only"],
+    "correctIndex": 3
+  },
+  {
+    "id": "TN-033",
+    "state": "TN",
+    "category": "stateUnique",
+    "question": "How long after sunset must headlights be turned on in Tennessee?",
+    "answers": ["30 minutes after", "Immediately at sunset", "60 minutes after", "15 minutes after"],
+    "correctIndex": 0
+  },
+  {
+    "id": "TN-034",
+    "state": "TN",
+    "category": "stateUnique",
+    "question": "How long before sunrise may headlights be turned off in Tennessee?",
+    "answers": ["Immediately at sunrise", "30 minutes before", "60 minutes before", "15 minutes before"],
+    "correctIndex": 1
+  },
+  {
+    "id": "TN-035",
+    "state": "TN",
+    "category": "stateUnique",
+    "question": "What type of offense is violating Tennessee's headlight law during rain?",
+    "answers": ["Traffic infraction only", "Civil violation only", "Class C misdemeanor", "Class A misdemeanor"],
+    "correctIndex": 2
+  },
+  {
+    "id": "TN-036",
+    "state": "TN",
+    "category": "stateUnique",
+    "question": "At what distance should you be able to see clearly to drive without headlights in Tennessee?",
+    "answers": ["100 feet ahead", "150 feet ahead", "250 feet ahead", "200 feet ahead"],
+    "correctIndex": 3
+  },
+  {
+    "id": "TN-037",
+    "state": "TN",
+    "category": "stateUnique",
+    "question": "What must drivers do when approaching emergency vehicles on Tennessee roadways?",
+    "answers": ["Move over or slow down", "Stop completely always", "Flash hazard lights", "Sound horn twice"],
+    "correctIndex": 0
+  },
+  {
+    "id": "TN-038",
+    "state": "TN",
+    "category": "stateUnique",
+    "question": "When are headlights required even during daytime in Tennessee?",
+    "answers": ["Never during daytime", "Inclement weather", "Only during fog", "Only during snow"],
+    "correctIndex": 1
+  },
+  {
+    "id": "TN-039",
+    "state": "TN",
+    "category": "stateUnique",
+    "question": "What weather conditions require constant windshield wiper use and headlights in Tennessee?",
+    "answers": ["Light drizzle only", "Heavy fog only", "Rain, mist, snow", "Sleet only"],
+    "correctIndex": 2
+  },
+  {
+    "id": "TN-040",
+    "state": "TN",
+    "category": "stateUnique",
+    "question": "Which colored headlights are banned on non-emergency vehicles in Tennessee?",
+    "answers": ["Amber colored lights", "Yellow colored lights", "White colored lights", "Blue or green lights"],
+    "correctIndex": 3
+  }
+]

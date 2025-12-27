@@ -18,10 +18,10 @@
     "category": "gdlLicensing",
     "question": "How many hours of supervised practice are required to advance from a learner's permit to a junior license in Pennsylvania?",
     "answers": [
-      "50 hours total",
-      "65 hours with specific conditions",
-      "100 hours total",
-      "30 hours total"
+      "50 total practice hours",
+      "65 hrs w/ conditions",
+      "100 total practice hours",
+      "30 total practice hours"
     ],
     "correctIndex": 1
   },
@@ -31,10 +31,10 @@
     "category": "gdlLicensing",
     "question": "How long must you hold a learner's permit before applying for a junior license in Pennsylvania?",
     "answers": [
-      "3 months",
-      "1 year",
+      "At least 3 months",
+      "At least 1 year",
       "At least 6 months",
-      "9 months"
+      "At least 9 months"
     ],
     "correctIndex": 2
   },
@@ -57,10 +57,10 @@
     "category": "gdlLicensing",
     "question": "What is the nighttime driving restriction for junior license holders in Pennsylvania?",
     "answers": [
-      "11 PM to 5 AM unless with parent or for work",
-      "Midnight to 6 AM only",
-      "10 PM to 6 AM no exceptions",
-      "No nighttime restrictions"
+      "11 PM-5 AM unless w/ parent",
+      "Midnight-6 AM only period",
+      "10 PM-6 AM no exceptions",
+      "No nighttime restrictions apply"
     ],
     "correctIndex": 0
   },
@@ -96,10 +96,10 @@
     "category": "gdlLicensing",
     "question": "When can a driver obtain an unrestricted license with parental consent and driver education in Pennsylvania?",
     "answers": [
-      "Age 16 with 6 months violation-free",
-      "Age 18 automatically",
+      "Age 16 w/ 6 months violation-free",
+      "Age 18 automatically after training",
       "Age 19 regardless of violations",
-      "Age 17.5 with clean record and training"
+      "Age 17.5 w/ clean record & training"
     ],
     "correctIndex": 3
   },
@@ -148,10 +148,10 @@
     "category": "gdlLicensing",
     "question": "What exception allows junior license holders to drive during restricted hours in Pennsylvania?",
     "answers": [
-      "Social events only",
+      "Social events only permitted",
       "Any recreational activities",
-      "No exceptions exist",
-      "Work, school, or accompanied by parent"
+      "No exceptions exist at all",
+      "Work, school, or w/ parent"
     ],
     "correctIndex": 3
   },
@@ -161,10 +161,10 @@
     "category": "cellPhone",
     "question": "What does Pennsylvania's Hands-Free Law prohibit while driving?",
     "answers": [
-      "Physically holding or manually using a device",
-      "Only texting while driving",
-      "Only video recording",
-      "Using Bluetooth devices"
+      "Holding or manually using device",
+      "Only texting while vehicle moving",
+      "Only video recording activities",
+      "Using Bluetooth devices hands-free"
     ],
     "correctIndex": 0
   },
@@ -175,9 +175,9 @@
     "question": "Can you use voice-operated talk-to-text while driving in Pennsylvania?",
     "answers": [
       "No, all phone use is banned",
-      "Yes, voice-operated features are allowed",
-      "Only with a hands-free mount",
-      "Only for emergencies"
+      "Yes, voice-operated allowed",
+      "Only w/ a hands-free mount",
+      "Only for emergency situations"
     ],
     "correctIndex": 1
   },
@@ -187,10 +187,10 @@
     "category": "cellPhone",
     "question": "How many button presses are allowed to initiate a call under Pennsylvania's Hands-Free Law?",
     "answers": [
-      "Up to three buttons",
-      "Two buttons maximum",
-      "Single button or single swipe",
-      "No touching allowed"
+      "Up to three buttons maximum",
+      "Two buttons maximum press",
+      "Single button or swipe",
+      "No touching allowed at all"
     ],
     "correctIndex": 2
   },
@@ -226,10 +226,10 @@
     "category": "cellPhone",
     "question": "What devices are permitted for phone conversations while driving in Pennsylvania?",
     "answers": [
-      "Handheld phones only",
-      "Bluetooth and speakerphones",
-      "No devices allowed",
-      "Only wired headsets"
+      "Handheld phones only permitted",
+      "Bluetooth & speakerphones",
+      "No devices allowed at all",
+      "Only wired headsets permitted"
     ],
     "correctIndex": 1
   },
@@ -265,10 +265,10 @@
     "category": "duiStateLaws",
     "question": "What does implied consent mean for Pennsylvania drivers?",
     "answers": [
-      "Agreement to BAC testing when lawfully stopped",
-      "Permission to search vehicle",
-      "Consent to field sobriety only",
-      "Waiver of legal representation"
+      "Agreement to BAC testing when stopped",
+      "Permission to search vehicle always",
+      "Consent to field sobriety tests only",
+      "Waiver of legal representation rights"
     ],
     "correctIndex": 0
   },
@@ -291,10 +291,10 @@
     "category": "duiStateLaws",
     "question": "What is the consequence of refusing a BAC test for the first time in Pennsylvania?",
     "answers": [
-      "Warning only",
+      "Warning only first time",
       "Automatic DUI conviction",
-      "12-month license suspension",
-      "No penalty"
+      "12-month suspension",
+      "No penalty at all"
     ],
     "correctIndex": 2
   },
@@ -317,9 +317,9 @@
     "category": "duiStateLaws",
     "question": "What happens if you refuse a BAC test in Pennsylvania regarding penalty tier?",
     "answers": [
-      "Placed in highest BAC penalty tier",
-      "Given minimum penalty",
-      "No effect on penalties",
+      "Highest BAC penalty tier",
+      "Given minimum penalty level",
+      "No effect on penalty levels",
       "Subject to civil penalties only"
     ],
     "correctIndex": 0
@@ -331,9 +331,9 @@
     "question": "What is Pennsylvania's tiered DUI system based on?",
     "answers": [
       "Number of prior offenses only",
-      "BAC level and impairment type",
-      "Driver's age",
-      "Time of day"
+      "BAC level & impairment",
+      "Driver's age at time",
+      "Time of day only"
     ],
     "correctIndex": 1
   },
@@ -356,10 +356,10 @@
     "category": "insurance",
     "question": "What does limited tort restrict in Pennsylvania's insurance system?",
     "answers": [
-      "Coverage amounts only",
-      "Vehicle types covered",
-      "Choice of repair shops",
-      "Right to sue for pain and suffering"
+      "Coverage amounts only restricted",
+      "Vehicle types covered only",
+      "Choice of repair shops only",
+      "Right to sue for pain & suffering"
     ],
     "correctIndex": 3
   },
@@ -383,9 +383,9 @@
     "question": "What happens if you drive without required insurance in Pennsylvania?",
     "answers": [
       "Warning for first offense",
-      "License and registration suspension",
-      "Points on license only",
-      "Civil fine only"
+      "License & registration loss",
+      "Points on license only issued",
+      "Civil fine only imposed"
     ],
     "correctIndex": 1
   },
@@ -395,10 +395,10 @@
     "category": "stateUnique",
     "question": "When must you turn on headlights while driving in Pennsylvania?",
     "answers": [
-      "Only at night",
-      "During rain only",
-      "When using windshield wipers",
-      "Only in fog"
+      "Only at nighttime",
+      "During rain only periods",
+      "Using windshield wipers",
+      "Only in fog conditions"
     ],
     "correctIndex": 2
   },
@@ -408,10 +408,10 @@
     "category": "stateUnique",
     "question": "What is required when approaching an emergency vehicle with flashing lights in Pennsylvania?",
     "answers": [
-      "Honk your horn",
-      "Stop completely",
-      "Flash your lights",
-      "Move over or slow 20 mph below limit"
+      "Honk your horn loudly",
+      "Stop completely if needed",
+      "Flash your lights at them",
+      "Move over or slow 20 mph"
     ],
     "correctIndex": 3
   },
@@ -434,10 +434,10 @@
     "category": "stateUnique",
     "question": "What is the automated camera violation for illegally passing a school bus in Pennsylvania?",
     "answers": [
-      "Warning only",
-      "Civil fine with no points",
-      "License suspension",
-      "Criminal record"
+      "Warning only first time",
+      "Civil fine w/ no points",
+      "License suspension period",
+      "Criminal record created"
     ],
     "correctIndex": 1
   },
@@ -447,10 +447,10 @@
     "category": "stateUnique",
     "question": "When are right turns on red allowed in Pennsylvania?",
     "answers": [
-      "Never permitted",
-      "Always without stopping",
-      "After full stop when safe and not prohibited",
-      "Only during daytime"
+      "Never permitted in PA",
+      "Always without stopping first",
+      "After full stop when safe",
+      "Only during daytime hours"
     ],
     "correctIndex": 2
   },
@@ -460,10 +460,10 @@
     "category": "stateUnique",
     "question": "What does Pennsylvania's Move Over Law apply to?",
     "answers": [
-      "Police vehicles only",
-      "Ambulances only",
-      "Fire trucks only",
-      "Emergency vehicles and disabled vehicles"
+      "Police vehicles only applies",
+      "Ambulances only covered",
+      "Fire trucks only applies",
+      "Emergency & disabled vehicles"
     ],
     "correctIndex": 3
   },
@@ -473,10 +473,10 @@
     "category": "stateUnique",
     "question": "When must you stop for a school bus on a divided highway in Pennsylvania?",
     "answers": [
-      "Only if on the same roadway",
-      "From any direction",
+      "Same roadway only",
+      "From any direction always",
       "Never on divided highways",
-      "Only if directly behind"
+      "Only if directly behind bus"
     ],
     "correctIndex": 0
   },
@@ -499,10 +499,10 @@
     "category": "stateUnique",
     "question": "What is the penalty tier system in Pennsylvania's DUI law based on?",
     "answers": [
-      "Driver's age only",
-      "Time of offense",
+      "Driver's age only used",
+      "Time of offense only",
       "BAC level categories",
-      "Vehicle type"
+      "Vehicle type used"
     ],
     "correctIndex": 2
   },
@@ -512,10 +512,10 @@
     "category": "stateUnique",
     "question": "What additional requirement applies when headlights are used in Pennsylvania?",
     "answers": [
-      "Must use high beams",
-      "Must use fog lights",
-      "Must use hazard lights",
-      "Must dim within 500 feet of oncoming traffic"
+      "Must use high beams only",
+      "Must use fog lights always",
+      "Must use hazard lights too",
+      "Dim within 500 ft of traffic"
     ],
     "correctIndex": 3
   }

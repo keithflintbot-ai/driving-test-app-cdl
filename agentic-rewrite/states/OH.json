@@ -5,10 +5,10 @@
     "category": "gdlLicensing",
     "question": "At what minimum age can you apply for a temporary instruction permit in Ohio?",
     "answers": [
-      "15 years and 6 months",
-      "15 years old",
-      "16 years old",
-      "14 years and 6 months"
+      "15 yrs and 6 months",
+      "15 years of age",
+      "16 years of age",
+      "14 yrs and 6 months"
     ],
     "correctIndex": 0
   },
@@ -18,10 +18,10 @@
     "category": "gdlLicensing",
     "question": "How long must you hold a temporary instruction permit before applying for a probationary license in Ohio?",
     "answers": [
-      "3 months",
+      "3 months period",
       "At least 6 months",
-      "1 year",
-      "9 months"
+      "1 year period",
+      "9 months period"
     ],
     "correctIndex": 1
   },
@@ -33,7 +33,7 @@
     "answers": [
       "Any licensed driver over 21",
       "Only a driving instructor",
-      "Parent, guardian, or approved licensed adult",
+      "Parent/guardian/approved adult",
       "Any family member with a license"
     ],
     "correctIndex": 2
@@ -57,10 +57,10 @@
     "category": "gdlLicensing",
     "question": "What nighttime restriction applies to probationary license holders in Ohio during their first year?",
     "answers": [
-      "Cannot drive midnight to 6 AM except for work, school, or with parent",
-      "Cannot drive 10 PM to 5 AM",
-      "No nighttime restriction",
-      "Cannot drive 11 PM to 6 AM"
+      "Midnight-6 AM except work/school/parent",
+      "Cannot drive from 10 PM to 5 AM time",
+      "No nighttime driving restriction applies",
+      "Cannot drive from 11 PM to 6 AM time"
     ],
     "correctIndex": 0
   },
@@ -83,10 +83,10 @@
     "category": "gdlLicensing",
     "question": "What is required for driver education in Ohio to qualify for a probationary license?",
     "answers": [
-      "Online course only",
-      "Road test only",
-      "24 hours classroom and 8 hours driving",
-      "40 hours classroom instruction"
+      "Online course instruction only",
+      "Road test instruction only",
+      "24 hrs classroom and 8 hrs driving",
+      "40 hrs classroom instruction only"
     ],
     "correctIndex": 2
   },
@@ -97,9 +97,9 @@
     "question": "Who must supervise a driver under 16 with a temporary permit in Ohio?",
     "answers": [
       "Any licensed driver over 18",
-      "Any family member",
+      "Any family member w/ license",
       "Only a certified instructor",
-      "Parent, guardian, or licensed driving instructor"
+      "Parent/guardian/instructor"
     ],
     "correctIndex": 3
   },
@@ -109,9 +109,9 @@
     "category": "gdlLicensing",
     "question": "What 2025 change affects first-time drivers aged 18 to 20 in Ohio?",
     "answers": [
-      "Must complete full driver education course",
-      "No longer need a permit",
-      "Can skip the road test",
+      "Must complete driver ed course",
+      "No longer need permit to drive",
+      "Can skip road test requirement",
       "Face same restrictions as under 18"
     ],
     "correctIndex": 0
@@ -122,10 +122,10 @@
     "category": "gdlLicensing",
     "question": "Can probationary license holders use hands-free cell phone features in Ohio?",
     "answers": [
-      "Yes, for GPS only",
-      "No, all electronic device use is prohibited",
-      "Yes, if over 17",
-      "Yes, for emergencies only"
+      "Yes, for GPS navigation only",
+      "No, all device use prohibited",
+      "Yes, if driver over 17 yrs",
+      "Yes, for emergency calls only"
     ],
     "correctIndex": 1
   },
@@ -148,10 +148,10 @@
     "category": "gdlLicensing",
     "question": "Do drivers aged 18-20 need to hold a permit for 6 months before testing in Ohio?",
     "answers": [
-      "Yes, same as younger teens",
+      "Yes, same as younger teen drivers",
       "Only if they lack driver education",
-      "Yes, but only 3 months",
-      "No, waiting period applies only to under 18"
+      "Yes, but waiting only 3 months",
+      "No, waiting period only for under 18"
     ],
     "correctIndex": 3
   },
@@ -161,9 +161,9 @@
     "category": "cellPhone",
     "question": "What does Ohio's Hands-Free Law prohibit while driving?",
     "answers": [
-      "Physically holding or using a wireless device",
-      "Only texting",
-      "Only video recording",
+      "Holding/using device",
+      "Only texting messages",
+      "Only video recording use",
       "Using Bluetooth devices"
     ],
     "correctIndex": 0
@@ -175,9 +175,9 @@
     "question": "Can adult drivers hold a phone to their ear for conversations in Ohio?",
     "answers": [
       "No, all phone holding is banned",
-      "Yes, if started with single touch or swipe",
-      "Only with a permit",
-      "Only during emergencies"
+      "Yes, w/ single touch or swipe start",
+      "Only with valid driving permit",
+      "Only during emergency situations"
     ],
     "correctIndex": 1
   },
@@ -187,10 +187,10 @@
     "category": "cellPhone",
     "question": "What type of enforcement applies to Ohio's Hands-Free Law?",
     "answers": [
-      "Secondary offense only",
+      "Secondary offense enforcement only",
       "Warning only for first violation",
-      "Primary offense, can stop for this alone",
-      "No enforcement mechanism"
+      "Primary offense, can stop for this",
+      "No enforcement mechanism exists"
     ],
     "correctIndex": 2
   },
@@ -200,10 +200,10 @@
     "category": "cellPhone",
     "question": "Can you use your phone at a red light in Ohio?",
     "answers": [
-      "Yes, when fully stopped",
-      "Yes, for navigation only",
-      "Only to make emergency calls",
-      "No, unless during emergency or road closure"
+      "Yes, when vehicle fully stopped",
+      "Yes, for navigation purposes only",
+      "Only to make emergency calls now",
+      "No, except emergency or road closure"
     ],
     "correctIndex": 3
   },
@@ -214,9 +214,9 @@
     "question": "How can you legally activate navigation or audio apps while driving in Ohio?",
     "answers": [
       "Single touch, swipe, or voice command",
-      "Not allowed while driving",
-      "Only when stopped",
-      "Unlimited touches if brief"
+      "Not allowed while driving vehicle",
+      "Only when vehicle is stopped",
+      "Unlimited touches if done briefly"
     ],
     "correctIndex": 0
   },
@@ -226,10 +226,10 @@
     "category": "cellPhone",
     "question": "What can help you avoid penalties for violating Ohio's Hands-Free Law?",
     "answers": [
-      "Paying fine within 30 days",
-      "Completing a distracted driving course",
-      "First-time offender exemption",
-      "Written apology to court"
+      "Paying fine within 30 days time",
+      "Complete distracted driving course",
+      "First-time offender exemption law",
+      "Written apology letter to court"
     ],
     "correctIndex": 1
   },
@@ -265,10 +265,10 @@
     "category": "duiStateLaws",
     "question": "What does Ohio's implied consent law require?",
     "answers": [
-      "Agreement to chemical testing when lawfully arrested for OVI",
+      "Chemical test when arrested for OVI",
       "Permission to search your vehicle",
       "Consent to field sobriety tests only",
-      "Waiver of attorney rights"
+      "Waiver of all attorney rights"
     ],
     "correctIndex": 0
   },
@@ -278,10 +278,10 @@
     "category": "duiStateLaws",
     "question": "What is the immediate consequence of refusing a chemical test in Ohio?",
     "answers": [
-      "Warning only",
-      "Administrative license suspension",
-      "Criminal charges only",
-      "Fine but no suspension"
+      "Warning only for refusal",
+      "Admin license suspension",
+      "Criminal charges only filed",
+      "Fine but no license suspension"
     ],
     "correctIndex": 1
   },
@@ -291,10 +291,10 @@
     "category": "duiStateLaws",
     "question": "At what BAC level does Ohio impose enhanced Super OVI penalties?",
     "answers": [
-      "0.10 percent",
-      "0.15 percent",
-      "0.17 percent or higher",
-      "0.20 percent"
+      "0.10 percent level",
+      "0.15 percent level",
+      "0.17% or higher",
+      "0.20 percent level"
     ],
     "correctIndex": 2
   },
@@ -317,10 +317,10 @@
     "category": "duiStateLaws",
     "question": "What new testing method was introduced in Ohio in April 2025?",
     "answers": [
-      "Oral fluid test for drug detection",
+      "Oral fluid test for drugs",
       "Portable breathalyzer only",
-      "Mandatory blood test",
-      "Saliva alcohol test"
+      "Mandatory blood test method",
+      "Saliva alcohol test only"
     ],
     "correctIndex": 0
   },
@@ -330,10 +330,10 @@
     "category": "duiStateLaws",
     "question": "What legislation increased minimum OVI fines in Ohio for 2025?",
     "answers": [
-      "Senate Bill 288",
-      "Liv's Law (House Bill 37)",
-      "House Bill 101",
-      "Administrative Rule 2025-1"
+      "Senate Bill 288 law",
+      "Liv's Law (HB 37)",
+      "House Bill 101 law",
+      "Admin Rule 2025-1 law"
     ],
     "correctIndex": 1
   },
@@ -343,10 +343,10 @@
     "category": "insurance",
     "question": "What type of insurance system does Ohio use for auto accidents?",
     "answers": [
-      "No-fault system",
-      "Hybrid system",
-      "At-fault (tort-based) system",
-      "Choice system"
+      "No-fault system type",
+      "Hybrid system type",
+      "At-fault tort system",
+      "Choice system type"
     ],
     "correctIndex": 2
   },
@@ -356,10 +356,10 @@
     "category": "insurance",
     "question": "What does liability insurance primarily cover in Ohio?",
     "answers": [
-      "Your own vehicle repairs",
-      "Your medical expenses",
-      "Theft of your vehicle",
-      "Damages you cause to others"
+      "Your own vehicle repairs only",
+      "Your medical expenses only",
+      "Theft of your vehicle only",
+      "Damages you cause others"
     ],
     "correctIndex": 3
   },
@@ -369,10 +369,10 @@
     "category": "insurance",
     "question": "When must you show proof of insurance in Ohio?",
     "answers": [
-      "At traffic stops, accidents, and inspections",
-      "Only during accidents",
-      "Only at annual registration",
-      "Only when requested by mail"
+      "Stops, accidents, inspections",
+      "Only during vehicle accidents",
+      "Only at annual registration time",
+      "Only when requested via mail"
     ],
     "correctIndex": 0
   },
@@ -395,10 +395,10 @@
     "category": "stateUnique",
     "question": "When are headlights required in Ohio?",
     "answers": [
-      "Only at night",
-      "Only in heavy rain",
+      "Only at nighttime hours",
+      "Only in heavy rain weather",
       "When using windshield wipers",
-      "Only in fog"
+      "Only in fog conditions"
     ],
     "correctIndex": 2
   },
@@ -408,10 +408,10 @@
     "category": "stateUnique",
     "question": "How far must you stop from a school bus with flashing lights in Ohio?",
     "answers": [
-      "5 feet",
-      "20 feet",
-      "15 feet",
-      "At least 10 feet"
+      "5 feet away min",
+      "20 feet away min",
+      "15 feet away min",
+      "10 feet minimum"
     ],
     "correctIndex": 3
   },
@@ -421,10 +421,10 @@
     "category": "stateUnique",
     "question": "When can you proceed after stopping for a school bus in Ohio?",
     "answers": [
-      "When bus resumes motion or driver signals you",
-      "When lights stop flashing",
-      "After waiting 10 seconds",
-      "When stop arm retracts"
+      "When bus moves or driver signals",
+      "When lights stop flashing now",
+      "After waiting 10 seconds time",
+      "When stop arm retracts fully"
     ],
     "correctIndex": 0
   },
@@ -434,10 +434,10 @@
     "category": "stateUnique",
     "question": "On a divided highway with four lanes, must you stop for a school bus on the opposite side in Ohio?",
     "answers": [
-      "Yes, always stop",
-      "No, only same-direction traffic must stop",
-      "Only during school hours",
-      "Only in residential areas"
+      "Yes, you must always stop",
+      "No, only same-direction traffic",
+      "Only during designated school hours",
+      "Only in residential areas zones"
     ],
     "correctIndex": 1
   },
@@ -447,10 +447,10 @@
     "category": "stateUnique",
     "question": "How far in advance must you activate turn signals in Ohio?",
     "answers": [
-      "50 feet",
-      "200 feet",
-      "At least 100 feet before the maneuver",
-      "When you begin turning"
+      "50 feet before turn",
+      "200 feet before turn",
+      "100 feet before maneuver",
+      "When you begin turning now"
     ],
     "correctIndex": 2
   },
@@ -460,10 +460,10 @@
     "category": "stateUnique",
     "question": "Who is required to wear a motorcycle helmet in Ohio?",
     "answers": [
-      "All riders regardless of age",
-      "Only passengers",
-      "Only on highways",
-      "Riders under 18 or with novice license"
+      "All riders regardless of age group",
+      "Only passengers on motorcycle",
+      "Only on highway riding areas",
+      "Riders under 18 or w/ novice license"
     ],
     "correctIndex": 3
   },
@@ -512,10 +512,10 @@
     "category": "stateUnique",
     "question": "When are right turns on red allowed in Ohio?",
     "answers": [
-      "Never permitted",
-      "Only on highways",
-      "During daytime only",
-      "After complete stop when safe, unless prohibited"
+      "Never permitted anywhere in state",
+      "Only on highway roads when safe",
+      "During daytime hours only, not night",
+      "After stop when safe & not prohibited"
     ],
     "correctIndex": 3
   }

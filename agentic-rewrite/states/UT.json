@@ -1,0 +1,322 @@
+[
+  {
+    "id": "UT-001",
+    "state": "UT",
+    "category": "gdlLicensing",
+    "question": "At what minimum age can you obtain a learner permit in Utah?",
+    "answers": ["15 years old", "16 years old", "14 years old", "17 years old"],
+    "correctIndex": 0
+  },
+  {
+    "id": "UT-002",
+    "state": "UT",
+    "category": "gdlLicensing",
+    "question": "How long must you hold a learner permit before upgrading to the next phase?",
+    "answers": ["3 months minimum", "6 months minimum", "12 months minimum", "9 months minimum"],
+    "correctIndex": 1
+  },
+  {
+    "id": "UT-003",
+    "state": "UT",
+    "category": "gdlLicensing",
+    "question": "How many total hours of supervised driving practice are required for Utah teens?",
+    "answers": ["30 hours total", "50 hours total", "40 hours total", "60 hours total"],
+    "correctIndex": 2
+  },
+  {
+    "id": "UT-004",
+    "state": "UT",
+    "category": "gdlLicensing",
+    "question": "How many of the required practice hours must be completed at night?",
+    "answers": ["5 night hours", "15 night hours", "20 night hours", "10 night hours"],
+    "correctIndex": 3
+  },
+  {
+    "id": "UT-005",
+    "state": "UT",
+    "category": "gdlLicensing",
+    "question": "What minimum age must a supervising driver be when accompanying a learner permit holder?",
+    "answers": ["21 years old", "25 years old", "18 years old", "23 years old"],
+    "correctIndex": 0
+  },
+  {
+    "id": "UT-006",
+    "state": "UT",
+    "category": "gdlLicensing",
+    "question": "During what hours are drivers under 17 prohibited from driving in Utah?",
+    "answers": ["11 PM to 6 AM", "12 AM to 5 AM", "1 AM to 6 AM", "10 PM to 5 AM"],
+    "correctIndex": 1
+  },
+  {
+    "id": "UT-007",
+    "state": "UT",
+    "category": "gdlLicensing",
+    "question": "How long must newly licensed 16-17 year olds wait before carrying non-family passengers?",
+    "answers": ["3 months", "12 months", "6 months", "9 months"],
+    "correctIndex": 2
+  },
+  {
+    "id": "UT-008",
+    "state": "UT",
+    "category": "gdlLicensing",
+    "question": "What is required for all Utah drivers age 18 and younger to obtain a license?",
+    "answers": ["Road skills test only", "Written exam only", "Medical exam only", "Driver ed course"],
+    "correctIndex": 3
+  },
+  {
+    "id": "UT-009",
+    "state": "UT",
+    "category": "gdlLicensing",
+    "question": "What percentage must you score on the Utah written knowledge test to pass?",
+    "answers": ["80% or higher", "75% or higher", "85% or higher", "70% or higher"],
+    "correctIndex": 0
+  },
+  {
+    "id": "UT-010",
+    "state": "UT",
+    "category": "gdlLicensing",
+    "question": "If you are 19 or older, what is the minimum learner permit holding period?",
+    "answers": ["6 months", "3 months", "1 month", "No minimum"],
+    "correctIndex": 1
+  },
+  {
+    "id": "UT-011",
+    "state": "UT",
+    "category": "gdlLicensing",
+    "question": "Where must an approved supervising driver sit while supervising a permit holder?",
+    "answers": ["Anywhere in vehicle", "In the back seat", "Front passenger seat", "Either front seat"],
+    "correctIndex": 2
+  },
+  {
+    "id": "UT-012",
+    "state": "UT",
+    "category": "gdlLicensing",
+    "question": "At what age can you apply for a full driver license if requirements are met?",
+    "answers": ["15 years old", "17 years old", "18 years old", "16½ years old"],
+    "correctIndex": 3
+  },
+  {
+    "id": "UT-013",
+    "state": "UT",
+    "category": "cellPhone",
+    "question": "What is the cell phone usage rule for Utah drivers under 18?",
+    "answers": ["Complete phone ban", "Texting allowed only", "Calling allowed only", "Hands-free only"],
+    "correctIndex": 0
+  },
+  {
+    "id": "UT-014",
+    "state": "UT",
+    "category": "cellPhone",
+    "question": "What type of phone communication is legal for adult drivers in Utah?",
+    "answers": ["Text messaging", "Hands-free calls", "Reading emails", "Browsing the web"],
+    "correctIndex": 1
+  },
+  {
+    "id": "UT-015",
+    "state": "UT",
+    "category": "cellPhone",
+    "question": "What action is banned for all Utah drivers while operating a vehicle?",
+    "answers": ["Using GPS apps", "Using Bluetooth", "Manually texting", "Voice commands"],
+    "correctIndex": 2
+  },
+  {
+    "id": "UT-016",
+    "state": "UT",
+    "category": "cellPhone",
+    "question": "What is Utah's distracted driving law classified as for enforcement purposes?",
+    "answers": ["Warning only law", "Secondary law", "Tertiary law", "Primary offense"],
+    "correctIndex": 3
+  },
+  {
+    "id": "UT-017",
+    "state": "UT",
+    "category": "cellPhone",
+    "question": "When can teen drivers legally use their phone while driving?",
+    "answers": ["Emergency situations", "During daylight only", "With passenger present", "Never under any condition"],
+    "correctIndex": 0
+  },
+  {
+    "id": "UT-018",
+    "state": "UT",
+    "category": "cellPhone",
+    "question": "What phone-related action is prohibited even at red lights in Utah?",
+    "answers": ["Voice calling", "Manual texting", "Using GPS navigation", "Hands-free talking"],
+    "correctIndex": 1
+  },
+  {
+    "id": "UT-019",
+    "state": "UT",
+    "category": "duiStateLaws",
+    "question": "What is Utah's legal BAC limit for drivers 21 and older?",
+    "answers": ["0.08%", "0.10%", "0.05%", "0.04%"],
+    "correctIndex": 2
+  },
+  {
+    "id": "UT-020",
+    "state": "UT",
+    "category": "duiStateLaws",
+    "question": "What is the BAC limit for commercial vehicle operators in Utah?",
+    "answers": ["0.08%", "0.05%", "0.02%", "0.04%"],
+    "correctIndex": 3
+  },
+  {
+    "id": "UT-021",
+    "state": "UT",
+    "category": "duiStateLaws",
+    "question": "What is Utah's BAC tolerance for drivers under 21?",
+    "answers": ["Zero tolerance", "0.02% BAC limit", "0.01% BAC limit", "0.05% BAC limit"],
+    "correctIndex": 0
+  },
+  {
+    "id": "UT-022",
+    "state": "UT",
+    "category": "duiStateLaws",
+    "question": "What device is required for DUI offenders in Utah after conviction?",
+    "answers": ["Ankle monitor device", "Ignition interlock", "GPS tracking device", "Breathalyzer phone app"],
+    "correctIndex": 1
+  },
+  {
+    "id": "UT-023",
+    "state": "UT",
+    "category": "duiStateLaws",
+    "question": "What happens if you refuse a BAC test in Utah under implied consent law?",
+    "answers": ["Warning issued", "Small citation", "License suspended", "Mandatory jail time"],
+    "correctIndex": 2
+  },
+  {
+    "id": "UT-024",
+    "state": "UT",
+    "category": "duiStateLaws",
+    "question": "How does Utah's 0.05% BAC limit compare nationally?",
+    "answers": ["Highest in US", "Average for US", "Above US average", "Lowest in US"],
+    "correctIndex": 3
+  },
+  {
+    "id": "UT-025",
+    "state": "UT",
+    "category": "duiStateLaws",
+    "question": "What classification is a first-time DUI without aggravating factors in Utah?",
+    "answers": ["Class B misdemeanor", "Class A felony", "Class C infraction", "Class D violation"],
+    "correctIndex": 0
+  },
+  {
+    "id": "UT-026",
+    "state": "UT",
+    "category": "duiStateLaws",
+    "question": "When did Utah's 0.05% BAC limit take effect?",
+    "answers": ["January 2020", "December 2018", "January 2019", "March 2017"],
+    "correctIndex": 1
+  },
+  {
+    "id": "UT-027",
+    "state": "UT",
+    "category": "insurance",
+    "question": "What type of insurance system does Utah operate under?",
+    "answers": ["Tort system", "Hybrid system", "No-fault system", "Modified fault system"],
+    "correctIndex": 2
+  },
+  {
+    "id": "UT-028",
+    "state": "UT",
+    "category": "insurance",
+    "question": "When did Utah's increased liability insurance minimums take effect?",
+    "answers": ["July 2024", "January 2025", "March 2024", "June 2025"],
+    "correctIndex": 3
+  },
+  {
+    "id": "UT-029",
+    "state": "UT",
+    "category": "insurance",
+    "question": "What additional coverage is required beyond liability insurance in Utah?",
+    "answers": ["Personal Injury Protection", "Collision coverage only", "Comprehensive coverage", "Gap insurance coverage"],
+    "correctIndex": 0
+  },
+  {
+    "id": "UT-030",
+    "state": "UT",
+    "category": "insurance",
+    "question": "What legislation prompted Utah's 2025 insurance requirement changes?",
+    "answers": ["Senate Bill 200", "House Bill 113", "Executive Order 45", "House Bill 250"],
+    "correctIndex": 1
+  },
+  {
+    "id": "UT-031",
+    "state": "UT",
+    "category": "stateUnique",
+    "question": "What is the default speed limit in Utah school zones?",
+    "answers": ["20 mph", "25 mph", "15 mph", "30 mph"],
+    "correctIndex": 0
+  },
+  {
+    "id": "UT-032",
+    "state": "UT",
+    "category": "stateUnique",
+    "question": "What must you do when a vehicle stops at a school crosswalk?",
+    "answers": ["Proceed cautiously", "Honk your horn", "Change lanes", "Stop behind it"],
+    "correctIndex": 3
+  },
+  {
+    "id": "UT-033",
+    "state": "UT",
+    "category": "stateUnique",
+    "question": "What is required for 2-wheel drive vehicles under Utah's winter Traction Law?",
+    "answers": ["4 winter-rated tires", "2 winter-rated tires", "Chains on all tires", "All-season tires"],
+    "correctIndex": 0
+  },
+  {
+    "id": "UT-034",
+    "state": "UT",
+    "category": "stateUnique",
+    "question": "What symbol indicates proper winter tires under Utah's Traction Law?",
+    "answers": ["M+S marking only", "3-Peak Snowflake", "Winter Approved stamp", "DOT certification"],
+    "correctIndex": 1
+  },
+  {
+    "id": "UT-035",
+    "state": "UT",
+    "category": "stateUnique",
+    "question": "How are speeding fines affected in Utah highway work zones?",
+    "answers": ["Stay the same", "Reduced by half", "Doubled", "Tripled"],
+    "correctIndex": 2
+  },
+  {
+    "id": "UT-036",
+    "state": "UT",
+    "category": "stateUnique",
+    "question": "When must you stop at a crosswalk not located at an intersection?",
+    "answers": ["When flashing only", "When convenient", "If police present", "Before entering it"],
+    "correctIndex": 3
+  },
+  {
+    "id": "UT-037",
+    "state": "UT",
+    "category": "stateUnique",
+    "question": "Who always has right-of-way at non-intersection crosswalks in Utah?",
+    "answers": ["Pedestrians", "Larger vehicles", "Emergency vehicles", "Through traffic"],
+    "correctIndex": 0
+  },
+  {
+    "id": "UT-038",
+    "state": "UT",
+    "category": "stateUnique",
+    "question": "What must all-wheel drive vehicles have under the Traction Law?",
+    "answers": ["4 winter tires", "2+ snowflake tires", "Chains available", "All-terrain tires"],
+    "correctIndex": 1
+  },
+  {
+    "id": "UT-039",
+    "state": "UT",
+    "category": "stateUnique",
+    "question": "What technology is Utah implementing at crosswalks for accessibility?",
+    "answers": ["Video cameras", "Motion sensors", "Radar buttons", "LED countdown timers"],
+    "correctIndex": 2
+  },
+  {
+    "id": "UT-040",
+    "state": "UT",
+    "category": "stateUnique",
+    "question": "What must you always do when you see a flagger in a work zone?",
+    "answers": ["Slow to 15 mph", "Turn on hazards", "Change lanes", "Obey flagger"],
+    "correctIndex": 3
+  }
+]

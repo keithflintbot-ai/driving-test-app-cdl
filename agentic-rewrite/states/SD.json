@@ -1,0 +1,522 @@
+[
+  {
+    "id": "SD-001",
+    "state": "SD",
+    "category": "gdlLicensing",
+    "question": "At what minimum age can you apply for an instruction permit in South Dakota?",
+    "answers": [
+      "14 years old",
+      "15 years old",
+      "16 years old",
+      "13 years old"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "SD-002",
+    "state": "SD",
+    "category": "gdlLicensing",
+    "question": "How long must you hold an instruction permit before applying for a restricted minor's permit in South Dakota?",
+    "answers": [
+      "90 days minimum",
+      "180 days minimum",
+      "270 days minimum",
+      "120 days minimum"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "SD-003",
+    "state": "SD",
+    "category": "gdlLicensing",
+    "question": "At what age can you obtain a restricted minor's permit in South Dakota?",
+    "answers": [
+      "14 years old",
+      "15 years old",
+      "14 yrs, 3 months",
+      "13 yrs, 6 months"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "SD-004",
+    "state": "SD",
+    "category": "gdlLicensing",
+    "question": "What is required to supervise a driver with an instruction permit in South Dakota?",
+    "answers": [
+      "Any adult over 18",
+      "Parent or guardian only",
+      "Professional instructor",
+      "Licensed adult 18+"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "SD-005",
+    "state": "SD",
+    "category": "gdlLicensing",
+    "question": "At what minimum age can you obtain an unrestricted operator's license in South Dakota?",
+    "answers": [
+      "16 years old",
+      "17 years old",
+      "18 years old",
+      "15 years old"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "SD-006",
+    "state": "SD",
+    "category": "gdlLicensing",
+    "question": "How many supervised driving hours are recommended before testing for a license in South Dakota?",
+    "answers": [
+      "20 total hours",
+      "50 total hours",
+      "30 total hours",
+      "40 total hours"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "SD-007",
+    "state": "SD",
+    "category": "gdlLicensing",
+    "question": "What restrictions apply to restricted minor's permit holders in South Dakota?",
+    "answers": [
+      "No night driving allowed",
+      "No highway driving allowed",
+      "Licensed adult present",
+      "Daytime driving only"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "SD-008",
+    "state": "SD",
+    "category": "gdlLicensing",
+    "question": "What must permit holders carry along with their permit in South Dakota?",
+    "answers": [
+      "School ID card",
+      "Birth certificate",
+      "Parental consent",
+      "Proof of insurance"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "SD-009",
+    "state": "SD",
+    "category": "gdlLicensing",
+    "question": "Where must the supervisor sit when accompanying an instruction permit holder in South Dakota?",
+    "answers": [
+      "In the front seat",
+      "In the back seat",
+      "Either front or back",
+      "No requirement"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "SD-010",
+    "state": "SD",
+    "category": "gdlLicensing",
+    "question": "What test must be passed to obtain an instruction permit in South Dakota?",
+    "answers": [
+      "Road test only",
+      "Written test",
+      "Vision test only",
+      "Practical skills test"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "SD-011",
+    "state": "SD",
+    "category": "gdlLicensing",
+    "question": "Can restricted minor's permit holders drive alone to school or work in South Dakota?",
+    "answers": [
+      "No, never permitted",
+      "Only to work sites",
+      "Yes, w/ endorsement",
+      "Only during daytime"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "SD-012",
+    "state": "SD",
+    "category": "gdlLicensing",
+    "question": "What documentation proves South Dakota residency when applying for a permit?",
+    "answers": [
+      "Public library card",
+      "School enrollment form",
+      "Employment records",
+      "Utility bill or lease"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "SD-013",
+    "state": "SD",
+    "category": "cellPhone",
+    "question": "What phone activity is prohibited for all drivers while operating a vehicle in South Dakota?",
+    "answers": [
+      "Texting/reading texts",
+      "All phone use banned",
+      "Making voice calls",
+      "Using GPS navigation"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "SD-014",
+    "state": "SD",
+    "category": "cellPhone",
+    "question": "Can adult drivers make handheld phone calls while driving in South Dakota?",
+    "answers": [
+      "No, all handheld banned",
+      "Yes, calls are allowed",
+      "Only hands-free permitted",
+      "Only in emergencies"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "SD-015",
+    "state": "SD",
+    "category": "cellPhone",
+    "question": "What are the cell phone restrictions for drivers under 18 in South Dakota?",
+    "answers": [
+      "Texting only banned",
+      "Calls only banned",
+      "No phone use at all",
+      "Hands-free only"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "SD-016",
+    "state": "SD",
+    "category": "cellPhone",
+    "question": "What exception exists for the texting ban in South Dakota?",
+    "answers": [
+      "No exceptions allowed",
+      "Stopped at red light",
+      "Hands-free only",
+      "Emergency reporting"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "SD-017",
+    "state": "SD",
+    "category": "cellPhone",
+    "question": "What device use is permitted for adult drivers in South Dakota?",
+    "answers": [
+      "Voice calls and GPS",
+      "All uses permitted",
+      "Emergency calls only",
+      "No phone use allowed"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "SD-018",
+    "state": "SD",
+    "category": "cellPhone",
+    "question": "Can you use voice-to-text features while driving in South Dakota?",
+    "answers": [
+      "Only if hands-free",
+      "Allowed for all drivers",
+      "Only for emergencies",
+      "Not allowed, considered texting"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "SD-019",
+    "state": "SD",
+    "category": "duiStateLaws",
+    "question": "What is the legal BAC limit for drivers age 21 and over in South Dakota?",
+    "answers": [
+      "0.05 percent",
+      "0.10 percent",
+      "0.08 percent",
+      "Zero tolerance"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "SD-020",
+    "state": "SD",
+    "category": "duiStateLaws",
+    "question": "What is the BAC limit for commercial drivers in South Dakota?",
+    "answers": [
+      "0.08 percent",
+      "0.02 percent",
+      "Zero tolerance",
+      "0.04 percent"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "SD-021",
+    "state": "SD",
+    "category": "duiStateLaws",
+    "question": "What is the alcohol tolerance level for drivers under 21 in South Dakota?",
+    "answers": [
+      "Zero tolerance policy",
+      "0.02 percent limit",
+      "0.04 percent limit",
+      "Same as adult limit"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "SD-022",
+    "state": "SD",
+    "category": "duiStateLaws",
+    "question": "What happens if you refuse a chemical BAC test in South Dakota?",
+    "answers": [
+      "Warning only issued",
+      "License revocation imposed",
+      "No penalty until convicted",
+      "Temporary suspension only"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "SD-023",
+    "state": "SD",
+    "category": "duiStateLaws",
+    "question": "What does South Dakota's implied consent law require?",
+    "answers": [
+      "Vehicle search consent",
+      "Field test consent only",
+      "Chemical test submission",
+      "Breathalyzer purchase"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "SD-024",
+    "state": "SD",
+    "category": "duiStateLaws",
+    "question": "What device may be required after a DUI conviction in South Dakota?",
+    "answers": [
+      "GPS monitoring device",
+      "Ankle monitor bracelet",
+      "Dashboard camera",
+      "Ignition interlock"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "SD-025",
+    "state": "SD",
+    "category": "duiStateLaws",
+    "question": "Can you be arrested for DUI with a BAC below the legal limit in South Dakota?",
+    "answers": [
+      "Yes, if impaired driving",
+      "No, must exceed limit",
+      "Only with accident",
+      "Only commercial drivers"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "SD-026",
+    "state": "SD",
+    "category": "duiStateLaws",
+    "question": "What is the term for driving under the influence of drugs in South Dakota?",
+    "answers": [
+      "DUID specifically",
+      "DUI covers drugs",
+      "DWID separately",
+      "DWI for drugs"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "SD-027",
+    "state": "SD",
+    "category": "insurance",
+    "question": "What type of fault system does South Dakota follow for auto accidents?",
+    "answers": [
+      "No-fault system",
+      "Comparative fault",
+      "At-fault system",
+      "Hybrid system"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "SD-028",
+    "state": "SD",
+    "category": "insurance",
+    "question": "What coverage is mandatory for all drivers in South Dakota?",
+    "answers": [
+      "Collision coverage",
+      "Comprehensive coverage",
+      "Personal injury protection",
+      "Liability insurance"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "SD-029",
+    "state": "SD",
+    "category": "insurance",
+    "question": "What coverage protects you if hit by an uninsured driver in South Dakota?",
+    "answers": [
+      "Collision only",
+      "Comprehensive only",
+      "Uninsured motorist",
+      "Personal injury protection"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "SD-030",
+    "state": "SD",
+    "category": "insurance",
+    "question": "What must you provide as proof of financial responsibility in South Dakota?",
+    "answers": [
+      "Bank statements",
+      "Insurance card or bond",
+      "Vehicle registration",
+      "Driver's license only"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "SD-031",
+    "state": "SD",
+    "category": "stateUnique",
+    "question": "When are headlights required while driving in South Dakota?",
+    "answers": [
+      "Only at nighttime",
+      "Only in heavy rain",
+      "Limited visibility",
+      "Only in fog"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "SD-032",
+    "state": "SD",
+    "category": "stateUnique",
+    "question": "What must you do when approaching a stopped emergency vehicle in South Dakota?",
+    "answers": [
+      "Stop completely first",
+      "Flash your lights",
+      "Honk your horn",
+      "Move over/slow down"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "SD-033",
+    "state": "SD",
+    "category": "stateUnique",
+    "question": "What is the maximum daytime speed limit on rural interstates in South Dakota?",
+    "answers": [
+      "80 mph maximum",
+      "75 mph maximum",
+      "70 mph maximum",
+      "65 mph maximum"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "SD-034",
+    "state": "SD",
+    "category": "stateUnique",
+    "question": "When must you stop for a school bus with flashing red lights on a two-lane road in South Dakota?",
+    "answers": [
+      "Only if behind it",
+      "From both directions",
+      "Only during school hours",
+      "Only same direction"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "SD-035",
+    "state": "SD",
+    "category": "stateUnique",
+    "question": "What headlight usage is required for motorcycles in South Dakota?",
+    "answers": [
+      "Only nighttime hours",
+      "Only on highways",
+      "Always operating",
+      "Only in bad weather"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "SD-036",
+    "state": "SD",
+    "category": "stateUnique",
+    "question": "What action is required when a funeral procession is passing in South Dakota?",
+    "answers": [
+      "No special requirement",
+      "Flash your lights",
+      "Honk in respect",
+      "Yield right-of-way"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "SD-037",
+    "state": "SD",
+    "category": "stateUnique",
+    "question": "What vehicles does South Dakota's move over law apply to?",
+    "answers": [
+      "Emergency and maintenance",
+      "Police vehicles only",
+      "Ambulance vehicles only",
+      "Fire truck vehicles only"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "SD-038",
+    "state": "SD",
+    "category": "stateUnique",
+    "question": "Can you make a right turn on red in South Dakota?",
+    "answers": [
+      "Never permitted",
+      "Yes, after full stop",
+      "Only on highways",
+      "Only during daytime"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "SD-039",
+    "state": "SD",
+    "category": "stateUnique",
+    "question": "What is required when changing lanes on a highway in South Dakota?",
+    "answers": [
+      "Horn and signal",
+      "Slow down first",
+      "Signal & mirrors",
+      "Flash lights first"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "SD-040",
+    "state": "SD",
+    "category": "stateUnique",
+    "question": "What is the nighttime speed limit on rural interstates in South Dakota?",
+    "answers": [
+      "Same as daytime",
+      "65 mph maximum",
+      "60 mph maximum",
+      "70 mph maximum"
+    ],
+    "correctIndex": 3
+  }
+]
