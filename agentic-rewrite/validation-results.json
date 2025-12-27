@@ -3790,39 +3790,11 @@
       "status": "FAIL",
       "issues": [
         {
-          "questionId": "DE-004",
-          "problem": "Correct answer 31% longer than wrong answers",
-          "correctLen": 46,
-          "avgWrongLen": 35,
-          "correct": "It automatically converts to a Class D l..."
-        },
-        {
-          "questionId": "DE-006",
-          "problem": "Correct answer 50% longer than wrong answers",
-          "correctLen": 35,
-          "avgWrongLen": 23,
-          "correct": "Both the sponsor and the GDL driver"
-        },
-        {
-          "questionId": "DE-010",
-          "problem": "Correct answer 59% longer than wrong answers",
-          "correctLen": 59,
-          "avgWrongLen": 37,
-          "correct": "The suspension time does not count towar..."
-        },
-        {
           "questionId": "DE-014",
           "problem": "Correct answer 22% longer than wrong answers",
           "correctLen": 31,
           "avgWrongLen": 25,
           "correct": "No, all phone use is prohibited"
-        },
-        {
-          "questionId": "DE-015",
-          "problem": "Correct answer 65% longer than wrong answers",
-          "correctLen": 28,
-          "avgWrongLen": 17,
-          "correct": "One-month license suspension"
         },
         {
           "questionId": "DE-016",
@@ -3832,53 +3804,11 @@
           "correct": "When at least one child is aboard"
         },
         {
-          "questionId": "DE-017",
-          "problem": "Correct answer 45% longer than wrong answers",
-          "correctLen": 47,
-          "avgWrongLen": 32,
-          "correct": "Activating or deactivating hands-free eq..."
-        },
-        {
-          "questionId": "DE-020",
-          "problem": "Correct answer 35% longer than wrong answers",
-          "correctLen": 36,
-          "avgWrongLen": 27,
-          "correct": "Automatic enhanced minimum penalties"
-        },
-        {
-          "questionId": "DE-024",
-          "problem": "Correct answer 32% longer than wrong answers",
-          "correctLen": 30,
-          "avgWrongLen": 23,
-          "correct": "First Offense Election program"
-        },
-        {
-          "questionId": "DE-027",
-          "problem": "Correct answer 30% longer than wrong answers",
-          "correctLen": 26,
-          "avgWrongLen": 20,
-          "correct": "Personal Injury Protection"
-        },
-        {
           "questionId": "DE-029",
-          "problem": "Correct answer 103% longer than wrong answers",
-          "correctLen": 44,
-          "avgWrongLen": 22,
-          "correct": "Uninsured and underinsured motorist cove..."
-        },
-        {
-          "questionId": "DE-036",
-          "problem": "Correct answer 34% longer than wrong answers",
-          "correctLen": 33,
-          "avgWrongLen": 25,
-          "correct": "Keep right or near the right edge"
-        },
-        {
-          "questionId": "DE-038",
-          "problem": "Correct answer 126% longer than wrong answers",
-          "correctLen": 40,
-          "avgWrongLen": 18,
-          "correct": "Speed, traffic flow, and road conditions"
+          "problem": "Correct answer 21% longer than wrong answers",
+          "correctLen": 31,
+          "avgWrongLen": 26,
+          "correct": "Uninsured/underinsured motorist"
         }
       ]
     },
