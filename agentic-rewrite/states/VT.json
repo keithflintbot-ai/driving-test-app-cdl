@@ -1,0 +1,522 @@
+[
+  {
+    "id": "VT-001",
+    "state": "VT",
+    "category": "gdlLicensing",
+    "question": "At what minimum age can you apply for a learner's permit in Vermont?",
+    "answers": [
+      "15 years old",
+      "16 years old",
+      "14 years old",
+      "17 years old"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "VT-002",
+    "state": "VT",
+    "category": "gdlLicensing",
+    "question": "What is the minimum age for a supervisor of a learner's permit holder in Vermont?",
+    "answers": [
+      "18 years old minimum",
+      "25 years old minimum",
+      "21 years old minimum",
+      "30 years old minimum"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "VT-003",
+    "state": "VT",
+    "category": "gdlLicensing",
+    "question": "How long must you hold a learner's permit before applying for a junior license in Vermont?",
+    "answers": [
+      "3 months minimum",
+      "6 months minimum",
+      "1 year minimum",
+      "2 years minimum"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "VT-004",
+    "state": "VT",
+    "category": "gdlLicensing",
+    "question": "How many total practice hours are required to progress from learner's permit to junior license in Vermont?",
+    "answers": [
+      "30 hours total",
+      "50 hours total",
+      "60 hours total",
+      "40 hours total"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "VT-005",
+    "state": "VT",
+    "category": "gdlLicensing",
+    "question": "How many nighttime practice hours are required for a junior license in Vermont?",
+    "answers": [
+      "10 hours nighttime",
+      "15 hours nighttime",
+      "5 hours nighttime",
+      "20 hours nighttime"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "VT-006",
+    "state": "VT",
+    "category": "gdlLicensing",
+    "question": "At what minimum age can you apply for a junior driver's license in Vermont?",
+    "answers": [
+      "15 years old",
+      "16 years old",
+      "17 years old",
+      "18 years old"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "VT-007",
+    "state": "VT",
+    "category": "gdlLicensing",
+    "question": "How long must you maintain a clean record before obtaining a junior license in Vermont?",
+    "answers": [
+      "3 months clean",
+      "1 year clean",
+      "6 months clean",
+      "9 months clean"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "VT-008",
+    "state": "VT",
+    "category": "gdlLicensing",
+    "question": "When does a junior license automatically convert to an unrestricted license in Vermont?",
+    "answers": [
+      "At age 17 only",
+      "After 2 years",
+      "Never automatic",
+      "1 yr or age 18"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "VT-009",
+    "state": "VT",
+    "category": "gdlLicensing",
+    "question": "Where must the supervising driver sit when accompanying a learner's permit holder in Vermont?",
+    "answers": [
+      "In the front seat",
+      "Anywhere in vehicle",
+      "In the back seat",
+      "Either front or back"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "VT-010",
+    "state": "VT",
+    "category": "gdlLicensing",
+    "question": "Who can supervise a learner's permit holder in Vermont?",
+    "answers": [
+      "Any licensed driver",
+      "Parent/guardian or 25+",
+      "Only driving instructors",
+      "Family members only"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "VT-011",
+    "state": "VT",
+    "category": "gdlLicensing",
+    "question": "What is required for a junior license to convert to unrestricted status in Vermont?",
+    "answers": [
+      "Pass another road test",
+      "Complete driver education",
+      "Hold 1 year or reach 18",
+      "Pay an upgrade fee"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "VT-012",
+    "state": "VT",
+    "category": "gdlLicensing",
+    "question": "What clean record period is required before a junior license in Vermont?",
+    "answers": [
+      "3 months no violations",
+      "1 year no violations",
+      "2 years no violations",
+      "6 months no violations"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "VT-013",
+    "state": "VT",
+    "category": "cellPhone",
+    "question": "When did Vermont's hands-free cell phone law take effect?",
+    "answers": [
+      "October 2014",
+      "January 2015",
+      "July 2016",
+      "March 2013"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "VT-014",
+    "state": "VT",
+    "category": "cellPhone",
+    "question": "What does Vermont's hands-free law prohibit while driving?",
+    "answers": [
+      "Only texting messages",
+      "Holding any phone",
+      "Only video calls",
+      "Using Bluetooth"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "VT-015",
+    "state": "VT",
+    "category": "cellPhone",
+    "question": "What phone restriction applies to drivers under 18 in Vermont?",
+    "answers": [
+      "Only handheld banned",
+      "Only texting banned",
+      "All phone use banned",
+      "No restriction"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "VT-016",
+    "state": "VT",
+    "category": "cellPhone",
+    "question": "What did Vermont's 2023 cell phone law update prohibit?",
+    "answers": [
+      "All phone features",
+      "Voice commands only",
+      "Emergency calls only",
+      "Holding phone at stops"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "VT-017",
+    "state": "VT",
+    "category": "cellPhone",
+    "question": "When can you legally use a handheld phone while driving in Vermont?",
+    "answers": [
+      "Emergency calls only",
+      "At traffic lights",
+      "On residential streets",
+      "Never while moving"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "VT-018",
+    "state": "VT",
+    "category": "cellPhone",
+    "question": "What type of enforcement does Vermont use for cell phone violations?",
+    "answers": [
+      "Warning only first time",
+      "Primary enforcement",
+      "Secondary enforcement",
+      "No enforcement at all"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "VT-019",
+    "state": "VT",
+    "category": "duiStateLaws",
+    "question": "What is the legal BAC limit for drivers under 21 in Vermont?",
+    "answers": [
+      "0.08 percent",
+      "0.04 percent",
+      "0.02 percent",
+      "Zero tolerance"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "VT-020",
+    "state": "VT",
+    "category": "duiStateLaws",
+    "question": "What is the BAC limit for commercial drivers in Vermont?",
+    "answers": [
+      "0.08 percent",
+      "0.02 percent",
+      "0.06 percent",
+      "0.04 percent"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "VT-021",
+    "state": "VT",
+    "category": "duiStateLaws",
+    "question": "What does implied consent mean for Vermont drivers?",
+    "answers": [
+      "Agree to BAC testing if arrested",
+      "Permission to search vehicle",
+      "Consent to field sobriety only",
+      "Waiver of legal representation"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "VT-022",
+    "state": "VT",
+    "category": "duiStateLaws",
+    "question": "What is the license suspension for a first BAC test refusal in Vermont?",
+    "answers": [
+      "3 months suspension",
+      "6 months suspension",
+      "1 year suspension",
+      "2 years suspension"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "VT-023",
+    "state": "VT",
+    "category": "duiStateLaws",
+    "question": "How long is the license suspension for a second test refusal in Vermont?",
+    "answers": [
+      "6 months",
+      "1 year",
+      "18 mos",
+      "2 years"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "VT-024",
+    "state": "VT",
+    "category": "duiStateLaws",
+    "question": "What is the license suspension for a third BAC test refusal in Vermont?",
+    "answers": [
+      "1 year",
+      "18 months",
+      "2 years",
+      "3 years"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "VT-025",
+    "state": "VT",
+    "category": "duiStateLaws",
+    "question": "How long is the license suspension for a first underage DUI in Vermont?",
+    "answers": [
+      "6 months",
+      "1 year",
+      "3 months",
+      "9 months"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "VT-026",
+    "state": "VT",
+    "category": "duiStateLaws",
+    "question": "What is the suspension for a second underage DUI in Vermont?",
+    "answers": [
+      "6 mos suspension",
+      "1 yr or until 21",
+      "2 yrs suspension",
+      "Until age 25 yrs"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "VT-027",
+    "state": "VT",
+    "category": "insurance",
+    "question": "What type of insurance system does Vermont use for accidents?",
+    "answers": [
+      "No-fault system",
+      "At-fault system",
+      "Hybrid system",
+      "Choice no-fault"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "VT-028",
+    "state": "VT",
+    "category": "insurance",
+    "question": "What does liability insurance cover in Vermont?",
+    "answers": [
+      "Your own vehicle damage",
+      "Your own medical costs",
+      "Theft of your vehicle",
+      "Damage you cause to others"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "VT-029",
+    "state": "VT",
+    "category": "insurance",
+    "question": "What coverage protects you from uninsured drivers in Vermont?",
+    "answers": [
+      "Comprehensive coverage",
+      "Collision coverage only",
+      "Uninsured motorist",
+      "Personal injury protection"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "VT-030",
+    "state": "VT",
+    "category": "insurance",
+    "question": "What type of insurance system does Vermont follow for auto accidents?",
+    "answers": [
+      "No-fault system",
+      "Fault-based system",
+      "Shared responsibility",
+      "Comparative negligence only"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "VT-031",
+    "state": "VT",
+    "category": "stateUnique",
+    "question": "Who must wear a helmet when riding a motorcycle in Vermont?",
+    "answers": [
+      "Only riders under 21",
+      "Only on highways",
+      "All riders required",
+      "Optional with insurance"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "VT-032",
+    "state": "VT",
+    "category": "stateUnique",
+    "question": "What feature is required on motorcycle helmets in Vermont?",
+    "answers": [
+      "Chin strap only",
+      "Face shield only",
+      "Padding standards only",
+      "Reflect patches f & r"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "VT-033",
+    "state": "VT",
+    "category": "stateUnique",
+    "question": "When must motorcycle riders wear eye protection in Vermont?",
+    "answers": [
+      "If no windshield",
+      "Always required",
+      "Only at night",
+      "Only on highways"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "VT-034",
+    "state": "VT",
+    "category": "stateUnique",
+    "question": "Is lane splitting legal for motorcycles in Vermont?",
+    "answers": [
+      "Yes, always legal",
+      "No, prohibited",
+      "Only in traffic",
+      "Only on highways"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "VT-035",
+    "state": "VT",
+    "category": "stateUnique",
+    "question": "When must you turn on headlights after sunset in Vermont?",
+    "answers": [
+      "Immediately at sunset",
+      "1 hour after sunset",
+      "30 minutes after",
+      "2 hours after sunset"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "VT-036",
+    "state": "VT",
+    "category": "stateUnique",
+    "question": "At what visibility distance are headlights required in Vermont?",
+    "answers": [
+      "300 feet",
+      "400 feet",
+      "600 feet",
+      "500 feet"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "VT-037",
+    "state": "VT",
+    "category": "stateUnique",
+    "question": "Can you cross a double yellow line to pass in Vermont?",
+    "answers": [
+      "Yes if safe & clear",
+      "No, never allowed",
+      "Only on rural roads",
+      "Only for emergencies"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "VT-038",
+    "state": "VT",
+    "category": "stateUnique",
+    "question": "What is the speed limit on rural interstate highways in Vermont?",
+    "answers": [
+      "55 mph",
+      "65 mph",
+      "70 mph",
+      "60 mph"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "VT-039",
+    "state": "VT",
+    "category": "stateUnique",
+    "question": "When must you stop for a school bus with flashing red lights in Vermont?",
+    "answers": [
+      "Only if directly behind",
+      "Only on two-lane roads",
+      "Both ways unless divided",
+      "Never on multilane roads"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "VT-040",
+    "state": "VT",
+    "category": "stateUnique",
+    "question": "What defines a divided highway exception for school bus stops in Vermont?",
+    "answers": [
+      "Any painted median",
+      "Four or more lanes",
+      "Double yellow lines",
+      "Physical barrier"
+    ],
+    "correctIndex": 3
+  }
+]

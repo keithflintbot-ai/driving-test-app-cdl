@@ -33,7 +33,7 @@
     "answers": [
       "3 months",
       "1 year",
-      "At least 6 months",
+      "6 months",
       "9 months"
     ],
     "correctIndex": 2
@@ -47,7 +47,7 @@
       "School sports events only",
       "Any recreational activities",
       "Only emergencies",
-      "Work, school, or church activities"
+      "Work, school, or church"
     ],
     "correctIndex": 3
   },
@@ -85,7 +85,7 @@
     "answers": [
       "Defensive driving course",
       "Advanced skills training",
-      "Oklahoma Work Zone Safe Course",
+      "OK Work Zone Safe Course",
       "Highway safety seminar"
     ],
     "correctIndex": 2
@@ -99,7 +99,7 @@
       "Immediately at age 18",
       "Age 19 regardless of violations",
       "Age 16 with driver education",
-      "Age 17 with 6 months violation-free driving"
+      "Age 17 w/ 6 mos violation-free"
     ],
     "correctIndex": 3
   },
@@ -109,7 +109,7 @@
     "category": "gdlLicensing",
     "question": "During what hours can a learner's permit holder drive in Oklahoma?",
     "answers": [
-      "5 a.m. to 10 p.m. with supervision",
+      "5am-10pm w/ supervision",
       "Anytime with supervision",
       "6 a.m. to 9 p.m. with supervision",
       "Daylight hours only"
@@ -123,7 +123,7 @@
     "question": "What documentation is required for drivers under 19 applying for a permit in Oklahoma?",
     "answers": [
       "Only birth certificate",
-      "Proof of school enrollment or graduation",
+      "Enrollment or graduation",
       "Employment verification",
       "Parental consent form only"
     ],
@@ -151,7 +151,7 @@
       "License suspended immediately",
       "Criminal record is created",
       "Must restart from learner's permit",
-      "May face license restrictions or suspension"
+      "License restrictions or suspension"
     ],
     "correctIndex": 3
   },
@@ -161,10 +161,10 @@
     "category": "cellPhone",
     "question": "What does Oklahoma law prohibit while driving?",
     "answers": [
-      "Manually composing, sending, or reading text messages",
+      "Manual texting while driving",
       "All phone use including hands-free",
-      "Only video calls",
-      "Using Bluetooth devices"
+      "Only video calls while operating",
+      "Using any Bluetooth devices"
     ],
     "correctIndex": 0
   },
@@ -174,8 +174,8 @@
     "category": "cellPhone",
     "question": "Can adult drivers use voice-operated talk-to-text while driving in Oklahoma?",
     "answers": [
-      "No, all texting is banned",
-      "Yes, speech-to-text is allowed",
+      "No, all texting banned",
+      "Yes, speech-to-text OK",
       "Only in emergencies",
       "Only on highways"
     ],
@@ -203,7 +203,7 @@
       "On all highways",
       "In parking lots",
       "Only on interstates",
-      "In school and construction zones"
+      "School & work zones"
     ],
     "correctIndex": 3
   },
@@ -227,7 +227,7 @@
     "question": "What devices are permitted for phone conversations while driving in Oklahoma?",
     "answers": [
       "Handheld phones only",
-      "Bluetooth and hands-free technology",
+      "Bluetooth & hands-free",
       "No devices allowed",
       "Only wired headsets"
     ],
@@ -265,7 +265,7 @@
     "category": "duiStateLaws",
     "question": "What does implied consent mean for Oklahoma drivers?",
     "answers": [
-      "Agreement to BAC testing when lawfully stopped for DUI",
+      "BAC testing when stopped for DUI",
       "Permission to search vehicle",
       "Consent to field sobriety only",
       "Waiver of legal representation"
@@ -278,8 +278,8 @@
     "category": "duiStateLaws",
     "question": "What happens if you refuse a BAC test for the first time in Oklahoma?",
     "answers": [
-      "No penalty",
-      "License revoked for 180 days",
+      "No penalty at all",
+      "180-day license revoked",
       "Automatic DUI conviction",
       "One year jail time"
     ],
@@ -307,7 +307,7 @@
       "Six month revocation",
       "Two year revocation",
       "No additional penalty",
-      "One year license revocation"
+      "One year revocation"
     ],
     "correctIndex": 3
   },
@@ -359,7 +359,7 @@
       "Your vehicle damage only",
       "Your medical bills only",
       "Rental car expenses",
-      "Damages you cause to others"
+      "Damages caused to others"
     ],
     "correctIndex": 3
   },
@@ -369,7 +369,7 @@
     "category": "insurance",
     "question": "What coverage protects you if hit by an uninsured driver in Oklahoma?",
     "answers": [
-      "Uninsured motorist coverage",
+      "Uninsured driver coverage",
       "Comprehensive coverage",
       "Collision coverage",
       "Personal injury protection"
@@ -397,7 +397,7 @@
     "answers": [
       "Only at night",
       "During rain only",
-      "When using windshield wipers",
+      "When wipers on",
       "Only in fog"
     ],
     "correctIndex": 2
@@ -411,7 +411,7 @@
       "Honk your horn",
       "Stop completely",
       "Flash your lights",
-      "Move over or slow to safe speed"
+      "Move over or slow"
     ],
     "correctIndex": 3
   },
@@ -434,8 +434,8 @@
     "category": "stateUnique",
     "question": "When must you stop for a school bus with flashing red lights in Oklahoma?",
     "answers": [
-      "Only if directly behind",
-      "From both directions on undivided roads",
+      "Only if directly behind bus",
+      "Both ways on undivided",
       "Only on two-lane roads",
       "Never if on opposite side"
     ],
@@ -447,9 +447,9 @@
     "category": "stateUnique",
     "question": "What is the headlight visibility requirement in Oklahoma?",
     "answers": [
-      "500 feet",
-      "800 feet",
-      "Anytime visibility is less than 1,000 feet",
+      "500 feet visibility",
+      "800 feet visibility",
+      "Under 1,000 ft visibility",
       "Only when completely dark"
     ],
     "correctIndex": 2
@@ -463,7 +463,7 @@
       "Only for riders under 21",
       "Optional with insurance",
       "Required for all riders",
-      "Required only for riders under 18"
+      "Required for under 18"
     ],
     "correctIndex": 3
   },
@@ -473,9 +473,9 @@
     "category": "stateUnique",
     "question": "When are right turns on red allowed in Oklahoma?",
     "answers": [
-      "After full stop when safe and not prohibited",
+      "After stop when safe",
       "Always without stopping",
-      "Only during daytime",
+      "Only during daytime hours",
       "Never permitted"
     ],
     "correctIndex": 0
@@ -487,7 +487,7 @@
     "question": "What is the primary use of the left lane on a divided highway in Oklahoma?",
     "answers": [
       "General travel",
-      "Passing or when traffic necessitates",
+      "Passing or heavy traffic",
       "Commercial vehicles only",
       "Emergency vehicles only"
     ],
@@ -501,7 +501,7 @@
     "answers": [
       "Sunset to sunrise only",
       "Only in bad weather",
-      "At all times, even during daylight",
+      "Always, day & night",
       "Only on highways"
     ],
     "correctIndex": 2
@@ -513,9 +513,9 @@
     "question": "What must motorcyclists wear if they choose not to wear a helmet in Oklahoma?",
     "answers": [
       "Protective jacket only",
-      "Reflective vest",
+      "Reflective vest item",
       "Nothing required",
-      "Eye protection such as goggles or glasses"
+      "Eye protection/goggles"
     ],
     "correctIndex": 3
   }

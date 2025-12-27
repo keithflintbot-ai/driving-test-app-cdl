@@ -1,0 +1,522 @@
+[
+  {
+    "id": "WY-001",
+    "state": "WY",
+    "category": "gdlLicensing",
+    "question": "At what age can you apply for a regular instruction permit in Wyoming?",
+    "answers": [
+      "15 years old",
+      "16 years old",
+      "14 years old",
+      "17 years old"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "WY-002",
+    "state": "WY",
+    "category": "gdlLicensing",
+    "question": "What is the minimum age of the supervising driver for an instruction permit holder in Wyoming?",
+    "answers": [
+      "21 years old minimum",
+      "18 years old minimum",
+      "25 years old minimum",
+      "16 years old minimum"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "WY-003",
+    "state": "WY",
+    "category": "gdlLicensing",
+    "question": "How long must you hold an instruction permit before applying for an intermediate permit in Wyoming?",
+    "answers": [
+      "30 days minimum",
+      "6 months minimum",
+      "10 days minimum",
+      "90 days minimum"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "WY-004",
+    "state": "WY",
+    "category": "gdlLicensing",
+    "question": "At what age can you obtain a hardship permit in Wyoming if you live far from school or work?",
+    "answers": [
+      "13 years old",
+      "15 years old",
+      "16 years old",
+      "14 years old"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "WY-005",
+    "state": "WY",
+    "category": "gdlLicensing",
+    "question": "How many supervised driving hours are required before obtaining an intermediate permit in Wyoming?",
+    "answers": [
+      "50 hours total",
+      "30 hours total",
+      "100 hours total",
+      "40 hours total"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "WY-006",
+    "state": "WY",
+    "category": "gdlLicensing",
+    "question": "How many nighttime hours are required as part of supervised driving practice in Wyoming?",
+    "answers": [
+      "5 night hours",
+      "10 night hours",
+      "15 night hours",
+      "20 night hours"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "WY-007",
+    "state": "WY",
+    "category": "gdlLicensing",
+    "question": "At what age can you obtain a full license with driver's education in Wyoming?",
+    "answers": [
+      "17 years old",
+      "18 years old",
+      "16.5 years old",
+      "15.5 years old"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "WY-008",
+    "state": "WY",
+    "category": "gdlLicensing",
+    "question": "At what age can you get a full license without driver's education in Wyoming?",
+    "answers": [
+      "16 years old",
+      "16.5 years old",
+      "18 years old",
+      "17 years old"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "WY-009",
+    "state": "WY",
+    "category": "gdlLicensing",
+    "question": "What minimum distance from school qualifies you for a hardship permit in Wyoming?",
+    "answers": [
+      "More than 5 miles",
+      "More than 10 miles",
+      "More than 3 miles",
+      "More than 15 miles"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "WY-010",
+    "state": "WY",
+    "category": "gdlLicensing",
+    "question": "How long must you hold an intermediate permit before getting a full license in Wyoming?",
+    "answers": [
+      "3 months minimum",
+      "6 months minimum",
+      "1 year minimum",
+      "9 months minimum"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "WY-011",
+    "state": "WY",
+    "category": "gdlLicensing",
+    "question": "What percentage of questions must you answer correctly on Wyoming's permit test?",
+    "answers": [
+      "70 percent correct",
+      "75 percent correct",
+      "80 percent correct",
+      "85 percent correct"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "WY-012",
+    "state": "WY",
+    "category": "gdlLicensing",
+    "question": "How many questions are on the Wyoming learner's permit knowledge test?",
+    "answers": [
+      "20 questions total",
+      "30 questions total",
+      "40 questions total",
+      "25 questions total"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "WY-013",
+    "state": "WY",
+    "category": "cellPhone",
+    "question": "What does Wyoming law prohibit regarding cell phones while driving?",
+    "answers": [
+      "Texting while driving",
+      "All handheld phone use",
+      "Voice calls prohibited",
+      "Bluetooth phone devices"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "WY-014",
+    "state": "WY",
+    "category": "cellPhone",
+    "question": "Is talking on a handheld cell phone while driving banned statewide in Wyoming?",
+    "answers": [
+      "Yes, completely banned",
+      "No, talking allowed",
+      "Only for teens",
+      "Only on highways"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "WY-015",
+    "state": "WY",
+    "category": "cellPhone",
+    "question": "Can you use voice-operated technology for texting while driving in Wyoming?",
+    "answers": [
+      "No, all texting banned",
+      "Only with permit",
+      "Yes, hands-free allowed",
+      "Only for emergencies"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "WY-016",
+    "state": "WY",
+    "category": "cellPhone",
+    "question": "When can you legally use a handheld device to contact emergency services while driving in Wyoming?",
+    "answers": [
+      "Only when vehicle stopped",
+      "Only off highway roads",
+      "Never while vehicle moving",
+      "Anytime for emergencies"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "WY-017",
+    "state": "WY",
+    "category": "cellPhone",
+    "question": "Can you manually enter a phone number to make a call while driving in Wyoming?",
+    "answers": [
+      "Dialing allowed",
+      "No, not allowed",
+      "Only single digit",
+      "Voice dial only"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "WY-018",
+    "state": "WY",
+    "category": "cellPhone",
+    "question": "Are emergency responders exempt from texting laws while on duty in Wyoming?",
+    "answers": [
+      "No exemptions for anyone",
+      "Yes, for official duties",
+      "Only for police officers",
+      "Only for fire personnel"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "WY-019",
+    "state": "WY",
+    "category": "duiStateLaws",
+    "question": "What is the BAC limit for drivers under 21 in Wyoming?",
+    "answers": [
+      "0.08 percent",
+      "Zero tolerance",
+      "0.02 percent",
+      "0.04 percent"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "WY-020",
+    "state": "WY",
+    "category": "duiStateLaws",
+    "question": "What is the legal BAC limit for commercial drivers in Wyoming?",
+    "answers": [
+      "0.08 percent",
+      "0.02 percent",
+      "0.06 percent",
+      "0.04 percent"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "WY-021",
+    "state": "WY",
+    "category": "duiStateLaws",
+    "question": "What does Wyoming's implied consent law require when lawfully arrested for DUI?",
+    "answers": [
+      "Submit to BAC testing",
+      "Provide vehicle registration",
+      "Sign admission form",
+      "Contact an attorney"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "WY-022",
+    "state": "WY",
+    "category": "duiStateLaws",
+    "question": "What is Wyoming's penalty for refusing a BAC test when lawfully arrested?",
+    "answers": [
+      "Automatic license suspension",
+      "No direct penalties",
+      "Immediate jail time",
+      "Vehicle impoundment"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "WY-023",
+    "state": "WY",
+    "category": "duiStateLaws",
+    "question": "What can happen if you refuse a BAC test in Wyoming?",
+    "answers": [
+      "Nothing happens at all",
+      "Court case dismissal",
+      "Warrant obtained",
+      "Case gets dropped"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "WY-024",
+    "state": "WY",
+    "category": "duiStateLaws",
+    "question": "What is the minimum jail time for a first DUI under Wyoming's 2025 law?",
+    "answers": [
+      "No jail required",
+      "5 days minimum",
+      "15 days minimum",
+      "10 days minimum"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "WY-025",
+    "state": "WY",
+    "category": "duiStateLaws",
+    "question": "Can your refusal to take a BAC test be used as evidence in court in Wyoming?",
+    "answers": [
+      "No, inadmissible evidence",
+      "Only in civil court cases",
+      "Yes, shows culpability",
+      "Only with court warrant"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "WY-026",
+    "state": "WY",
+    "category": "duiStateLaws",
+    "question": "What classification is a first-time DUI under Wyoming's 2025 law?",
+    "answers": [
+      "Civil infraction only",
+      "Misdemeanor offense",
+      "Felony criminal offense",
+      "Traffic violation only"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "WY-027",
+    "state": "WY",
+    "category": "insurance",
+    "question": "What type of insurance system does Wyoming use for auto accidents?",
+    "answers": [
+      "No-fault system",
+      "Shared fault system",
+      "Fault-based system",
+      "Comparative only"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "WY-028",
+    "state": "WY",
+    "category": "insurance",
+    "question": "Is uninsured motorist coverage automatically included in Wyoming policies?",
+    "answers": [
+      "Never automatically included",
+      "Always legally required",
+      "Optional coverage only",
+      "Included, optional"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "WY-029",
+    "state": "WY",
+    "category": "insurance",
+    "question": "What does liability insurance primarily cover in Wyoming?",
+    "answers": [
+      "Damages you cause",
+      "Your vehicle only",
+      "Rental car costs",
+      "Medical bills only"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "WY-030",
+    "state": "WY",
+    "category": "insurance",
+    "question": "What coverage protects you from drivers without insurance in Wyoming?",
+    "answers": [
+      "Collision coverage",
+      "Uninsured motorist",
+      "Comprehensive only",
+      "Personal injury"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "WY-031",
+    "state": "WY",
+    "category": "stateUnique",
+    "question": "At what age is a motorcycle helmet required in Wyoming?",
+    "answers": [
+      "All ages required",
+      "Under 21 only",
+      "Under 16 only",
+      "Never required"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "WY-032",
+    "state": "WY",
+    "category": "stateUnique",
+    "question": "When must motorcycle headlights be activated in Wyoming?",
+    "answers": [
+      "Only at night",
+      "Only in bad weather",
+      "Only on highways",
+      "At all times"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "WY-033",
+    "state": "WY",
+    "category": "stateUnique",
+    "question": "What is the maximum handlebar height above the seat for motorcycles in Wyoming?",
+    "answers": [
+      "15 inches maximum",
+      "12 inches maximum",
+      "18 inches maximum",
+      "No height limit"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "WY-034",
+    "state": "WY",
+    "category": "stateUnique",
+    "question": "Is lane splitting legal for motorcycles in Wyoming?",
+    "answers": [
+      "Legal everywhere allowed",
+      "Prohibited statewide",
+      "Only on state highways",
+      "Only under 35 mph speed"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "WY-035",
+    "state": "WY",
+    "category": "stateUnique",
+    "question": "When must you stop for a school bus with flashing lights in Wyoming?",
+    "answers": [
+      "Only if behind bus",
+      "Only on two-lane roads",
+      "Unless barrier present",
+      "Never on divided highways"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "WY-036",
+    "state": "WY",
+    "category": "stateUnique",
+    "question": "At what distance must you dim headlights for oncoming vehicles in Wyoming?",
+    "answers": [
+      "300 feet away",
+      "1000 feet away",
+      "200 feet away",
+      "500 feet away"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "WY-037",
+    "state": "WY",
+    "category": "stateUnique",
+    "question": "At what distance must you dim headlights when following another vehicle in Wyoming?",
+    "answers": [
+      "300 feet behind",
+      "500 feet behind",
+      "200 feet behind",
+      "400 feet behind"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "WY-038",
+    "state": "WY",
+    "category": "stateUnique",
+    "question": "When are headlights required due to weather conditions in Wyoming?",
+    "answers": [
+      "Only during rainfall",
+      "Visibility <1000 ft",
+      "Only during snowfall",
+      "Only during fog"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "WY-039",
+    "state": "WY",
+    "category": "stateUnique",
+    "question": "When must headlights be turned on in relation to sunset in Wyoming?",
+    "answers": [
+      "At sunset exactly",
+      "One hour after",
+      "30 minutes after",
+      "15 minutes after"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "WY-040",
+    "state": "WY",
+    "category": "stateUnique",
+    "question": "When can headlights be turned off in relation to sunrise in Wyoming?",
+    "answers": [
+      "At sunrise exactly",
+      "15 minutes before",
+      "One hour before",
+      "30 minutes before"
+    ],
+    "correctIndex": 3
+  }
+]

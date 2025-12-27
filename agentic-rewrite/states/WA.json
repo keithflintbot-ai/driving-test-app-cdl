@@ -1,0 +1,322 @@
+[
+  {
+    "id": "WA-001",
+    "state": "WA",
+    "category": "gdlLicensing",
+    "question": "At what age can you apply for a learner's permit in Washington if you are enrolled in an approved driver training course?",
+    "answers": ["15 years old", "14.5 years old", "16 years old", "15.5 years old"],
+    "correctIndex": 0
+  },
+  {
+    "id": "WA-002",
+    "state": "WA",
+    "category": "gdlLicensing",
+    "question": "How many hours of supervised driving experience are required before applying for an Intermediate Driver's License in Washington?",
+    "answers": ["30 hours total, with 5 at night", "50 hours total, with 10 at night", "40 hours total, with 10 at night", "60 hours total, with 15 at night"],
+    "correctIndex": 1
+  },
+  {
+    "id": "WA-003",
+    "state": "WA",
+    "category": "gdlLicensing",
+    "question": "During the learner's permit phase in Washington, who must accompany the permit holder in the vehicle?",
+    "answers": ["Any parent or legal guardian", "Any relative over 18 yrs old", "Licensed adult 21+ w/ 5 yrs", "Any licensed driver over 18"],
+    "correctIndex": 2
+  },
+  {
+    "id": "WA-004",
+    "state": "WA",
+    "category": "gdlLicensing",
+    "question": "For the first six months of an Intermediate Driver's License, who can be passengers in the vehicle?",
+    "answers": ["Any friends from school", "One non-family passenger only", "Up to two non-family passengers", "Immediate family members only"],
+    "correctIndex": 3
+  },
+  {
+    "id": "WA-005",
+    "state": "WA",
+    "category": "gdlLicensing",
+    "question": "What is the minimum age to obtain an Intermediate Driver's License in Washington?",
+    "answers": ["16 years old", "15.5 years old", "17 years old", "15 years old"],
+    "correctIndex": 0
+  },
+  {
+    "id": "WA-006",
+    "state": "WA",
+    "category": "gdlLicensing",
+    "question": "How long must you hold a learner's permit before applying for an Intermediate License in Washington?",
+    "answers": ["Three months minimum", "Six months minimum", "Nine months minimum", "One year minimum"],
+    "correctIndex": 1
+  },
+  {
+    "id": "WA-007",
+    "state": "WA",
+    "category": "gdlLicensing",
+    "question": "During what hours are Intermediate License holders prohibited from driving without a qualified adult?",
+    "answers": ["11 PM to 6 AM", "12 AM to 6 AM", "1 AM to 5 AM", "10 PM to 5 AM"],
+    "correctIndex": 2
+  },
+  {
+    "id": "WA-008",
+    "state": "WA",
+    "category": "gdlLicensing",
+    "question": "Can learner's permit holders in Washington use hands-free cell phone devices while driving?",
+    "answers": ["Yes, if over 16 years old", "Yes, for navigation only", "Yes, for emergency calls only", "No, no wireless devices at all"],
+    "correctIndex": 3
+  },
+  {
+    "id": "WA-009",
+    "state": "WA",
+    "category": "gdlLicensing",
+    "question": "At what age can you obtain a full unrestricted license in Washington if you have no violations?",
+    "answers": ["17 years old if clean record", "18 years old regardless", "16.5 years old if clean record", "19 years old regardless"],
+    "correctIndex": 0
+  },
+  {
+    "id": "WA-010",
+    "state": "WA",
+    "category": "gdlLicensing",
+    "question": "What happens after a second violation of GDL restrictions in Washington?",
+    "answers": ["Written warning only", "License suspended until 18", "Mandatory driver training course", "Community service requirement"],
+    "correctIndex": 1
+  },
+  {
+    "id": "WA-011",
+    "state": "WA",
+    "category": "gdlLicensing",
+    "question": "Who can certify that a teen has completed the required supervised driving hours for an Intermediate License?",
+    "answers": ["Only a certified driving instructor", "Only the teen's parent or guardian", "Parent, guardian, or employer", "Only the driving school instructor"],
+    "correctIndex": 2
+  },
+  {
+    "id": "WA-012",
+    "state": "WA",
+    "category": "gdlLicensing",
+    "question": "What is required for drivers under 18 to obtain an Intermediate License in Washington?",
+    "answers": ["Pass a vision test only", "Complete an online course", "Pay an additional fee", "State-approved driver ed"],
+    "correctIndex": 3
+  },
+  {
+    "id": "WA-013",
+    "state": "WA",
+    "category": "cellPhone",
+    "question": "Under Washington's hands-free law, when is it illegal to hold a personal electronic device while driving?",
+    "answers": ["Anytime, even at red lights", "Only while vehicle is moving", "Only on highways or freeways", "Only in school zones or work zones"],
+    "correctIndex": 0
+  },
+  {
+    "id": "WA-014",
+    "state": "WA",
+    "category": "cellPhone",
+    "question": "What type of enforcement is Washington's handheld device law?",
+    "answers": ["Secondary - need another reason", "Primary - can stop for this alone", "Warning only enforcement", "Only enforced after accidents"],
+    "correctIndex": 1
+  },
+  {
+    "id": "WA-015",
+    "state": "WA",
+    "category": "cellPhone",
+    "question": "How can you legally make a phone call while driving in Washington?",
+    "answers": ["Hold phone away from ear", "Use speaker in your lap", "Bluetooth w/ minimal touch", "Only with passenger dialing"],
+    "correctIndex": 2
+  },
+  {
+    "id": "WA-016",
+    "state": "WA",
+    "category": "cellPhone",
+    "question": "Which devices are exempt from Washington's personal electronic device law while driving?",
+    "answers": ["Smartphones in emergencies only", "Tablets mounted on dashboard", "GPS devices only", "Two-way radios and CB radios"],
+    "correctIndex": 3
+  },
+  {
+    "id": "WA-017",
+    "state": "WA",
+    "category": "cellPhone",
+    "question": "When can you legally use a handheld phone while in your vehicle in Washington?",
+    "answers": ["After pulling over safely", "At stop signs only", "In parking lot drive lanes", "During traffic jams only"],
+    "correctIndex": 0
+  },
+  {
+    "id": "WA-018",
+    "state": "WA",
+    "category": "cellPhone",
+    "question": "What is the distracted driving standard in Washington besides the handheld device law?",
+    "answers": ["No distractions while moving", "Dangerously distracted prohibition", "Three-second rule compliance", "Zero tolerance for all distractions"],
+    "correctIndex": 1
+  },
+  {
+    "id": "WA-019",
+    "state": "WA",
+    "category": "duiStateLaws",
+    "question": "What is the legal BAC limit for drivers 21 and older in Washington?",
+    "answers": ["0.10%", "0.05%", "0.08%", "0.06%"],
+    "correctIndex": 2
+  },
+  {
+    "id": "WA-020",
+    "state": "WA",
+    "category": "duiStateLaws",
+    "question": "What is the BAC limit for commercial driver's license (CDL) holders in Washington?",
+    "answers": ["0.08%", "0.02%", "0.06%", "0.04%"],
+    "correctIndex": 3
+  },
+  {
+    "id": "WA-021",
+    "state": "WA",
+    "category": "duiStateLaws",
+    "question": "What is the legal BAC limit for drivers under age 21 in Washington?",
+    "answers": ["0.02%", "0.00%", "0.04%", "0.08%"],
+    "correctIndex": 0
+  },
+  {
+    "id": "WA-022",
+    "state": "WA",
+    "category": "duiStateLaws",
+    "question": "How long does a DUI conviction remain on your driving record in Washington?",
+    "answers": ["Removed after 10 yrs total", "Lifetime - cannot be removed", "Removed after 15 yrs total", "Removed after 7 yrs total"],
+    "correctIndex": 1
+  },
+  {
+    "id": "WA-023",
+    "state": "WA",
+    "category": "duiStateLaws",
+    "question": "What happens if you refuse a breath test in Washington on your first refusal?",
+    "answers": ["No penalty for first refusal", "License suspension for 90 days", "License suspension for 2 years", "License suspension for 1 year"],
+    "correctIndex": 2
+  },
+  {
+    "id": "WA-024",
+    "state": "WA",
+    "category": "duiStateLaws",
+    "question": "How many DUIs within 10 years result in felony charges in Washington?",
+    "answers": ["3 DUIs", "5 DUIs", "2 DUIs", "4 DUIs"],
+    "correctIndex": 3
+  },
+  {
+    "id": "WA-025",
+    "state": "WA",
+    "category": "duiStateLaws",
+    "question": "What additional penalty applies if you are convicted of DUI with a child under 16 in the vehicle?",
+    "answers": ["Enhanced jail time and fines", "Automatic felony charge", "Vehicle impoundment only", "Mandatory ignition interlock device"],
+    "correctIndex": 0
+  },
+  {
+    "id": "WA-026",
+    "state": "WA",
+    "category": "duiStateLaws",
+    "question": "What is the minimum license suspension for a first DUI offense in Washington?",
+    "answers": ["30 days", "90 days", "180 days", "One year"],
+    "correctIndex": 1
+  },
+  {
+    "id": "WA-027",
+    "state": "WA",
+    "category": "insurance",
+    "question": "What type of liability coverage does Washington require all drivers to carry?",
+    "answers": ["Comprehensive coverage only", "Uninsured motorist coverage", "Bodily injury & property damage", "Collision coverage protection"],
+    "correctIndex": 2
+  },
+  {
+    "id": "WA-028",
+    "state": "WA",
+    "category": "insurance",
+    "question": "What is an acceptable alternative to insurance for proving financial responsibility in Washington?",
+    "answers": ["Verbal promise to pay damages", "Employment verification letter", "Valid credit card on file", "Certificate of deposit with DOL"],
+    "correctIndex": 3
+  },
+  {
+    "id": "WA-029",
+    "state": "WA",
+    "category": "insurance",
+    "question": "When must you show proof of insurance in Washington?",
+    "answers": ["When requested by police", "Only after an accident occurs", "Only during vehicle registration", "Only at border crossings"],
+    "correctIndex": 0
+  },
+  {
+    "id": "WA-030",
+    "state": "WA",
+    "category": "insurance",
+    "question": "What coverage must insurance companies include unless you waive it in writing in Washington?",
+    "answers": ["Comprehensive coverage", "Personal injury protection", "Gap insurance coverage", "Rental car reimbursement"],
+    "correctIndex": 1
+  },
+  {
+    "id": "WA-031",
+    "state": "WA",
+    "category": "stateUnique",
+    "question": "When you approach a stopped school bus with flashing red lights on an undivided road, what must you do?",
+    "answers": ["Slow down to 20 mph", "Change lanes if possible", "Stop in both directions", "Proceed with caution"],
+    "correctIndex": 2
+  },
+  {
+    "id": "WA-032",
+    "state": "WA",
+    "category": "stateUnique",
+    "question": "During what months are studded tires legal to use in Washington?",
+    "answers": ["October 1 to May 1", "December 1 to March 1", "Year-round with permit", "November 1 to March 31"],
+    "correctIndex": 3
+  },
+  {
+    "id": "WA-033",
+    "state": "WA",
+    "category": "stateUnique",
+    "question": "When must you stop for a pedestrian at a crosswalk in Washington?",
+    "answers": ["When they're in your travel lane", "Only at marked crosswalks", "Only when signal says walk", "Only if they make eye contact"],
+    "correctIndex": 0
+  },
+  {
+    "id": "WA-034",
+    "state": "WA",
+    "category": "stateUnique",
+    "question": "What happens to traffic infractions committed in school zones in Washington?",
+    "answers": ["Same penalty as elsewhere", "Penalties are doubled", "License points are doubled", "Court appearance is mandatory"],
+    "correctIndex": 1
+  },
+  {
+    "id": "WA-035",
+    "state": "WA",
+    "category": "stateUnique",
+    "question": "Do studded tires exempt you from chain requirements on mountain passes in Washington?",
+    "answers": ["Yes, studded tires replace chains", "Yes, if all-wheel drive too", "No, you must carry chains", "Only in certain weather conditions"],
+    "correctIndex": 2
+  },
+  {
+    "id": "WA-036",
+    "state": "WA",
+    "category": "stateUnique",
+    "question": "On a divided highway in Washington, who must stop when a school bus has its red lights flashing?",
+    "answers": ["All traffic in both directions", "No one needs to stop", "Only oncoming traffic", "Only traffic behind the bus"],
+    "correctIndex": 3
+  },
+  {
+    "id": "WA-037",
+    "state": "WA",
+    "category": "stateUnique",
+    "question": "What is considered a crosswalk in Washington even without painted lines?",
+    "answers": ["Every intersection is a crosswalk", "Only corners with stop signs", "Only where pedestrians are present", "Only school zone areas"],
+    "correctIndex": 0
+  },
+  {
+    "id": "WA-038",
+    "state": "WA",
+    "category": "stateUnique",
+    "question": "How does Washington verify that drivers maintain continuous insurance coverage?",
+    "answers": ["Annual insurance card submission", "Electronic verification system", "Random traffic stops only", "Self-reporting honor system"],
+    "correctIndex": 1
+  },
+  {
+    "id": "WA-039",
+    "state": "WA",
+    "category": "stateUnique",
+    "question": "What must vehicles over 10,000 pounds carry when traveling in chain-required areas?",
+    "answers": ["Emergency flares and reflectors", "Commercial driver endorsement", "Minimum of two extra chains", "Special studded tire equipment"],
+    "correctIndex": 2
+  },
+  {
+    "id": "WA-040",
+    "state": "WA",
+    "category": "stateUnique",
+    "question": "What can happen if another vehicle is stopped at a crosswalk to let a pedestrian cross?",
+    "answers": ["You may pass if lane is clear", "You must honk before passing", "You must use caution passing", "You cannot overtake that vehicle"],
+    "correctIndex": 3
+  }
+]

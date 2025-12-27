@@ -1,0 +1,522 @@
+[
+  {
+    "id": "TX-001",
+    "state": "TX",
+    "category": "gdlLicensing",
+    "question": "At what minimum age can you apply for a learner license in Texas?",
+    "answers": [
+      "15 years old",
+      "16 years old",
+      "14 years old",
+      "17 years old"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "TX-002",
+    "state": "TX",
+    "category": "gdlLicensing",
+    "question": "Who must supervise a learner license holder in Texas?",
+    "answers": [
+      "Any licensed driver 18+",
+      "Licensed adult 21+ in front",
+      "Parent or guardian only",
+      "Certified instructor only"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "TX-003",
+    "state": "TX",
+    "category": "gdlLicensing",
+    "question": "How long must you hold a learner license before getting a provisional license in Texas?",
+    "answers": [
+      "3 months minimum",
+      "12 months minimum",
+      "6 months minimum",
+      "9 months minimum"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "TX-004",
+    "state": "TX",
+    "category": "gdlLicensing",
+    "question": "What curfew applies to provisional license holders under 18 in Texas?",
+    "answers": [
+      "10 PM to 6 AM daily",
+      "11 PM to 5 AM daily",
+      "No driving after 10 PM",
+      "Midnight to 5 AM"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "TX-005",
+    "state": "TX",
+    "category": "gdlLicensing",
+    "question": "When can a provisional license holder drive alone at night in Texas?",
+    "answers": [
+      "Work, school, or emergency",
+      "Recreational purposes only",
+      "Never permitted at all",
+      "Weekends & holidays only"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "TX-006",
+    "state": "TX",
+    "category": "gdlLicensing",
+    "question": "How many non-family passengers under 21 can a provisional driver have in Texas?",
+    "answers": [
+      "Two passengers max",
+      "One passenger only",
+      "Three passengers max",
+      "No passengers allowed"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "TX-007",
+    "state": "TX",
+    "category": "gdlLicensing",
+    "question": "How long does the passenger restriction last for provisional license holders in Texas?",
+    "answers": [
+      "3 months from issuance",
+      "12 months from issuance",
+      "6 months from issuance",
+      "Until age 18"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "TX-008",
+    "state": "TX",
+    "category": "gdlLicensing",
+    "question": "What driving practice is required before taking the skills test in Texas?",
+    "answers": [
+      "20 hours practice total",
+      "30 hours practice total",
+      "No minimum required",
+      "30 hrs with 10 at night"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "TX-009",
+    "state": "TX",
+    "category": "gdlLicensing",
+    "question": "At what age can you skip GDL phases and apply for a full license in Texas?",
+    "answers": [
+      "18 years old",
+      "21 years old",
+      "17 years old",
+      "19 years old"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "TX-010",
+    "state": "TX",
+    "category": "gdlLicensing",
+    "question": "What driver education is required for minors applying for a license in Texas?",
+    "answers": [
+      "Parent-taught program only",
+      "Approved or parent-taught",
+      "No driver education required",
+      "Online driver course only"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "TX-011",
+    "state": "TX",
+    "category": "gdlLicensing",
+    "question": "What restriction applies during the first year of a provisional license in Texas?",
+    "answers": [
+      "Highway driving prohibited",
+      "Daytime hours driving only",
+      "Curfew and passenger limits",
+      "Family members only allowed"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "TX-012",
+    "state": "TX",
+    "category": "gdlLicensing",
+    "question": "What happens if you accumulate moving violations on a provisional license in Texas?",
+    "answers": [
+      "License revoked permanently",
+      "Must pay higher penalty fees",
+      "Automatic license suspension",
+      "License suspended/restricted"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "TX-013",
+    "state": "TX",
+    "category": "cellPhone",
+    "question": "What cell phone use is prohibited for all drivers in school zones in Texas?",
+    "answers": [
+      "Handheld device use",
+      "Only texting prohibited",
+      "Bluetooth use prohibited",
+      "GPS use prohibited"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "TX-014",
+    "state": "TX",
+    "category": "cellPhone",
+    "question": "Can novice drivers under 18 use hands-free devices in Texas?",
+    "answers": [
+      "Yes, if voice-activated",
+      "No, all use prohibited",
+      "Only for emergencies",
+      "Only with supervision"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "TX-015",
+    "state": "TX",
+    "category": "cellPhone",
+    "question": "What electronic communication is banned while driving in Texas?",
+    "answers": [
+      "Voice calls use only",
+      "GPS navigation use only",
+      "Reading or writing texts",
+      "Music streaming use only"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "TX-016",
+    "state": "TX",
+    "category": "cellPhone",
+    "question": "When can you legally use a handheld device while driving in Texas?",
+    "answers": [
+      "At traffic lights only",
+      "Low-speed zones only",
+      "During daytime only",
+      "When stopped or parked"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "TX-017",
+    "state": "TX",
+    "category": "cellPhone",
+    "question": "What hands-free exception exists for reporting emergencies in Texas?",
+    "answers": [
+      "Can use handheld for 911",
+      "Must pull over first",
+      "No exceptions allowed",
+      "Voice-only permitted"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "TX-018",
+    "state": "TX",
+    "category": "cellPhone",
+    "question": "What local ordinances can cities enforce regarding cell phones in Texas?",
+    "answers": [
+      "Only state laws apply",
+      "Stricter local bans OK",
+      "Cities cannot regulate",
+      "Federal law preempts"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "TX-019",
+    "state": "TX",
+    "category": "duiStateLaws",
+    "question": "What is the legal BAC limit for drivers under 21 in Texas?",
+    "answers": [
+      "0.08 percent BAC limit",
+      "0.04 percent BAC limit",
+      "Any detectable amount",
+      "0.05 percent BAC limit"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "TX-020",
+    "state": "TX",
+    "category": "duiStateLaws",
+    "question": "What is the BAC limit for commercial drivers operating CMVs in Texas?",
+    "answers": [
+      "0.08 percent BAC",
+      "0.02 percent BAC",
+      "0.06 percent BAC",
+      "0.04 percent BAC"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "TX-021",
+    "state": "TX",
+    "category": "duiStateLaws",
+    "question": "What does implied consent mean when you obtain a license in Texas?",
+    "answers": [
+      "Agree to breath or blood test",
+      "Consent to vehicle search",
+      "Waive right to attorney",
+      "Accept automatic conviction"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "TX-022",
+    "state": "TX",
+    "category": "duiStateLaws",
+    "question": "What administrative penalty occurs for refusing a BAC test in Texas?",
+    "answers": [
+      "30-day suspension",
+      "License suspension",
+      "Immediate arrest only",
+      "Community service hours"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "TX-023",
+    "state": "TX",
+    "category": "duiStateLaws",
+    "question": "What device may be required after a DWI conviction in Texas?",
+    "answers": [
+      "GPS tracking device",
+      "Alcohol monitoring bracelet",
+      "Ignition interlock device",
+      "Speed limiting device"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "TX-024",
+    "state": "TX",
+    "category": "duiStateLaws",
+    "question": "When does a third DWI become a felony offense in Texas?",
+    "answers": [
+      "Within 5 years",
+      "Within 10 years",
+      "Within 15 years",
+      "At any time"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "TX-025",
+    "state": "TX",
+    "category": "duiStateLaws",
+    "question": "What enhanced penalty applies for DWI with a child passenger in Texas?",
+    "answers": [
+      "Child endangerment",
+      "Doubled jail sentence",
+      "License revocation",
+      "Mandatory ignition lock"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "TX-026",
+    "state": "TX",
+    "category": "duiStateLaws",
+    "question": "What surcharge program applies to DWI convictions in Texas?",
+    "answers": [
+      "One-time court fee",
+      "Annual surcharge 3 yrs",
+      "Monthly payment plan",
+      "Insurance premium increase"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "TX-027",
+    "state": "TX",
+    "category": "insurance",
+    "question": "What auto insurance system does Texas use for accidents?",
+    "answers": [
+      "Pure no-fault system",
+      "Modified comparative fault",
+      "Fault-based tort system",
+      "Strict liability system"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "TX-028",
+    "state": "TX",
+    "category": "insurance",
+    "question": "What liability coverage is mandatory in Texas?",
+    "answers": [
+      "Collision coverage only",
+      "Comprehensive coverage only",
+      "Medical payments only",
+      "Bodily injury and property"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "TX-029",
+    "state": "TX",
+    "category": "insurance",
+    "question": "What protects you from uninsured drivers in Texas?",
+    "answers": [
+      "Uninsured motorist coverage",
+      "Personal injury protection",
+      "Comprehensive insurance",
+      "Collision coverage only"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "TX-030",
+    "state": "TX",
+    "category": "insurance",
+    "question": "What must you show police during a traffic stop in Texas?",
+    "answers": [
+      "Registration only",
+      "Insurance & license",
+      "Vehicle title only",
+      "Inspection sticker only"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "TX-031",
+    "state": "TX",
+    "category": "stateUnique",
+    "question": "What is Texas's Move Over law for emergency vehicles?",
+    "answers": [
+      "Move over or slow down",
+      "Honk horn when passing",
+      "Stop completely first",
+      "Flash hazard lights"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "TX-032",
+    "state": "TX",
+    "category": "stateUnique",
+    "question": "When are headlights required while driving in Texas?",
+    "answers": [
+      "Only at night time",
+      "Sunset to sunrise",
+      "When raining only",
+      "In fog only"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "TX-033",
+    "state": "TX",
+    "category": "stateUnique",
+    "question": "How far must you park from a fire hydrant in Texas?",
+    "answers": [
+      "15 feet away",
+      "20 feet away",
+      "10 feet away",
+      "25 feet away"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "TX-034",
+    "state": "TX",
+    "category": "stateUnique",
+    "question": "What is required for all children under 8 in Texas?",
+    "answers": [
+      "Seatbelt in back seat",
+      "Child safety seat or booster",
+      "Adult supervision always",
+      "Special license endorsement"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "TX-035",
+    "state": "TX",
+    "category": "stateUnique",
+    "question": "What is the speed limit in urban districts unless posted in Texas?",
+    "answers": [
+      "25 mph",
+      "35 mph",
+      "30 mph",
+      "40 mph"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "TX-036",
+    "state": "TX",
+    "category": "stateUnique",
+    "question": "Are motorcycle helmets required in Texas?",
+    "answers": [
+      "Only riders under age 21",
+      "Only on highways required",
+      "Required for all riders",
+      "Required unless certified"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "TX-037",
+    "state": "TX",
+    "category": "stateUnique",
+    "question": "When must you stop for a school bus in Texas?",
+    "answers": [
+      "When lights flash",
+      "Only if behind bus",
+      "Only on two-lane roads",
+      "Only during school hours"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "TX-038",
+    "state": "TX",
+    "category": "stateUnique",
+    "question": "What turn signal distance is required before turning in Texas?",
+    "answers": [
+      "50 feet minimum",
+      "100 feet minimum",
+      "200 feet minimum",
+      "No specific distance"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "TX-039",
+    "state": "TX",
+    "category": "stateUnique",
+    "question": "What is the law on passing on the right in Texas?",
+    "answers": [
+      "Never allowed",
+      "Only on highways",
+      "Allowed when safe",
+      "Only in emergencies"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "TX-040",
+    "state": "TX",
+    "category": "stateUnique",
+    "question": "When are right turns on red permitted in Texas?",
+    "answers": [
+      "Never allowed at all",
+      "Only during daytime hours",
+      "Only on weekend days",
+      "After stop unless posted"
+    ],
+    "correctIndex": 3
+  }
+]

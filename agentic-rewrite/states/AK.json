@@ -243,7 +243,7 @@
     "id": "AK-021",
     "question": "What does Alaska's implied consent law mean for drivers?",
     "answers": [
-      "Driving implies consent to testing",
+      "Driving = consent to testing",
       "You may refuse tests freely",
       "Must carry a consent form",
       "Only commercial drivers consent"
@@ -282,7 +282,7 @@
       "0.02% BAC limit",
       "0.04% BAC limit",
       "Same limit as adults",
-      "Zero tolerance policy"
+      "Zero tolerance"
     ],
     "correctIndex": 3,
     "category": "duiStateLaws"

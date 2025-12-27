@@ -1,0 +1,322 @@
+[
+  {
+    "id": "WV-001",
+    "state": "WV",
+    "category": "gdlLicensing",
+    "question": "What is the minimum age to apply for a Level 1 instruction permit in West Virginia?",
+    "answers": ["15 years old", "16 years old", "14 years old", "17 years old"],
+    "correctIndex": 0
+  },
+  {
+    "id": "WV-002",
+    "state": "WV",
+    "category": "gdlLicensing",
+    "question": "How many days must you hold a Level 1 permit before applying for a Level 2 intermediate license?",
+    "answers": ["90 days minimum", "180 days minimum", "120 days minimum", "150 days minimum"],
+    "correctIndex": 1
+  },
+  {
+    "id": "WV-003",
+    "state": "WV",
+    "category": "gdlLicensing",
+    "question": "What are the permitted driving hours for a Level 1 instruction permit holder?",
+    "answers": ["6 a.m. to 11 p.m.", "Sunrise to sunset only", "5 a.m. to 10 p.m.", "7 a.m. to 9 p.m."],
+    "correctIndex": 2
+  },
+  {
+    "id": "WV-004",
+    "state": "WV",
+    "category": "gdlLicensing",
+    "question": "What minimum age must the supervising driver be for a Level 1 permit holder?",
+    "answers": ["18 years or older", "19 years or older", "25 years or older", "21 years or older"],
+    "correctIndex": 3
+  },
+  {
+    "id": "WV-005",
+    "state": "WV",
+    "category": "gdlLicensing",
+    "question": "How many hours of supervised driving practice are required for a Level 2 intermediate license?",
+    "answers": ["50 hrs total, 10 at night", "40 hrs total, 5 at night", "60 hrs total, 15 at night", "30 hrs total, 8 at night"],
+    "correctIndex": 0
+  },
+  {
+    "id": "WV-006",
+    "state": "WV",
+    "category": "gdlLicensing",
+    "question": "During the first 6 months of a Level 2 license, how many passengers under 20 can you transport?",
+    "answers": ["Two passengers max", "No passengers allowed", "Three passengers max", "One passenger max"],
+    "correctIndex": 1
+  },
+  {
+    "id": "WV-007",
+    "state": "WV",
+    "category": "gdlLicensing",
+    "question": "After the first 6 months of Level 2, how many passengers under 20 are permitted?",
+    "answers": ["Two passengers max", "Three passengers max", "One passenger max", "No passengers allowed"],
+    "correctIndex": 2
+  },
+  {
+    "id": "WV-008",
+    "state": "WV",
+    "category": "gdlLicensing",
+    "question": "At what age can you obtain a full unrestricted Level 3 driver's license in WV?",
+    "answers": ["16 years old", "18 years old", "16.5 years old", "17 years old"],
+    "correctIndex": 3
+  },
+  {
+    "id": "WV-009",
+    "state": "WV",
+    "category": "gdlLicensing",
+    "question": "How many additional passengers can a Level 1 permit holder have besides the supervisor?",
+    "answers": ["Two, unless family", "Three, unless family", "One, unless family", "None, unless family"],
+    "correctIndex": 0
+  },
+  {
+    "id": "WV-010",
+    "state": "WV",
+    "category": "gdlLicensing",
+    "question": "What happens if a Level 2 driver receives two moving violations?",
+    "answers": ["Extended probation", "License revoked until 18", "Mandatory retesting only", "Additional training only"],
+    "correctIndex": 1
+  },
+  {
+    "id": "WV-011",
+    "state": "WV",
+    "category": "gdlLicensing",
+    "question": "To obtain Level 3, what must you show regarding education?",
+    "answers": ["GED certificate only", "College acceptance", "Enrolled or completed", "High school diploma"],
+    "correctIndex": 2
+  },
+  {
+    "id": "WV-012",
+    "state": "WV",
+    "category": "gdlLicensing",
+    "question": "What requirement must be met during Level 2 to advance to Level 3?",
+    "answers": ["Complete 100 hrs driving", "Pass advanced test", "Complete drivers ed", "No traffic violations"],
+    "correctIndex": 3
+  },
+  {
+    "id": "WV-013",
+    "state": "WV",
+    "category": "cellPhone",
+    "question": "What is the general rule about holding a cell phone while driving in West Virginia?",
+    "answers": ["Cannot hold with body", "Can hold if over 21", "Can hold at stoplights", "Can hold if hands-free"],
+    "correctIndex": 0
+  },
+  {
+    "id": "WV-014",
+    "state": "WV",
+    "category": "cellPhone",
+    "question": "Can you send text messages while driving in WV, even at a red light?",
+    "answers": ["Yes, if traffic stopped", "No, it is prohibited", "Yes, if hands-free", "Yes, if under 3 words"],
+    "correctIndex": 1
+  },
+  {
+    "id": "WV-015",
+    "state": "WV",
+    "category": "cellPhone",
+    "question": "When can a Level 1 or Level 2 license holder use a cell phone while driving?",
+    "answers": ["For GPS navigation", "After 6 months driving", "Only for 911 calls", "Never under any case"],
+    "correctIndex": 2
+  },
+  {
+    "id": "WV-016",
+    "state": "WV",
+    "category": "cellPhone",
+    "question": "What device can you wear while driving without violating the cell phone law?",
+    "answers": ["Tablet on dashboard", "Phone in pocket", "Bluetooth earpiece", "Smartwatch on wrist"],
+    "correctIndex": 3
+  },
+  {
+    "id": "WV-017",
+    "state": "WV",
+    "category": "cellPhone",
+    "question": "Which activity is prohibited under WV's distracted driving law?",
+    "answers": ["Reading emails", "Using GPS display", "Listening to music", "Using voice commands"],
+    "correctIndex": 0
+  },
+  {
+    "id": "WV-018",
+    "state": "WV",
+    "category": "cellPhone",
+    "question": "The Robin W. Ames Memorial Act refers to which WV law?",
+    "answers": ["GDL requirements", "Distracted driving", "DUI enforcement", "Insurance mandates"],
+    "correctIndex": 1
+  },
+  {
+    "id": "WV-019",
+    "state": "WV",
+    "category": "duiStateLaws",
+    "question": "What is the legal blood alcohol content (BAC) limit for drivers under 21 in WV?",
+    "answers": ["0.00% - zero tolerance", "0.05% or lower", "0.02% or lower", "0.01% or lower"],
+    "correctIndex": 2
+  },
+  {
+    "id": "WV-020",
+    "state": "WV",
+    "category": "duiStateLaws",
+    "question": "What is the BAC limit for operating a commercial vehicle in West Virginia?",
+    "answers": ["0.08% or higher", "0.06% or higher", "0.02% or higher", "0.04% or higher"],
+    "correctIndex": 3
+  },
+  {
+    "id": "WV-021",
+    "state": "WV",
+    "category": "duiStateLaws",
+    "question": "What is the standard BAC limit for adult drivers of regular vehicles in WV?",
+    "answers": ["0.08% or higher", "0.10% or higher", "0.05% or higher", "0.06% or higher"],
+    "correctIndex": 0
+  },
+  {
+    "id": "WV-022",
+    "state": "WV",
+    "category": "duiStateLaws",
+    "question": "What type of offense is a third DUI in 10 years in West Virginia?",
+    "answers": ["Misdemeanor only", "Felony offense", "Traffic infraction", "Summary offense"],
+    "correctIndex": 1
+  },
+  {
+    "id": "WV-023",
+    "state": "WV",
+    "category": "duiStateLaws",
+    "question": "Under WV's implied consent law, what must you submit to when lawfully arrested for DUI?",
+    "answers": ["Field sobriety test", "Vehicle inspection", "Blood or breath test", "Written statement"],
+    "correctIndex": 2
+  },
+  {
+    "id": "WV-024",
+    "state": "WV",
+    "category": "duiStateLaws",
+    "question": "What may result from successfully completing WV's Motor Vehicle Alcohol Test and Lock Program for first-time offenders?",
+    "answers": ["Reduced jail time", "Lower insurance rates", "Shorter probation", "DUI charge dismissal"],
+    "correctIndex": 3
+  },
+  {
+    "id": "WV-025",
+    "state": "WV",
+    "category": "duiStateLaws",
+    "question": "A DUI causing serious injury to another person is classified as what?",
+    "answers": ["Felony charge", "Misdemeanor charge", "Traffic violation", "Civil infraction"],
+    "correctIndex": 0
+  },
+  {
+    "id": "WV-026",
+    "state": "WV",
+    "category": "duiStateLaws",
+    "question": "How far back does WV count prior DUI convictions when determining penalties?",
+    "answers": ["5 years lookback", "10 years lookback", "7 years lookback", "Lifetime lookback"],
+    "correctIndex": 1
+  },
+  {
+    "id": "WV-027",
+    "state": "WV",
+    "category": "insurance",
+    "question": "What type of insurance system does West Virginia use for accidents?",
+    "answers": ["No-fault system", "Hybrid system", "At-fault system", "Choice no-fault"],
+    "correctIndex": 2
+  },
+  {
+    "id": "WV-028",
+    "state": "WV",
+    "category": "insurance",
+    "question": "What does liability insurance primarily cover in West Virginia?",
+    "answers": ["Your own vehicle damage", "Your own medical bills", "Theft of your vehicle", "Damage to others"],
+    "correctIndex": 3
+  },
+  {
+    "id": "WV-029",
+    "state": "WV",
+    "category": "insurance",
+    "question": "What type of additional coverage does WV mandate besides liability insurance?",
+    "answers": ["Uninsured motorist", "Collision coverage", "Comprehensive only", "Gap insurance"],
+    "correctIndex": 0
+  },
+  {
+    "id": "WV-030",
+    "state": "WV",
+    "category": "insurance",
+    "question": "What happens if you drive without insurance in West Virginia?",
+    "answers": ["Warning first time only", "License & reg suspended", "Higher registration fee", "No penalty until crash"],
+    "correctIndex": 1
+  },
+  {
+    "id": "WV-031",
+    "state": "WV",
+    "category": "stateUnique",
+    "question": "How often must registered vehicles in WV pass a safety inspection?",
+    "answers": ["Every 2 years", "Every 6 months", "Once annually", "Every 3 years"],
+    "correctIndex": 2
+  },
+  {
+    "id": "WV-032",
+    "state": "WV",
+    "category": "stateUnique",
+    "question": "What is the speed limit in school zones during school hours in West Virginia?",
+    "answers": ["20 mph limit", "10 mph limit", "25 mph limit", "15 mph limit"],
+    "correctIndex": 3
+  },
+  {
+    "id": "WV-033",
+    "state": "WV",
+    "category": "stateUnique",
+    "question": "Are right turns on red permitted in West Virginia unless posted otherwise?",
+    "answers": ["Yes, after stopping", "No, never allowed", "Yes, without stopping", "Only at intersections"],
+    "correctIndex": 0
+  },
+  {
+    "id": "WV-034",
+    "state": "WV",
+    "category": "stateUnique",
+    "question": "What must you do before making a right turn on red in WV?",
+    "answers": ["Slow to 5 mph", "Stop fully and yield", "Signal for 5 seconds", "Check mirrors only"],
+    "correctIndex": 1
+  },
+  {
+    "id": "WV-035",
+    "state": "WV",
+    "category": "stateUnique",
+    "question": "Where are U-turns prohibited in West Virginia?",
+    "answers": ["On all highways", "In residential zones", "At fire stations", "On interstate only"],
+    "correctIndex": 2
+  },
+  {
+    "id": "WV-036",
+    "state": "WV",
+    "category": "stateUnique",
+    "question": "What distinguishes WV driver's licenses for different age groups?",
+    "answers": ["Size of license", "Hologram pattern", "Expiration dates", "License colors"],
+    "correctIndex": 3
+  },
+  {
+    "id": "WV-037",
+    "state": "WV",
+    "category": "stateUnique",
+    "question": "What speed is considered reasonable for controlled access highways in WV with no special hazards?",
+    "answers": ["At least 55 mph", "Maximum 70 mph", "Between 45-55 mph", "Exactly 60 mph"],
+    "correctIndex": 0
+  },
+  {
+    "id": "WV-038",
+    "state": "WV",
+    "category": "stateUnique",
+    "question": "When must you reduce speed in WV regardless of the posted limit?",
+    "answers": ["Only in rain", "W/ hazards", "During rush hour", "On weekends only"],
+    "correctIndex": 1
+  },
+  {
+    "id": "WV-039",
+    "state": "WV",
+    "category": "stateUnique",
+    "question": "What is prohibited when following another vehicle on WV roads?",
+    "answers": ["Using cruise control", "Changing lanes twice", "Following too closely", "Using high beams"],
+    "correctIndex": 2
+  },
+  {
+    "id": "WV-040",
+    "state": "WV",
+    "category": "stateUnique",
+    "question": "Besides fire stations, where else are U-turns prohibited in West Virginia?",
+    "answers": ["Shopping centers", "Parking lots", "School zones", "Railroad tracks"],
+    "correctIndex": 3
+  }
+]

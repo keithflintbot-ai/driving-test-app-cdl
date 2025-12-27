@@ -1,0 +1,322 @@
+[
+  {
+    "id": "VA-001",
+    "state": "VA",
+    "category": "gdlLicensing",
+    "question": "At what minimum age can a juvenile apply for a learner's permit in Virginia?",
+    "answers": ["15 years and 6 months", "15 years old exactly", "16 years old exactly", "14 years and 6 months"],
+    "correctIndex": 0
+  },
+  {
+    "id": "VA-002",
+    "state": "VA",
+    "category": "gdlLicensing",
+    "question": "What is the minimum age requirement to accompany a learner's permit holder as a supervising driver who is NOT a parent or guardian?",
+    "answers": ["18 years old minimum", "21 years old minimum", "19 years old minimum", "25 years old minimum"],
+    "correctIndex": 1
+  },
+  {
+    "id": "VA-003",
+    "state": "VA",
+    "category": "gdlLicensing",
+    "question": "During what hours are learner's permit holders prohibited from driving in Virginia?",
+    "answers": ["10 p.m. to 6 a.m.", "11 p.m. to 5 a.m.", "Midnight to 4 a.m.", "1 a.m. to 5 a.m."],
+    "correctIndex": 2
+  },
+  {
+    "id": "VA-004",
+    "state": "VA",
+    "category": "gdlLicensing",
+    "question": "How many hours of supervised driving practice must a juvenile complete before applying for a driver's license in Virginia?",
+    "answers": ["30 total hours", "40 total hours", "50 total hours", "45 total hours"],
+    "correctIndex": 3
+  },
+  {
+    "id": "VA-005",
+    "state": "VA",
+    "category": "gdlLicensing",
+    "question": "How long must a juvenile hold a learner's permit before applying for a driver's license in Virginia?",
+    "answers": ["9 months minimum", "6 months minimum", "12 months minimum", "3 months minimum"],
+    "correctIndex": 0
+  },
+  {
+    "id": "VA-006",
+    "state": "VA",
+    "category": "gdlLicensing",
+    "question": "At what age can a juvenile apply for a provisional driver's license in Virginia?",
+    "answers": ["15 years and 6 months", "16 years and 3 months", "16 years exactly", "17 years exactly"],
+    "correctIndex": 1
+  },
+  {
+    "id": "VA-007",
+    "state": "VA",
+    "category": "gdlLicensing",
+    "question": "How many non-family passengers under 18 can a new provisional license holder transport during the first year?",
+    "answers": ["Two passengers max", "Three passengers max", "One passenger max", "No passengers allowed"],
+    "correctIndex": 2
+  },
+  {
+    "id": "VA-008",
+    "state": "VA",
+    "category": "gdlLicensing",
+    "question": "During what hours are provisional license holders under 18 prohibited from driving due to curfew restrictions?",
+    "answers": ["11 p.m. to 5 a.m.", "10 p.m. to 6 a.m.", "1 a.m. to 5 a.m.", "Midnight to 4 a.m."],
+    "correctIndex": 3
+  },
+  {
+    "id": "VA-009",
+    "state": "VA",
+    "category": "gdlLicensing",
+    "question": "How many of the required supervised driving hours must be completed after sunset in Virginia?",
+    "answers": ["15 hours minimum", "10 hours minimum", "20 hours minimum", "5 hours minimum"],
+    "correctIndex": 0
+  },
+  {
+    "id": "VA-010",
+    "state": "VA",
+    "category": "gdlLicensing",
+    "question": "How long must an adult (18+) who has never held any license hold a learner's permit before applying for a driver's license?",
+    "answers": ["30 days minimum", "60 days minimum", "90 days minimum", "No permit required"],
+    "correctIndex": 1
+  },
+  {
+    "id": "VA-011",
+    "state": "VA",
+    "category": "gdlLicensing",
+    "question": "What happens if a juvenile fails the DMV knowledge test three times in Virginia?",
+    "answers": ["Retake immediately available", "Wait 30 days to retake", "Must complete driver education", "License eligibility suspended"],
+    "correctIndex": 2
+  },
+  {
+    "id": "VA-012",
+    "state": "VA",
+    "category": "gdlLicensing",
+    "question": "How many non-family passengers under 18 can a provisional license holder transport after holding the license for one full year?",
+    "answers": ["One passenger maximum", "Two passengers maximum", "Four passengers maximum", "Three passengers maximum"],
+    "correctIndex": 3
+  },
+  {
+    "id": "VA-013",
+    "state": "VA",
+    "category": "cellPhone",
+    "question": "What is Virginia's law regarding holding a handheld cell phone while driving?",
+    "answers": ["Prohibited for all drivers", "Allowed for brief calls", "Prohibited only in school zones", "Allowed with speakerphone"],
+    "correctIndex": 0
+  },
+  {
+    "id": "VA-014",
+    "state": "VA",
+    "category": "cellPhone",
+    "question": "When did Virginia's hands-free driving law take effect prohibiting drivers from holding phones?",
+    "answers": ["July 1, 2020", "January 1, 2021", "July 1, 2021", "January 1, 2020"],
+    "correctIndex": 1
+  },
+  {
+    "id": "VA-015",
+    "state": "VA",
+    "category": "cellPhone",
+    "question": "What type of cell phone use is permitted while driving in Virginia?",
+    "answers": ["Holding phone for navigation", "Texting at stoplights only", "Hands-free talking only", "Brief calls under 30 sec"],
+    "correctIndex": 2
+  },
+  {
+    "id": "VA-016",
+    "state": "VA",
+    "category": "cellPhone",
+    "question": "What is the cell phone restriction for drivers under 18 in Virginia?",
+    "answers": ["Hands-free calls permitted", "Emergency calls only", "Texting only prohibited", "No use while moving"],
+    "correctIndex": 3
+  },
+  {
+    "id": "VA-017",
+    "state": "VA",
+    "category": "cellPhone",
+    "question": "Is Virginia's handheld cell phone law a primary or secondary offense?",
+    "answers": ["Primary offense violation", "Secondary offense only", "Warning only for first offense", "No enforcement unless reckless"],
+    "correctIndex": 0
+  },
+  {
+    "id": "VA-018",
+    "state": "VA",
+    "category": "cellPhone",
+    "question": "When can a driver legally use a handheld cell phone in Virginia?",
+    "answers": ["During stopped traffic only", "When parked or emergency", "In residential areas only", "For GPS navigation only"],
+    "correctIndex": 1
+  },
+  {
+    "id": "VA-019",
+    "state": "VA",
+    "category": "duiStateLaws",
+    "question": "What is the BAC legal limit for drivers under 21 in Virginia?",
+    "answers": ["0.04% BAC limit", "0.05% BAC limit", "0.02% BAC limit", "0.00% BAC limit"],
+    "correctIndex": 2
+  },
+  {
+    "id": "VA-020",
+    "state": "VA",
+    "category": "duiStateLaws",
+    "question": "What is the BAC legal limit for commercial drivers operating commercial vehicles in Virginia?",
+    "answers": ["0.08% BAC limit", "0.06% BAC limit", "0.02% BAC limit", "0.04% BAC limit"],
+    "correctIndex": 3
+  },
+  {
+    "id": "VA-021",
+    "state": "VA",
+    "category": "duiStateLaws",
+    "question": "What is Virginia's zero tolerance policy for underage drinking and driving?",
+    "answers": ["Any alcohol prohibited", "Only applies over 0.05%", "Only felony over 0.08%", "Warnings only for first offense"],
+    "correctIndex": 0
+  },
+  {
+    "id": "VA-022",
+    "state": "VA",
+    "category": "duiStateLaws",
+    "question": "What classification is an underage DUI (BAC 0.02-0.07) in Virginia?",
+    "answers": ["Traffic infraction only", "Class 1 misdemeanor", "Class 2 misdemeanor", "Felony charge"],
+    "correctIndex": 1
+  },
+  {
+    "id": "VA-023",
+    "state": "VA",
+    "category": "duiStateLaws",
+    "question": "If an underage driver refuses a breath test or tests at 0.02% or higher, how long is the immediate license suspension?",
+    "answers": ["3 days immediate suspension", "5 days immediate suspension", "7 days immediate suspension", "10 days immediate suspension"],
+    "correctIndex": 2
+  },
+  {
+    "id": "VA-024",
+    "state": "VA",
+    "category": "duiStateLaws",
+    "question": "What is the standard BAC legal limit for drivers 21 and older in Virginia?",
+    "answers": ["0.10% BAC limit", "0.06% BAC limit", "0.05% BAC limit", "0.08% BAC limit"],
+    "correctIndex": 3
+  },
+  {
+    "id": "VA-025",
+    "state": "VA",
+    "category": "duiStateLaws",
+    "question": "Under Virginia's zero tolerance law, what type of offense is underage DUI?",
+    "answers": ["Criminal misdemeanor offense", "Civil infraction only", "Felony for first offense", "Administrative violation only"],
+    "correctIndex": 0
+  },
+  {
+    "id": "VA-026",
+    "state": "VA",
+    "category": "duiStateLaws",
+    "question": "What additional consequence may underage DUI offenders face in 2025 beyond traditional penalties?",
+    "answers": ["Mandatory vehicle forfeiture", "Ignition interlock requirement", "Permanent license revocation", "Criminal record expungement"],
+    "correctIndex": 1
+  },
+  {
+    "id": "VA-027",
+    "state": "VA",
+    "category": "insurance",
+    "question": "What type of insurance system does Virginia use for auto accidents?",
+    "answers": ["At-fault tort system", "No-fault insurance", "Hybrid fault system", "Choice no-fault system"],
+    "correctIndex": 0
+  },
+  {
+    "id": "VA-028",
+    "state": "VA",
+    "category": "insurance",
+    "question": "What was eliminated in Virginia on July 1, 2024, that previously allowed uninsured driving?",
+    "answers": ["Hardship waivers", "Uninsured motorist fee", "Payment plan options", "Temporary permits"],
+    "correctIndex": 3
+  },
+  {
+    "id": "VA-029",
+    "state": "VA",
+    "category": "insurance",
+    "question": "What coverage protects you if hit by an uninsured driver in Virginia?",
+    "answers": ["Collision coverage only", "Comprehensive coverage", "Uninsured motorist", "Personal injury protection"],
+    "correctIndex": 2
+  },
+  {
+    "id": "VA-030",
+    "state": "VA",
+    "category": "insurance",
+    "question": "What happens if you drive without insurance in Virginia as of 2024?",
+    "answers": ["Warning for first offense", "No longer an option at all", "Higher registration fee", "License suspended 30 days"],
+    "correctIndex": 3
+  },
+  {
+    "id": "VA-031",
+    "state": "VA",
+    "category": "stateUnique",
+    "question": "At what speed does Virginia consider driving to be reckless driving regardless of the posted speed limit?",
+    "answers": ["80 mph or higher", "90 mph or higher", "100 mph or higher", "85 mph or higher"],
+    "correctIndex": 2
+  },
+  {
+    "id": "VA-032",
+    "state": "VA",
+    "category": "stateUnique",
+    "question": "What classification is reckless driving in Virginia?",
+    "answers": ["Traffic infraction", "Class 2 misdemeanor", "Class 3 misdemeanor", "Class 1 misdemeanor"],
+    "correctIndex": 3
+  },
+  {
+    "id": "VA-033",
+    "state": "VA",
+    "category": "stateUnique",
+    "question": "How many occupants are required for HOV-3 on I-66 inside the Beltway during peak hours as of December 2022?",
+    "answers": ["3 or more occupants", "2 or more occupants", "4 or more occupants", "Driver only with permit"],
+    "correctIndex": 0
+  },
+  {
+    "id": "VA-034",
+    "state": "VA",
+    "category": "stateUnique",
+    "question": "What must drivers do when approaching stationary vehicles with flashing lights on a 4+ lane highway?",
+    "answers": ["Stop completely behind vehicle", "Change lanes or slow down", "Flash hazard lights", "Sound horn as warning"],
+    "correctIndex": 1
+  },
+  {
+    "id": "VA-035",
+    "state": "VA",
+    "category": "stateUnique",
+    "question": "What new type of driving became classified as reckless driving in Virginia effective July 1, 2025?",
+    "answers": ["Aggressive tailgating only", "Distracted driving behaviors", "Exhibition driving behaviors", "Lane weaving only"],
+    "correctIndex": 2
+  },
+  {
+    "id": "VA-036",
+    "state": "VA",
+    "category": "stateUnique",
+    "question": "How long are vehicles impounded if the driver is arrested for exhibition driving in Virginia?",
+    "answers": ["10 days impoundment", "15 days impoundment", "30 days impoundment", "20 days impoundment"],
+    "correctIndex": 3
+  },
+  {
+    "id": "VA-037",
+    "state": "VA",
+    "category": "stateUnique",
+    "question": "What must drivers do when an emergency vehicle with siren and flashing lights approaches?",
+    "answers": ["Pull to nearest edge and stop", "Slow down but continue moving", "Change lanes if possible", "Flash lights to acknowledge"],
+    "correctIndex": 0
+  },
+  {
+    "id": "VA-038",
+    "state": "VA",
+    "category": "stateUnique",
+    "question": "What are the peak HOV-3 hours eastbound on I-66 inside the Beltway on weekdays?",
+    "answers": ["6 a.m. to 10 a.m.", "5:30am to 9:30am", "7 a.m. to 10 a.m.", "5 a.m. to 9 a.m."],
+    "correctIndex": 1
+  },
+  {
+    "id": "VA-039",
+    "state": "VA",
+    "category": "stateUnique",
+    "question": "What right-of-way privilege do funeral processions have in Virginia?",
+    "answers": ["Only in designated zones", "Only with traffic signals", "Right-of-way on all highways", "No special privileges granted"],
+    "correctIndex": 2
+  },
+  {
+    "id": "VA-040",
+    "state": "VA",
+    "category": "stateUnique",
+    "question": "What consequence applies for overtaking or passing a moving emergency vehicle with active lights and siren?",
+    "answers": ["Minor traffic infraction", "Class 2 misdemeanor", "Warning only first time", "Reckless driving charge"],
+    "correctIndex": 3
+  }
+]
