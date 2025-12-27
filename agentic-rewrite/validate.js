@@ -16,6 +16,7 @@ const results = {
   distribution: [],
   memorization: [],
   format: [],
+  answerLength: [],
   summary: { pass: 0, fail: 0 }
 };
 
@@ -130,6 +131,42 @@ function validateMemorization(questions, filename) {
   };
 }
 
+function validateAnswerLength(questions, filename) {
+  const issues = [];
+  const LONGER_THRESHOLD = 1.2; // 20% longer than average of wrong answers
+
+  questions.forEach(q => {
+    const normalized = normalizeQuestion(q);
+    if (!normalized.answers || normalized.answers.length !== 4 || normalized.correctIndex === undefined) {
+      return; // Skip malformed questions
+    }
+
+    const correctLen = normalized.answers[normalized.correctIndex].length;
+    const wrongLens = normalized.answers
+      .filter((_, i) => i !== normalized.correctIndex)
+      .map(a => a.length);
+    const avgWrongLen = wrongLens.reduce((a, b) => a + b, 0) / wrongLens.length;
+
+    // Check if correct answer is >20% longer than average wrong answer
+    if (avgWrongLen > 0 && correctLen > avgWrongLen * LONGER_THRESHOLD) {
+      const pctLonger = ((correctLen / avgWrongLen - 1) * 100).toFixed(0);
+      issues.push({
+        questionId: normalized.id,
+        problem: `Correct answer ${pctLonger}% longer than wrong answers`,
+        correctLen,
+        avgWrongLen: Math.round(avgWrongLen),
+        correct: normalized.answers[normalized.correctIndex].substring(0, 40) + (normalized.answers[normalized.correctIndex].length > 40 ? '...' : '')
+      });
+    }
+  });
+
+  return {
+    file: filename,
+    status: issues.length === 0 ? 'PASS' : 'FAIL',
+    issues
+  };
+}
+
 function validateFormat(questions, filename, expectedCount) {
   const checks = {
     valid_json: true,
@@ -199,14 +236,17 @@ function validateFile(filepath, expectedCount) {
     const distResult = validateDistribution(questions, filename);
     const memResult = validateMemorization(questions, filename);
     const formatResult = validateFormat(questions, filename, expectedCount);
+    const lengthResult = validateAnswerLength(questions, filename);
 
     results.distribution.push(distResult);
     results.memorization.push(memResult);
     results.format.push(formatResult);
+    results.answerLength.push(lengthResult);
 
     const allPass = distResult.status === 'PASS' &&
                     memResult.status === 'PASS' &&
-                    formatResult.status === 'PASS';
+                    formatResult.status === 'PASS' &&
+                    lengthResult.status === 'PASS';
 
     if (allPass) {
       results.summary.pass++;
@@ -276,6 +316,23 @@ function printResults() {
     });
   } else {
     console.log('\n✅ Format: All files have correct structure');
+  }
+
+  // Answer length issues
+  const lengthFails = results.answerLength.filter(r => r.status === 'FAIL');
+  if (lengthFails.length > 0) {
+    console.log('\n❌ ANSWER LENGTH ISSUES (correct answer too long):');
+    lengthFails.forEach(r => {
+      console.log(`  ${r.file}: ${r.issues.length} issue(s)`);
+      r.issues.slice(0, 5).forEach(i => {
+        console.log(`    - ${i.questionId}: ${i.problem} (${i.correctLen} vs avg ${i.avgWrongLen})`);
+      });
+      if (r.issues.length > 5) {
+        console.log(`    ... and ${r.issues.length - 5} more`);
+      }
+    });
+  } else {
+    console.log('\n✅ Answer Length: Correct answers not systematically longer');
   }
 
   // Summary
