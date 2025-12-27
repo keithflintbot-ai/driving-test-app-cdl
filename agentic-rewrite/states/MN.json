@@ -44,10 +44,10 @@
     "category": "gdlLicensing",
     "question": "How many supervised driving hours are required to move from instruction permit to provisional license in Minnesota?",
     "answers": [
-      "20 hours total",
-      "50 hours total",
-      "Only a road test",
-      "30 hours, with 10 at night"
+      "20 hours total practice",
+      "50 hours total practice",
+      "Only a road test required",
+      "30 hrs total, 10 at night"
     ],
     "correctIndex": 3
   },
@@ -57,10 +57,10 @@
     "category": "gdlLicensing",
     "question": "What are the nighttime driving restrictions for a provisional license holder in the first six months in Minnesota?",
     "answers": [
-      "Cannot drive midnight to 5 AM without supervisor age 25+",
-      "Cannot drive 10 PM to 6 AM ever",
-      "Cannot drive 11 PM to 5 AM without parent only",
-      "No nighttime restrictions"
+      "Midnight-5 AM, need supervisor 25+",
+      "Cannot drive 10 PM to 6 AM at all",
+      "Cannot drive 11 PM-5 AM, parent only",
+      "No nighttime restrictions at all"
     ],
     "correctIndex": 0
   },
@@ -70,9 +70,9 @@
     "category": "gdlLicensing",
     "question": "How many passengers under 20 can a provisional license holder transport during the first six months in Minnesota?",
     "answers": [
-      "No passengers allowed",
-      "One passenger unless family members",
-      "Two passengers maximum",
+      "No passengers allowed at all",
+      "One passenger, family exempt",
+      "Two passengers maximum allowed",
       "Three passengers maximum"
     ],
     "correctIndex": 1
@@ -83,10 +83,10 @@
     "category": "gdlLicensing",
     "question": "What phone use is allowed for provisional license holders in Minnesota?",
     "answers": [
-      "Voice commands only",
+      "Voice commands only allowed",
       "Hands-free calling only",
-      "None, except GPS navigation and music",
-      "Emergency calls only"
+      "Only GPS navigation and music",
+      "Emergency calls only allowed"
     ],
     "correctIndex": 2
   },
@@ -109,10 +109,10 @@
     "category": "gdlLicensing",
     "question": "What does Vanessa's Law in Minnesota address?",
     "answers": [
-      "Losing license eligibility until 18 for DUI or accident violations",
-      "Cell phone use while driving",
-      "Graduated license fees",
-      "Insurance requirements for teens"
+      "License loss until 18 for DUI/violations",
+      "Cell phone use restrictions while driving",
+      "Graduated driver license fee requirements",
+      "Insurance requirements for teen drivers"
     ],
     "correctIndex": 0
   },
@@ -122,10 +122,10 @@
     "category": "gdlLicensing",
     "question": "How long must you hold a provisional license with a clean record before upgrading to a full license in Minnesota?",
     "answers": [
-      "6 months",
-      "12 months without serious violations",
-      "18 months",
-      "Automatically at age 18"
+      "6 months with clean record",
+      "12 months, no serious violations",
+      "18 months with clean record",
+      "Automatically when turning 18"
     ],
     "correctIndex": 1
   },
@@ -135,10 +135,10 @@
     "category": "gdlLicensing",
     "question": "How many passengers under 20 can a provisional license holder have during the second six months in Minnesota?",
     "answers": [
-      "One passenger",
-      "Two passengers",
-      "Three passengers unless family members",
-      "No limit"
+      "One passenger maximum",
+      "Two passengers maximum",
+      "Three, family exempt",
+      "No passenger limit"
     ],
     "correctIndex": 2
   },
@@ -161,10 +161,10 @@
     "category": "cellPhone",
     "question": "What does Minnesota's hands-free law prohibit while driving?",
     "answers": [
-      "Holding or manually using a phone",
-      "Only texting",
-      "Only video recording",
-      "Using Bluetooth devices"
+      "Holding or using phone manually",
+      "Only texting messages sent",
+      "Only video recording use",
+      "Using Bluetooth devices only"
     ],
     "correctIndex": 0
   },
@@ -175,8 +175,8 @@
     "question": "How can adult drivers legally make phone calls while driving in Minnesota?",
     "answers": [
       "Cannot make calls at all",
-      "Voice commands or single-touch activation",
-      "Only when parked",
+      "Voice command or single-touch",
+      "Only when vehicle parked",
       "Only with wired headphones"
     ],
     "correctIndex": 1
@@ -188,9 +188,9 @@
     "question": "When does Minnesota's hands-free law apply?",
     "answers": [
       "Only when vehicle is moving",
-      "Only on highways",
-      "Even when stopped at red lights",
-      "Only in school zones"
+      "Only on highways and freeways",
+      "Even when stopped at lights",
+      "Only in school zone areas"
     ],
     "correctIndex": 2
   },
@@ -201,9 +201,9 @@
     "question": "What phone use is completely prohibited for drivers under 18 in Minnesota?",
     "answers": [
       "Handheld calls only",
-      "Texting only",
+      "Texting messages only",
       "Video recording only",
-      "All use except GPS and music"
+      "All except GPS and music"
     ],
     "correctIndex": 3
   },
@@ -239,10 +239,10 @@
     "category": "duiStateLaws",
     "question": "What is the legal BAC limit for drivers under 21 in Minnesota?",
     "answers": [
-      "Zero tolerance for any alcohol",
-      "0.02 percent",
-      "0.04 percent",
-      "0.08 percent"
+      "Zero tolerance level",
+      "0.02 percent BAC level",
+      "0.04 percent BAC level",
+      "0.08 percent BAC level"
     ],
     "correctIndex": 0
   },
@@ -265,7 +265,7 @@
     "category": "duiStateLaws",
     "question": "What does Minnesota's implied consent law mean for drivers?",
     "answers": [
-      "Automatic agreement to BAC testing when lawfully arrested",
+      "Agreement to BAC test when arrested",
       "Permission to search vehicle",
       "Consent to field sobriety tests only",
       "Waiver of legal representation"
@@ -278,10 +278,10 @@
     "category": "duiStateLaws",
     "question": "What is the consequence of refusing a chemical test for the first time in Minnesota?",
     "answers": [
-      "No penalty",
-      "License suspension for one year",
+      "No penalty at all issued",
+      "One year license suspension",
       "Automatic DUI conviction",
-      "Warning only"
+      "Warning only, no penalty"
     ],
     "correctIndex": 1
   },
@@ -291,10 +291,10 @@
     "category": "duiStateLaws",
     "question": "At what BAC level is enhanced sentencing triggered in Minnesota?",
     "answers": [
-      "0.10 percent",
-      "0.12 percent",
+      "0.10 percent BAC level",
+      "0.12 percent BAC level",
       "0.16 percent or higher",
-      "0.20 percent"
+      "0.20 percent BAC level"
     ],
     "correctIndex": 2
   },
@@ -356,10 +356,10 @@
     "category": "insurance",
     "question": "What does Personal Injury Protection cover in Minnesota?",
     "answers": [
-      "Only vehicle damage",
-      "Only property damage",
-      "Only collision damage",
-      "Medical expenses and lost wages"
+      "Only vehicle damage costs",
+      "Only property damage costs",
+      "Only collision damage costs",
+      "Medical and lost wages"
     ],
     "correctIndex": 3
   },
@@ -369,10 +369,10 @@
     "category": "insurance",
     "question": "What additional coverage is required in Minnesota beyond liability?",
     "answers": [
-      "PIP and uninsured motorist coverage",
+      "PIP and uninsured motorist",
       "Only comprehensive coverage",
       "Only collision coverage",
-      "Gap insurance"
+      "Gap insurance coverage"
     ],
     "correctIndex": 0
   },
@@ -408,10 +408,10 @@
     "category": "stateUnique",
     "question": "What must you do when approaching an emergency vehicle with flashing lights on a multi-lane road in Minnesota?",
     "answers": [
-      "Honk your horn",
-      "Stop completely",
-      "Flash your lights",
-      "Move over one lane or slow down"
+      "Honk your horn loudly",
+      "Stop completely immediately",
+      "Flash your headlights",
+      "Move over or slow down"
     ],
     "correctIndex": 3
   },
@@ -434,10 +434,10 @@
     "category": "stateUnique",
     "question": "What does Minnesota's expanded Move Over Law now include?",
     "answers": [
-      "Only emergency vehicles",
-      "Any vehicle with hazard lights activated",
-      "Only tow trucks",
-      "Only police vehicles"
+      "Only emergency type vehicles",
+      "Vehicles with hazard lights on",
+      "Only tow trucks operating",
+      "Only police vehicles used"
     ],
     "correctIndex": 1
   },
@@ -447,10 +447,10 @@
     "category": "stateUnique",
     "question": "At what age must children remain in a booster seat in Minnesota?",
     "answers": [
-      "Until age 7",
-      "Until age 8",
-      "Until age 9 or exceeds booster limits",
-      "Until age 10"
+      "Until age 7 years old",
+      "Until age 8 years old",
+      "Until age 9 or size limit",
+      "Until age 10 years old"
     ],
     "correctIndex": 2
   },
@@ -460,10 +460,10 @@
     "category": "stateUnique",
     "question": "Until what age must children ride in rear-facing car seats in Minnesota?",
     "answers": [
-      "Age 1",
-      "Age 3",
-      "Age 6 months",
-      "Age 2 or until exceeding seat limits"
+      "Until age 1 year",
+      "Until age 3 years",
+      "Until age 6 months old",
+      "Age 2 or size limit"
     ],
     "correctIndex": 3
   },
@@ -473,9 +473,9 @@
     "category": "stateUnique",
     "question": "When are right turns on red permitted in Minnesota?",
     "answers": [
-      "After complete stop unless prohibited by sign",
-      "Never permitted",
-      "Only during daytime",
+      "After full stop if allowed",
+      "Never permitted anywhere",
+      "Only during daytime hours",
       "Only on county roads"
     ],
     "correctIndex": 0
@@ -487,8 +487,8 @@
     "question": "What do yellow flashing lights on a school bus indicate in Minnesota?",
     "answers": [
       "Continue at normal speed",
-      "Bus is preparing to stop, slow down",
-      "Pass the bus quickly",
+      "Preparing to stop, slow down",
+      "Pass the bus quickly now",
       "Only stop if children present"
     ],
     "correctIndex": 1

@@ -18,8 +18,8 @@
     "category": "gdlLicensing",
     "question": "Who can supervise a learner's permit holder while driving in Massachusetts?",
     "answers": [
-      "Any licensed driver over 18",
-      "Licensed driver 21 or older with at least 1 year experience",
+      "Any licensed driver aged over 18",
+      "Licensed driver 21+ with 1 yr exp",
       "Only certified driving instructors",
       "Any family member with a license"
     ],
@@ -31,10 +31,10 @@
     "category": "gdlLicensing",
     "question": "How many hours of supervised practice driving are required with a learner's permit in Massachusetts?",
     "answers": [
-      "20 hours total",
-      "50 hours total",
-      "40 hours, or 30 with driver education",
-      "60 hours total"
+      "20 hours of practice total",
+      "50 hours of practice total",
+      "40 hours, 30 with driver ed",
+      "60 hours of practice total"
     ],
     "correctIndex": 2
   },
@@ -57,10 +57,10 @@
     "category": "gdlLicensing",
     "question": "How long must you hold a learner's permit before applying for a JOL in Massachusetts?",
     "answers": [
-      "At least 6 months",
-      "3 months",
-      "1 year",
-      "9 months"
+      "6 months minimum",
+      "3 months minimum",
+      "1 year minimum",
+      "9 months minimum"
     ],
     "correctIndex": 0
   },
@@ -70,10 +70,10 @@
     "category": "gdlLicensing",
     "question": "What is the passenger restriction for the first 6 months of holding a JOL in Massachusetts?",
     "answers": [
-      "No passengers at all",
-      "No passengers under 18 except immediate family",
-      "Only one passenger allowed",
-      "Two passengers maximum"
+      "No passengers at all allowed",
+      "No under-18 except family members",
+      "Only one passenger at a time",
+      "Maximum of two passengers only"
     ],
     "correctIndex": 1
   },
@@ -83,10 +83,10 @@
     "category": "gdlLicensing",
     "question": "What are the nighttime driving restrictions for JOL holders in Massachusetts?",
     "answers": [
-      "Cannot drive 10 PM to 6 AM",
-      "Cannot drive 11 PM to 5 AM",
-      "Cannot drive 12:30 AM to 5 AM unless with parent or guardian",
-      "Cannot drive midnight to 6 AM"
+      "Cannot drive between 10 PM and 6 AM",
+      "Cannot drive between 11 PM and 5 AM",
+      "12:30 AM-5 AM prohibited except with parent",
+      "Cannot drive between midnight and 6 AM"
     ],
     "correctIndex": 2
   },
@@ -122,8 +122,8 @@
     "category": "gdlLicensing",
     "question": "What is required for drivers under 18 to obtain a license in Massachusetts?",
     "answers": [
-      "Only a road test",
-      "Approved driver education program",
+      "Only road test required",
+      "Approved driver ed program",
       "Parental supervision only",
       "Online course completion"
     ],
@@ -161,8 +161,8 @@
     "category": "cellPhone",
     "question": "What does Massachusetts' hands-free law require while driving?",
     "answers": [
-      "Phone must be in hands-free mode, cannot be held",
-      "Only texting is prohibited",
+      "Phone must be in hands-free mode",
+      "Only texting is prohibited by law",
       "Only applies to drivers under 21",
       "Phone calls are completely banned"
     ],
@@ -174,10 +174,10 @@
     "category": "cellPhone",
     "question": "Where must your phone be positioned to comply with Massachusetts' hands-free law?",
     "answers": [
-      "In your pocket or bag",
-      "Mounted to windshield, dashboard, or center console",
-      "Held below dashboard level",
-      "On passenger seat"
+      "In your pocket or bag area only",
+      "Mounted on windshield or dashboard",
+      "Held below the dashboard level",
+      "On the passenger seat area only"
     ],
     "correctIndex": 1
   },
@@ -187,10 +187,10 @@
     "category": "cellPhone",
     "question": "What phone use is allowed for drivers under 18 in Massachusetts?",
     "answers": [
-      "Hands-free calls only",
-      "GPS navigation only",
-      "None, all electronic device use is prohibited",
-      "Voice commands only"
+      "Hands-free calls only allowed",
+      "GPS navigation only allowed",
+      "None, all device use prohibited",
+      "Voice commands only allowed"
     ],
     "correctIndex": 2
   },
@@ -200,10 +200,10 @@
     "category": "cellPhone",
     "question": "Can you legally use GPS navigation while driving in Massachusetts?",
     "answers": [
-      "Never allowed",
+      "Never allowed at all",
       "Only with voice commands",
-      "Only on highways",
-      "Yes, if device is properly mounted"
+      "Only on highways allowed",
+      "Yes, if properly mounted"
     ],
     "correctIndex": 3
   },
@@ -213,10 +213,10 @@
     "category": "cellPhone",
     "question": "When can you hold your phone while stopped at a red light in Massachusetts?",
     "answers": [
-      "Never, the law applies even when stationary",
-      "Only for emergencies",
+      "Never, applies when stopped too",
+      "Only for emergency calls made",
       "Only to check notifications",
-      "Only for navigation"
+      "Only when using navigation"
     ],
     "correctIndex": 0
   },
@@ -228,8 +228,8 @@
     "answers": [
       "Checking emails at stoplights",
       "Contacting emergency services",
-      "Using social media",
-      "Watching videos"
+      "Using social media apps",
+      "Watching videos while driving"
     ],
     "correctIndex": 1
   },
@@ -265,10 +265,10 @@
     "category": "duiStateLaws",
     "question": "What does implied consent mean for Massachusetts drivers?",
     "answers": [
-      "Agreement to chemical testing when arrested for OUI",
+      "Agreement to chemical test when arrested",
       "Permission to search your vehicle",
       "Consent to field sobriety tests only",
-      "Waiver of right to attorney"
+      "Waiver of right to legal attorney"
     ],
     "correctIndex": 0
   },
@@ -304,9 +304,9 @@
     "category": "duiStateLaws",
     "question": "What device may be required for drivers with OUI convictions in Massachusetts?",
     "answers": [
-      "Speed governor",
-      "Dashboard camera",
-      "GPS tracker",
+      "Speed governor device",
+      "Dashboard camera system",
+      "GPS tracking device",
       "Ignition interlock device"
     ],
     "correctIndex": 3
@@ -356,10 +356,10 @@
     "category": "insurance",
     "question": "Which coverage is unique to Massachusetts and other no-fault states?",
     "answers": [
-      "Liability coverage",
-      "Collision coverage",
+      "Liability coverage plans",
+      "Collision coverage plans",
       "Comprehensive coverage",
-      "Personal Injury Protection (PIP)"
+      "Personal Injury Protection"
     ],
     "correctIndex": 3
   },
@@ -369,9 +369,9 @@
     "category": "insurance",
     "question": "What does Massachusetts require for bodily injury coverage as of July 2025?",
     "answers": [
-      "Minimum coverage per person and per accident",
+      "Minimum per person and per accident",
       "Only property damage coverage",
-      "No minimum requirements",
+      "No minimum requirements exist",
       "Coverage only for drivers under 21"
     ],
     "correctIndex": 0
@@ -395,10 +395,10 @@
     "category": "stateUnique",
     "question": "When must you use headlights in Massachusetts?",
     "answers": [
-      "Only at night",
-      "During bad weather only",
-      "When using windshield wipers or visibility under 500 feet",
-      "Only in tunnels"
+      "Only at night time driving hours",
+      "During bad weather conditions only",
+      "With wipers or visibility under 500 ft",
+      "Only in tunnels and underpasses"
     ],
     "correctIndex": 2
   },
@@ -408,10 +408,10 @@
     "category": "stateUnique",
     "question": "What must you do when approaching a stationary emergency vehicle with flashing lights on a four-lane highway in Massachusetts?",
     "answers": [
-      "Honk your horn",
-      "Stop completely",
-      "Flash your lights",
-      "Change lanes away and reduce speed"
+      "Honk your horn to alert them",
+      "Stop completely and wait there",
+      "Flash your lights at them",
+      "Change lanes away, reduce speed"
     ],
     "correctIndex": 3
   },
@@ -434,10 +434,10 @@
     "category": "stateUnique",
     "question": "What must you do when a school bus has red lights flashing and stop sign extended in Massachusetts?",
     "answers": [
-      "Slow down to 20 mph",
+      "Slow down to 20 mph speed limit",
       "Stop from both directions of travel",
       "Stop only if directly behind the bus",
-      "Proceed with caution"
+      "Proceed with caution carefully"
     ],
     "correctIndex": 1
   },
@@ -447,9 +447,9 @@
     "category": "stateUnique",
     "question": "When are right turns on red allowed in Massachusetts?",
     "answers": [
-      "Never permitted",
-      "Only during daytime",
-      "After complete stop unless sign prohibits it",
+      "Never permitted anywhere at all",
+      "Only during daytime hours",
+      "After stop unless prohibited",
       "Without stopping if clear"
     ],
     "correctIndex": 2
@@ -499,9 +499,9 @@
     "category": "stateUnique",
     "question": "What is prohibited for children under 12 in Massachusetts?",
     "answers": [
-      "Riding in front seat",
+      "Riding in the front seat",
       "Riding without seatbelt",
-      "Riding in the bed of a pickup truck",
+      "Riding in bed of pickup truck",
       "Riding a bicycle without helmet"
     ],
     "correctIndex": 2
@@ -512,10 +512,10 @@
     "category": "stateUnique",
     "question": "What action must drivers take under the Move Over Law in Massachusetts?",
     "answers": [
-      "Stop completely",
-      "Turn on hazard lights",
-      "Honk to alert others",
-      "Reduce speed and change lanes if possible"
+      "Stop completely and wait",
+      "Turn on hazard lights immediately",
+      "Honk to alert other drivers",
+      "Reduce speed and change lanes"
     ],
     "correctIndex": 3
   }

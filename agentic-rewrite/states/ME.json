@@ -18,10 +18,10 @@
     "category": "gdlLicensing",
     "question": "Who can supervise a learner's permit holder in Maine?",
     "answers": [
-      "Any licensed driver over 18",
-      "Licensed driver at least 20 years old with 2+ years experience",
-      "Any family member with a license",
-      "Only certified driving instructors"
+      "Any licensed driver over age 18 years",
+      "Licensed driver 20+ with 2 yrs experience",
+      "Any family member with valid license",
+      "Only certified driving instructors here"
     ],
     "correctIndex": 1
   },
@@ -31,8 +31,8 @@
     "category": "gdlLicensing",
     "question": "How long must drivers under 21 hold a learner's permit before taking the road test in Maine?",
     "answers": [
-      "3 months",
-      "1 year",
+      "Minimum 3 months",
+      "Minimum 1 year",
       "At least 6 months",
       "No waiting period"
     ],
@@ -44,10 +44,10 @@
     "category": "gdlLicensing",
     "question": "How many supervised driving hours are required for permit holders under 21 in Maine?",
     "answers": [
-      "50 hours total",
-      "30 hours total",
+      "50 hours total required",
+      "30 hours total required",
       "No specific requirement",
-      "70 hours with 10 after dark"
+      "70 hours, 10 after dark"
     ],
     "correctIndex": 3
   },
@@ -84,9 +84,9 @@
     "question": "What type of license do drivers ages 16-20 receive initially in Maine?",
     "answers": [
       "Full unrestricted license",
-      "Temporary license",
+      "Temporary driver license",
       "Juvenile provisional license",
-      "Conditional license"
+      "Conditional driver license"
     ],
     "correctIndex": 2
   },
@@ -135,10 +135,10 @@
     "category": "gdlLicensing",
     "question": "What phone restriction applies to all learner's permit holders in Maine?",
     "answers": [
-      "Hands-free only",
+      "Hands-free devices only",
       "Texting prohibited only",
-      "No handheld or mobile phone use",
-      "GPS use allowed"
+      "No handheld or phone use",
+      "GPS navigation allowed"
     ],
     "correctIndex": 2
   },
@@ -148,10 +148,10 @@
     "category": "gdlLicensing",
     "question": "What happens if your learner's permit expires in Maine?",
     "answers": [
-      "Automatic renewal",
-      "Must pay late fee only",
+      "Automatic renewal is granted",
+      "Must pay late fee only first",
       "License is permanently revoked",
-      "Must take written exam for new permit"
+      "Retake written exam for permit"
     ],
     "correctIndex": 3
   },
@@ -161,9 +161,9 @@
     "category": "cellPhone",
     "question": "What does Maine's hands-free law prohibit for drivers 18 and older?",
     "answers": [
-      "Physically holding or manually using a phone",
+      "Holding or manually using phone",
       "Only texting while driving",
-      "Only video recording",
+      "Only video recording devices",
       "All phone use including hands-free"
     ],
     "correctIndex": 0
@@ -174,10 +174,10 @@
     "category": "cellPhone",
     "question": "Can drivers use voice-to-text features while driving in Maine?",
     "answers": [
-      "No, all texting methods banned",
-      "Yes, voice-operated texting is allowed",
-      "Only for drivers over 21",
-      "Only in emergencies"
+      "No, all texting methods are banned",
+      "Yes, voice-operated texting allowed",
+      "Only for drivers over age 21",
+      "Only in emergency situations here"
     ],
     "correctIndex": 1
   },
@@ -188,9 +188,9 @@
     "question": "What phone interaction is allowed if your phone is mounted in Maine?",
     "answers": [
       "Unlimited touching allowed",
-      "No touching allowed",
+      "No touching at all allowed",
       "Single swipe, tap, or push",
-      "Only voice commands"
+      "Only voice command use"
     ],
     "correctIndex": 2
   },
@@ -200,10 +200,10 @@
     "category": "cellPhone",
     "question": "What phone restriction applies to drivers under 18 in Maine?",
     "answers": [
-      "Hands-free only",
+      "Hands-free devices only",
       "Texting prohibited only",
-      "GPS use allowed",
-      "All mobile phone use prohibited"
+      "GPS navigation allowed",
+      "All phone use prohibited"
     ],
     "correctIndex": 3
   },
@@ -228,8 +228,8 @@
     "answers": [
       "Handheld phones allowed",
       "Bluetooth or speakerphone",
-      "No devices permitted",
-      "Only wired headsets"
+      "No devices are permitted",
+      "Only wired headset use"
     ],
     "correctIndex": 1
   },
@@ -265,10 +265,10 @@
     "category": "duiStateLaws",
     "question": "What does Maine's implied consent law require?",
     "answers": [
-      "Agreement to chemical testing when lawfully stopped",
-      "Permission to search vehicle",
-      "Consent to field sobriety only",
-      "Waiver of attorney rights"
+      "Agreement to chemical testing if stopped",
+      "Permission to search your vehicle",
+      "Consent to field sobriety tests only",
+      "Waiver of attorney representation"
     ],
     "correctIndex": 0
   },
@@ -278,10 +278,10 @@
     "category": "duiStateLaws",
     "question": "What happens if a driver under 21 refuses a BAC test for the first time in Maine?",
     "answers": [
-      "90-day suspension",
+      "90-day license suspension",
       "18-month license suspension",
       "No penalty until convicted",
-      "One-year suspension"
+      "One-year license suspension"
     ],
     "correctIndex": 1
   },
@@ -304,10 +304,10 @@
     "category": "duiStateLaws",
     "question": "What additional consequence applies for OUI with a passenger under 21 in Maine?",
     "answers": [
-      "Warning only",
-      "Points on license",
-      "Community service",
-      "Additional license suspension and jail time"
+      "Warning is issued only",
+      "Points added to license",
+      "Community service required",
+      "Added suspension and jail"
     ],
     "correctIndex": 3
   },
@@ -356,10 +356,10 @@
     "category": "insurance",
     "question": "What does liability insurance primarily cover in Maine?",
     "answers": [
-      "Your vehicle repairs",
-      "Your medical bills",
-      "Rental car costs",
-      "Damages you cause to others"
+      "Your own vehicle repairs",
+      "Your own medical bills",
+      "Rental car costs only",
+      "Damages you cause others"
     ],
     "correctIndex": 3
   },
@@ -370,8 +370,8 @@
     "question": "What coverage protects you if hit by an uninsured driver in Maine?",
     "answers": [
       "Uninsured motorist coverage",
-      "Comprehensive coverage",
-      "Collision coverage",
+      "Comprehensive coverage plan",
+      "Collision coverage plan",
       "Personal injury protection"
     ],
     "correctIndex": 0
@@ -382,10 +382,10 @@
     "category": "insurance",
     "question": "What are the consequences of driving without required insurance in Maine?",
     "answers": [
-      "Warning only",
-      "Fines and possible license suspension",
+      "Warning issued only first",
+      "Fines and possible suspension",
       "No penalty unless in accident",
-      "Points on license only"
+      "Points on license are added"
     ],
     "correctIndex": 1
   },
@@ -395,10 +395,10 @@
     "category": "stateUnique",
     "question": "When must you use headlights in Maine?",
     "answers": [
-      "Only after dark",
-      "During rain only",
-      "When wipers are in constant use",
-      "Only in fog"
+      "Only after dark hours",
+      "During rainfall periods",
+      "When wipers constantly on",
+      "Only in fog conditions"
     ],
     "correctIndex": 2
   },
@@ -408,9 +408,9 @@
     "category": "stateUnique",
     "question": "What must you do when passing an emergency vehicle with lights on in Maine?",
     "answers": [
-      "Honk your horn",
-      "Stop completely",
-      "Flash your lights",
+      "Honk your vehicle horn",
+      "Stop vehicle completely",
+      "Flash your headlights",
       "Move over or slow down"
     ],
     "correctIndex": 3
@@ -434,9 +434,9 @@
     "category": "stateUnique",
     "question": "How far before a stop must a school bus activate flashing lights in Maine?",
     "answers": [
-      "50 feet",
+      "Minimum 50 feet",
       "At least 100 feet",
-      "200 feet",
+      "Minimum 200 feet",
       "Immediately upon stopping"
     ],
     "correctIndex": 1
@@ -447,10 +447,10 @@
     "category": "stateUnique",
     "question": "When must you stop for a school bus with flashing red lights in Maine?",
     "answers": [
-      "Only if directly behind",
-      "Only on two-lane roads",
-      "From both directions unless separated by barrier",
-      "Never if on divided highway"
+      "Only if directly behind the bus",
+      "Only on two-lane roads here now",
+      "Both directions unless barrier",
+      "Never if on a divided highway"
     ],
     "correctIndex": 2
   },
@@ -460,10 +460,10 @@
     "category": "stateUnique",
     "question": "Who must wear a motorcycle helmet in Maine?",
     "answers": [
-      "All riders",
-      "Only riders under 21",
-      "Optional for all riders",
-      "Riders under 18 and permit holders"
+      "All motorcycle riders always",
+      "Only riders under age 21",
+      "Optional for all riders here",
+      "Riders under 18 and permits"
     ],
     "correctIndex": 3
   },
@@ -476,7 +476,7 @@
       "Under 16 years old",
       "Under 18 years old",
       "Under 12 years old",
-      "All ages"
+      "All ages required"
     ],
     "correctIndex": 0
   },
@@ -499,10 +499,10 @@
     "category": "stateUnique",
     "question": "At what visibility distance must headlights be on in Maine?",
     "answers": [
-      "500 feet",
-      "800 feet",
-      "Less than 1000 feet",
-      "2000 feet"
+      "Under 500 feet",
+      "Under 800 feet",
+      "Under 1000 feet",
+      "Under 2000 feet"
     ],
     "correctIndex": 2
   },
@@ -512,10 +512,10 @@
     "category": "stateUnique",
     "question": "When are right turns on red allowed in Maine?",
     "answers": [
-      "Never permitted",
-      "Always without stopping",
-      "Only during daytime",
-      "After complete stop unless posted otherwise"
+      "Never permitted at any time",
+      "Always without stopping first",
+      "Only during daytime hours only",
+      "After full stop unless posted"
     ],
     "correctIndex": 3
   }

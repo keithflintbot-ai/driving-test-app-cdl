@@ -51,10 +51,10 @@
     "id": "IN-005",
     "question": "At what age can you obtain a probationary license in Indiana with driver education?",
     "answers": [
-      "16 years and 90 days",
-      "16 years",
-      "15 years and 180 days",
-      "17 years"
+      "16 yrs and 90 days",
+      "Exactly 16 years",
+      "15 yrs and 180 days",
+      "Exactly 17 years"
     ],
     "correctIndex": 0,
     "category": "gdlLicensing"
@@ -77,7 +77,7 @@
     "answers": [
       "After midnight until 5 a.m.",
       "After 10 p.m. until 5 a.m.",
-      "After 11 p.m. and before 5 a.m. Monday morning",
+      "11 p.m. to 5 a.m. Monday",
       "After 9 p.m. until 6 a.m."
     ],
     "correctIndex": 2,
@@ -112,7 +112,7 @@
     "question": "Who can probationary drivers carry as passengers during the first 180 days?",
     "answers": [
       "Any licensed driver",
-      "Only immediate family members",
+      "Immediate family only",
       "No passengers allowed",
       "Friends of any age"
     ],
@@ -125,8 +125,8 @@
     "answers": [
       "Driving to visit friends",
       "Going to the movies",
-      "Traveling to or from employment or school activities",
-      "Shopping trips"
+      "Work or school activities",
+      "Shopping trips mainly"
     ],
     "correctIndex": 2,
     "category": "gdlLicensing"
@@ -160,7 +160,7 @@
     "question": "What type of phone use is allowed while driving in Indiana?",
     "answers": [
       "Holding phone for calls",
-      "Hands-free or voice-operated technology",
+      "Hands-free or voice tech",
       "Texting at red lights",
       "No phone use allowed"
     ],
@@ -173,7 +173,7 @@
     "answers": [
       "Can use hands-free only",
       "Can text but not call",
-      "Cannot use phone at all except to call 911",
+      "No phone except 911 calls",
       "No special restrictions"
     ],
     "correctIndex": 2,
@@ -186,7 +186,7 @@
       "Yes, if stopped for more than 30 seconds",
       "Yes, in school zones only",
       "Yes, but only to check GPS",
-      "No, you cannot hold the phone while driving"
+      "No, cannot hold phone while driving"
     ],
     "correctIndex": 3,
     "category": "cellPhone"
@@ -195,7 +195,7 @@
     "id": "IN-017",
     "question": "What does Indiana's hands-free law prohibit while operating a vehicle?",
     "answers": [
-      "Holding or using a mobile device",
+      "Holding/using mobile device",
       "Using Bluetooth devices",
       "Having a phone in the car",
       "Voice-operated technology"
@@ -207,8 +207,8 @@
     "id": "IN-018",
     "question": "Can police confiscate your phone without consent to check usage in Indiana?",
     "answers": [
-      "Yes, always",
-      "No, you are not required to turn over your phone",
+      "Yes, always permitted",
+      "No, not required to give it",
       "Only with a supervisor present",
       "Yes, if you were texting"
     ],
@@ -279,10 +279,10 @@
     "id": "IN-024",
     "question": "Can you be charged with OWI if your BAC is below the legal limit in Indiana?",
     "answers": [
-      "No, never",
+      "No, not possible",
       "Only if you refuse testing",
       "Only for commercial drivers",
-      "Yes, if you show signs of impairment"
+      "Yes, if showing impairment"
     ],
     "correctIndex": 3,
     "category": "duiStateLaws"
@@ -291,10 +291,10 @@
     "id": "IN-025",
     "question": "When does a second OWI become a felony in Indiana?",
     "answers": [
-      "If the prior conviction was within seven years",
-      "If the prior conviction was within ten years",
-      "Always",
-      "Never"
+      "Prior OWI within 7 years",
+      "Prior OWI within 10 years",
+      "Always becomes a felony",
+      "Never becomes a felony"
     ],
     "correctIndex": 0,
     "category": "duiStateLaws"
@@ -304,9 +304,9 @@
     "question": "What method does Indiana use to test for THC impairment under the new law?",
     "answers": [
       "Blood test only",
-      "Oral fluid or saliva test",
-      "Urine test",
-      "Breath test"
+      "Oral fluid test",
+      "Urine test only",
+      "Breath test only"
     ],
     "correctIndex": 1,
     "category": "duiStateLaws"
@@ -317,7 +317,7 @@
     "answers": [
       "Your own vehicle damage",
       "Your medical bills only",
-      "Other people's expenses if you cause an accident",
+      "Others' costs if at fault",
       "All damages regardless of fault"
     ],
     "correctIndex": 2,
@@ -330,7 +330,7 @@
       "Nothing, it's not required",
       "Collision coverage",
       "Comprehensive coverage",
-      "Uninsured and underinsured motorist coverage"
+      "UM/UIM motorist coverage"
     ],
     "correctIndex": 3,
     "category": "insurance"
@@ -365,8 +365,8 @@
     "answers": [
       "Emergency vehicles only",
       "Police and fire vehicles only",
-      "All disabled vehicles with flashing hazard lights",
-      "Tow trucks only"
+      "Disabled veh w/ flashers",
+      "Tow trucks primarily"
     ],
     "correctIndex": 2,
     "category": "stateUnique"
@@ -378,7 +378,7 @@
       "5 mph below the speed limit",
       "15 mph below the speed limit",
       "20 mph below the speed limit",
-      "10 mph below the posted speed limit"
+      "10 mph below speed limit"
     ],
     "correctIndex": 3,
     "category": "stateUnique"
@@ -387,10 +387,10 @@
     "id": "IN-033",
     "question": "Where does Indiana's Move Over law apply?",
     "answers": [
-      "All roadways in Indiana",
-      "Highways only",
-      "Interstates only",
-      "Urban areas only"
+      "All Indiana roads",
+      "Only on highways",
+      "Only interstates",
+      "Only urban areas"
     ],
     "correctIndex": 0,
     "category": "stateUnique"
@@ -400,9 +400,9 @@
     "question": "When must you use turn signals before turning or changing lanes in Indiana?",
     "answers": [
       "200 feet in advance",
-      "At a reasonable time before the maneuver",
+      "At reasonable time before",
       "Immediately before turning",
-      "Only on highways"
+      "Only on major highways"
     ],
     "correctIndex": 1,
     "category": "stateUnique"
@@ -424,7 +424,7 @@
     "question": "Who must wear a seat belt while in a vehicle in Indiana?",
     "answers": [
       "Front seat passengers only",
-      "Children only",
+      "Children passengers only",
       "No one, it's optional",
       "Drivers and all passengers"
     ],
@@ -435,9 +435,9 @@
     "id": "IN-037",
     "question": "What lights must you use when driving in heavy fog in Indiana?",
     "answers": [
-      "Headlights and emergency flashers",
-      "Fog lights only",
-      "High beams only",
+      "Headlights and flashers",
+      "Fog lights primarily",
+      "High beams primarily",
       "Parking lights only"
     ],
     "correctIndex": 0,
@@ -447,10 +447,10 @@
     "id": "IN-038",
     "question": "How close to a fire hydrant can you legally park in Indiana?",
     "answers": [
-      "10 feet",
-      "Not within 15 feet",
-      "20 feet",
-      "25 feet"
+      "10 feet away",
+      "15 feet",
+      "20 feet away",
+      "25 feet away"
     ],
     "correctIndex": 1,
     "category": "stateUnique"
