@@ -5,10 +5,10 @@
     "category": "gdlLicensing",
     "question": "At what minimum age can you obtain a Level 1 learner's license in Michigan?",
     "answers": [
-      "14 years and 9 months",
-      "15 years old",
-      "16 years old",
-      "14 years old"
+      "14 yrs, 9 months",
+      "15 years of age",
+      "16 years of age",
+      "14 years of age"
     ],
     "correctIndex": 0
   },
@@ -31,10 +31,10 @@
     "category": "gdlLicensing",
     "question": "How many practice hours are required before taking the road test in Michigan?",
     "answers": [
-      "30 hours total",
+      "30 hours total practice",
       "40 hours with 5 at night",
       "50 hours with 10 at night",
-      "60 hours total"
+      "60 hours total practice"
     ],
     "correctIndex": 2
   },
@@ -83,10 +83,10 @@
     "category": "gdlLicensing",
     "question": "What violation-free period is required to upgrade from Level 2 to Level 3 in Michigan?",
     "answers": [
-      "6 months violation-free",
-      "9 months violation-free",
+      "6 consecutive months violation-free",
+      "9 consecutive months violation-free",
       "12 consecutive months violation-free",
-      "18 months violation-free"
+      "18 consecutive months violation-free"
     ],
     "correctIndex": 2
   },
@@ -111,7 +111,7 @@
     "answers": [
       "Restricted period may be extended",
       "License permanently revoked",
-      "Must restart from Level 1",
+      "Must restart from Level 1 license",
       "Fine only, no license impact"
     ],
     "correctIndex": 0
@@ -148,10 +148,10 @@
     "category": "gdlLicensing",
     "question": "What type of instruction is included in Michigan's Segment 1 driver education?",
     "answers": [
-      "Online only",
-      "Behind-the-wheel only",
-      "Parent-supervised only",
-      "Classroom, behind-the-wheel, and observation"
+      "Online-based instruction only",
+      "Behind-wheel instruction only",
+      "Parent-supervised instruction only",
+      "Classroom, behind-wheel, observation"
     ],
     "correctIndex": 3
   },
@@ -161,10 +161,10 @@
     "category": "cellPhone",
     "question": "What does Michigan's hands-free law prohibit while driving?",
     "answers": [
-      "Holding or manually using a phone",
-      "Only texting",
-      "Only video watching",
-      "Using Bluetooth devices"
+      "Holding or using phone manually",
+      "Only texting while driving",
+      "Only video watching activities",
+      "Using any Bluetooth devices"
     ],
     "correctIndex": 0
   },
@@ -187,10 +187,10 @@
     "category": "cellPhone",
     "question": "What phone use is allowed for Level 1 and Level 2 teen drivers in Michigan?",
     "answers": [
-      "Hands-free calls only",
+      "Hands-free calling only allowed",
       "Texting with voice commands",
-      "Vehicle-integrated voice systems only",
-      "Any hands-free device"
+      "Vehicle-integrated voice only",
+      "Any hands-free device allowed"
     ],
     "correctIndex": 2
   },
@@ -265,10 +265,10 @@
     "category": "duiStateLaws",
     "question": "What does Michigan's implied consent law require?",
     "answers": [
-      "Agreement to chemical testing when lawfully arrested",
-      "Consent to vehicle searches",
+      "Chemical testing when arrested",
+      "Consent to all vehicle searches",
       "Permission for field sobriety tests only",
-      "Waiver of legal representation"
+      "Waiver of all legal representation"
     ],
     "correctIndex": 0
   },
@@ -356,10 +356,10 @@
     "category": "insurance",
     "question": "What does Michigan's no-fault insurance mean for accident claims?",
     "answers": [
-      "Other driver always pays",
-      "State pays all claims",
-      "No insurance needed",
-      "Your insurance covers your injuries"
+      "Other driver always pays claims",
+      "State pays all your claims",
+      "No insurance is needed",
+      "Your insurance covers injuries"
     ],
     "correctIndex": 3
   },
@@ -369,10 +369,10 @@
     "category": "insurance",
     "question": "What PIP options does Michigan offer since the 2019 insurance reform?",
     "answers": [
-      "Multiple coverage levels from unlimited to opt-out",
-      "Only unlimited coverage",
-      "One fixed coverage level",
-      "No PIP coverage allowed"
+      "Multiple coverage levels available",
+      "Only unlimited coverage option",
+      "One fixed coverage level only",
+      "No PIP coverage is allowed"
     ],
     "correctIndex": 0
   },
@@ -395,10 +395,10 @@
     "category": "stateUnique",
     "question": "What is a Michigan Left turn maneuver?",
     "answers": [
-      "Left turn on red light",
-      "Left from right lane",
-      "Proceed through intersection, then U-turn in median crossover",
-      "Left turn without stopping"
+      "Left turn made on red light",
+      "Left turn made from right lane",
+      "Through, then U-turn at median",
+      "Left turn made without stopping"
     ],
     "correctIndex": 2
   },
@@ -408,9 +408,9 @@
     "category": "stateUnique",
     "question": "How far must you stop from a school bus with flashing red lights in Michigan?",
     "answers": [
-      "10 feet",
-      "15 feet",
-      "25 feet",
+      "10 feet minimum",
+      "15 feet minimum",
+      "25 feet minimum",
       "At least 20 feet"
     ],
     "correctIndex": 3
@@ -421,10 +421,10 @@
     "category": "stateUnique",
     "question": "What must you do if you cannot move over for an emergency vehicle in Michigan?",
     "answers": [
-      "Slow to at least 10 mph below posted speed",
-      "Stop completely",
-      "Flash hazard lights",
-      "Sound horn to alert"
+      "Slow 10 mph below speed",
+      "Stop completely in place",
+      "Flash your hazard lights",
+      "Sound horn to alert them"
     ],
     "correctIndex": 0
   },
@@ -434,10 +434,10 @@
     "category": "stateUnique",
     "question": "When can you make a left turn on red in Michigan?",
     "answers": [
-      "Never permitted",
-      "From one-way to one-way after stopping",
-      "Any time after midnight",
-      "Only in rural areas"
+      "Never permitted in Michigan",
+      "One-way to one-way after stopping",
+      "Any time after midnight hours",
+      "Only in rural areas of state"
     ],
     "correctIndex": 1
   },
@@ -473,9 +473,9 @@
     "category": "stateUnique",
     "question": "Are daytime headlights required in Michigan?",
     "answers": [
-      "No, not required during daytime",
-      "Yes, always required",
-      "Only on highways",
+      "No, not required in daytime",
+      "Yes, always required by law",
+      "Only on highways and freeways",
       "Only in construction zones"
     ],
     "correctIndex": 0
@@ -486,9 +486,9 @@
     "category": "stateUnique",
     "question": "Is lane splitting legal for motorcycles in Michigan?",
     "answers": [
-      "Yes, at all times",
-      "No, lane splitting is not authorized",
-      "Only in traffic jams",
+      "Yes, at all times allowed",
+      "No, lane splitting not allowed",
+      "Only in traffic jams allowed",
       "Only at speeds below 30 mph"
     ],
     "correctIndex": 1
@@ -499,10 +499,10 @@
     "category": "stateUnique",
     "question": "What is the purpose of Michigan's move over law?",
     "answers": [
-      "To reduce traffic congestion",
-      "To allow faster commutes",
-      "To protect emergency responders and workers",
-      "To enforce speed limits"
+      "To reduce traffic congestion levels",
+      "To allow faster commutes for all",
+      "Protect emergency responders/workers",
+      "To enforce speed limits properly"
     ],
     "correctIndex": 2
   },
@@ -514,8 +514,8 @@
     "answers": [
       "Always from both directions",
       "Only if traveling behind it",
-      "Only during school hours",
-      "Not required if separated by barrier"
+      "Only during school hours of day",
+      "Not required if barrier separates"
     ],
     "correctIndex": 3
   }

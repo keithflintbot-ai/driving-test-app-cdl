@@ -5,10 +5,10 @@
     "category": "gdlLicensing",
     "question": "At what minimum age can you apply for a learner's permit in Maryland?",
     "answers": [
-      "15 years and 9 months",
-      "16 years old",
-      "15 years old",
-      "16 years and 6 months"
+      "15 yrs and 9 months",
+      "16 years of age",
+      "15 years of age",
+      "16 yrs and 6 months"
     ],
     "correctIndex": 0
   },
@@ -18,9 +18,9 @@
     "category": "gdlLicensing",
     "question": "Who can supervise a learner's permit holder while driving in Maryland?",
     "answers": [
-      "Any licensed driver over 18",
-      "Licensed driver 21 or older with 3 years experience",
-      "Any family member with a license",
+      "Any licensed driver over age 18",
+      "Licensed driver 21+ with 3 yrs exp",
+      "Any family member with valid license",
       "Only certified driving instructors"
     ],
     "correctIndex": 1
@@ -44,10 +44,10 @@
     "category": "gdlLicensing",
     "question": "How many hours of supervised driving practice are required for permit holders under 25 in Maryland?",
     "answers": [
-      "40 hours total",
-      "50 hours total",
-      "30 hours total",
-      "60 hours with 10 at night"
+      "40 total hours required",
+      "50 total hours required",
+      "30 total hours required",
+      "60 hrs with 10 at night"
     ],
     "correctIndex": 3
   },
@@ -57,10 +57,10 @@
     "category": "gdlLicensing",
     "question": "At what minimum age can you obtain a provisional license in Maryland?",
     "answers": [
-      "16 years and 6 months",
-      "16 years old",
-      "17 years old",
-      "15 years and 9 months"
+      "16 yrs and 6 months",
+      "16 years of age",
+      "17 years of age",
+      "15 yrs and 9 months"
     ],
     "correctIndex": 0
   },
@@ -71,9 +71,9 @@
     "question": "What passenger restriction applies to new provisional license holders under 18 in Maryland?",
     "answers": [
       "No restrictions on passengers",
-      "No passengers under 18 for first 5 months",
+      "No under-18 passengers for 5 mo",
       "Only one passenger allowed",
-      "Family members only"
+      "Family members only allowed"
     ],
     "correctIndex": 1
   },
@@ -83,10 +83,10 @@
     "category": "gdlLicensing",
     "question": "What are the night driving curfew hours for provisional license holders under 18 in Maryland?",
     "answers": [
-      "11 PM to 5 AM",
-      "10 PM to 6 AM",
+      "From 11 PM to 5 AM",
+      "From 10 PM to 6 AM",
       "Midnight to 5 AM",
-      "1 AM to 6 AM"
+      "From 1 AM to 6 AM"
     ],
     "correctIndex": 2
   },
@@ -97,9 +97,9 @@
     "question": "When can a provisional driver under 18 drive during curfew hours in Maryland?",
     "answers": [
       "For any social activities",
-      "Only for emergencies",
-      "Never permitted",
-      "With licensed adult 21 or older"
+      "Only in case of emergency",
+      "Never permitted at all",
+      "With licensed adult 21+"
     ],
     "correctIndex": 3
   },
@@ -122,10 +122,10 @@
     "category": "gdlLicensing",
     "question": "What school attendance requirement exists for applicants under 16 in Maryland?",
     "answers": [
-      "Perfect attendance required",
-      "No more than 10 unexcused absences per semester",
-      "Minimum GPA requirement",
-      "Must be enrolled in driver education"
+      "Perfect attendance is required",
+      "Max 10 unexcused absences/semester",
+      "Minimum GPA is required",
+      "Must be enrolled in driver ed course"
     ],
     "correctIndex": 1
   },
@@ -161,10 +161,10 @@
     "category": "cellPhone",
     "question": "What type of phone use is prohibited for all drivers in Maryland?",
     "answers": [
-      "Holding or manually using a handheld device",
+      "Manually using handheld device",
       "Only texting while driving",
-      "Only video recording",
-      "Using Bluetooth devices"
+      "Only video recording use",
+      "Using any Bluetooth devices"
     ],
     "correctIndex": 0
   },
@@ -174,10 +174,10 @@
     "category": "cellPhone",
     "question": "What cell phone restriction applies to drivers under 18 in Maryland?",
     "answers": [
-      "Handheld use only prohibited",
-      "No wireless devices at all, even hands-free",
-      "Texting only prohibited",
-      "Same as adult drivers"
+      "Handheld use only is banned",
+      "No wireless use, even hands-free",
+      "Texting only is prohibited",
+      "Same restrictions as adults"
     ],
     "correctIndex": 1
   },
@@ -213,10 +213,10 @@
     "category": "cellPhone",
     "question": "When can you use a handheld phone to contact emergency services in Maryland?",
     "answers": [
-      "To report emergencies or call 911",
+      "To report emergencies/911",
       "Only when fully stopped",
       "Only with voice commands",
-      "Never while vehicle is running"
+      "Never while vehicle runs"
     ],
     "correctIndex": 0
   },
@@ -226,10 +226,10 @@
     "category": "cellPhone",
     "question": "When is texting while driving prohibited in Maryland?",
     "answers": [
-      "Only while moving",
-      "At all times, including at red lights",
-      "Only on highways",
-      "Only in school zones"
+      "Only while moving in traffic",
+      "Always, even at red lights",
+      "Only on highways and freeways",
+      "Only in designated school zones"
     ],
     "correctIndex": 1
   },
@@ -252,9 +252,9 @@
     "category": "duiStateLaws",
     "question": "What is the legal alcohol limit for drivers under 21 in Maryland?",
     "answers": [
-      "0.08 percent",
-      "0.02 percent",
-      "0.04 percent",
+      "0.08 percent BAC level",
+      "0.02 percent BAC level",
+      "0.04 percent BAC level",
       "Any detectable alcohol"
     ],
     "correctIndex": 3
@@ -265,10 +265,10 @@
     "category": "duiStateLaws",
     "question": "What does Maryland's implied consent law mean for drivers?",
     "answers": [
-      "Agreement to BAC testing when lawfully arrested",
-      "Permission to search vehicle",
-      "Consent to field sobriety only",
-      "Waiver of attorney rights"
+      "Agreement to BAC testing if arrested",
+      "Permission to search your vehicle",
+      "Consent to field sobriety testing",
+      "Waiver of your attorney rights"
     ],
     "correctIndex": 0
   },
@@ -304,9 +304,9 @@
     "category": "duiStateLaws",
     "question": "At what BAC level does Maryland require ignition interlock participation?",
     "answers": [
-      "0.10 percent",
-      "0.12 percent",
-      "0.08 percent",
+      "0.10 percent BAC level",
+      "0.12 percent BAC level",
+      "0.08 percent BAC level",
       "0.15 percent or higher"
     ],
     "correctIndex": 3
@@ -356,10 +356,10 @@
     "category": "insurance",
     "question": "What does liability insurance primarily cover in Maryland?",
     "answers": [
-      "Your own vehicle damage",
+      "Your own vehicle damage costs",
       "Your medical bills only",
-      "Rental car expenses",
-      "Injury and damage you cause to others"
+      "Rental car expense costs",
+      "Injury/damage you cause others"
     ],
     "correctIndex": 3
   },
@@ -370,9 +370,9 @@
     "question": "What coverage is required in Maryland to protect against uninsured drivers?",
     "answers": [
       "Uninsured motorist coverage",
-      "Comprehensive coverage",
-      "Collision coverage",
-      "Gap coverage"
+      "Comprehensive coverage plan",
+      "Collision coverage policy",
+      "Gap insurance coverage"
     ],
     "correctIndex": 0
   },
@@ -382,9 +382,9 @@
     "category": "insurance",
     "question": "What unique coverage does Maryland require despite being an at-fault state?",
     "answers": [
-      "Gap insurance",
+      "Gap insurance coverage plan",
       "Personal injury protection (PIP)",
-      "Rental reimbursement",
+      "Rental reimbursement plan",
       "Mechanical breakdown coverage"
     ],
     "correctIndex": 1
@@ -395,10 +395,10 @@
     "category": "stateUnique",
     "question": "When must you turn on headlights while driving in Maryland?",
     "answers": [
-      "Only at night",
-      "During heavy traffic",
+      "Only at night time driving",
+      "During heavy traffic periods",
       "When using windshield wipers",
-      "Only in fog"
+      "Only in fog conditions"
     ],
     "correctIndex": 2
   },
@@ -408,9 +408,9 @@
     "category": "stateUnique",
     "question": "What does Maryland's move over law require when approaching stopped vehicles with warning signals?",
     "answers": [
-      "Honk your horn",
-      "Flash your lights",
-      "Stop completely",
+      "Honk your horn loudly",
+      "Flash your lights twice",
+      "Stop completely first",
       "Change lanes or slow down"
     ],
     "correctIndex": 3
@@ -435,9 +435,9 @@
     "question": "When must you stop for a school bus if traveling in the opposite direction in Maryland?",
     "answers": [
       "Always, regardless of road type",
-      "When there is no physical median",
+      "When there's no physical median",
       "Only on one-lane roads",
-      "Never if on opposite side"
+      "Never if on the opposite side"
     ],
     "correctIndex": 1
   },
@@ -447,10 +447,10 @@
     "category": "stateUnique",
     "question": "What must you do before making a right turn on red in Maryland?",
     "answers": [
-      "Slow to 5 mph",
-      "Honk your horn",
+      "Slow to 5 mph first",
+      "Honk your horn once",
       "Come to a complete stop",
-      "Signal for 5 seconds"
+      "Signal for 5 seconds first"
     ],
     "correctIndex": 2
   },
@@ -460,10 +460,10 @@
     "category": "stateUnique",
     "question": "Who has the right of way when you're turning right on red in Maryland?",
     "answers": [
-      "The turning vehicle",
-      "No one has priority",
-      "Emergency vehicles only",
-      "Pedestrians and vehicles with green light"
+      "The turning vehicle always",
+      "No one has any priority at all",
+      "Emergency vehicles only have it",
+      "Pedestrians and green light cars"
     ],
     "correctIndex": 3
   },
@@ -473,10 +473,10 @@
     "category": "stateUnique",
     "question": "Which vehicles does Maryland's move over law apply to?",
     "answers": [
-      "All stopped vehicles displaying warning signals",
-      "Only police vehicles",
-      "Only emergency vehicles",
-      "Only disabled vehicles"
+      "Stopped vehicles with warning signals",
+      "Only police vehicles on roadside",
+      "Only emergency vehicles responding",
+      "Only disabled vehicles on shoulder"
     ],
     "correctIndex": 0
   },
@@ -486,10 +486,10 @@
     "category": "stateUnique",
     "question": "What action must you take when a school bus extends its stop arm and displays red lights?",
     "answers": [
-      "Slow down and proceed carefully",
+      "Slow down and proceed with caution",
       "Stop and remain stopped until signals end",
-      "Change lanes if possible",
-      "Stop only if children are visible"
+      "Change lanes if it is possible",
+      "Stop only if children are visible nearby"
     ],
     "correctIndex": 1
   },
@@ -499,10 +499,10 @@
     "category": "stateUnique",
     "question": "When do pedestrians have the right of way at crosswalks in Maryland?",
     "answers": [
-      "Only with walk signals",
-      "Only at marked crosswalks",
-      "Even if crossing against the signal",
-      "Only during daylight hours"
+      "Only with walk signals active",
+      "Only at marked crosswalks shown",
+      "Even if crossing against signal",
+      "Only during daylight hours only"
     ],
     "correctIndex": 2
   },
@@ -512,10 +512,10 @@
     "category": "stateUnique",
     "question": "What is notable about right turn on red restrictions in Montgomery County and Baltimore?",
     "answers": [
-      "Right turns always prohibited",
-      "No special restrictions",
-      "Allowed only during daytime",
-      "Many intersections post NO TURN ON RED signs"
+      "Right turns always prohibited there",
+      "No special restrictions at all",
+      "Allowed only during daytime hours",
+      "Many intersections post NO TURN ON RED"
     ],
     "correctIndex": 3
   }
