@@ -4,7 +4,14 @@ import { Question, TestSession, UserAnswer, TestAttemptStats } from '@/types';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
+// Current data version - increment this when question data changes
+const DATA_VERSION = 2;
+
 interface AppState {
+  // Data version notification
+  showDataResetNotification: boolean;
+  dismissDataResetNotification: () => void;
+
   // Guest mode
   isGuest: boolean;
   startGuestSession: () => void;
@@ -93,6 +100,10 @@ interface AppState {
 export const useStore = create<AppState>()(
   persist(
     (set, get) => ({
+      // Data version notification
+      showDataResetNotification: false,
+      dismissDataResetNotification: () => set({ showDataResetNotification: false }),
+
       // Initial state
       isGuest: false,
       selectedState: null,
@@ -647,6 +658,7 @@ export const useStore = create<AppState>()(
     }),
     {
       name: 'driving-test-storage',
+      version: DATA_VERSION,
       storage: createJSONStorage(() => {
         // Only use localStorage on the client side
         if (typeof window !== 'undefined') {
@@ -660,6 +672,34 @@ export const useStore = create<AppState>()(
         };
       }),
       skipHydration: false,
+      migrate: (persistedState: unknown, version: number) => {
+        // If upgrading from an older version, reset all data and show notification
+        if (version < DATA_VERSION) {
+          console.log(`Migrating from version ${version} to ${DATA_VERSION} - resetting data`);
+          return {
+            showDataResetNotification: true,
+            isGuest: false,
+            selectedState: null,
+            currentTests: {},
+            completedTests: [],
+            testAttempts: [],
+            training: {
+              questionsAnswered: [],
+              correctCount: 0,
+              incorrectCount: 0,
+              currentStreak: 0,
+              bestStreak: 0,
+              totalCorrectAllTime: 0,
+              masteredQuestionIds: [],
+              lastQuestionId: null,
+            },
+            trainingSets: {},
+            userId: null,
+            photoURL: null,
+          };
+        }
+        return persistedState as AppState;
+      },
     }
   )
 );
