@@ -15,10 +15,10 @@
     "id": "AZ-002",
     "question": "How long must a teen hold an instruction permit before applying for a Class G license?",
     "answers": [
-      "Three months",
-      "Six months or until turning 18",
-      "One year",
-      "Nine months"
+      "Three months minimum",
+      "Six months or age 18",
+      "One full year",
+      "Nine months minimum"
     ],
     "correctIndex": 1,
     "category": "gdlLicensing"
@@ -27,9 +27,9 @@
     "id": "AZ-003",
     "question": "During the first six months of a Class G license, how many passengers under 18 may a teen driver transport?",
     "answers": [
-      "Two passengers",
-      "Three passengers",
-      "One passenger, unless they are siblings",
+      "Two passengers maximum",
+      "Three passengers maximum",
+      "One passenger (siblings exempt)",
       "No passengers under any circumstances"
     ],
     "correctIndex": 2,
@@ -63,10 +63,10 @@
     "id": "AZ-006",
     "question": "How many hours of supervised driving practice must teens complete before getting a Class G license?",
     "answers": [
-      "20 hours total",
-      "30 hours total, including 10 hours at night",
-      "40 hours total",
-      "25 hours total, including 5 hours at night"
+      "20 hours total practice",
+      "30 hours (10 at night)",
+      "40 hours total practice",
+      "25 hours (5 at night)"
     ],
     "correctIndex": 1,
     "category": "gdlLicensing"
@@ -75,10 +75,10 @@
     "id": "AZ-007",
     "question": "When do Class G license restrictions expire for teen drivers?",
     "answers": [
-      "After one year",
+      "After one full year",
       "After three months",
-      "After six months or when turning 18",
-      "After nine months"
+      "Six months or age 18",
+      "After nine full months"
     ],
     "correctIndex": 2,
     "category": "gdlLicensing"
@@ -124,9 +124,9 @@
     "question": "Who must provide written certification of a teen's supervised driving hours?",
     "answers": [
       "A driving instructor only",
-      "Any licensed adult",
-      "A parent or legal guardian",
-      "The DMV examiner"
+      "Any licensed adult driver",
+      "Parent or guardian",
+      "The DMV examiner only"
     ],
     "correctIndex": 2,
     "category": "gdlLicensing"
@@ -138,7 +138,7 @@
       "To reduce insurance costs",
       "To delay full driving privileges",
       "To increase state revenue",
-      "To allow teens to gain experience gradually"
+      "To build experience gradually"
     ],
     "correctIndex": 3,
     "category": "gdlLicensing"
@@ -159,10 +159,10 @@
     "id": "AZ-014",
     "question": "Under Arizona's hands-free law, when is it legal to hold a phone while driving?",
     "answers": [
-      "Only in emergencies",
-      "When the vehicle is completely stopped at a red light",
+      "Only during emergencies",
+      "When stopped at red light",
       "Never under any circumstances",
-      "When using GPS navigation"
+      "When using GPS navigation only"
     ],
     "correctIndex": 1,
     "category": "cellPhone"
@@ -172,8 +172,8 @@
     "question": "What type of device use is permitted under Arizona's hands-free law?",
     "answers": [
       "Holding phone on speaker",
-      "Texting at stop signs",
-      "Voice-activated hands-free systems",
+      "Texting at stop signs only",
+      "Voice-activated systems",
       "Reading texts while stopped"
     ],
     "correctIndex": 2,
@@ -183,10 +183,10 @@
     "id": "AZ-016",
     "question": "Arizona's hands-free law prohibits which action while the vehicle is in motion?",
     "answers": [
-      "Using voice commands",
-      "Listening to music",
-      "Using mounted GPS",
-      "Holding or supporting a phone with your body"
+      "Using voice commands only",
+      "Listening to music only",
+      "Using mounted GPS devices",
+      "Holding/supporting phone"
     ],
     "correctIndex": 3,
     "category": "cellPhone"
@@ -195,7 +195,7 @@
     "id": "AZ-017",
     "question": "What makes texting while driving a primary offense in Arizona?",
     "answers": [
-      "Officers can stop you for texting alone",
+      "Officers can stop for it alone",
       "It requires a second violation",
       "It only applies to teen drivers",
       "It requires witness testimony"
@@ -207,10 +207,10 @@
     "id": "AZ-018",
     "question": "Which drivers are exempt from Arizona's hands-free law?",
     "answers": [
-      "Drivers over 65",
-      "Emergency responders performing duties",
+      "Drivers over age 65 only",
+      "Emergency responders on duty",
       "Commercial truck drivers",
-      "Rideshare drivers"
+      "Rideshare drivers only"
     ],
     "correctIndex": 1,
     "category": "cellPhone"
@@ -219,10 +219,10 @@
     "id": "AZ-019",
     "question": "What is the BAC limit for drivers under 21 in Arizona?",
     "answers": [
-      "0.04%",
-      "0.08%",
-      "0.00% (zero tolerance)",
-      "0.02%"
+      "0.04% BAC maximum",
+      "0.08% BAC maximum",
+      "0.00% zero tolerance",
+      "0.02% BAC maximum"
     ],
     "correctIndex": 2,
     "category": "duiStateLaws"
@@ -231,9 +231,9 @@
     "id": "AZ-020",
     "question": "At what BAC level is a driver charged with Super Extreme DUI in Arizona?",
     "answers": [
-      "0.15%",
-      "0.18%",
-      "0.12%",
+      "0.15% or higher",
+      "0.18% or higher",
+      "0.12% or higher",
       "0.20% or higher"
     ],
     "correctIndex": 3,
@@ -243,9 +243,9 @@
     "id": "AZ-021",
     "question": "What is required for all DUI convictions in Arizona, including first offenses?",
     "answers": [
-      "Installation of an ignition interlock device",
+      "Ignition interlock device required",
       "License revocation for life",
-      "Community service only",
+      "Community service requirement only",
       "Alcohol education classes only"
     ],
     "correctIndex": 0,
@@ -280,9 +280,9 @@
     "question": "Under Arizona's implied consent law, what happens if you refuse a breath test?",
     "answers": [
       "No penalty if it's your first refusal",
-      "Six-month license suspension",
-      "Warning only",
-      "Automatic 12-month license suspension"
+      "Six-month license suspension only",
+      "Warning only first time",
+      "Automatic 12-month suspension"
     ],
     "correctIndex": 3,
     "category": "duiStateLaws"
@@ -303,10 +303,10 @@
     "id": "AZ-026",
     "question": "How long does a DUI conviction remain on your driving record in Arizona?",
     "answers": [
-      "7 years",
+      "7 years total",
       "Permanently",
-      "10 years",
-      "5 years"
+      "10 years total",
+      "5 years total"
     ],
     "correctIndex": 1,
     "category": "duiStateLaws"
@@ -352,9 +352,9 @@
     "question": "What does liability insurance primarily cover in Arizona?",
     "answers": [
       "Your own vehicle repairs",
-      "Injuries and property damage you cause to others",
+      "Injuries/damage to others",
       "Your medical bills only",
-      "Theft and vandalism"
+      "Theft and vandalism damage"
     ],
     "correctIndex": 1,
     "category": "insurance"
@@ -375,10 +375,10 @@
     "id": "AZ-032",
     "question": "After pulling off the road during a dust storm, what should you do with your vehicle lights?",
     "answers": [
-      "Turn on hazard flashers",
+      "Turn on hazard flashers only",
       "Keep headlights on low beam",
-      "Turn on high beams",
-      "Turn off all lights including brake lights"
+      "Turn on high beams only",
+      "Turn off all lights completely"
     ],
     "correctIndex": 3,
     "category": "stateUnique"
@@ -387,8 +387,8 @@
     "id": "AZ-033",
     "question": "Why should you turn off all lights when stopped during a dust storm?",
     "answers": [
-      "Drivers may follow your lights and crash into you",
-      "To save battery power",
+      "Others may follow and crash",
+      "To save battery power only",
       "To avoid attracting wildlife",
       "It's required by state law"
     ],
@@ -411,9 +411,9 @@
     "id": "AZ-035",
     "question": "What is the primary cause of tire blowouts in Arizona's extreme heat?",
     "answers": [
-      "Road construction debris",
-      "Excessive speed limits",
-      "Underinflated tires on hot pavement",
+      "Road construction debris only",
+      "Excessive speed limits only",
+      "Underinflated tires on heat",
       "Overuse of air conditioning"
     ],
     "correctIndex": 2,
@@ -423,9 +423,9 @@
     "id": "AZ-036",
     "question": "What temperature can Arizona pavement reach during summer months?",
     "answers": [
-      "120°F",
-      "130°F",
-      "140°F",
+      "120°F maximum",
+      "130°F maximum",
+      "140°F maximum",
       "Over 150°F"
     ],
     "correctIndex": 3,
@@ -435,10 +435,10 @@
     "id": "AZ-037",
     "question": "What should you do when encountering a dust storm on the highway?",
     "answers": [
-      "Exit the highway safely as soon as possible",
+      "Exit highway as soon as safe",
       "Speed up to get through quickly",
       "Turn on high beams and proceed slowly",
-      "Stop in the emergency lane"
+      "Stop in the emergency lane only"
     ],
     "correctIndex": 0,
     "category": "stateUnique"
@@ -448,9 +448,9 @@
     "question": "What does Arizona's \"Stupid Motorist Law\" address?",
     "answers": [
       "Speeding in school zones",
-      "Drivers who enter flooded roadways",
+      "Entering flooded roadways",
       "Texting while driving",
-      "Running red lights"
+      "Running red lights only"
     ],
     "correctIndex": 1,
     "category": "stateUnique"
@@ -459,9 +459,9 @@
     "id": "AZ-039",
     "question": "What should drivers carry in their vehicle during Arizona's extreme heat?",
     "answers": [
-      "Fire extinguisher",
-      "Snow chains",
-      "Extra water and charged cell phone",
+      "Fire extinguisher only",
+      "Snow chains for winter",
+      "Water and cell phone",
       "Emergency flares only"
     ],
     "correctIndex": 2,
@@ -471,10 +471,10 @@
     "id": "AZ-040",
     "question": "Where is pulled off completely during a dust storm, where should you position your foot?",
     "answers": [
-      "On the brake pedal",
-      "On the accelerator",
+      "On the brake pedal only",
+      "On the accelerator only",
       "Hovering over the brake",
-      "Off the brake pedal entirely"
+      "Off the brake entirely"
     ],
     "correctIndex": 3,
     "category": "stateUnique"

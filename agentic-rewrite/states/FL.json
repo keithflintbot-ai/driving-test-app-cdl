@@ -17,7 +17,7 @@
     "category": "gdlLicensing",
     "question": "How many hours of supervised driving practice must Florida learner's permit holders complete?",
     "answers": [
-      "40 hours total",
+      "40 hours total, no night required",
       "50 hours, including 10 at night",
       "30 hours, including 5 at night",
       "60 hours, including 15 at night"
@@ -30,10 +30,10 @@
     "category": "gdlLicensing",
     "question": "What course must Florida teens under 18 complete before applying for a learner's permit as of August 2025?",
     "answers": [
-      "TLSAE course only",
-      "Defensive driving course",
-      "Driver Education and Traffic Safety (DETS) course",
-      "Advanced driver training"
+      "TLSAE (Traffic Law) course only",
+      "Defensive driving course only",
+      "Driver Ed and Traffic Safety (DETS)",
+      "Advanced driver training course"
     ],
     "correctIndex": 2,
     "explanation": "Starting August 1, 2025, Florida teens under 18 must complete the 6-hour DETS course before applying for a learner's permit."
@@ -43,9 +43,9 @@
     "category": "gdlLicensing",
     "question": "During the first three months with a Florida learner's license, when can teens drive?",
     "answers": [
-      "Until 8 PM",
-      "Until 10 PM",
-      "Until midnight",
+      "Until 8 PM each day",
+      "Until 10 PM each day",
+      "Until midnight only",
       "Daylight hours only"
     ],
     "correctIndex": 3,
@@ -109,9 +109,9 @@
     "question": "What is the minimum period a Florida teen must hold a learner's license before getting a provisional license?",
     "answers": [
       "12 months or until age 18",
-      "6 months",
-      "9 months",
-      "18 months"
+      "6 months minimum period",
+      "9 months minimum period",
+      "18 months minimum period"
     ],
     "correctIndex": 0,
     "explanation": "Florida requires teens to hold a learner's license for at least 12 months or until their 18th birthday, whichever comes first."
@@ -148,9 +148,9 @@
     "question": "What happens if a Florida teen driver under 18 commits a moving violation?",
     "answers": [
       "License suspended for 30 days",
-      "Must pay fine only",
+      "Must pay fines and fees only",
       "Community service required",
-      "Restrictions may be extended or license suspended"
+      "Restrictions extended/suspended"
     ],
     "correctIndex": 3,
     "explanation": "Florida GDL violations can result in extended restrictions or license suspension for drivers under 18."
@@ -161,9 +161,9 @@
     "question": "What type of offense is texting while driving in Florida?",
     "answers": [
       "Primary offense allowing stops",
-      "Secondary offense only",
+      "Secondary offense violation",
       "Warning only for first time",
-      "Not currently illegal"
+      "Not currently illegal now"
     ],
     "correctIndex": 0,
     "explanation": "Since July 1, 2019, texting while driving is a primary offense in Florida, meaning officers can stop vehicles solely for this violation."
@@ -173,10 +173,10 @@
     "category": "cellPhone",
     "question": "Where is handheld phone use completely prohibited in Florida?",
     "answers": [
-      "All highways",
-      "School and active construction zones",
-      "Residential areas",
-      "All roads statewide"
+      "All highways and freeways",
+      "School and construction zones",
+      "Residential areas and streets",
+      "All roads statewide entirely"
     ],
     "correctIndex": 1,
     "explanation": "Florida prohibits handheld phone use in school zones and active construction zones with workers present."
@@ -199,10 +199,10 @@
     "category": "cellPhone",
     "question": "What manual phone activity does Florida's texting law specifically prohibit while driving?",
     "answers": [
-      "Voice calls only",
-      "GPS navigation",
+      "Making voice calls to others",
+      "Using GPS navigation apps",
       "Social media browsing",
-      "Typing or entering multiple characters"
+      "Typing or entering messages"
     ],
     "correctIndex": 3,
     "explanation": "Florida Statute 316.305 prohibits manually typing or entering multiple characters into wireless devices while operating a vehicle."
@@ -265,8 +265,8 @@
     "question": "How long do DUI convictions remain on a Florida driving record?",
     "answers": [
       "75 years and cannot be sealed",
-      "10 years",
-      "25 years",
+      "10 years on driving record",
+      "25 years on driving record",
       "Lifetime but can be expunged"
     ],
     "correctIndex": 0,
@@ -277,10 +277,10 @@
     "category": "duiStateLaws",
     "question": "What major change did Trenton's Law bring to Florida DUI enforcement in October 2025?",
     "answers": [
-      "Higher fines only",
-      "Refusing chemical tests is now criminal",
-      "Lower BAC limits",
-      "Mandatory jail time"
+      "Higher fines for DUI only",
+      "Refusing tests became criminal",
+      "Lower BAC limit standards",
+      "Mandatory jail time for DUI"
     ],
     "correctIndex": 1,
     "explanation": "Trenton's Law, effective October 1, 2025, made refusing chemical testing a criminal charge, not just an administrative penalty."
@@ -329,10 +329,10 @@
     "category": "duiStateLaws",
     "question": "Under Trenton's Law, what is the maximum penalty for a second DUI manslaughter conviction?",
     "answers": [
-      "15 years",
-      "Up to 30 years as first-degree felony",
-      "20 years",
-      "25 years"
+      "15 years imprisonment max",
+      "Up to 30 yrs, 1st-deg felony",
+      "20 years imprisonment max",
+      "25 years imprisonment max"
     ],
     "correctIndex": 1,
     "explanation": "Trenton's Law elevated second DUI manslaughter convictions from second-degree to first-degree felonies with up to 30 years imprisonment."
@@ -342,10 +342,10 @@
     "category": "insurance",
     "question": "What type of insurance system does Florida operate under?",
     "answers": [
-      "Fault-based liability",
-      "Hybrid system",
+      "Fault-based liability system",
+      "Hybrid system coverage",
       "No-fault with PIP coverage",
-      "Tort liability only"
+      "Tort liability only system"
     ],
     "correctIndex": 2,
     "explanation": "Florida operates under a no-fault insurance system requiring Personal Injury Protection (PIP) coverage for all drivers."
@@ -369,9 +369,9 @@
     "question": "What type of insurance is uniquely required in Florida's no-fault system?",
     "answers": [
       "Personal Injury Protection (PIP)",
-      "Collision coverage",
-      "Comprehensive coverage",
-      "Rental car coverage"
+      "Collision coverage insurance",
+      "Comprehensive coverage insurance",
+      "Rental car coverage insurance"
     ],
     "correctIndex": 0,
     "explanation": "Florida's no-fault system requires all drivers to carry Personal Injury Protection coverage for their own medical expenses regardless of fault."
@@ -395,8 +395,8 @@
     "question": "During hurricane evacuations, which vehicles can use Emergency Shoulder Use lanes in Florida?",
     "answers": [
       "All vehicles including motorcycles",
-      "Emergency vehicles only",
-      "Cars and SUVs only, no large trucks or trailers",
+      "Emergency vehicles only allowed",
+      "Cars and SUVs, no trucks/trailers",
       "Any vehicle under posted weight"
     ],
     "correctIndex": 2,
@@ -408,8 +408,8 @@
     "question": "How often must Florida drivers age 80 and older renew their licenses?",
     "answers": [
       "Every 8 years like other drivers",
-      "Every 4 years",
-      "Annually",
+      "Every 4 years with testing",
+      "Annually with vision test",
       "Every 6 years with vision test"
     ],
     "correctIndex": 3,
@@ -433,8 +433,8 @@
     "category": "stateUnique",
     "question": "As of January 2025, what triggers Florida's Move Over Law requirements?",
     "answers": [
-      "Emergency vehicles only",
-      "Any vehicle with hazard lights activated",
+      "Emergency vehicles only on road",
+      "Any vehicle with hazards activated",
       "Police and fire vehicles only",
       "Tow trucks and emergency vehicles"
     ],
@@ -446,10 +446,10 @@
     "category": "stateUnique",
     "question": "If you cannot move over for a stopped vehicle in Florida, how much must you reduce speed?",
     "answers": [
-      "10 mph below limit",
-      "15 mph below limit",
-      "20 mph below limit, or to 5 mph if limit is 20 or less",
-      "Half the posted speed"
+      "10 mph below the posted limit",
+      "15 mph below the posted limit",
+      "20 mph below, or 5 if under 20",
+      "Half of the posted speed limit"
     ],
     "correctIndex": 2,
     "explanation": "Florida law requires reducing speed by 20 mph below the limit, or to 5 mph if the speed limit is 20 mph or less."
@@ -459,9 +459,9 @@
     "category": "stateUnique",
     "question": "Which shoulder is used for Emergency Shoulder Use on Florida's four-lane highways?",
     "answers": [
-      "Left shoulder only",
+      "Left shoulder lane only",
       "Either shoulder as needed",
-      "Center median",
+      "Center median lane area",
       "Right or outside shoulder"
     ],
     "correctIndex": 3,
@@ -487,8 +487,8 @@
     "answers": [
       "Restricted access highways",
       "Emergency Shoulder Use (ESU)",
-      "Toll road waivers",
-      "Mass transit systems"
+      "Toll road waivers program",
+      "Mass transit systems use"
     ],
     "correctIndex": 1,
     "explanation": "Florida replaced contraflow with Emergency Shoulder Use (ESU) in 2017, allowing shoulders to become travel lanes during evacuations."
@@ -498,10 +498,10 @@
     "category": "stateUnique",
     "question": "What are the recommended top speeds when using ESU shoulder lanes during evacuations?",
     "answers": [
-      "45-55 mph",
+      "45-55 mph on shoulders",
       "Same as normal lanes",
-      "30-40 mph due to narrower width",
-      "20-25 mph"
+      "30-40 mph, narrower lanes",
+      "20-25 mph on shoulders"
     ],
     "correctIndex": 2,
     "explanation": "ESU shoulders are about 2 feet narrower than regular lanes, so recommended speeds are 30-40 mph for safety."
@@ -511,7 +511,7 @@
     "category": "stateUnique",
     "question": "What two types of coverage are required for all Florida drivers?",
     "answers": [
-      "Liability and collision",
+      "Liability and collision coverage",
       "Comprehensive and collision",
       "Uninsured motorist and liability",
       "PIP and property damage liability"
