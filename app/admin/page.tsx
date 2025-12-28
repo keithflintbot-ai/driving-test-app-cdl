@@ -47,9 +47,14 @@ export default function AdminPage() {
 
   // Helper function to process Firestore data
   const processFirestoreDoc = (docId: string, data: ReturnType<typeof Object>) => {
-    // Calculate training questions from trainingSets (masteredIds + wrongQueue per set)
+    // Calculate training questions from:
+    // 1. Initial onboarding training (training.masteredQuestionIds)
+    // 2. Post-onboarding training sets (trainingSets[1-4])
+    const training = data.training || {};
+    const onboardingMastered = training.masteredQuestionIds || [];
+
     const trainingSets = data.trainingSets || {};
-    let trainingQuestionsAnswered = 0;
+    let trainingQuestionsAnswered = onboardingMastered.length;
     for (const setId of [1, 2, 3, 4]) {
       const setData = trainingSets[setId] || {};
       const masteredIds = setData.masteredIds || [];
