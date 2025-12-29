@@ -88,7 +88,7 @@
     "state": "ALL",
     "questionId": "U-007",
     "category": "roadSigns",
-    "question": "What does a red circle with a line through it mean?",
+    "question": "What does a red circle with a diagonal line through it mean?",
     "optionA": "A red circle with line means stop here",
     "optionB": "A red circle with line means yield to traffic",
     "optionC": "A red circle with line means action prohibited",
