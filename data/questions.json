@@ -2226,6 +2226,20 @@
     "explanation": "If no building is available leave your car and lie flat in a low area away from vehicles."
   },
   {
+    "type": "Universal",
+    "state": "ALL",
+    "questionId": "U-161",
+    "category": "alcoholDUI",
+    "question": "Studies show that the greatest number of people arrested for drunk driving had been drinking what kind of alcoholic beverage?",
+    "optionA": "Wine",
+    "optionB": "Beer",
+    "optionC": "Whiskey",
+    "optionD": "Vodka",
+    "correctAnswer": "B",
+    "correctIndex": 1,
+    "explanation": "Statistics show that beer is the most common alcoholic beverage consumed by people arrested for drunk driving."
+  },
+  {
     "type": "State-Specific",
     "state": "AK",
     "questionId": "AK-001",
