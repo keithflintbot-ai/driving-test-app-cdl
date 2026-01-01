@@ -195,9 +195,115 @@ These topics typically VARY by state and should be researched for each state:
 
 ---
 
-## Validation Checklist
+## ⛔ MANDATORY VALIDATION BEFORE PROMISE ⛔
 
-Before outputting the completion promise, verify:
+**YOU MUST RUN THESE VALIDATION CHECKS BEFORE OUTPUTTING THE COMPLETION PROMISE.**
+**DO NOT OUTPUT THE PROMISE UNTIL ALL CHECKS PASS.**
+
+### Step 1: Run These Bash Commands
+
+```bash
+# Count questions
+echo "Question count:" && grep -c "^## Question" [state]-driving-questions.md
+
+# Count answer distribution
+echo "A answers:" && grep -c "Correct Answer:\*\* A)" [state]-driving-questions.md
+echo "B answers:" && grep -c "Correct Answer:\*\* B)" [state]-driving-questions.md
+echo "C answers:" && grep -c "Correct Answer:\*\* C)" [state]-driving-questions.md
+echo "D answers:" && grep -c "Correct Answer:\*\* D)" [state]-driving-questions.md
+
+# Check for prohibited content
+echo "Dollar amounts:" && grep -c '\$[0-9]' [state]-driving-questions.md || echo "0"
+echo "Point values:" && grep -ci '[0-9] points' [state]-driving-questions.md || echo "0"
+echo "Jail times:" && grep -ci 'months in jail\|years in jail' [state]-driving-questions.md || echo "0"
+```
+
+**Expected Output:**
+- Question count: 50
+- A answers: 12 or 13
+- B answers: 12 or 13
+- C answers: 12 or 13
+- D answers: 12 or 13
+- Dollar amounts: 0
+- Point values: 0
+- Jail times: 0
+
+### Step 2: Run This Python Validation (REQUIRED)
+
+```python
+python3 << 'EOF'
+import re
+
+with open('[state]-driving-questions.md', 'r') as f:
+    content = f.read()
+
+questions = re.split(r'---\s*\n\s*## Question \d+:', content)[1:]
+issues = []
+
+for i, q in enumerate(questions, 1):
+    options = re.findall(r'^([A-D])\) (.+)$', q, re.MULTILINE)
+    if len(options) != 4:
+        continue
+
+    correct = re.search(r'\*\*Correct Answer:\*\* ([A-D])\)', q)
+    if not correct:
+        continue
+
+    correct_letter = correct.group(1)
+    correct_len = len([o[1] for o in options if o[0] == correct_letter][0])
+    wrong_lens = [len(o[1]) for o in options if o[0] != correct_letter]
+    avg_wrong = sum(wrong_lens) / 3
+
+    # Rule 9: Length balance
+    if correct_len > avg_wrong * 1.4:
+        issues.append(f"Q{i}: Correct answer too long ({correct_len} vs avg {avg_wrong:.0f})")
+
+    # Rule 10: Giveaway qualifiers
+    correct_text = [o[1].lower() for o in options if o[0] == correct_letter][0]
+    wrong_texts = [o[1].lower() for o in options if o[0] != correct_letter]
+    for qual in ['always', 'never', 'only', 'all']:
+        if qual in correct_text and not any(qual in w for w in wrong_texts):
+            issues.append(f"Q{i}: Giveaway qualifier '{qual}' only in correct answer")
+
+if issues:
+    print(f"❌ VALIDATION FAILED - {len(issues)} issues:")
+    for issue in issues[:20]:
+        print(f"  - {issue}")
+    print("\n⛔ DO NOT OUTPUT PROMISE - FIX ISSUES FIRST")
+else:
+    print("✅ VALIDATION PASSED - All checks OK")
+    print("✅ You may now output the completion promise")
+EOF
+```
+
+### Step 3: Verify Letter/Index Matching
+
+```python
+python3 << 'EOF'
+import re
+with open('[state]-driving-questions.md', 'r') as f:
+    content = f.read()
+matches = re.findall(r'\*\*Correct Answer:\*\* ([A-D])\).*?\n\*\*Correct Index:\*\* (\d+)', content)
+mapping = {'A': '1', 'B': '2', 'C': '3', 'D': '4'}
+errors = [f"Q{i+1}: {l} should be index {mapping[l]}, got {idx}" for i, (l, idx) in enumerate(matches) if mapping[l] != idx]
+if errors:
+    print(f"❌ {len(errors)} letter/index mismatches")
+    for e in errors: print(f"  - {e}")
+else:
+    print("✅ All letter/index pairs match")
+EOF
+```
+
+### ⚠️ PROMISE RULES
+
+1. **ALL THREE VALIDATION STEPS MUST PASS** before outputting the promise
+2. If ANY check fails, FIX THE ISSUES and re-run validation
+3. Do NOT output `<promise>` until you see "✅ VALIDATION PASSED" from all checks
+4. A checklist alone is NOT sufficient - you MUST run the actual validation code
+
+---
+
+## Validation Checklist (Reference Only - Use Commands Above)
 
 - [ ] Exactly 50 questions
 - [ ] Count A answers = 12 or 13

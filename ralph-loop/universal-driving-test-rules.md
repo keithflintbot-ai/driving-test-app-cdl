@@ -355,9 +355,145 @@ These topics VARY BY STATE and are covered in state-specific question sets. Do N
 
 ---
 
-## Validation Checklist
+## ⛔ MANDATORY VALIDATION BEFORE PROMISE ⛔
 
-Before outputting the completion promise, verify:
+**YOU MUST RUN THESE VALIDATION CHECKS BEFORE OUTPUTTING THE COMPLETION PROMISE.**
+**DO NOT OUTPUT THE PROMISE UNTIL ALL CHECKS PASS.**
+
+### Step 1: Run These Bash Commands
+
+```bash
+# Count questions
+echo "Question count:" && grep -c "^## Question" universal-driving-questions.md
+
+# Count answer distribution
+echo "A answers:" && grep -c "Correct Answer:\*\* A)" universal-driving-questions.md
+echo "B answers:" && grep -c "Correct Answer:\*\* B)" universal-driving-questions.md
+echo "C answers:" && grep -c "Correct Answer:\*\* C)" universal-driving-questions.md
+echo "D answers:" && grep -c "Correct Answer:\*\* D)" universal-driving-questions.md
+
+# Check for prohibited content
+echo "Dollar amounts:" && grep -c '\$[0-9]' universal-driving-questions.md || echo "0"
+echo "Point values:" && grep -ci '[0-9] points' universal-driving-questions.md || echo "0"
+echo "Jail times:" && grep -ci 'months in jail\|years in jail' universal-driving-questions.md || echo "0"
+```
+
+**Expected Output:**
+- Question count: 150
+- A answers: 37 or 38
+- B answers: 37 or 38
+- C answers: 37 or 38
+- D answers: 37 or 38
+- Dollar amounts: 0
+- Point values: 0
+- Jail times: 0
+
+### Step 2: Run This Python Validation (REQUIRED)
+
+```python
+python3 << 'EOF'
+import re
+
+with open('universal-driving-questions.md', 'r') as f:
+    content = f.read()
+
+questions = re.split(r'---\s*\n\s*## Question \d+:', content)[1:]
+issues = []
+
+for i, q in enumerate(questions, 1):
+    options = re.findall(r'^([A-D])\) (.+)$', q, re.MULTILINE)
+    if len(options) != 4:
+        continue
+
+    correct = re.search(r'\*\*Correct Answer:\*\* ([A-D])\)', q)
+    if not correct:
+        continue
+
+    correct_letter = correct.group(1)
+    correct_len = len([o[1] for o in options if o[0] == correct_letter][0])
+    wrong_lens = [len(o[1]) for o in options if o[0] != correct_letter]
+    avg_wrong = sum(wrong_lens) / 3
+
+    # Rule 9: Length balance - correct answer must NOT be >40% longer than avg wrong
+    if correct_len > avg_wrong * 1.4:
+        issues.append(f"Q{i}: Correct answer too long ({correct_len} chars vs avg wrong {avg_wrong:.0f}, max allowed {avg_wrong*1.4:.0f})")
+
+    # Rule 10: Giveaway qualifiers - "always/never/only/all" should not ONLY appear in correct answer
+    correct_text = [o[1].lower() for o in options if o[0] == correct_letter][0]
+    wrong_texts = [o[1].lower() for o in options if o[0] != correct_letter]
+    for qual in ['always', 'never', 'only', 'all']:
+        if qual in correct_text and not any(qual in w for w in wrong_texts):
+            issues.append(f"Q{i}: Giveaway qualifier '{qual}' only in correct answer")
+            break
+
+if issues:
+    print(f"❌ VALIDATION FAILED - {len(issues)} issues found:")
+    for issue in issues[:25]:
+        print(f"  - {issue}")
+    if len(issues) > 25:
+        print(f"  ... and {len(issues) - 25} more issues")
+    print("\n⛔ DO NOT OUTPUT PROMISE - FIX ALL ISSUES FIRST")
+else:
+    print("✅ VALIDATION PASSED - All length and qualifier checks OK")
+    print("✅ You may now output the completion promise")
+EOF
+```
+
+### Step 3: Verify Letter/Index Matching
+
+```python
+python3 << 'EOF'
+import re
+with open('universal-driving-questions.md', 'r') as f:
+    content = f.read()
+matches = re.findall(r'\*\*Correct Answer:\*\* ([A-D])\).*?\n\*\*Correct Index:\*\* (\d+)', content)
+mapping = {'A': '1', 'B': '2', 'C': '3', 'D': '4'}
+errors = [f"Q{i+1}: Letter {l} should have index {mapping[l]}, but got {idx}" for i, (l, idx) in enumerate(matches) if mapping[l] != idx]
+if errors:
+    print(f"❌ VALIDATION FAILED - {len(errors)} letter/index mismatches:")
+    for e in errors: print(f"  - {e}")
+    print("\n⛔ DO NOT OUTPUT PROMISE - FIX MISMATCHES FIRST")
+else:
+    print(f"✅ All {len(matches)} letter/index pairs match correctly")
+EOF
+```
+
+### Step 4: Check for Similar Questions
+
+```python
+python3 << 'EOF'
+import re
+with open('universal-driving-questions.md', 'r') as f:
+    content = f.read()
+questions = re.findall(r'\*\*(.+\?)\*\*', content)
+similar = []
+for i, q1 in enumerate(questions):
+    for j, q2 in enumerate(questions):
+        if i >= j: continue
+        w1, w2 = set(q1.lower().split()), set(q2.lower().split())
+        sim = len(w1 & w2) / len(w1 | w2) if w1 | w2 else 0
+        if sim > 0.8:
+            similar.append(f"Q{i+1} vs Q{j+1}: {sim*100:.0f}% similar")
+if similar:
+    print(f"❌ VALIDATION FAILED - {len(similar)} question pairs are >80% similar:")
+    for s in similar: print(f"  - {s}")
+    print("\n⛔ DO NOT OUTPUT PROMISE - REWRITE SIMILAR QUESTIONS")
+else:
+    print("✅ No questions exceed 80% similarity")
+EOF
+```
+
+### ⚠️ PROMISE RULES - READ CAREFULLY
+
+1. **ALL FOUR VALIDATION STEPS MUST SHOW ✅** before outputting the promise
+2. If ANY step shows ❌, you MUST fix all issues and re-run ALL validations
+3. Do NOT output `<promise>` until EVERY check shows "✅ VALIDATION PASSED"
+4. A mental checklist is NOT sufficient - you MUST run the actual validation code
+5. **COMMON MISTAKE**: Outputting the promise after only checking count/distribution - you MUST also validate answer lengths and qualifiers
+
+---
+
+## Validation Checklist (Reference Only - Use Commands Above)
 
 ### Count Verification
 - [ ] Exactly 150 questions
