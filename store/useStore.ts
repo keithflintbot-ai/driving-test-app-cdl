@@ -70,6 +70,9 @@ interface AppState {
   getTrainingSetProgress: (setId: number) => { correct: number; total: number; complete: boolean };
   resetTrainingSet: (setId: number) => void;
 
+  // Activity tracking for DAU
+  activeDates: string[];
+
   // Onboarding
   isOnboardingComplete: () => boolean;
 
