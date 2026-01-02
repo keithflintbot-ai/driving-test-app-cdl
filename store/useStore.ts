@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import { Question, TestSession, UserAnswer, TestAttemptStats } from '@/types';
+import { Question, TestSession, UserAnswer, TestAttemptStats, QuestionPerformance } from '@/types';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
@@ -85,6 +85,7 @@ interface AppState {
     averageScore: number;
   };
   getPassProbability: () => number;
+  getQuestionPerformance: () => QuestionPerformance[];
 
   // Firebase sync
   userId: string | null;
@@ -522,6 +523,44 @@ export const useStore = create<AppState>()(
         }
 
         return Math.round(totalPassProbability);
+      },
+
+      getQuestionPerformance: () => {
+        const { completedTests, selectedState } = get();
+        // Filter tests by current state
+        const stateTests = completedTests.filter((t) => t.state === selectedState);
+
+        // Aggregate answers by questionId
+        const performanceMap: { [questionId: string]: { correct: number; wrong: number } } = {};
+
+        for (const test of stateTests) {
+          for (const answer of test.answers) {
+            if (!performanceMap[answer.questionId]) {
+              performanceMap[answer.questionId] = { correct: 0, wrong: 0 };
+            }
+            if (answer.isCorrect) {
+              performanceMap[answer.questionId].correct++;
+            } else {
+              performanceMap[answer.questionId].wrong++;
+            }
+          }
+        }
+
+        // Convert to QuestionPerformance array
+        const performance: QuestionPerformance[] = Object.entries(performanceMap).map(
+          ([questionId, data]) => {
+            const timesAnswered = data.correct + data.wrong;
+            return {
+              questionId,
+              timesAnswered,
+              timesCorrect: data.correct,
+              timesWrong: data.wrong,
+              accuracy: timesAnswered > 0 ? Math.round((data.correct / timesAnswered) * 100) : 0,
+            };
+          }
+        );
+
+        return performance;
       },
 
       // Firebase sync functions
