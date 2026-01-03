@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { Progress } from "@/components/ui/progress";
-import { ArrowLeft, ArrowUpDown, CheckCircle, XCircle, HelpCircle, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowUpDown, CheckCircle, XCircle, HelpCircle, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { useStore } from "@/store/useStore";
@@ -335,22 +335,19 @@ export default function StatsPage() {
 
         {/* Smart CTA - DO THIS */}
         {getRecommendation && (
-          <Card className="mb-6 border-orange-200 bg-orange-50">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between gap-4">
-                <div>
-                  <h2 className="text-lg font-bold text-gray-900">{getRecommendation.title}</h2>
-                  <p className="text-sm text-gray-600 mt-1">{getRecommendation.description}</p>
+          <Link href={getRecommendation.href} className="block">
+            <Card className="mb-6 border-orange-200 bg-orange-50 cursor-pointer hover:shadow-md transition-shadow">
+              <CardContent className="p-6">
+                <div className="flex items-center gap-4">
+                  <div className="flex-1">
+                    <h2 className="text-lg font-bold text-gray-900">{getRecommendation.title}</h2>
+                    <p className="text-sm text-gray-600 mt-1">{getRecommendation.description}</p>
+                  </div>
+                  <ChevronRight className="h-6 w-6 text-orange-400 flex-shrink-0" />
                 </div>
-                <Link href={getRecommendation.href}>
-                  <Button className="bg-orange-600 hover:bg-orange-700 text-white whitespace-nowrap">
-                    {getRecommendation.buttonText}
-                    <ArrowRight className="h-4 w-4 ml-2" />
-                  </Button>
-                </Link>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </Link>
         )}
 
         {/* Mobile Sort Controls */}
