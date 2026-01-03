@@ -4,7 +4,7 @@ import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { ArrowLeft, ArrowUpDown, CheckCircle, XCircle, HelpCircle } from "lucide-react";
 import Link from "next/link";
 import { useStore } from "@/store/useStore";
@@ -279,9 +279,9 @@ export default function QuestionsPage() {
                         className="border-b last:border-b-0 hover:bg-gray-50"
                       >
                         <td className="py-3 px-4">
-                          <Popover>
-                            <PopoverTrigger asChild>
-                              <button className="flex items-start gap-2 cursor-pointer text-left w-full">
+                          <HoverCard openDelay={200} closeDelay={100}>
+                            <HoverCardTrigger asChild>
+                              <div className="flex items-start gap-2 cursor-default">
                                 {item.timesAnswered === 0 ? (
                                   <HelpCircle className="h-5 w-5 text-gray-400 flex-shrink-0 mt-0.5" />
                                 ) : item.accuracy === 100 ? (
@@ -299,10 +299,10 @@ export default function QuestionsPage() {
                                     {item.question.category}
                                   </p>
                                 </div>
-                              </button>
-                            </PopoverTrigger>
-                            <PopoverContent className="w-[calc(100vw-2rem)] sm:w-96" side="bottom" align="start" showCloseButton>
-                              <div className="space-y-2 pr-4">
+                              </div>
+                            </HoverCardTrigger>
+                            <HoverCardContent className="w-96 hidden sm:block" side="right" align="start">
+                              <div className="space-y-2">
                                 <p className="text-sm font-medium mb-3">{item.question.question}</p>
                                 <div className="space-y-2">
                                   {["A", "B", "C", "D"].map((letter) => {
@@ -332,8 +332,8 @@ export default function QuestionsPage() {
                                   })}
                                 </div>
                               </div>
-                            </PopoverContent>
-                          </Popover>
+                            </HoverCardContent>
+                          </HoverCard>
                         </td>
                         <td className="text-center py-3 px-4">
                           <span className={item.timesAnswered > 0 ? "font-semibold" : "text-gray-400"}>
