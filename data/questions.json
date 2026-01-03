@@ -4554,7 +4554,7 @@
     "state": "CA",
     "questionId": "CA-006",
     "category": "gdlLicensing",
-    "question": "For how long after receiving a provisional license cannot a teen transport passengers under 20 years old alone?",
+    "question": "How long must a teen with a provisional license wait before transporting passengers under 20 alone?",
     "optionA": "6 months",
     "optionB": "12 months",
     "optionC": "18 months",
@@ -4963,11 +4963,11 @@
     "question": "Which vehicles are exempt from California's smog check requirement?",
     "optionA": "Vehicles less than 5 years old",
     "optionB": "All hybrid electric vehicles",
-    "optionC": "Vehicles 8 model years and newer",
+    "optionC": "Vehicles less than 8 years old",
     "optionD": "All diesel engine vehicles",
     "correctAnswer": "C",
     "correctIndex": 2,
-    "explanation": "California exempts vehicles eight model years and newer from smog checks, requiring instead a smog abatement fee with registration."
+    "explanation": "California exempts vehicles less than 8 years old from smog checks, requiring instead a smog abatement fee with registration."
   },
   {
     "type": "State-Specific",
