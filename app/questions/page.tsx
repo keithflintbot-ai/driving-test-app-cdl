@@ -4,7 +4,7 @@ import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { ArrowLeft, ArrowUpDown, CheckCircle, XCircle, HelpCircle } from "lucide-react";
 import Link from "next/link";
 import { useStore } from "@/store/useStore";
@@ -32,9 +32,8 @@ export default function QuestionsPage() {
   const isGuest = useStore((state) => state.isGuest);
   const getQuestionPerformance = useStore((state) => state.getQuestionPerformance);
 
-  const [sortField, setSortField] = useState<SortField>("question");
-  const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
-  const [filterType, setFilterType] = useState<"all" | "answered" | "unanswered">("all");
+  const [sortField, setSortField] = useState<SortField>("timesAnswered");
+  const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
 
   // Get state name from code
   const stateName = states.find((s) => s.code === selectedState)?.name || selectedState;
@@ -83,21 +82,9 @@ export default function QuestionsPage() {
     });
   }, [stateQuestions, getQuestionPerformance, hydrated]);
 
-  // Filter questions
-  const filteredQuestions = useMemo(() => {
-    switch (filterType) {
-      case "answered":
-        return questionsWithPerformance.filter((q) => q.timesAnswered > 0);
-      case "unanswered":
-        return questionsWithPerformance.filter((q) => q.timesAnswered === 0);
-      default:
-        return questionsWithPerformance;
-    }
-  }, [questionsWithPerformance, filterType]);
-
   // Sort questions
   const sortedQuestions = useMemo(() => {
-    const sorted = [...filteredQuestions].sort((a, b) => {
+    const sorted = [...questionsWithPerformance].sort((a, b) => {
       let comparison = 0;
       switch (sortField) {
         case "question":
@@ -119,7 +106,7 @@ export default function QuestionsPage() {
       return sortDirection === "asc" ? comparison : -comparison;
     });
     return sorted;
-  }, [filteredQuestions, sortField, sortDirection]);
+  }, [questionsWithPerformance, sortField, sortDirection]);
 
   // Calculate summary stats
   const summaryStats = useMemo(() => {
@@ -157,6 +144,19 @@ export default function QuestionsPage() {
     </button>
   );
 
+  // Status icon component
+  const StatusIcon = ({ item }: { item: QuestionWithPerformance }) => {
+    if (item.timesAnswered === 0) {
+      return <HelpCircle className="h-5 w-5 text-gray-400 flex-shrink-0" />;
+    } else if (item.accuracy === 100) {
+      return <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0" />;
+    } else if (item.accuracy === 0) {
+      return <XCircle className="h-5 w-5 text-red-600 flex-shrink-0" />;
+    } else {
+      return <div className="h-5 w-5 rounded-full border-2 border-yellow-500 flex-shrink-0" />;
+    }
+  };
+
   if (!hydrated || !selectedState || isGuest) {
     return null;
   }
@@ -166,76 +166,141 @@ export default function QuestionsPage() {
       <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-orange-50 to-white pointer-events-none" />
       <div className="relative container mx-auto px-4 py-8 max-w-6xl">
         {/* Header */}
-        <div className="mb-8">
+        <div className="mb-6">
           <Link href="/dashboard">
-            <Button variant="ghost" className="mb-4">
+            <Button variant="ghost" className="mb-4 -ml-2">
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Dashboard
+              Back
             </Button>
           </Link>
-          <h1 className="text-4xl font-bold mb-2">Question Performance</h1>
-          <p className="text-gray-600">
+          <h1 className="text-2xl md:text-4xl font-bold mb-2">Question Performance</h1>
+          <p className="text-gray-600 text-sm md:text-base">
             Track your performance on all {stateName} questions
           </p>
         </div>
 
         {/* Summary Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
           <Card>
-            <CardContent className="p-6 text-center">
-              <div className="text-2xl font-bold text-orange-600 mb-1">
+            <CardContent className="p-4 text-center">
+              <div className="text-xl md:text-2xl font-bold text-orange-600 mb-1">
                 {summaryStats.uniqueQuestionsAnswered}/{summaryStats.totalQuestions}
               </div>
-              <div className="text-sm text-gray-600">Questions Seen</div>
+              <div className="text-xs md:text-sm text-gray-600">Questions Seen</div>
             </CardContent>
           </Card>
           <Card>
-            <CardContent className="p-6 text-center">
-              <div className="text-2xl font-bold text-orange-600 mb-1">{summaryStats.totalAnswered}</div>
-              <div className="text-sm text-gray-600">Total Attempts</div>
+            <CardContent className="p-4 text-center">
+              <div className="text-xl md:text-2xl font-bold text-orange-600 mb-1">{summaryStats.totalAnswered}</div>
+              <div className="text-xs md:text-sm text-gray-600">Total Attempts</div>
             </CardContent>
           </Card>
           <Card>
-            <CardContent className="p-6 text-center">
-              <div className="text-2xl font-bold text-green-600 mb-1">{summaryStats.totalCorrect}</div>
-              <div className="text-sm text-gray-600">Correct</div>
+            <CardContent className="p-4 text-center">
+              <div className="text-xl md:text-2xl font-bold text-green-600 mb-1">{summaryStats.totalCorrect}</div>
+              <div className="text-xs md:text-sm text-gray-600">Correct</div>
             </CardContent>
           </Card>
           <Card>
-            <CardContent className="p-6 text-center">
-              <div className="text-2xl font-bold text-red-600 mb-1">{summaryStats.totalWrong}</div>
-              <div className="text-sm text-gray-600">Wrong</div>
+            <CardContent className="p-4 text-center">
+              <div className="text-xl md:text-2xl font-bold text-red-600 mb-1">{summaryStats.totalWrong}</div>
+              <div className="text-xs md:text-sm text-gray-600">Wrong</div>
             </CardContent>
           </Card>
         </div>
 
-        {/* Filter Tabs */}
-        <div className="flex gap-2 mb-6">
-          <Button
-            variant={filterType === "all" ? "default" : "outline"}
-            onClick={() => setFilterType("all")}
-            className={filterType === "all" ? "bg-black text-white" : ""}
-          >
-            All ({questionsWithPerformance.length})
-          </Button>
-          <Button
-            variant={filterType === "answered" ? "default" : "outline"}
-            onClick={() => setFilterType("answered")}
-            className={filterType === "answered" ? "bg-black text-white" : ""}
-          >
-            Answered ({questionsWithPerformance.filter((q) => q.timesAnswered > 0).length})
-          </Button>
-          <Button
-            variant={filterType === "unanswered" ? "default" : "outline"}
-            onClick={() => setFilterType("unanswered")}
-            className={filterType === "unanswered" ? "bg-black text-white" : ""}
-          >
-            Unanswered ({questionsWithPerformance.filter((q) => q.timesAnswered === 0).length})
-          </Button>
+        {/* Mobile Sort Controls */}
+        <div className="md:hidden flex items-center gap-2 mb-4 overflow-x-auto pb-2 -mx-4 px-4">
+          {[
+            { field: "timesAnswered" as SortField, label: "Answered" },
+            { field: "correct" as SortField, label: "Correct" },
+            { field: "wrong" as SortField, label: "Wrong" },
+            { field: "accuracy" as SortField, label: "Accuracy" },
+          ].map(({ field, label }) => (
+            <button
+              key={field}
+              onClick={() => handleSort(field)}
+              className={`whitespace-nowrap text-sm px-3 py-1.5 rounded-full border transition-colors ${
+                sortField === field
+                  ? "bg-orange-100 border-orange-300 text-orange-700 font-medium"
+                  : "bg-white border-gray-200 text-gray-600"
+              }`}
+            >
+              {label}
+              {sortField === field && (
+                <span className="ml-1">{sortDirection === "asc" ? "↑" : "↓"}</span>
+              )}
+            </button>
+          ))}
         </div>
 
-        {/* Questions Table */}
-        <Card>
+        {/* Mobile Card View */}
+        <div className="md:hidden space-y-3">
+          {sortedQuestions.length === 0 ? (
+            <Card>
+              <CardContent className="p-6 text-center text-gray-500">
+                No questions available.
+              </CardContent>
+            </Card>
+          ) : (
+            sortedQuestions.map((item) => (
+              <Card key={item.question.questionId} className="overflow-hidden">
+                <CardContent className="p-4">
+                  <div className="flex items-start gap-3 mb-3">
+                    <StatusIcon item={item} />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium leading-snug">{item.question.question}</p>
+                      <p className="text-xs text-gray-500 mt-1">
+                        {item.question.type === "Universal" ? "Universal" : `${selectedState}-specific`}
+                        {" "}&bull;{" "}
+                        {item.question.category}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between text-sm bg-gray-50 rounded-lg p-3">
+                    <div className="text-center">
+                      <div className={`font-semibold ${item.timesAnswered > 0 ? "text-gray-900" : "text-gray-400"}`}>
+                        {item.timesAnswered}
+                      </div>
+                      <div className="text-xs text-gray-500">Answered</div>
+                    </div>
+                    <div className="text-center">
+                      <div className={`font-semibold ${item.correct > 0 ? "text-green-600" : "text-gray-400"}`}>
+                        {item.correct}
+                      </div>
+                      <div className="text-xs text-gray-500">Correct</div>
+                    </div>
+                    <div className="text-center">
+                      <div className={`font-semibold ${item.wrong > 0 ? "text-red-600" : "text-gray-400"}`}>
+                        {item.wrong}
+                      </div>
+                      <div className="text-xs text-gray-500">Wrong</div>
+                    </div>
+                    <div className="text-center">
+                      {item.timesAnswered > 0 ? (
+                        <div className={`font-semibold ${
+                          item.accuracy === 100
+                            ? "text-green-600"
+                            : item.accuracy >= 50
+                              ? "text-yellow-600"
+                              : "text-red-600"
+                        }`}>
+                          {item.accuracy}%
+                        </div>
+                      ) : (
+                        <div className="font-semibold text-gray-400">-</div>
+                      )}
+                      <div className="text-xs text-gray-500">Accuracy</div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))
+          )}
+        </div>
+
+        {/* Desktop Table View */}
+        <Card className="hidden md:block">
           <CardHeader>
             <CardTitle>Questions ({sortedQuestions.length})</CardTitle>
           </CardHeader>
@@ -265,11 +330,7 @@ export default function QuestionsPage() {
                   {sortedQuestions.length === 0 ? (
                     <tr>
                       <td colSpan={5} className="text-center py-8 text-gray-500">
-                        {filterType === "answered"
-                          ? "You haven't answered any questions yet. Take a practice test to get started!"
-                          : filterType === "unanswered"
-                            ? "You've answered all available questions!"
-                            : "No questions available."}
+                        No questions available.
                       </td>
                     </tr>
                   ) : (
@@ -279,18 +340,10 @@ export default function QuestionsPage() {
                         className="border-b last:border-b-0 hover:bg-gray-50"
                       >
                         <td className="py-3 px-4">
-                          <Popover>
-                            <PopoverTrigger asChild>
-                              <button className="flex items-start gap-2 cursor-pointer text-left w-full">
-                                {item.timesAnswered === 0 ? (
-                                  <HelpCircle className="h-5 w-5 text-gray-400 flex-shrink-0 mt-0.5" />
-                                ) : item.accuracy === 100 ? (
-                                  <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
-                                ) : item.accuracy === 0 ? (
-                                  <XCircle className="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" />
-                                ) : (
-                                  <div className="h-5 w-5 rounded-full border-2 border-yellow-500 flex-shrink-0 mt-0.5" />
-                                )}
+                          <HoverCard openDelay={200} closeDelay={100}>
+                            <HoverCardTrigger asChild>
+                              <div className="flex items-start gap-2 cursor-default">
+                                <StatusIcon item={item} />
                                 <div>
                                   <p className="text-sm line-clamp-2">{item.question.question}</p>
                                   <p className="text-xs text-gray-500 mt-1">
@@ -299,10 +352,10 @@ export default function QuestionsPage() {
                                     {item.question.category}
                                   </p>
                                 </div>
-                              </button>
-                            </PopoverTrigger>
-                            <PopoverContent className="w-[calc(100vw-2rem)] sm:w-96" side="bottom" align="start" showCloseButton>
-                              <div className="space-y-2 pr-4">
+                              </div>
+                            </HoverCardTrigger>
+                            <HoverCardContent className="w-96" side="right" align="start">
+                              <div className="space-y-2">
                                 <p className="text-sm font-medium mb-3">{item.question.question}</p>
                                 <div className="space-y-2">
                                   {["A", "B", "C", "D"].map((letter) => {
@@ -332,8 +385,8 @@ export default function QuestionsPage() {
                                   })}
                                 </div>
                               </div>
-                            </PopoverContent>
-                          </Popover>
+                            </HoverCardContent>
+                          </HoverCard>
                         </td>
                         <td className="text-center py-3 px-4">
                           <span className={item.timesAnswered > 0 ? "font-semibold" : "text-gray-400"}>
