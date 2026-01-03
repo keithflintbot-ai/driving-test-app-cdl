@@ -157,6 +157,19 @@ export default function QuestionsPage() {
     </button>
   );
 
+  // Status icon component
+  const StatusIcon = ({ item }: { item: QuestionWithPerformance }) => {
+    if (item.timesAnswered === 0) {
+      return <HelpCircle className="h-5 w-5 text-gray-400 flex-shrink-0" />;
+    } else if (item.accuracy === 100) {
+      return <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0" />;
+    } else if (item.accuracy === 0) {
+      return <XCircle className="h-5 w-5 text-red-600 flex-shrink-0" />;
+    } else {
+      return <div className="h-5 w-5 rounded-full border-2 border-yellow-500 flex-shrink-0" />;
+    }
+  };
+
   if (!hydrated || !selectedState || isGuest) {
     return null;
   }
@@ -166,76 +179,148 @@ export default function QuestionsPage() {
       <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-orange-50 to-white pointer-events-none" />
       <div className="relative container mx-auto px-4 py-8 max-w-6xl">
         {/* Header */}
-        <div className="mb-8">
+        <div className="mb-6">
           <Link href="/dashboard">
-            <Button variant="ghost" className="mb-4">
+            <Button variant="ghost" className="mb-4 -ml-2">
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Dashboard
+              Back
             </Button>
           </Link>
-          <h1 className="text-4xl font-bold mb-2">Question Performance</h1>
-          <p className="text-gray-600">
+          <h1 className="text-2xl md:text-4xl font-bold mb-2">Question Performance</h1>
+          <p className="text-gray-600 text-sm md:text-base">
             Track your performance on all {stateName} questions
           </p>
         </div>
 
         {/* Summary Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
           <Card>
-            <CardContent className="p-6 text-center">
-              <div className="text-2xl font-bold text-orange-600 mb-1">
+            <CardContent className="p-4 text-center">
+              <div className="text-xl md:text-2xl font-bold text-orange-600 mb-1">
                 {summaryStats.uniqueQuestionsAnswered}/{summaryStats.totalQuestions}
               </div>
-              <div className="text-sm text-gray-600">Questions Seen</div>
+              <div className="text-xs md:text-sm text-gray-600">Questions Seen</div>
             </CardContent>
           </Card>
           <Card>
-            <CardContent className="p-6 text-center">
-              <div className="text-2xl font-bold text-orange-600 mb-1">{summaryStats.totalAnswered}</div>
-              <div className="text-sm text-gray-600">Total Attempts</div>
+            <CardContent className="p-4 text-center">
+              <div className="text-xl md:text-2xl font-bold text-orange-600 mb-1">{summaryStats.totalAnswered}</div>
+              <div className="text-xs md:text-sm text-gray-600">Total Attempts</div>
             </CardContent>
           </Card>
           <Card>
-            <CardContent className="p-6 text-center">
-              <div className="text-2xl font-bold text-green-600 mb-1">{summaryStats.totalCorrect}</div>
-              <div className="text-sm text-gray-600">Correct</div>
+            <CardContent className="p-4 text-center">
+              <div className="text-xl md:text-2xl font-bold text-green-600 mb-1">{summaryStats.totalCorrect}</div>
+              <div className="text-xs md:text-sm text-gray-600">Correct</div>
             </CardContent>
           </Card>
           <Card>
-            <CardContent className="p-6 text-center">
-              <div className="text-2xl font-bold text-red-600 mb-1">{summaryStats.totalWrong}</div>
-              <div className="text-sm text-gray-600">Wrong</div>
+            <CardContent className="p-4 text-center">
+              <div className="text-xl md:text-2xl font-bold text-red-600 mb-1">{summaryStats.totalWrong}</div>
+              <div className="text-xs md:text-sm text-gray-600">Wrong</div>
             </CardContent>
           </Card>
         </div>
 
-        {/* Filter Tabs */}
-        <div className="flex gap-2 mb-6">
+        {/* Filter Tabs - Scrollable on mobile */}
+        <div className="flex gap-2 mb-6 overflow-x-auto pb-2 -mx-4 px-4 md:mx-0 md:px-0">
           <Button
             variant={filterType === "all" ? "default" : "outline"}
             onClick={() => setFilterType("all")}
-            className={filterType === "all" ? "bg-black text-white" : ""}
+            className={`whitespace-nowrap text-sm ${filterType === "all" ? "bg-black text-white" : ""}`}
+            size="sm"
           >
             All ({questionsWithPerformance.length})
           </Button>
           <Button
             variant={filterType === "answered" ? "default" : "outline"}
             onClick={() => setFilterType("answered")}
-            className={filterType === "answered" ? "bg-black text-white" : ""}
+            className={`whitespace-nowrap text-sm ${filterType === "answered" ? "bg-black text-white" : ""}`}
+            size="sm"
           >
             Answered ({questionsWithPerformance.filter((q) => q.timesAnswered > 0).length})
           </Button>
           <Button
             variant={filterType === "unanswered" ? "default" : "outline"}
             onClick={() => setFilterType("unanswered")}
-            className={filterType === "unanswered" ? "bg-black text-white" : ""}
+            className={`whitespace-nowrap text-sm ${filterType === "unanswered" ? "bg-black text-white" : ""}`}
+            size="sm"
           >
             Unanswered ({questionsWithPerformance.filter((q) => q.timesAnswered === 0).length})
           </Button>
         </div>
 
-        {/* Questions Table */}
-        <Card>
+        {/* Mobile Card View */}
+        <div className="md:hidden space-y-3">
+          {sortedQuestions.length === 0 ? (
+            <Card>
+              <CardContent className="p-6 text-center text-gray-500">
+                {filterType === "answered"
+                  ? "You haven't answered any questions yet. Take a practice test to get started!"
+                  : filterType === "unanswered"
+                    ? "You've answered all available questions!"
+                    : "No questions available."}
+              </CardContent>
+            </Card>
+          ) : (
+            sortedQuestions.map((item) => (
+              <Card key={item.question.questionId} className="overflow-hidden">
+                <CardContent className="p-4">
+                  <div className="flex items-start gap-3 mb-3">
+                    <StatusIcon item={item} />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium leading-snug">{item.question.question}</p>
+                      <p className="text-xs text-gray-500 mt-1">
+                        {item.question.type === "Universal" ? "Universal" : `${selectedState}-specific`}
+                        {" "}&bull;{" "}
+                        {item.question.category}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between text-sm bg-gray-50 rounded-lg p-3">
+                    <div className="text-center">
+                      <div className={`font-semibold ${item.timesAnswered > 0 ? "text-gray-900" : "text-gray-400"}`}>
+                        {item.timesAnswered}
+                      </div>
+                      <div className="text-xs text-gray-500">Answered</div>
+                    </div>
+                    <div className="text-center">
+                      <div className={`font-semibold ${item.correct > 0 ? "text-green-600" : "text-gray-400"}`}>
+                        {item.correct}
+                      </div>
+                      <div className="text-xs text-gray-500">Correct</div>
+                    </div>
+                    <div className="text-center">
+                      <div className={`font-semibold ${item.wrong > 0 ? "text-red-600" : "text-gray-400"}`}>
+                        {item.wrong}
+                      </div>
+                      <div className="text-xs text-gray-500">Wrong</div>
+                    </div>
+                    <div className="text-center">
+                      {item.timesAnswered > 0 ? (
+                        <div className={`font-semibold ${
+                          item.accuracy === 100
+                            ? "text-green-600"
+                            : item.accuracy >= 50
+                              ? "text-yellow-600"
+                              : "text-red-600"
+                        }`}>
+                          {item.accuracy}%
+                        </div>
+                      ) : (
+                        <div className="font-semibold text-gray-400">-</div>
+                      )}
+                      <div className="text-xs text-gray-500">Accuracy</div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))
+          )}
+        </div>
+
+        {/* Desktop Table View */}
+        <Card className="hidden md:block">
           <CardHeader>
             <CardTitle>Questions ({sortedQuestions.length})</CardTitle>
           </CardHeader>
@@ -282,15 +367,7 @@ export default function QuestionsPage() {
                           <HoverCard openDelay={200} closeDelay={100}>
                             <HoverCardTrigger asChild>
                               <div className="flex items-start gap-2 cursor-default">
-                                {item.timesAnswered === 0 ? (
-                                  <HelpCircle className="h-5 w-5 text-gray-400 flex-shrink-0 mt-0.5" />
-                                ) : item.accuracy === 100 ? (
-                                  <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
-                                ) : item.accuracy === 0 ? (
-                                  <XCircle className="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" />
-                                ) : (
-                                  <div className="h-5 w-5 rounded-full border-2 border-yellow-500 flex-shrink-0 mt-0.5" />
-                                )}
+                                <StatusIcon item={item} />
                                 <div>
                                   <p className="text-sm line-clamp-2">{item.question.question}</p>
                                   <p className="text-xs text-gray-500 mt-1">
@@ -301,7 +378,7 @@ export default function QuestionsPage() {
                                 </div>
                               </div>
                             </HoverCardTrigger>
-                            <HoverCardContent className="w-96 hidden sm:block" side="right" align="start">
+                            <HoverCardContent className="w-96" side="right" align="start">
                               <div className="space-y-2">
                                 <p className="text-sm font-medium mb-3">{item.question.question}</p>
                                 <div className="space-y-2">
