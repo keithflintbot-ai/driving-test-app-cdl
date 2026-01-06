@@ -13,45 +13,54 @@ echo "Ralph Loop - Single Iteration (Human in Loop)"
 echo "============================================"
 echo ""
 
-# Fresh context - Claude only knows what's in these files
 claude \
     "$SCRIPT_DIR/prd.json" \
     "$SCRIPT_DIR/progress.txt" \
     -p "You are working through a PRD with tasks and rules.
 
-## STEP 1: READ THE FILES
-- prd.json contains:
-  - 'rules': 18 rules ALL questions must follow
-  - 'tasks': List of tasks with passes: true/false
-  - 'output_format': How to structure the JSON output
-- progress.txt contains notes from previous iterations (your memory)
+READ THESE FILES:
+- prd.json: Contains rules_checklist (18 rules), workflow, tasks, output_format
+- progress.txt: Your notes from previous iterations
 
-## STEP 2: PICK ONE TASK
-- Find a task where passes: false
-- Choose based on priority/dependencies (not just first in list)
-- Work on ONLY that ONE task
+WORKFLOW FOR GENERATING QUESTIONS:
+1. Pick ONE task with passes: false
+2. For that task, generate questions ONE AT A TIME:
 
-## STEP 3: DO THE WORK
-- Follow ALL 18 rules in prd.json
-- Use web search to verify facts
-- Save output to the specified file
+   Loop for each question:
+   ┌─────────────────────────────────┐
+   │ Generate question N             │
+   └───────────────┬─────────────────┘
+                   ▼
+   ┌─────────────────────────────────┐
+   │ Check ALL 18 rules:             │
+   │ □ 1. No dollar amounts?         │
+   │ □ 2. No insurance format?       │
+   │ □ 3. No point values?           │
+   │ □ 4. No jail times?             │
+   │ □ 5. Not >80% similar to prev?  │
+   │ □ 6. <3 questions on concept?   │
+   │ □ 7. Answer length balanced?    │
+   │ □ 8. No always/never giveaway?  │
+   │ □ 9. Tracking A/B/C/D count?    │
+   │ □ 10. Ends with ?               │
+   │ □ 11. All fields present?       │
+   │ □ 12. Index matches letter?     │
+   │ □ 13. AM/PM time format?        │
+   │ □ 14. Stem not in answers?      │
+   │ □ 15. Options similar length?   │
+   │ □ 16. Spelling/grammar OK?      │
+   │ □ 17. Fact verified (web)?      │
+   │ □ 18. Universal (if applies)?   │
+   └───────────────┬─────────────────┘
+                   ▼
+   Pass all 18? → Save question, go to N+1
+   Fail any?    → Fix it, re-check
 
-## STEP 4: VERIFY AGAINST ALL 18 RULES
-Before marking complete, check every rule:
-- Rules 1-4: No dollars, insurance formats, points, jail times
-- Rules 5-6: No duplicates, max 3 per concept
-- Rules 7-9: Answer length balance, no giveaways, A/B/C/D distribution
-- Rules 10-13: Format (?, all fields, index match, AM/PM)
-- Rules 14-15: Style (no stem repetition, similar lengths)
-- Rules 16-18: Accuracy (spelling, verified facts, universal truth)
+3. After all questions done:
+   - Verify A/B/C/D distribution is balanced
+   - Update prd.json: passes: true
+   - Append notes to progress.txt
+   - Git commit
 
-## STEP 5: UPDATE FILES
-- Update prd.json: Set passes: true for completed task
-- Append to progress.txt: Brief notes on what you did, what you learned
-- Make a git commit
-
-## STEP 6: CHECK IF DONE
-If ALL tasks have passes: true, output exactly:
-<promise>COMPLETE</promise>
-
-IMPORTANT: Each iteration is a fresh context. progress.txt is your only memory between iterations."
+If ALL tasks have passes: true, output:
+<promise>COMPLETE</promise>"

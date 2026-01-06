@@ -1,6 +1,6 @@
 {
-  "rules": {
-    "description": "ALL questions must follow these 18 rules. Verify each rule before marking a task complete.",
+  "rules_checklist": {
+    "description": "Check EVERY rule after generating EACH question. Do not move to the next question until current question passes all 18 rules.",
     "content_rules": [
       "1. No dollar amounts (e.g., 'The fine is $150' is NOT allowed)",
       "2. No insurance X/Y/Z format (e.g., '15/30/5 coverage' is NOT allowed)",
@@ -8,53 +8,64 @@
       "4. No exact jail times (e.g., 'Up to 6 months in jail' is NOT allowed)"
     ],
     "uniqueness_rules": [
-      "5. No two questions can be >80% similar",
-      "6. Max 3 questions per concept (e.g., max 3 about stop signs)"
+      "5. No >80% similarity to any previous question",
+      "6. Max 3 questions per concept (count as you go)"
     ],
     "answer_balance_rules": [
-      "7. Correct answer must NOT be >40% longer than average of wrong answers",
-      "8. No giveaway qualifiers (don't put 'always'/'never' only in correct answer)",
-      "9. Answer distribution: 12-13 each of A, B, C, D for 50 questions (37-38 each for 150)"
+      "7. Correct answer NOT >40% longer than average of wrong answers",
+      "8. No giveaway qualifiers ('always'/'never' only in correct answer)",
+      "9. Track A/B/C/D distribution as you go (target: 12-13 each for 50, 37-38 each for 150)"
     ],
     "format_rules": [
-      "10. Every question must end with ?",
-      "11. All fields required: question, options A-D, correctAnswer, correctIndex, explanation",
-      "12. Letter/Index must match: A=1, B=2, C=3, D=4",
-      "13. Use AM/PM time format (not 24-hour)"
+      "10. Question ends with ?",
+      "11. Has all fields: question, options A-D, correctAnswer, correctIndex, explanation",
+      "12. Letter/Index match: A=1, B=2, C=3, D=4",
+      "13. Time in AM/PM format (not 24-hour)"
     ],
     "style_rules": [
-      "14. Don't repeat the question stem in the answers",
-      "15. All 4 answer options should be similar length"
+      "14. Question stem not repeated in answers",
+      "15. All 4 answer options similar length"
     ],
     "accuracy_rules": [
-      "16. No spelling errors, no grammar issues, clear wording",
-      "17. All facts verified via web search against current official sources",
-      "18. Universal questions must be true in ALL 50 states"
+      "16. No spelling/grammar errors",
+      "17. Fact verified via web search",
+      "18. (Universal only) True in all 50 states"
+    ]
+  },
+  "workflow": {
+    "description": "Generate ONE question at a time, validate it, then continue",
+    "steps": [
+      "1. Generate question N",
+      "2. Run through all 18 rules",
+      "3. If any rule fails → fix and re-check",
+      "4. If all rules pass → save to file, increment N",
+      "5. Repeat until target count reached",
+      "6. Final check: verify A/B/C/D distribution is balanced"
     ]
   },
   "tasks": [
     {
       "id": 1,
       "task": "Generate 50 New Jersey driving test questions",
-      "details": "Search web for current NJ Driver Manual. Create 50 NJ-specific questions covering: speed limits, parking distances, BAC limits, GDL restrictions, cell phone laws, turn signal distance, headlight rules. Save to questions/nj-questions.json. Follow ALL 18 rules above.",
+      "details": "Search web for current NJ Driver Manual. Generate questions ONE AT A TIME. After each question, check all 18 rules before moving to next. Topics: speed limits, parking distances, BAC limits, GDL restrictions, cell phone laws, turn signal distance, headlight rules. Save to questions/nj-questions.json",
       "passes": false
     },
     {
       "id": 2,
       "task": "Generate 150 universal driving test questions",
-      "details": "Create 150 questions true in ALL 50 US states. Topics: traffic sign shapes/colors, lane markings, defensive driving, emergency procedures, vehicle operation, weather driving. AVOID state-variable topics (speed limits, distances, BAC numbers). Save to questions/universal-questions.json. Follow ALL 18 rules above.",
+      "details": "Generate questions ONE AT A TIME. After each question, check all 18 rules before moving to next. Topics: traffic sign shapes/colors, lane markings, defensive driving, emergency procedures, vehicle operation, weather driving. AVOID state-variable topics. Save to questions/universal-questions.json",
       "passes": false
     },
     {
       "id": 3,
       "task": "Verify NJ questions against DMV manual",
-      "details": "Web search to verify EVERY fact in nj-questions.json against current NJ Driver Manual. Fix any incorrect answers. Run through all 18 rules as final checklist.",
+      "details": "Go through each question ONE AT A TIME. Web search to verify the fact. Fix any wrong answers. Re-check rules if changed.",
       "passes": false
     },
     {
       "id": 4,
       "task": "Verify universal questions are truly universal",
-      "details": "Check that NO universal question has an answer that varies by state. Web search questionable facts. Remove or fix any state-specific content. Run through all 18 rules as final checklist.",
+      "details": "Go through each question ONE AT A TIME. Confirm answer doesn't vary by state. Fix or remove any state-specific content.",
       "passes": false
     }
   ],
