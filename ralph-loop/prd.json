@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "task": "Generate 50 New Jersey driving test questions",
+    "description": "Create 50 NJ-specific driving knowledge test questions. Use web search to verify all facts against current NJ DMV manual. Include state-specific info like speed limits, parking distances, BAC limits, GDL restrictions. Save to questions/nj-questions.json",
+    "passes": false
+  },
+  {
+    "id": 2,
+    "task": "Generate 150 universal driving test questions",
+    "description": "Create 150 universal questions that are true in ALL 50 US states. Topics: traffic signs/shapes, lane markings, defensive driving, emergency situations, vehicle operation. Avoid state-variable topics (speed limits, distances, BAC). Save to questions/universal-questions.json",
+    "passes": false
+  },
+  {
+    "id": 3,
+    "task": "Verify NJ questions against DMV manual",
+    "description": "Web search to verify each NJ question answer against the current NJ Driver Manual. Fix any incorrect answers. Mark passes: true only when all 50 are verified.",
+    "passes": false
+  },
+  {
+    "id": 4,
+    "task": "Verify universal questions are truly universal",
+    "description": "Check that no universal question has an answer that varies by state. Web search any questionable facts. Remove or fix any state-specific content.",
+    "passes": false
+  }
+]
