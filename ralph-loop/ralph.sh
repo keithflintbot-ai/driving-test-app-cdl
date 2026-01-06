@@ -17,36 +17,48 @@ for ((i=1; i<=MAX_ITERATIONS; i++)); do
     echo "============================================"
     echo ""
 
+    # Each iteration is a FRESH context - Claude only knows what's in these files
     OUTPUT=$(claude --print \
         "$SCRIPT_DIR/prd.json" \
         "$SCRIPT_DIR/progress.txt" \
-        -p "You are working through a PRD (Product Requirements Document).
+        -p "You are working through a PRD with tasks and rules.
 
-FILES PROVIDED:
-- prd.json: List of tasks with 'passes' boolean flags
-- progress.txt: Log of previous work (append your learnings here)
+## STEP 1: READ THE FILES
+- prd.json contains:
+  - 'rules': 18 rules ALL questions must follow
+  - 'tasks': List of tasks with passes: true/false
+  - 'output_format': How to structure the JSON output
+- progress.txt contains notes from previous iterations (your memory)
 
-INSTRUCTIONS:
-1. Find the highest priority task that has passes: false
-   - Priority is YOUR judgment, not necessarily first in list
-   - Consider dependencies between tasks
+## STEP 2: PICK ONE TASK
+- Find a task where passes: false
+- Choose based on priority/dependencies (not just first in list)
+- Work on ONLY that ONE task
 
-2. Work on ONLY that ONE task
-   - Keep changes focused and small
-   - Run any verification steps needed
+## STEP 3: DO THE WORK
+- Follow ALL 18 rules in prd.json
+- Use web search to verify facts
+- Save output to the specified file
 
-3. When the task is complete:
-   - Update prd.json marking the task as passes: true
-   - Append a brief note to progress.txt about what you did
-   - Make a git commit with a descriptive message
+## STEP 4: VERIFY AGAINST ALL 18 RULES
+Before marking complete, check every rule:
+- Rules 1-4: No dollars, insurance formats, points, jail times
+- Rules 5-6: No duplicates, max 3 per concept
+- Rules 7-9: Answer length balance, no giveaways, A/B/C/D distribution
+- Rules 10-13: Format (?, all fields, index match, AM/PM)
+- Rules 14-15: Style (no stem repetition, similar lengths)
+- Rules 16-18: Accuracy (spelling, verified facts, universal truth)
 
-4. If ALL tasks in prd.json have passes: true, output:
-   <promise>COMPLETE</promise>
+## STEP 5: UPDATE FILES
+- Update prd.json: Set passes: true for completed task
+- Append to progress.txt: Brief notes on what you did, what you learned
+- Make a git commit
 
-IMPORTANT:
-- Only work on ONE task per iteration
-- Commit after completing each task
-- Keep progress.txt notes brief but useful for future iterations")
+## STEP 6: CHECK IF DONE
+If ALL tasks have passes: true, output exactly:
+<promise>COMPLETE</promise>
+
+IMPORTANT: Each iteration is a fresh context. progress.txt is your only memory between iterations.")
 
     echo "$OUTPUT"
 

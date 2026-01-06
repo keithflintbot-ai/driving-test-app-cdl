@@ -1,26 +1,78 @@
-[
-  {
-    "id": 1,
-    "task": "Generate 50 New Jersey driving test questions",
-    "description": "Create 50 NJ-specific driving knowledge test questions. Use web search to verify all facts against current NJ DMV manual. Include state-specific info like speed limits, parking distances, BAC limits, GDL restrictions. Save to questions/nj-questions.json",
-    "passes": false
+{
+  "rules": {
+    "description": "ALL questions must follow these 18 rules. Verify each rule before marking a task complete.",
+    "content_rules": [
+      "1. No dollar amounts (e.g., 'The fine is $150' is NOT allowed)",
+      "2. No insurance X/Y/Z format (e.g., '15/30/5 coverage' is NOT allowed)",
+      "3. No point values (e.g., 'You will receive 4 points' is NOT allowed)",
+      "4. No exact jail times (e.g., 'Up to 6 months in jail' is NOT allowed)"
+    ],
+    "uniqueness_rules": [
+      "5. No two questions can be >80% similar",
+      "6. Max 3 questions per concept (e.g., max 3 about stop signs)"
+    ],
+    "answer_balance_rules": [
+      "7. Correct answer must NOT be >40% longer than average of wrong answers",
+      "8. No giveaway qualifiers (don't put 'always'/'never' only in correct answer)",
+      "9. Answer distribution: 12-13 each of A, B, C, D for 50 questions (37-38 each for 150)"
+    ],
+    "format_rules": [
+      "10. Every question must end with ?",
+      "11. All fields required: question, options A-D, correctAnswer, correctIndex, explanation",
+      "12. Letter/Index must match: A=1, B=2, C=3, D=4",
+      "13. Use AM/PM time format (not 24-hour)"
+    ],
+    "style_rules": [
+      "14. Don't repeat the question stem in the answers",
+      "15. All 4 answer options should be similar length"
+    ],
+    "accuracy_rules": [
+      "16. No spelling errors, no grammar issues, clear wording",
+      "17. All facts verified via web search against current official sources",
+      "18. Universal questions must be true in ALL 50 states"
+    ]
   },
-  {
-    "id": 2,
-    "task": "Generate 150 universal driving test questions",
-    "description": "Create 150 universal questions that are true in ALL 50 US states. Topics: traffic signs/shapes, lane markings, defensive driving, emergency situations, vehicle operation. Avoid state-variable topics (speed limits, distances, BAC). Save to questions/universal-questions.json",
-    "passes": false
-  },
-  {
-    "id": 3,
-    "task": "Verify NJ questions against DMV manual",
-    "description": "Web search to verify each NJ question answer against the current NJ Driver Manual. Fix any incorrect answers. Mark passes: true only when all 50 are verified.",
-    "passes": false
-  },
-  {
-    "id": 4,
-    "task": "Verify universal questions are truly universal",
-    "description": "Check that no universal question has an answer that varies by state. Web search any questionable facts. Remove or fix any state-specific content.",
-    "passes": false
+  "tasks": [
+    {
+      "id": 1,
+      "task": "Generate 50 New Jersey driving test questions",
+      "details": "Search web for current NJ Driver Manual. Create 50 NJ-specific questions covering: speed limits, parking distances, BAC limits, GDL restrictions, cell phone laws, turn signal distance, headlight rules. Save to questions/nj-questions.json. Follow ALL 18 rules above.",
+      "passes": false
+    },
+    {
+      "id": 2,
+      "task": "Generate 150 universal driving test questions",
+      "details": "Create 150 questions true in ALL 50 US states. Topics: traffic sign shapes/colors, lane markings, defensive driving, emergency procedures, vehicle operation, weather driving. AVOID state-variable topics (speed limits, distances, BAC numbers). Save to questions/universal-questions.json. Follow ALL 18 rules above.",
+      "passes": false
+    },
+    {
+      "id": 3,
+      "task": "Verify NJ questions against DMV manual",
+      "details": "Web search to verify EVERY fact in nj-questions.json against current NJ Driver Manual. Fix any incorrect answers. Run through all 18 rules as final checklist.",
+      "passes": false
+    },
+    {
+      "id": 4,
+      "task": "Verify universal questions are truly universal",
+      "details": "Check that NO universal question has an answer that varies by state. Web search questionable facts. Remove or fix any state-specific content. Run through all 18 rules as final checklist.",
+      "passes": false
+    }
+  ],
+  "output_format": {
+    "description": "Each question in the JSON file should look like this:",
+    "example": {
+      "id": 1,
+      "topic": "Speed Limits",
+      "question": "What is the default speed limit in a New Jersey school zone?",
+      "options": {
+        "A": "15 mph",
+        "B": "20 mph",
+        "C": "25 mph",
+        "D": "30 mph"
+      },
+      "correctAnswer": "C",
+      "correctIndex": 3,
+      "explanation": "New Jersey school zones have a default speed limit of 25 mph when children are present."
+    }
   }
-]
+}
