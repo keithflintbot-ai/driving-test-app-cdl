@@ -107,12 +107,12 @@
     "id": "OH-009",
     "state": "OH",
     "category": "gdlLicensing",
-    "question": "What 2025 change affects first-time drivers aged 18 to 20 in Ohio?",
+    "question": "At what age do probationary license restrictions end in Ohio?",
     "answers": [
-      "Must complete driver ed course",
-      "No longer need permit to drive",
-      "Can skip road test requirement",
-      "Face same restrictions as under 18"
+      "18 years old",
+      "17 years old",
+      "19 years old",
+      "21 years old"
     ],
     "correctIndex": 0
   },
@@ -315,12 +315,12 @@
     "id": "OH-025",
     "state": "OH",
     "category": "duiStateLaws",
-    "question": "What new testing method was introduced in Ohio in April 2025?",
+    "question": "How long is the lookback period for prior OVI offenses in Ohio?",
     "answers": [
-      "Oral fluid test for drugs",
-      "Portable breathalyzer only",
-      "Mandatory blood test method",
-      "Saliva alcohol test only"
+      "10 years",
+      "5 years",
+      "7 years",
+      "Lifetime"
     ],
     "correctIndex": 0
   },
@@ -328,12 +328,12 @@
     "id": "OH-026",
     "state": "OH",
     "category": "duiStateLaws",
-    "question": "What legislation increased minimum OVI fines in Ohio for 2025?",
+    "question": "What device may be required after an OVI conviction in Ohio?",
     "answers": [
-      "Senate Bill 288 law",
-      "Liv's Law (HB 37)",
-      "House Bill 101 law",
-      "Admin Rule 2025-1 law"
+      "GPS tracking device",
+      "Ignition interlock device",
+      "Ankle monitoring bracelet",
+      "Dashboard camera system"
     ],
     "correctIndex": 1
   },
