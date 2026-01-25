@@ -16,9 +16,9 @@ export function getStripe(): Stripe {
 // Price for premium access ($9.99)
 export const PREMIUM_PRICE_ID = process.env.STRIPE_PRICE_ID;
 
-// Premium product metadata
+// Premium product metadata (used as fallback if no STRIPE_PRICE_ID configured)
 export const PREMIUM_PRODUCT = {
   name: 'TigerTest Premium',
   description: 'Unlock Training Set 4 (State Laws) and Practice Test 4',
-  price: 999, // in cents
+  price: 999, // $9.99 in cents
 };
