@@ -14,7 +14,7 @@ export function getStripe(): Stripe {
 }
 
 // Price for premium access ($9.99)
-export const PREMIUM_PRICE_ID = process.env.STRIPE_PRICE_ID;
+export const PREMIUM_PRICE_ID = process.env.STRIPE_SINGLE_PRICE_ID;
 
 // Premium product metadata (used as fallback if no STRIPE_PRICE_ID configured)
 export const PREMIUM_PRODUCT = {
