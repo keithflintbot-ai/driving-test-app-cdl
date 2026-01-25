@@ -30,7 +30,7 @@ const BENEFITS = [
   "50 state-specific law questions",
   "Master your state's unique driving rules",
   "Boost your pass probability",
-  "Lifetime access - pay once, use forever",
+  "Lifetime access - pay once, own forever",
 ];
 
 export function PaywallModal({
