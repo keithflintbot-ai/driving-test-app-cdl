@@ -99,3 +99,11 @@ export interface State {
   passingScore: number; // Percentage needed to pass
   minPermitAge: string; // Minimum age for learner's permit
 }
+
+// Subscription/Premium types
+export interface Subscription {
+  isPremium: boolean;
+  purchasedAt: string | null; // ISO timestamp
+  stripeCustomerId: string | null;
+  stripePaymentId: string | null;
+}

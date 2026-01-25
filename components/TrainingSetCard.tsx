@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ChevronRight } from "lucide-react";
+import { PremiumBadge } from "@/components/PremiumBadge";
 
 export interface TrainingSet {
   id: number;
@@ -13,9 +14,11 @@ export interface TrainingSet {
 interface TrainingSetCardProps {
   set: TrainingSet;
   locked?: boolean;
+  isPremiumLocked?: boolean;
+  onPremiumClick?: () => void;
 }
 
-export function TrainingSetCard({ set, locked = false }: TrainingSetCardProps) {
+export function TrainingSetCard({ set, locked = false, isPremiumLocked = false, onPremiumClick }: TrainingSetCardProps) {
   const isComplete = set.correctCount >= set.targetCount;
   const progress = Math.min(100, Math.round((set.correctCount / set.targetCount) * 100));
 
@@ -29,6 +32,9 @@ export function TrainingSetCard({ set, locked = false }: TrainingSetCardProps) {
   };
 
   const getBadge = () => {
+    if (isPremiumLocked) {
+      return <PremiumBadge variant="locked" size="sm" />;
+    }
     if (locked) {
       return <Badge variant="outline" className="bg-gray-100 hover:bg-gray-100 text-xs">Locked</Badge>;
     }
@@ -41,11 +47,15 @@ export function TrainingSetCard({ set, locked = false }: TrainingSetCardProps) {
     return null;
   };
 
+  const isDisabled = locked || isPremiumLocked;
+
   const cardContent = (
     <Card className={`h-full transition-all ${
       locked
         ? "bg-gray-100 border-gray-200 opacity-60"
-        : "bg-gray-50 hover:shadow-md hover:border-orange-300 cursor-pointer"
+        : isPremiumLocked
+          ? "bg-gradient-to-r from-orange-50 to-amber-50 border-orange-200 hover:shadow-md hover:border-orange-300 cursor-pointer"
+          : "bg-gray-50 hover:shadow-md hover:border-orange-300 cursor-pointer"
     }`}>
       <CardContent className="p-4 flex items-center justify-between">
         <div className="flex flex-col">
@@ -56,6 +66,8 @@ export function TrainingSetCard({ set, locked = false }: TrainingSetCardProps) {
           <p className="text-xs">
             {locked ? (
               <span className="text-gray-400">Locked</span>
+            ) : isPremiumLocked ? (
+              <span className="text-orange-600">Unlock with Premium</span>
             ) : (
               <span className={isComplete ? 'text-green-600' : 'text-gray-500'}>
                 {set.correctCount}/{set.targetCount}
@@ -63,13 +75,21 @@ export function TrainingSetCard({ set, locked = false }: TrainingSetCardProps) {
             )}
           </p>
         </div>
-        {!locked && <ChevronRight className="h-5 w-5 text-gray-400" />}
+        {!locked && <ChevronRight className={`h-5 w-5 ${isPremiumLocked ? "text-orange-400" : "text-gray-400"}`} />}
       </CardContent>
     </Card>
   );
 
   if (locked) {
     return cardContent;
+  }
+
+  if (isPremiumLocked && onPremiumClick) {
+    return (
+      <button onClick={onPremiumClick} className="block h-full w-full text-left">
+        {cardContent}
+      </button>
+    );
   }
 
   return (

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ChevronRight } from "lucide-react";
+import { PremiumBadge } from "@/components/PremiumBadge";
 
 interface TestCardProps {
   testNumber: number;
@@ -13,6 +14,8 @@ interface TestCardProps {
   attemptCount?: number;
   locked?: boolean;
   lockMessage?: string;
+  isPremiumLocked?: boolean;
+  onPremiumClick?: () => void;
 }
 
 export function TestCard({
@@ -22,10 +25,15 @@ export function TestCard({
   progress = 0,
   bestScore,
   locked = false,
+  isPremiumLocked = false,
+  onPremiumClick,
 }: TestCardProps) {
   const bestPercentage = bestScore ? Math.round((bestScore / totalQuestions) * 100) : 0;
 
   const getStatusBadge = () => {
+    if (isPremiumLocked) {
+      return <PremiumBadge variant="locked" size="sm" />;
+    }
     if (locked) {
       return <Badge variant="outline" className="bg-gray-100 hover:bg-gray-100 text-xs">Locked</Badge>;
     }
@@ -52,6 +60,9 @@ export function TestCard({
     if (locked) {
       return <span className="text-gray-400">Locked</span>;
     }
+    if (isPremiumLocked) {
+      return <span className="text-orange-600">Unlock with Premium</span>;
+    }
     if (status === "in-progress") {
       return <span className="text-yellow-600">{progress}% done</span>;
     }
@@ -69,7 +80,9 @@ export function TestCard({
     <Card className={`h-full transition-all ${
       locked
         ? "bg-gray-100 border-gray-200 opacity-60"
-        : "bg-gray-50 hover:shadow-md hover:border-gray-300 cursor-pointer"
+        : isPremiumLocked
+          ? "bg-gradient-to-r from-orange-50 to-amber-50 border-orange-200 hover:shadow-md hover:border-orange-300 cursor-pointer"
+          : "bg-gray-50 hover:shadow-md hover:border-gray-300 cursor-pointer"
     }`}>
       <CardContent className="p-4 flex items-center justify-between">
         <div className="flex flex-col">
@@ -81,13 +94,21 @@ export function TestCard({
             {getSubtext()}
           </p>
         </div>
-        {!locked && <ChevronRight className="h-5 w-5 text-gray-400" />}
+        {!locked && <ChevronRight className={`h-5 w-5 ${isPremiumLocked ? "text-orange-400" : "text-gray-400"}`} />}
       </CardContent>
     </Card>
   );
 
   if (locked) {
     return cardContent;
+  }
+
+  if (isPremiumLocked && onPremiumClick) {
+    return (
+      <button onClick={onPremiumClick} className="block h-full w-full text-left">
+        {cardContent}
+      </button>
+    );
   }
 
   return (
