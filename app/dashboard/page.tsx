@@ -135,19 +135,34 @@ function DashboardContent() {
       return;
     }
 
-    const response = await fetch("/api/stripe/checkout", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        userId: user.uid,
-        email: user.email,
-        returnUrl: window.location.origin,
-      }),
-    });
+    try {
+      const response = await fetch("/api/stripe/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: user.uid,
+          email: user.email,
+          returnUrl: window.location.origin,
+        }),
+      });
 
-    const data = await response.json();
-    if (data.checkoutUrl) {
-      window.location.href = data.checkoutUrl;
+      const data = await response.json();
+
+      if (data.error) {
+        console.error("Checkout error:", data.error);
+        alert(`Error: ${data.error}`);
+        return;
+      }
+
+      if (data.checkoutUrl) {
+        window.location.href = data.checkoutUrl;
+      } else {
+        console.error("No checkout URL returned:", data);
+        alert("Failed to start checkout. Please try again.");
+      }
+    } catch (error) {
+      console.error("Checkout error:", error);
+      alert("Failed to start checkout. Please check your connection and try again.");
     }
   };
 

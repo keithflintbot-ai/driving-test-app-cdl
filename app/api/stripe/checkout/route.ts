@@ -5,6 +5,14 @@ import { doc, getDoc } from 'firebase/firestore';
 
 export async function POST(request: NextRequest) {
   try {
+    // Check if Stripe is configured
+    if (!process.env.STRIPE_SECRET_KEY) {
+      return NextResponse.json(
+        { error: 'Stripe is not configured. Please add STRIPE_SECRET_KEY to environment variables.' },
+        { status: 500 }
+      );
+    }
+
     const body = await request.json();
     const { userId, email, returnUrl } = body;
 
@@ -83,8 +91,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ checkoutUrl: session.url });
   } catch (error) {
     console.error('Checkout error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return NextResponse.json(
-      { error: 'Failed to create checkout session' },
+      { error: `Failed to create checkout session: ${errorMessage}` },
       { status: 500 }
     );
   }
