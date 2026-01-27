@@ -9,6 +9,7 @@ export const states: State[] = [
   { name: "Colorado", code: "CO", slug: "colorado", dmvName: "DMV", writtenTestQuestions: 25, passingScore: 80, minPermitAge: "15" },
   { name: "Connecticut", code: "CT", slug: "connecticut", dmvName: "DMV", writtenTestQuestions: 25, passingScore: 80, minPermitAge: "16" },
   { name: "Delaware", code: "DE", slug: "delaware", dmvName: "DMV", writtenTestQuestions: 30, passingScore: 80, minPermitAge: "16" },
+  { name: "District of Columbia", code: "DC", slug: "district-of-columbia", dmvName: "DC DMV", writtenTestQuestions: 25, passingScore: 80, minPermitAge: "16" },
   { name: "Florida", code: "FL", slug: "florida", dmvName: "FLHSMV", writtenTestQuestions: 50, passingScore: 80, minPermitAge: "15" },
   { name: "Georgia", code: "GA", slug: "georgia", dmvName: "DDS", writtenTestQuestions: 40, passingScore: 75, minPermitAge: "15" },
   { name: "Hawaii", code: "HI", slug: "hawaii", dmvName: "DMV", writtenTestQuestions: 30, passingScore: 80, minPermitAge: "15 years 6 months" },

@@ -39,7 +39,7 @@ function SignupPageContent() {
 
   const handleStateSelect = () => {
     if (!selectedState) {
-      setError("Please select a state");
+      setError("Please select a location");
       return;
     }
     setError("");
@@ -51,7 +51,7 @@ function SignupPageContent() {
     // For guests, use existing state; otherwise require selection
     const stateToUse = guestHasState ? storeSelectedState : selectedState;
     if (!stateToUse) {
-      setError("Please select a state first");
+      setError("Please select a location first");
       return;
     }
 
@@ -125,7 +125,7 @@ function SignupPageContent() {
             <span>I need to pass the</span>
             <Select onValueChange={setSelectedState} value={selectedState || undefined}>
               <SelectTrigger className="w-auto inline-flex text-2xl md:text-3xl font-semibold text-orange-600 border-none shadow-none focus:ring-0 focus:ring-offset-0 px-1 underline decoration-orange-300 decoration-2 underline-offset-4 hover:decoration-orange-500 h-auto">
-                <SelectValue placeholder="select state" />
+                <SelectValue placeholder="select location" />
               </SelectTrigger>
               <SelectContent>
                 {states.map((state) => (

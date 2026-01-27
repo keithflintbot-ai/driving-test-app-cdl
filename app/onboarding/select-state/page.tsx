@@ -57,7 +57,7 @@ export default function OnboardingSelectStatePage() {
           <span>I need to pass the</span>
           <Select onValueChange={setSelectedState} value={selectedState || undefined}>
             <SelectTrigger className="w-auto inline-flex text-2xl md:text-3xl font-semibold text-orange-600 border-none shadow-none focus:ring-0 focus:ring-offset-0 px-1 underline decoration-orange-300 decoration-2 underline-offset-4 hover:decoration-orange-500 h-auto">
-              <SelectValue placeholder="select state" />
+              <SelectValue placeholder="select location" />
             </SelectTrigger>
             <SelectContent>
               {states.map((state) => (
