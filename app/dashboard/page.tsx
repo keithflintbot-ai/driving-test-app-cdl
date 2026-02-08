@@ -12,6 +12,7 @@ import Image from "next/image";
 import { useStore } from "@/store/useStore";
 import { useHydration } from "@/hooks/useHydration";
 import { useAuth } from "@/contexts/AuthContext";
+import { auth } from "@/lib/firebase";
 import { states } from "@/data/states";
 
 // Training set definitions
@@ -94,13 +95,22 @@ function DashboardContent() {
 
     if (sessionId && success === "true" && user?.uid) {
       // Verify purchase with backend
-      fetch("/api/stripe/verify-purchase", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ sessionId, userId: user.uid }),
-      })
-        .then((res) => res.json())
+      const sendVerification = async () => {
+        const idToken = await auth.currentUser?.getIdToken();
+        if (!idToken) return;
+        return fetch("/api/stripe/verify-purchase", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${idToken}`,
+          },
+          body: JSON.stringify({ sessionId }),
+        });
+      };
+      sendVerification()
+        .then((res) => res?.json())
         .then((data) => {
+          if (!data) return;
           if (data.isPremium) {
             setPremiumStatus({
               isPremium: true,
@@ -136,11 +146,19 @@ function DashboardContent() {
     }
 
     try {
+      const idToken = await auth.currentUser?.getIdToken();
+      if (!idToken) {
+        alert("Authentication error. Please sign in again.");
+        return;
+      }
+
       const response = await fetch("/api/stripe/checkout", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${idToken}`,
+        },
         body: JSON.stringify({
-          userId: user.uid,
           email: user.email,
           returnUrl: window.location.origin,
         }),

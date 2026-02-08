@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getStripe, PREMIUM_PRICE_ID, PREMIUM_PRODUCT } from '@/lib/stripe';
-import { db } from '@/lib/firebase';
-import { doc, getDoc } from 'firebase/firestore';
+import { getAdminDb, getAdminAuth } from '@/lib/firebase-admin';
 
 export async function POST(request: NextRequest) {
   try {
@@ -13,20 +12,30 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Verify Firebase auth token
+    const authHeader = request.headers.get('authorization');
+    if (!authHeader?.startsWith('Bearer ')) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+    const token = authHeader.split('Bearer ')[1];
+    const decodedToken = await getAdminAuth().verifyIdToken(token);
+
     const body = await request.json();
-    const { userId, email, returnUrl } = body;
+    const { email, returnUrl } = body;
+    const userId = decodedToken.uid;
 
     // Validate required fields
-    if (!userId || !email) {
+    if (!email) {
       return NextResponse.json(
-        { error: 'Missing required fields: userId and email' },
+        { error: 'Missing required field: email' },
         { status: 400 }
       );
     }
 
     // Check if user already has premium
-    const userDoc = await getDoc(doc(db, 'users', userId));
-    if (userDoc.exists()) {
+    const adminDb = getAdminDb();
+    const userDoc = await adminDb.collection('users').doc(userId).get();
+    if (userDoc.exists) {
       const userData = userDoc.data();
       if (userData?.subscription?.isPremium) {
         return NextResponse.json(

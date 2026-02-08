@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getStripe } from '@/lib/stripe';
-import { db } from '@/lib/firebase';
-import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { getAdminDb } from '@/lib/firebase-admin';
 import Stripe from 'stripe';
 
 export async function POST(request: NextRequest) {
@@ -48,11 +47,12 @@ export async function POST(request: NextRequest) {
       }
 
       // Update user's premium status in Firestore
-      const userRef = doc(db, 'users', userId);
-      const userDoc = await getDoc(userRef);
-      const existingData = userDoc.exists() ? userDoc.data() : {};
+      const adminDb = getAdminDb();
+      const userRef = adminDb.collection('users').doc(userId);
+      const userDoc = await userRef.get();
+      const existingData = userDoc.exists ? userDoc.data() || {} : {};
 
-      await setDoc(userRef, {
+      await userRef.set({
         ...existingData,
         subscription: {
           isPremium: true,
@@ -64,8 +64,8 @@ export async function POST(request: NextRequest) {
       });
 
       // Create payment record for audit trail
-      const paymentRef = doc(db, 'payments', session.payment_intent as string);
-      await setDoc(paymentRef, {
+      const paymentRef = adminDb.collection('payments').doc(session.payment_intent as string);
+      await paymentRef.set({
         userId,
         stripeCustomerId: session.customer,
         stripeSessionId: session.id,

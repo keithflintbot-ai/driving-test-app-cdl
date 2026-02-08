@@ -1,12 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getStripe } from '@/lib/stripe';
-import { db } from '@/lib/firebase';
-import { doc, getDoc } from 'firebase/firestore';
+import { getAdminDb, getAdminAuth } from '@/lib/firebase-admin';
 
 export async function POST(request: NextRequest) {
   try {
+    // Verify Firebase auth token
+    const authHeader = request.headers.get('authorization');
+    if (!authHeader?.startsWith('Bearer ')) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+    const token = authHeader.split('Bearer ')[1];
+    const decodedToken = await getAdminAuth().verifyIdToken(token);
+    const userId = decodedToken.uid;
+
     const body = await request.json();
-    const { sessionId, userId } = body;
+    const { sessionId } = body;
 
     if (!sessionId) {
       return NextResponse.json(
@@ -28,18 +36,17 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    // If userId provided, also check Firestore to confirm webhook processed
-    if (userId) {
-      const userDoc = await getDoc(doc(db, 'users', userId));
-      if (userDoc.exists()) {
-        const userData = userDoc.data();
-        if (userData?.subscription?.isPremium) {
-          return NextResponse.json({
-            isPremium: true,
-            purchasedAt: userData.subscription.purchasedAt,
-            message: 'Premium access confirmed',
-          });
-        }
+    // Check Firestore to confirm webhook processed
+    const adminDb = getAdminDb();
+    const userDoc = await adminDb.collection('users').doc(userId).get();
+    if (userDoc.exists) {
+      const userData = userDoc.data();
+      if (userData?.subscription?.isPremium) {
+        return NextResponse.json({
+          isPremium: true,
+          purchasedAt: userData.subscription.purchasedAt,
+          message: 'Premium access confirmed',
+        });
       }
     }
 
