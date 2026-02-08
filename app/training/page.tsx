@@ -38,6 +38,7 @@ function TrainingPageContent() {
   const resetMasteredQuestions = useStore((state) => state.resetMasteredQuestions);
   const resetTrainingSet = useStore((state) => state.resetTrainingSet);
   const isOnboardingComplete = useStore((state) => state.isOnboardingComplete);
+  const isTrainingSetUnlocked = useStore((state) => state.isTrainingSetUnlocked);
 
   // Get set number from URL if present
   const setParam = searchParams.get('set');
@@ -61,12 +62,18 @@ function TrainingPageContent() {
   const setMasteredIds = setData?.masteredIds || [];
   const setWrongQueue = setData?.wrongQueue || [];
 
-  // Redirect to onboarding if no state selected
+  // Redirect to onboarding if no state selected, or to dashboard if premium required
   useEffect(() => {
     if (hydrated && !selectedState) {
       router.push("/onboarding/select-state");
+      return;
     }
-  }, [hydrated, selectedState, router]);
+    // Check if trying to access set 4 without premium
+    if (hydrated && setNumber === 4 && !isTrainingSetUnlocked(4)) {
+      router.push("/dashboard");
+      return;
+    }
+  }, [hydrated, selectedState, setNumber, isTrainingSetUnlocked, router]);
 
   // Detect when user unlocks practice tests (crosses 10 correct answers) - onboarding only
   useEffect(() => {

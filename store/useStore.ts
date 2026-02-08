@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import { Question, TestSession, UserAnswer, TestAttemptStats, QuestionPerformance } from '@/types';
+import { Question, TestSession, UserAnswer, TestAttemptStats, QuestionPerformance, Subscription } from '@/types';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
@@ -103,6 +103,12 @@ interface AppState {
 
   // Guest to user conversion
   convertGuestToUser: (userId: string) => Promise<void>;
+
+  // Subscription/Premium
+  subscription: Subscription;
+  hasPremiumAccess: () => boolean;
+  setPremiumStatus: (status: { isPremium: boolean; purchasedAt: string; stripeCustomerId: string; stripePaymentId: string }) => void;
+  isTrainingSetUnlocked: (setId: number) => boolean;
 }
 
 export const useStore = create<AppState>()(
@@ -133,6 +139,12 @@ export const useStore = create<AppState>()(
       activeDates: [],
       userId: null,
       photoURL: null,
+      subscription: {
+        isPremium: false,
+        purchasedAt: null,
+        stripeCustomerId: null,
+        stripePaymentId: null,
+      },
 
       // Actions
       startGuestSession: () => {
@@ -305,9 +317,12 @@ export const useStore = create<AppState>()(
       },
 
       isTestUnlocked: (testId: number) => {
-        // All tests (1, 2, 3, 4) require onboarding completion (10 correct training answers)
+        // All tests require onboarding completion (10 correct training answers)
         // or prior app usage (backwards compatibility)
-        return get().isOnboardingComplete();
+        if (!get().isOnboardingComplete()) return false;
+        // Test 4 requires premium
+        if (testId === 4 && !get().hasPremiumAccess()) return false;
+        return true;
       },
 
       // Training mode functions
@@ -611,6 +626,12 @@ export const useStore = create<AppState>()(
               activeDates: data.activeDates || [],
               photoURL: data.photoURL || null,
               userId,
+              subscription: data.subscription || {
+                isPremium: false,
+                purchasedAt: null,
+                stripeCustomerId: null,
+                stripePaymentId: null,
+              },
             });
           } else {
             // New user - set userId
@@ -640,7 +661,7 @@ export const useStore = create<AppState>()(
       },
 
       saveToFirestore: async () => {
-        const { userId, isGuest, selectedState, currentTests, completedTests, testAttempts, training, trainingSets, trainingAnswerHistory, activeDates, photoURL } = get();
+        const { userId, isGuest, selectedState, currentTests, completedTests, testAttempts, training, trainingSets, trainingAnswerHistory, activeDates, photoURL, subscription } = get();
         if (!userId || isGuest) return; // Don't save if no user is logged in or guest mode
 
         try {
@@ -684,6 +705,7 @@ export const useStore = create<AppState>()(
             trainingSets,
             trainingAnswerHistory,
             activeDates: updatedActiveDates,
+            subscription,
             lastUpdated: new Date().toISOString(),
           });
         } catch (error) {
@@ -735,6 +757,12 @@ export const useStore = create<AppState>()(
           activeDates: [],
           userId: null,
           photoURL: null,
+          subscription: {
+            isPremium: false,
+            purchasedAt: null,
+            stripeCustomerId: null,
+            stripePaymentId: null,
+          },
         });
       },
 
@@ -744,6 +772,36 @@ export const useStore = create<AppState>()(
         set({ userId, isGuest: false });
         // Save all existing guest progress to Firestore
         await get().saveToFirestore();
+      },
+
+      // Premium access check
+      hasPremiumAccess: () => {
+        const { subscription, userId, isGuest } = get();
+        // Guests never have premium
+        if (isGuest || !userId) return false;
+        return subscription?.isPremium === true;
+      },
+
+      // Set premium status after purchase
+      setPremiumStatus: (status) => {
+        set({
+          subscription: {
+            isPremium: status.isPremium,
+            purchasedAt: status.purchasedAt,
+            stripeCustomerId: status.stripeCustomerId,
+            stripePaymentId: status.stripePaymentId,
+          },
+        });
+        get().saveToFirestore();
+      },
+
+      // Check if a training set is unlocked
+      isTrainingSetUnlocked: (setId: number) => {
+        // All training sets require onboarding completion
+        if (!get().isOnboardingComplete()) return false;
+        // Set 4 requires premium
+        if (setId === 4 && !get().hasPremiumAccess()) return false;
+        return true;
       },
     }),
     {
@@ -788,6 +846,12 @@ export const useStore = create<AppState>()(
             activeDates: [],
             userId: null,
             photoURL: null,
+            subscription: {
+              isPremium: false,
+              purchasedAt: null,
+              stripeCustomerId: null,
+              stripePaymentId: null,
+            },
           };
         }
         return persistedState as AppState;

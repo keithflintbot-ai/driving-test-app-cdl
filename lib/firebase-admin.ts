@@ -2,6 +2,9 @@ import { initializeApp, getApps, cert, App } from 'firebase-admin/app';
 import { getFirestore, Firestore } from 'firebase-admin/firestore';
 import { getAuth, Auth } from 'firebase-admin/auth';
 
+// Force REST transport instead of gRPC to avoid connectivity issues
+process.env.FIRESTORE_PREFER_REST = 'true';
+
 // Initialize Firebase Admin SDK
 // Uses FIREBASE_SERVICE_ACCOUNT_KEY environment variable (JSON string)
 // or GOOGLE_APPLICATION_CREDENTIALS file path
