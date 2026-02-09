@@ -48,6 +48,7 @@ export async function GET(request: NextRequest) {
         testsCompleted: firestoreData?.completedTests?.length || 0,
         trainingProgress: firestoreData?.training?.totalCorrectAllTime || 0,
         activeDates: firestoreData?.activeDates || [],
+        isPremium: firestoreData?.subscription?.isPremium || false,
       };
     });
 

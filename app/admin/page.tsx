@@ -23,6 +23,7 @@ interface UserData {
   trainingQuestionsAnswered: number;
   testQuestionsAnswered: number;
   activeDates: string[];
+  isPremium: boolean;
 }
 
 interface Stats {
@@ -35,6 +36,7 @@ interface Stats {
   activeUsers7d: number;
   totalTestsCompleted: number;
   avgQuestionsPerUser: number;
+  payingUsers: number;
 }
 
 export default function AdminPage() {
@@ -130,6 +132,7 @@ export default function AdminPage() {
       trainingQuestionsAnswered,
       testQuestionsAnswered,
       activeDates: data.activeDates || [],
+      isPremium: data.subscription?.isPremium || false,
     };
   };
 
@@ -163,7 +166,7 @@ export default function AdminPage() {
             });
 
             // Map API users to UserData with detailed stats from Firestore
-            userData = apiUsers.map((apiUser: { uid: string; email: string; selectedState: string | null; lastUpdated: string | null; createdAt: string | null; testsCompleted: number; activeDates?: string[] }) => {
+            userData = apiUsers.map((apiUser: { uid: string; email: string; selectedState: string | null; lastUpdated: string | null; createdAt: string | null; testsCompleted: number; activeDates?: string[]; isPremium?: boolean }) => {
               const firestoreData = firestoreDataMap.get(apiUser.uid);
               if (firestoreData) {
                 const processed = processFirestoreDoc(apiUser.uid, firestoreData);
@@ -183,6 +186,7 @@ export default function AdminPage() {
                 trainingQuestionsAnswered: 0,
                 testQuestionsAnswered: 0,
                 activeDates: apiUser.activeDates || [],
+                isPremium: apiUser.isPremium || false,
               };
             });
           }
@@ -256,6 +260,7 @@ export default function AdminPage() {
         activeUsers7d,
         totalTestsCompleted,
         avgQuestionsPerUser,
+        payingUsers: userData.filter(u => u.isPremium).length,
       });
       setDailyActiveUsers(calculateDailyActiveUsers(userData));
     } catch (err) {
@@ -301,6 +306,7 @@ export default function AdminPage() {
           activeUsers7d: wasActive ? stats.activeUsers7d - 1 : stats.activeUsers7d,
           totalTestsCompleted: stats.totalTestsCompleted - deletedUser.testsCompleted,
           avgQuestionsPerUser: newTotalUsers > 0 ? Math.round(newTotalQuestions / newTotalUsers) : 0,
+          payingUsers: stats.payingUsers - (deletedUser.isPremium ? 1 : 0),
         });
       }
     } catch (err) {
@@ -404,7 +410,7 @@ export default function AdminPage() {
                   <p className="text-2xl font-bold">{stats?.totalUsers || 0}</p>
                   <p className="text-sm text-gray-500">Total Users</p>
                   <p className="text-xs text-gray-400">
-                    {stats?.avgQuestionsPerUser || 0} avg qs/user
+                    {stats?.payingUsers || 0} paying · {stats?.avgQuestionsPerUser || 0} avg qs/user
                   </p>
                 </div>
               </div>
