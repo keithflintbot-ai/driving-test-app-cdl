@@ -36,56 +36,18 @@ export async function GET(request: NextRequest) {
       usersSnapshot.docs.map(doc => [doc.id, doc.data()])
     );
 
-    // Process Firestore doc into detailed stats
-    const processFirestoreDoc = (data: Record<string, unknown>) => {
-      const training = (data.training || {}) as Record<string, unknown>;
-      const onboardingMastered = (training.masteredQuestionIds || []) as unknown[];
-
-      const trainingSets = (data.trainingSets || {}) as Record<string, Record<string, unknown>>;
-      let trainingQuestionsAnswered = onboardingMastered.length;
-      for (const setId of [1, 2, 3, 4]) {
-        const setData = trainingSets[setId] || {};
-        const masteredIds = (setData.masteredIds || []) as unknown[];
-        const wrongQueue = (setData.wrongQueue || []) as unknown[];
-        trainingQuestionsAnswered += masteredIds.length + wrongQueue.length;
-      }
-
-      const completedTests = (data.completedTests || []) as Record<string, unknown>[];
-      let testQuestionsAnswered = completedTests.reduce((sum: number, test: Record<string, unknown>) => {
-        const answers = test.answers as unknown[] | undefined;
-        return sum + (answers?.length || (test.totalQuestions as number) || 0);
-      }, 0);
-
-      const currentTests = (data.currentTests || {}) as Record<string, Record<string, unknown>>;
-      for (const testId of Object.keys(currentTests)) {
-        const testData = currentTests[testId];
-        if (testData?.answers) {
-          testQuestionsAnswered += Object.keys(testData.answers as Record<string, unknown>).length;
-        }
-      }
-
-      return {
-        testsCompleted: completedTests.length,
-        trainingQuestionsAnswered,
-        testQuestionsAnswered,
-        activeDates: (data.activeDates || []) as string[],
-      };
-    };
-
-    // Combine Auth and Firestore data with detailed stats
+    // Combine Auth and Firestore data - iterate through Auth users to include all accounts
     const users = authUsers.users.map(authUser => {
       const firestoreData = firestoreUserMap.get(authUser.uid);
-      const stats = firestoreData ? processFirestoreDoc(firestoreData) : null;
       return {
         uid: authUser.uid,
         email: authUser.email || 'Unknown',
-        selectedState: firestoreData?.selectedState as string | null ?? null,
-        lastUpdated: firestoreData?.lastUpdated as string | null ?? null,
+        selectedState: firestoreData?.selectedState || null,
+        lastUpdated: firestoreData?.lastUpdated || null,
         createdAt: authUser.metadata.creationTime || null,
-        testsCompleted: stats?.testsCompleted || 0,
-        trainingQuestionsAnswered: stats?.trainingQuestionsAnswered || 0,
-        testQuestionsAnswered: stats?.testQuestionsAnswered || 0,
-        activeDates: stats?.activeDates || [],
+        testsCompleted: firestoreData?.completedTests?.length || 0,
+        trainingProgress: firestoreData?.training?.totalCorrectAllTime || 0,
+        activeDates: firestoreData?.activeDates || [],
       };
     });
 
