@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import { useAdmin } from "@/hooks/useAdmin";
 import { db } from "@/lib/firebase";
-import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
+import { deleteDoc, doc } from "firebase/firestore";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { states } from "@/data/states";
 import { ArrowLeft, Users, RefreshCw, Trash2, HelpCircle, Activity, ClipboardCheck } from "lucide-react";
@@ -90,125 +90,43 @@ export default function AdminPage() {
     return days;
   };
 
-  // Helper function to process Firestore data
-  const processFirestoreDoc = (docId: string, data: ReturnType<typeof Object>) => {
-    // Calculate training questions from:
-    // 1. Initial onboarding training (training.masteredQuestionIds)
-    // 2. Post-onboarding training sets (trainingSets[1-4])
-    const training = data.training || {};
-    const onboardingMastered = training.masteredQuestionIds || [];
-
-    const trainingSets = data.trainingSets || {};
-    let trainingQuestionsAnswered = onboardingMastered.length;
-    for (const setId of [1, 2, 3, 4]) {
-      const setData = trainingSets[setId] || {};
-      const masteredIds = setData.masteredIds || [];
-      const wrongQueue = setData.wrongQueue || [];
-      trainingQuestionsAnswered += masteredIds.length + wrongQueue.length;
-    }
-
-    // Calculate test questions answered from completed tests
-    const completedTests = data.completedTests || [];
-    let testQuestionsAnswered = completedTests.reduce((sum: number, test: { totalQuestions?: number; answers?: unknown[] }) => {
-      return sum + (test.answers?.length || test.totalQuestions || 0);
-    }, 0);
-
-    // Add questions from in-progress tests (currentTests)
-    const currentTests = data.currentTests || {};
-    for (const testId of Object.keys(currentTests)) {
-      const testData = currentTests[testId];
-      if (testData?.answers) {
-        testQuestionsAnswered += Object.keys(testData.answers).length;
-      }
-    }
-
-    return {
-      uid: docId,
-      email: data.email || "Unknown",
-      selectedState: data.selectedState || null,
-      lastUpdated: data.lastUpdated || null,
-      createdAt: data.createdAt || null,
-      testsCompleted: completedTests.length,
-      trainingQuestionsAnswered,
-      testQuestionsAnswered,
-      activeDates: data.activeDates || [],
-      isPremium: data.subscription?.isPremium || false,
-    };
-  };
-
   const fetchUsers = async () => {
     setLoading(true);
     setError(null);
 
     try {
-      let userData: UserData[] = [];
-      let useApiData = false;
-
-      // Try to fetch from API first (includes all Firebase Auth users)
-      try {
-        const idToken = await user?.getIdToken();
-        if (idToken) {
-          const response = await fetch("/api/admin/users", {
-            headers: {
-              Authorization: `Bearer ${idToken}`,
-            },
-          });
-
-          if (response.ok) {
-            const { users: apiUsers } = await response.json();
-            useApiData = true;
-
-            // Also fetch detailed Firestore data for stats calculation
-            const usersSnapshot = await getDocs(collection(db, "users"));
-            const firestoreDataMap = new Map<string, ReturnType<typeof usersSnapshot.docs[0]["data"]>>();
-            usersSnapshot.docs.forEach(doc => {
-              firestoreDataMap.set(doc.id, doc.data());
-            });
-
-            // Map API users to UserData with detailed stats from Firestore
-            userData = apiUsers.map((apiUser: { uid: string; email: string; selectedState: string | null; lastUpdated: string | null; createdAt: string | null; testsCompleted: number; activeDates?: string[]; isPremium?: boolean }) => {
-              const firestoreData = firestoreDataMap.get(apiUser.uid);
-              if (firestoreData) {
-                const processed = processFirestoreDoc(apiUser.uid, firestoreData);
-                return {
-                  ...processed,
-                  email: apiUser.email,
-                  createdAt: apiUser.createdAt,
-                };
-              }
-              return {
-                uid: apiUser.uid,
-                email: apiUser.email,
-                selectedState: apiUser.selectedState,
-                lastUpdated: apiUser.lastUpdated,
-                createdAt: apiUser.createdAt,
-                testsCompleted: 0,
-                trainingQuestionsAnswered: 0,
-                testQuestionsAnswered: 0,
-                activeDates: apiUser.activeDates || [],
-                isPremium: apiUser.isPremium || false,
-              };
-            });
-          }
-        }
-      } catch (apiError) {
-        console.warn("API fetch failed, falling back to Firestore:", apiError);
+      const idToken = await user?.getIdToken();
+      if (!idToken) {
+        setError("Not authenticated");
+        return;
       }
 
-      // Fallback to direct Firestore query if API failed
-      if (!useApiData) {
-        const usersSnapshot = await getDocs(collection(db, "users"));
-        userData = usersSnapshot.docs.map(doc => processFirestoreDoc(doc.id, doc.data()));
-      }
-
-      // Sort by createdAt (newest first), fall back to lastUpdated
-      userData.sort((a, b) => {
-        const aDate = a.createdAt || a.lastUpdated;
-        const bDate = b.createdAt || b.lastUpdated;
-        if (!aDate) return 1;
-        if (!bDate) return -1;
-        return new Date(bDate).getTime() - new Date(aDate).getTime();
+      const response = await fetch("/api/admin/users", {
+        headers: {
+          Authorization: `Bearer ${idToken}`,
+        },
       });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || errorData.details || `API error: ${response.status}`);
+      }
+
+      const { users: apiUsers } = await response.json();
+
+      // API now returns all detailed stats - just map directly
+      const userData: UserData[] = apiUsers.map((u: UserData) => ({
+        uid: u.uid,
+        email: u.email,
+        selectedState: u.selectedState,
+        lastUpdated: u.lastUpdated,
+        createdAt: u.createdAt,
+        testsCompleted: u.testsCompleted || 0,
+        trainingQuestionsAnswered: u.trainingQuestionsAnswered || 0,
+        testQuestionsAnswered: u.testQuestionsAnswered || 0,
+        activeDates: u.activeDates || [],
+        isPremium: u.isPremium || false,
+      }));
 
       // Calculate stats by state and totals
       const stateCounts: Record<string, number> = {};
