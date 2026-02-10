@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { CheckCircle2, XCircle } from "lucide-react";
 import { Question } from "@/types";
 import { useState, useEffect } from "react";
+import { useTranslation } from "@/contexts/LanguageContext";
 
 interface TrainingCardProps {
   question: Question;
@@ -17,6 +18,7 @@ export function TrainingCard({
   onAnswerSelect,
   onNext,
 }: TrainingCardProps) {
+  const { t } = useTranslation();
   // Prevent ghost clicks on mobile: when tapping "Next Question", the delayed
   // click event can fire on the new question's answer options. We disable
   // answer selection briefly after component mounts to prevent this.
@@ -90,7 +92,7 @@ export function TrainingCard({
         {answered && (
           <div className="space-y-3 md:space-y-4">
             <Button onClick={onNext} className="w-full bg-black text-white hover:bg-gray-800" size="lg">
-              Next Question
+              {t("trainingCard.nextQuestion")}
             </Button>
 
             <div
@@ -103,7 +105,7 @@ export function TrainingCard({
                   isCorrect ? "text-green-700" : "text-red-700"
                 }`}
               >
-                {isCorrect ? "Correct!" : "Incorrect"}
+                {isCorrect ? t("trainingCard.correct") : t("trainingCard.incorrect")}
               </div>
               <p className="text-gray-700 text-sm md:text-base">{question.explanation}</p>
             </div>

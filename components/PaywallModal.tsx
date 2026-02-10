@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Lock, Sparkles, CheckCircle } from "lucide-react";
+import { useTranslation } from "@/contexts/LanguageContext";
+import { en, es } from "@/i18n";
 
 interface PaywallModalProps {
   open: boolean;
@@ -21,20 +23,6 @@ interface PaywallModalProps {
   onSignUp?: () => void;
 }
 
-const FEATURE_NAMES = {
-  training_set_4: "Training Set 4: State Laws",
-  practice_test_4: "Practice Test 4",
-  full_stats: "Full Question Stats",
-};
-
-const BENEFITS = [
-  "50 state-specific law questions",
-  "Detailed question-by-question stats",
-  "Master your state's unique driving rules",
-  "Boost your pass probability",
-  "Lifetime access - pay once, own forever",
-];
-
 export function PaywallModal({
   open,
   onOpenChange,
@@ -43,6 +31,8 @@ export function PaywallModal({
   isGuest = false,
   onSignUp,
 }: PaywallModalProps) {
+  const { t, language } = useTranslation();
+  const dict = language === "es" ? es : en;
   const [loading, setLoading] = useState(false);
 
   const handleUpgrade = async () => {
@@ -62,10 +52,10 @@ export function PaywallModal({
             <div className="p-2 bg-orange-100 rounded-full">
               <Lock className="h-5 w-5 text-orange-600" />
             </div>
-            <DialogTitle className="text-xl">Unlock Premium Content</DialogTitle>
+            <DialogTitle className="text-xl">{t("paywall.unlockPremiumContent")}</DialogTitle>
           </div>
           <DialogDescription className="pt-2 text-base">
-            Get access to <strong>{FEATURE_NAMES[feature]}</strong> and complete your DMV prep.
+            {t("paywall.getAccessTo")} <strong>{dict.paywall.featureNames[feature]}</strong> {t("paywall.andCompleteDMVPrep")}
           </DialogDescription>
         </DialogHeader>
 
@@ -73,10 +63,10 @@ export function PaywallModal({
           <div className="bg-gradient-to-r from-orange-50 to-amber-50 rounded-lg p-4 mb-4">
             <div className="flex items-center gap-2 mb-3">
               <Sparkles className="h-5 w-5 text-orange-500" />
-              <span className="font-semibold text-gray-900">TigerTest Premium</span>
+              <span className="font-semibold text-gray-900">{t("paywall.tigerTestPremium")}</span>
             </div>
             <ul className="space-y-2">
-              {BENEFITS.map((benefit, index) => (
+              {dict.paywall.benefits.map((benefit, index) => (
                 <li key={index} className="flex items-start gap-2 text-sm text-gray-700">
                   <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
                   <span>{benefit}</span>
@@ -87,27 +77,27 @@ export function PaywallModal({
 
           <div className="text-center">
             <div className="text-3xl font-bold text-gray-900">$9.99</div>
-            <div className="text-sm text-gray-500">One-time payment</div>
+            <div className="text-sm text-gray-500">{t("paywall.oneTimePayment")}</div>
           </div>
         </div>
 
         {isGuest ? (
           <DialogFooter className="flex flex-col gap-2 sm:flex-col">
             <p className="text-sm text-gray-600 text-center mb-2">
-              Create a free account to unlock premium features
+              {t("paywall.createFreeAccountPrompt")}
             </p>
             <Button
               onClick={onSignUp}
               className="w-full bg-black text-white hover:bg-gray-800"
             >
-              Create Account
+              {t("common.createAccount")}
             </Button>
             <Button
               variant="outline"
               onClick={() => onOpenChange(false)}
               className="w-full"
             >
-              Maybe Later
+              {t("common.maybeLater")}
             </Button>
           </DialogFooter>
         ) : (
@@ -117,7 +107,7 @@ export function PaywallModal({
               disabled={loading}
               className="w-full bg-black text-white hover:bg-gray-800"
             >
-              {loading ? "Loading..." : "Upgrade Now"}
+              {loading ? t("common.loading") : t("paywall.upgradeNow")}
             </Button>
             <Button
               variant="outline"
@@ -125,7 +115,7 @@ export function PaywallModal({
               className="w-full"
               disabled={loading}
             >
-              Maybe Later
+              {t("common.maybeLater")}
             </Button>
           </DialogFooter>
         )}

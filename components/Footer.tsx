@@ -1,15 +1,20 @@
+"use client";
+
 import Link from "next/link";
+import { useTranslation } from "@/contexts/LanguageContext";
 
 export function Footer() {
+  const { t } = useTranslation();
+
   return (
     <footer className="border-t bg-gray-50 mt-auto">
       <div className="container mx-auto px-4 py-6">
         <p className="text-center text-sm text-gray-600">
-          This site was made with AI and{" "}
+          {t("footer.madeWith")}{" "}
           <span className="text-red-500" aria-label="love">
             ❤️
           </span>{" "}
-          by{" "}
+          {t("footer.by")}{" "}
           <a
             href="https://x.com/JohnBr0"
             target="_blank"
@@ -25,9 +30,9 @@ export function Footer() {
             rel="noopener noreferrer"
             className="text-orange-600 hover:text-orange-700 font-medium hover:underline"
           >
-            Send me
+            {t("footer.sendMe")}
           </a>{" "}
-          a quote for the homepage if you pass!
+          {t("footer.quoteIfPass")}
         </p>
       </div>
     </footer>

@@ -3,6 +3,7 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 import { Question, TestSession, UserAnswer, TestAttemptStats, QuestionPerformance, Subscription } from '@/types';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
+import type { Language } from '@/i18n';
 
 // Current data version - increment this when question data changes
 const DATA_VERSION = 2;
@@ -11,6 +12,10 @@ interface AppState {
   // Data version notification
   showDataResetNotification: boolean;
   dismissDataResetNotification: () => void;
+
+  // Language
+  language: Language;
+  setLanguage: (lang: Language) => void;
 
   // Guest mode
   isGuest: boolean;
@@ -119,6 +124,7 @@ export const useStore = create<AppState>()(
       dismissDataResetNotification: () => set({ showDataResetNotification: false }),
 
       // Initial state
+      language: 'en' as Language,
       isGuest: false,
       selectedState: null,
       currentTests: {},
@@ -147,6 +153,10 @@ export const useStore = create<AppState>()(
       },
 
       // Actions
+      setLanguage: (lang: Language) => {
+        set({ language: lang });
+      },
+
       startGuestSession: () => {
         set({ isGuest: true });
       },
@@ -625,6 +635,7 @@ export const useStore = create<AppState>()(
               trainingAnswerHistory: data.trainingAnswerHistory || [],
               activeDates: data.activeDates || [],
               photoURL: data.photoURL || null,
+              language: data.language || 'en',
               userId,
               subscription: data.subscription || {
                 isPremium: false,
@@ -661,7 +672,7 @@ export const useStore = create<AppState>()(
       },
 
       saveToFirestore: async () => {
-        const { userId, isGuest, selectedState, currentTests, completedTests, testAttempts, training, trainingSets, trainingAnswerHistory, activeDates, photoURL, subscription } = get();
+        const { userId, isGuest, selectedState, currentTests, completedTests, testAttempts, training, trainingSets, trainingAnswerHistory, activeDates, photoURL, subscription, language } = get();
         if (!userId || isGuest) return; // Don't save if no user is logged in or guest mode
 
         try {
@@ -706,6 +717,7 @@ export const useStore = create<AppState>()(
             trainingAnswerHistory,
             activeDates: updatedActiveDates,
             subscription,
+            language,
             lastUpdated: new Date().toISOString(),
           });
         } catch (error) {

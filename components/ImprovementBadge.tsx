@@ -1,4 +1,7 @@
+"use client";
+
 import { TrendingUp } from "lucide-react";
+import { useTranslation } from "@/contexts/LanguageContext";
 
 interface ImprovementBadgeProps {
   firstScore: number;
@@ -7,6 +10,7 @@ interface ImprovementBadgeProps {
 }
 
 export function ImprovementBadge({ firstScore, bestScore, totalQuestions }: ImprovementBadgeProps) {
+  const { t } = useTranslation();
   const firstPercentage = Math.round((firstScore / totalQuestions) * 100);
   const bestPercentage = Math.round((bestScore / totalQuestions) * 100);
   const improvement = bestPercentage - firstPercentage;
@@ -14,7 +18,7 @@ export function ImprovementBadge({ firstScore, bestScore, totalQuestions }: Impr
   if (improvement === 0) {
     return (
       <div className="text-sm text-gray-500">
-        No improvement yet
+        {t("improvement.noImprovementYet")}
       </div>
     );
   }

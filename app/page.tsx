@@ -8,25 +8,8 @@ import { Button } from "@/components/ui/button";
 import { Smartphone, Monitor } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useStore } from "@/store/useStore";
-
-const allPhrases = [
-  "in bed",
-  "while watching TV",
-  "on the toilet",
-  "in the waiting room",
-  "on your lunch break",
-  "the night before",
-  "in line at the grocery store",
-  "during a commercial break",
-  "between meetings",
-  "on the train",
-  "in the back of an Uber",
-  "while dinner's in the oven",
-  "while brushing your teeth",
-  "when you should be working",
-  "on the treadmill",
-  "when you can't sleep",
-];
+import { useTranslation } from "@/contexts/LanguageContext";
+import { en, es } from "@/i18n";
 
 function shuffleArray<T>(array: T[]): T[] {
   const shuffled = [...array];
@@ -137,7 +120,12 @@ export default function Home() {
   const router = useRouter();
   const startGuestSession = useStore((state) => state.startGuestSession);
   const isGuest = useStore((state) => state.isGuest);
-  const animatedText = useTypewriter(allPhrases);
+  const { t, language } = useTranslation();
+
+  const dict = language === 'es' ? es : en;
+  const allPhrases = dict.landing.phrases;
+
+  const animatedText = useTypewriter(allPhrases as unknown as string[]);
 
   const handleTryFree = () => {
     startGuestSession();
@@ -156,12 +144,12 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-b from-orange-50 to-white pointer-events-none" />
         <div className="relative max-w-4xl mx-auto px-6 pt-16 pb-20 md:pt-24 md:pb-28 text-center">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 tracking-tight min-h-[10rem] md:min-h-[7rem] lg:min-h-[8rem]">
-            The DMV app for studying{" "}
+            {t("landing.heroPrefix")}{" "}
             <span className="text-orange-600">{animatedText}</span>
             <span className="animate-pulse">|</span>
           </h1>
           <p className="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
-            200 state-specific questions. Tuned for mobile. No account needed.
+            {t("landing.heroSubtitle")}
           </p>
 
           {!loading && (
@@ -169,21 +157,21 @@ export default function Home() {
               {user || isGuest ? (
                 <Link href="/dashboard">
                   <Button className="bg-gray-900 text-white hover:bg-gray-800 px-8 py-6 text-lg rounded-full">
-                    Go to Dashboard
+                    {t("common.goToDashboard")}
                   </Button>
                 </Link>
               ) : (
                 <div className="flex flex-col items-center gap-3">
                   <Link href="/signup">
                     <Button className="bg-gray-900 text-white hover:bg-gray-800 px-8 py-6 text-lg rounded-full">
-                      Start practicing
+                      {t("common.startPracticing")}
                     </Button>
                   </Link>
                   <button
                     onClick={handleTryFree}
                     className="text-sm text-gray-500 hover:text-gray-700 underline"
                   >
-                    Try it first
+                    {t("common.tryItFirst")}
                   </button>
                 </div>
               )}
@@ -203,7 +191,7 @@ export default function Home() {
                   className="w-[200px] md:w-[240px]"
                 />
               </div>
-              <p className="text-sm text-gray-500 mt-6 text-center">Train on mobile</p>
+              <p className="text-sm text-gray-500 mt-6 text-center">{t("landing.trainOnMobile")}</p>
             </div>
 
             {/* Desktop Screenshot */}
@@ -217,7 +205,7 @@ export default function Home() {
                   className="w-[320px] md:w-[500px]"
                 />
               </div>
-              <p className="text-sm text-gray-500 mt-6 text-center">Test on desktop</p>
+              <p className="text-sm text-gray-500 mt-6 text-center">{t("landing.testOnDesktop")}</p>
             </div>
           </div>
         </div>
@@ -226,7 +214,7 @@ export default function Home() {
       {/* How it works */}
       <div className="max-w-5xl mx-auto px-6 pt-8 pb-16 md:pt-12 md:pb-24">
         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-16">
-          How it works
+          {t("landing.howItWorks")}
         </h2>
 
         <div className="grid md:grid-cols-2 gap-8 md:gap-12">
@@ -236,10 +224,10 @@ export default function Home() {
             </div>
             <div className="bg-gray-50 rounded-2xl p-8 pt-12 text-center">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                Training mode
+                {t("landing.trainingMode")}
               </h3>
               <p className="text-gray-600">
-                Learn the questions on your phone while you&apos;re in bed, on the couch, or waiting around. Instant feedback after each answer helps you memorize faster.
+                {t("landing.trainingModeDesc")}
               </p>
             </div>
           </div>
@@ -250,10 +238,10 @@ export default function Home() {
             </div>
             <div className="bg-gray-50 rounded-2xl p-8 pt-12 text-center">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                Practice tests
+                {t("landing.practiceTests")}
               </h3>
               <p className="text-gray-600">
-                When you&apos;re ready, take a full 50-question test. Sit down, focus, and simulate the real exam - just like you&apos;ll do at the DMV.
+                {t("landing.practiceTestsDesc")}
               </p>
             </div>
           </div>
@@ -275,13 +263,13 @@ export default function Home() {
         <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16">
           <div className="flex-1">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-              Questions written for your state,<br className="hidden sm:block" /> not generic filler
+              {t("landing.stateSpecificTitle")}
             </h2>
             <p className="text-lg text-gray-600 mb-4">
-              Every state has different driving laws. TigerTest uses questions specific to your state&apos;s DMV handbook - the same material that&apos;s on your actual test.
+              {t("landing.stateSpecificDesc")}
             </p>
             <p className="text-gray-500">
-              All 50 states covered. 200 questions each.
+              {t("landing.allStatesCovered")}
             </p>
           </div>
           <div className="flex-shrink-0">
@@ -309,10 +297,10 @@ export default function Home() {
       {/* Reddit proof section */}
       <div className="max-w-5xl mx-auto px-6 py-16 md:py-24">
         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-4">
-          Built for people who just need to pass
+          {t("landing.builtForPeople")}
         </h2>
         <p className="text-gray-600 text-center mb-12 flex items-center justify-center gap-2">
-          From r/driving and r/DMV on
+          {t("landing.fromReddit")}
           <Image
             src="/reddit.png"
             alt="Reddit"
@@ -370,24 +358,24 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-t from-orange-50 to-white pointer-events-none" />
         <div className="relative max-w-4xl mx-auto px-6 py-16 md:py-24 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-            Ready to pass your permit test?
+            {t("landing.readyToPass")}
           </h2>
           <p className="text-lg text-gray-600 mb-10">
-            Free to start. No account required.
+            {t("landing.freeToStart")}
           </p>
 
           {!loading && !user && !isGuest && (
             <div className="flex flex-col items-center gap-3">
               <Link href="/signup">
                 <Button className="bg-gray-900 text-white hover:bg-gray-800 px-8 py-6 text-lg rounded-full">
-                  Start practicing
+                  {t("common.startPracticing")}
                 </Button>
               </Link>
               <button
                 onClick={handleTryFree}
                 className="text-sm text-gray-500 hover:text-gray-700 underline"
               >
-                Try it first
+                {t("common.tryItFirst")}
               </button>
             </div>
           )}
@@ -395,7 +383,7 @@ export default function Home() {
           {!loading && (user || isGuest) && (
             <Link href="/dashboard">
               <Button className="bg-gray-900 text-white hover:bg-gray-800 px-8 py-6 text-lg rounded-full">
-                Go to Dashboard
+                {t("common.goToDashboard")}
               </Button>
             </Link>
           )}

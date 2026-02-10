@@ -1,6 +1,9 @@
+"use client";
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Trophy } from "lucide-react";
+import { useTranslation } from "@/contexts/LanguageContext";
 
 interface MasteryProgressProps {
   totalBestScore: number;
@@ -8,6 +11,7 @@ interface MasteryProgressProps {
 }
 
 export function MasteryProgress({ totalBestScore, totalPossible }: MasteryProgressProps) {
+  const { t } = useTranslation();
   const masteryPercentage = totalPossible > 0 ? Math.round((totalBestScore / totalPossible) * 100) : 0;
 
   return (
@@ -16,8 +20,8 @@ export function MasteryProgress({ totalBestScore, totalPossible }: MasteryProgre
         <div className="flex items-center gap-3">
           <Trophy className="h-8 w-8 text-yellow-600" />
           <div>
-            <CardTitle className="text-2xl">Overall Mastery</CardTitle>
-            <CardDescription>Your best performance across all tests</CardDescription>
+            <CardTitle className="text-2xl">{t("mastery.overallMastery")}</CardTitle>
+            <CardDescription>{t("mastery.bestPerformance")}</CardDescription>
           </div>
         </div>
       </CardHeader>
@@ -25,11 +29,11 @@ export function MasteryProgress({ totalBestScore, totalPossible }: MasteryProgre
         <div className="space-y-4">
           <div className="flex items-baseline gap-2">
             <span className="text-5xl font-bold text-orange-600">{masteryPercentage}%</span>
-            <span className="text-gray-600">mastered</span>
+            <span className="text-gray-600">{t("mastery.masteredSuffix")}</span>
           </div>
           <Progress value={masteryPercentage} className="h-4 [&>div]:bg-orange-600" />
           <p className="text-sm text-gray-600">
-            {totalBestScore} of {totalPossible} questions correct (based on best scores)
+            {totalBestScore} {t("questionCard.of")} {totalPossible} {t("mastery.questionsCorrectBest")}
           </p>
         </div>
       </CardContent>

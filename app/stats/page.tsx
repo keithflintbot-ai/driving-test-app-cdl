@@ -12,6 +12,7 @@ import Image from "next/image";
 import { useStore } from "@/store/useStore";
 import { useHydration } from "@/hooks/useHydration";
 import { useAuth } from "@/contexts/AuthContext";
+import { useTranslation } from "@/contexts/LanguageContext";
 import { auth } from "@/lib/firebase";
 import { PaywallModal } from "@/components/PaywallModal";
 import { states } from "@/data/states";
@@ -44,16 +45,10 @@ const CATEGORY_TO_SET: { [key: string]: number } = {
   "Licensing": 4,
 };
 
-const SET_NAMES: { [key: number]: string } = {
-  1: "Signs & Signals",
-  2: "Rules of the Road",
-  3: "Safety & Emergencies",
-  4: "State Laws",
-};
-
 export default function StatsPage() {
   const router = useRouter();
   const hydrated = useHydration();
+  const { t } = useTranslation();
 
   const selectedState = useStore((state) => state.selectedState);
   const isGuest = useStore((state) => state.isGuest);
@@ -214,35 +209,35 @@ export default function StatsPage() {
     }));
 
     // Find first training set that hasn't been started (0 correct)
-    const unstartedSet = trainingProgress.find(t => t.progress.correct === 0);
+    const unstartedSet = trainingProgress.find(tp => tp.progress.correct === 0);
     if (unstartedSet) {
       return {
-        title: `Start "${SET_NAMES[unstartedSet.setNum]}"`,
-        description: "Complete all 4 training sets before taking practice tests",
+        title: `${t("stats.start")} "${t(`trainingSets.${unstartedSet.setNum}`)}"`,
+        description: t("stats.completeAllTrainingSets"),
         href: `/training?set=${unstartedSet.setNum}`,
       };
     }
 
     // Find first incomplete training set (started but not finished)
-    const incompleteSet = trainingProgress.find(t => t.progress.correct < t.progress.total);
+    const incompleteSet = trainingProgress.find(tp => tp.progress.correct < tp.progress.total);
     if (incompleteSet) {
       const pct = Math.round((incompleteSet.progress.correct / incompleteSet.progress.total) * 100);
       return {
-        title: `Finish "${SET_NAMES[incompleteSet.setNum]}"`,
-        description: `${pct}% complete - ${incompleteSet.progress.total - incompleteSet.progress.correct} questions left`,
+        title: `${t("stats.finish")} "${t(`trainingSets.${incompleteSet.setNum}`)}"`,
+        description: `${pct}% ${t("stats.complete")} - ${incompleteSet.progress.total - incompleteSet.progress.correct} ${t("stats.questionsLeft")}`,
         href: `/training?set=${incompleteSet.setNum}`,
       };
     }
 
     // All training sets complete - now check test performance
-    const testStats = [1, 2, 3, 4].map(t => getTestAttemptStats(t));
+    const testStats = [1, 2, 3, 4].map(n => getTestAttemptStats(n));
     const hasAnyTests = testStats.some(s => s && s.attemptCount > 0);
 
     // If user is doing well, they're ready
     if (passProbability >= 80) {
       return {
-        title: "You're ready!",
-        description: "Take a practice test to confirm",
+        title: t("stats.youreReady"),
+        description: t("stats.takePracticeTest"),
         href: "/dashboard",
       };
     }
@@ -250,8 +245,8 @@ export default function StatsPage() {
     // If no tests taken yet, recommend first test
     if (!hasAnyTests) {
       return {
-        title: "Take Practice Test 1",
-        description: "See where you stand with a full practice test",
+        title: t("stats.takePracticeTest1"),
+        description: t("stats.seeWhereYouStand"),
         href: "/test/1",
       };
     }
@@ -287,23 +282,22 @@ export default function StatsPage() {
     // Recommend training on worst category
     if (worstCategory && worstWrongCount > 0) {
       const setNumber = CATEGORY_TO_SET[worstCategory] || 1;
-      const setName = SET_NAMES[setNumber];
       const wrongPercent = Math.round(100 - worstAccuracy);
 
       return {
-        title: `Practice "${setName}"`,
-        description: `You're getting ${wrongPercent}% wrong on ${worstCategory.toLowerCase()} questions`,
+        title: `${t("stats.practice")} "${t(`trainingSets.${setNumber}`)}"`,
+        description: `${t("stats.youreGetting")} ${wrongPercent}% ${t("stats.wrongOn")} ${worstCategory.toLowerCase()} ${t("stats.questions")}`,
         href: `/training?set=${setNumber}`,
       };
     }
 
     // Default
     return {
-      title: "Keep practicing",
-      description: "Continue training to improve your score",
+      title: t("stats.keepPracticing"),
+      description: t("stats.continueTraining"),
       href: "/dashboard",
     };
-  }, [hydrated, questionsWithPerformance, passProbability, getTestAttemptStats, getTrainingSetProgress]);
+  }, [hydrated, questionsWithPerformance, passProbability, getTestAttemptStats, getTrainingSetProgress, t]);
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
@@ -360,7 +354,7 @@ export default function StatsPage() {
           <Link href="/dashboard">
             <Button variant="ghost" className="mb-4 -ml-2">
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Back
+              {t("common.back")}
             </Button>
           </Link>
         </div>
@@ -395,10 +389,10 @@ export default function StatsPage() {
               <div className="flex-1">
                 <h1 className="text-2xl md:text-3xl font-bold">
                   {passProbability === 0
-                    ? "No data yet"
+                    ? t("stats.noDataYet")
                     : passProbability > 50
-                      ? `${passProbability}% chance of passing`
-                      : `${100 - passProbability}% chance of failing`
+                      ? `${passProbability}% ${t("stats.chanceOfPassing")}`
+                      : `${100 - passProbability}% ${t("stats.chanceOfFailing")}`
                   }
                 </h1>
                 {passProbability > 0 && (
@@ -442,10 +436,10 @@ export default function StatsPage() {
         {/* Mobile Sort Controls */}
         <div className="md:hidden flex items-center gap-2 mb-4 overflow-x-auto pb-2 -mx-4 px-4">
           {[
-            { field: "timesAnswered" as SortField, label: "Answered" },
-            { field: "correct" as SortField, label: "Correct" },
-            { field: "wrong" as SortField, label: "Wrong" },
-            { field: "accuracy" as SortField, label: "Accuracy" },
+            { field: "timesAnswered" as SortField, label: t("stats.answered") },
+            { field: "correct" as SortField, label: t("stats.correctLabel") },
+            { field: "wrong" as SortField, label: t("stats.wrongLabel") },
+            { field: "accuracy" as SortField, label: t("stats.accuracy") },
           ].map(({ field, label }) => (
             <button
               key={field}
@@ -469,7 +463,7 @@ export default function StatsPage() {
           {sortedQuestions.length === 0 ? (
             <Card>
               <CardContent className="p-6 text-center text-gray-500">
-                No questions available.
+                {t("stats.noQuestionsAvailable")}
               </CardContent>
             </Card>
           ) : (
@@ -482,7 +476,7 @@ export default function StatsPage() {
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium leading-snug">{item.question.question}</p>
                         <p className="text-xs text-gray-500 mt-1">
-                          {item.question.type === "Universal" ? "Universal" : `${selectedState}-specific`}
+                          {item.question.type === "Universal" ? t("stats.universal") : `${selectedState}${t("stats.specific")}`}
                           {" "}&bull;{" "}
                           {item.question.category}
                         </p>
@@ -493,19 +487,19 @@ export default function StatsPage() {
                         <div className={`font-semibold ${item.timesAnswered > 0 ? "text-gray-900" : "text-gray-400"}`}>
                           {item.timesAnswered}
                         </div>
-                        <div className="text-xs text-gray-500">Answered</div>
+                        <div className="text-xs text-gray-500">{t("stats.answered")}</div>
                       </div>
                       <div className="text-center">
                         <div className={`font-semibold ${item.correct > 0 ? "text-green-600" : "text-gray-400"}`}>
                           {item.correct}
                         </div>
-                        <div className="text-xs text-gray-500">Correct</div>
+                        <div className="text-xs text-gray-500">{t("stats.correctLabel")}</div>
                       </div>
                       <div className="text-center">
                         <div className={`font-semibold ${item.wrong > 0 ? "text-red-600" : "text-gray-400"}`}>
                           {item.wrong}
                         </div>
-                        <div className="text-xs text-gray-500">Wrong</div>
+                        <div className="text-xs text-gray-500">{t("stats.wrongLabel")}</div>
                       </div>
                       <div className="text-center">
                         {item.timesAnswered > 0 ? (
@@ -521,7 +515,7 @@ export default function StatsPage() {
                         ) : (
                           <div className="font-semibold text-gray-400">-</div>
                         )}
-                        <div className="text-xs text-gray-500">Accuracy</div>
+                        <div className="text-xs text-gray-500">{t("stats.accuracy")}</div>
                       </div>
                     </div>
                   </CardContent>
@@ -538,7 +532,7 @@ export default function StatsPage() {
                             <div className="flex-1 min-w-0">
                               <p className="text-sm font-medium leading-snug">{item.question.question}</p>
                               <p className="text-xs text-gray-500 mt-1">
-                                {item.question.type === "Universal" ? "Universal" : `${selectedState}-specific`}
+                                {item.question.type === "Universal" ? t("stats.universal") : `${selectedState}${t("stats.specific")}`}
                                 {" "}&bull;{" "}
                                 {item.question.category}
                               </p>
@@ -547,19 +541,19 @@ export default function StatsPage() {
                           <div className="flex items-center justify-between text-sm bg-gray-50 rounded-lg p-3">
                             <div className="text-center">
                               <div className="font-semibold text-gray-400">{item.timesAnswered}</div>
-                              <div className="text-xs text-gray-500">Answered</div>
+                              <div className="text-xs text-gray-500">{t("stats.answered")}</div>
                             </div>
                             <div className="text-center">
                               <div className="font-semibold text-gray-400">{item.correct}</div>
-                              <div className="text-xs text-gray-500">Correct</div>
+                              <div className="text-xs text-gray-500">{t("stats.correctLabel")}</div>
                             </div>
                             <div className="text-center">
                               <div className="font-semibold text-gray-400">{item.wrong}</div>
-                              <div className="text-xs text-gray-500">Wrong</div>
+                              <div className="text-xs text-gray-500">{t("stats.wrongLabel")}</div>
                             </div>
                             <div className="text-center">
                               <div className="font-semibold text-gray-400">-</div>
-                              <div className="text-xs text-gray-500">Accuracy</div>
+                              <div className="text-xs text-gray-500">{t("stats.accuracy")}</div>
                             </div>
                           </div>
                         </CardContent>
@@ -572,16 +566,16 @@ export default function StatsPage() {
                         <Lock className="h-6 w-6 text-orange-600" />
                       </div>
                       <h3 className="text-lg font-bold text-gray-900 mb-1">
-                        {sortedQuestions.length - FREE_QUESTION_LIMIT} more questions
+                        {sortedQuestions.length - FREE_QUESTION_LIMIT} {t("stats.moreQuestions")}
                       </h3>
                       <p className="text-sm text-gray-600 mb-4">
-                        Unlock Premium to see all your question stats
+                        {t("stats.unlockPremiumStats")}
                       </p>
                       <Button
                         onClick={() => setPaywallOpen(true)}
                         className="bg-black text-white hover:bg-gray-800"
                       >
-                        Unlock with Premium
+                        {t("common.unlockWithPremium")}
                       </Button>
                     </div>
                   </div>
@@ -595,7 +589,7 @@ export default function StatsPage() {
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium leading-snug">{item.question.question}</p>
                         <p className="text-xs text-gray-500 mt-1">
-                          {item.question.type === "Universal" ? "Universal" : `${selectedState}-specific`}
+                          {item.question.type === "Universal" ? t("stats.universal") : `${selectedState}${t("stats.specific")}`}
                           {" "}&bull;{" "}
                           {item.question.category}
                         </p>
@@ -606,19 +600,19 @@ export default function StatsPage() {
                         <div className={`font-semibold ${item.timesAnswered > 0 ? "text-gray-900" : "text-gray-400"}`}>
                           {item.timesAnswered}
                         </div>
-                        <div className="text-xs text-gray-500">Answered</div>
+                        <div className="text-xs text-gray-500">{t("stats.answered")}</div>
                       </div>
                       <div className="text-center">
                         <div className={`font-semibold ${item.correct > 0 ? "text-green-600" : "text-gray-400"}`}>
                           {item.correct}
                         </div>
-                        <div className="text-xs text-gray-500">Correct</div>
+                        <div className="text-xs text-gray-500">{t("stats.correctLabel")}</div>
                       </div>
                       <div className="text-center">
                         <div className={`font-semibold ${item.wrong > 0 ? "text-red-600" : "text-gray-400"}`}>
                           {item.wrong}
                         </div>
-                        <div className="text-xs text-gray-500">Wrong</div>
+                        <div className="text-xs text-gray-500">{t("stats.wrongLabel")}</div>
                       </div>
                       <div className="text-center">
                         {item.timesAnswered > 0 ? (
@@ -634,7 +628,7 @@ export default function StatsPage() {
                         ) : (
                           <div className="font-semibold text-gray-400">-</div>
                         )}
-                        <div className="text-xs text-gray-500">Accuracy</div>
+                        <div className="text-xs text-gray-500">{t("stats.accuracy")}</div>
                       </div>
                     </div>
                   </CardContent>
@@ -647,7 +641,7 @@ export default function StatsPage() {
         {/* Desktop Table View - HERES THE DATA */}
         <Card className="hidden md:block">
           <CardHeader>
-            <CardTitle>Question Performance ({sortedQuestions.length})</CardTitle>
+            <CardTitle>{t("stats.questionPerformance")} ({sortedQuestions.length})</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
@@ -655,19 +649,19 @@ export default function StatsPage() {
                 <thead>
                   <tr className="border-b">
                     <th className="text-left py-3 px-4 w-1/2">
-                      <SortButton field="question">Question</SortButton>
+                      <SortButton field="question">{t("stats.question")}</SortButton>
                     </th>
                     <th className="text-center py-3 px-4">
-                      <SortButton field="timesAnswered">Answered</SortButton>
+                      <SortButton field="timesAnswered">{t("stats.answered")}</SortButton>
                     </th>
                     <th className="text-center py-3 px-4">
-                      <SortButton field="correct">Correct</SortButton>
+                      <SortButton field="correct">{t("stats.correctLabel")}</SortButton>
                     </th>
                     <th className="text-center py-3 px-4">
-                      <SortButton field="wrong">Wrong</SortButton>
+                      <SortButton field="wrong">{t("stats.wrongLabel")}</SortButton>
                     </th>
                     <th className="text-center py-3 px-4">
-                      <SortButton field="accuracy">Accuracy</SortButton>
+                      <SortButton field="accuracy">{t("stats.accuracy")}</SortButton>
                     </th>
                   </tr>
                 </thead>
@@ -675,7 +669,7 @@ export default function StatsPage() {
                   {sortedQuestions.length === 0 ? (
                     <tr>
                       <td colSpan={5} className="text-center py-8 text-gray-500">
-                        No questions available.
+                        {t("stats.noQuestionsAvailable")}
                       </td>
                     </tr>
                   ) : (
@@ -693,7 +687,7 @@ export default function StatsPage() {
                                   <div>
                                     <p className="text-sm line-clamp-2">{item.question.question}</p>
                                     <p className="text-xs text-gray-500 mt-1">
-                                      {item.question.type === "Universal" ? "Universal" : `${selectedState}-specific`}
+                                      {item.question.type === "Universal" ? t("stats.universal") : `${selectedState}${t("stats.specific")}`}
                                       {" "}&bull;{" "}
                                       {item.question.category}
                                     </p>
@@ -804,16 +798,16 @@ export default function StatsPage() {
                       <Lock className="h-6 w-6 text-orange-600" />
                     </div>
                     <h3 className="text-lg font-bold text-gray-900 mb-1">
-                      {sortedQuestions.length - FREE_QUESTION_LIMIT} more questions
+                      {sortedQuestions.length - FREE_QUESTION_LIMIT} {t("stats.moreQuestions")}
                     </h3>
                     <p className="text-sm text-gray-600 mb-4">
-                      Unlock Premium to see all your question stats
+                      {t("stats.unlockPremiumStats")}
                     </p>
                     <Button
                       onClick={() => setPaywallOpen(true)}
                       className="bg-black text-white hover:bg-gray-800"
                     >
-                      Unlock with Premium
+                      {t("common.unlockWithPremium")}
                     </Button>
                   </div>
                 </div>
