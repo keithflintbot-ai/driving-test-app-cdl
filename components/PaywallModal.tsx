@@ -29,6 +29,7 @@ const FEATURE_NAMES = {
 
 const BENEFITS = [
   "50 state-specific law questions",
+  "Detailed question-by-question stats",
   "Master your state's unique driving rules",
   "Boost your pass probability",
   "Lifetime access - pay once, own forever",
