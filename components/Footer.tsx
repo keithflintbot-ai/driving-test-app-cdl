@@ -11,12 +11,12 @@ export function Footer() {
           </span>{" "}
           by{" "}
           <a
-            href="https://account.venmo.com/u/brophenator"
+            href="https://x.com/JohnBr0"
             target="_blank"
             rel="noopener noreferrer"
             className="text-orange-600 hover:text-orange-700 font-medium hover:underline"
           >
-            @brophenator
+            @JohnBr0
           </a>
           . Consider a donation or{" "}
           <a
