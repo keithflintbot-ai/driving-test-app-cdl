@@ -38,7 +38,7 @@ export function Header() {
   }
 
   return (
-    <header className={`border-b ${isPremium ? "bg-[#fffaf3] border-amber-100" : "bg-white"}`}>
+    <header className="border-b bg-white">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <Link href={user || isGuest ? "/dashboard" : "/"} className="flex items-center gap-2 group">
             <Image src={isPremium ? "/tiger_face_01.png" : "/tiger.png"} alt="tigertest.io" width={40} height={40} className="w-10 h-10" />
