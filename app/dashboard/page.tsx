@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useState, useMemo, Suspense } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { TestCard } from "@/components/TestCard";
 import { TrainingSetCard, TrainingSet } from "@/components/TrainingSetCard";
 import { PaywallModal } from "@/components/PaywallModal";
 import { Card, CardContent } from "@/components/ui/card";
-import { Zap, ChevronRight, CheckCircle, BarChart3 } from "lucide-react";
+import { Zap, ChevronRight, CheckCircle } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { useStore } from "@/store/useStore";
@@ -14,8 +14,6 @@ import { useHydration } from "@/hooks/useHydration";
 import { useAuth } from "@/contexts/AuthContext";
 import { auth } from "@/lib/firebase";
 import { states } from "@/data/states";
-import questionsData from "@/data/questions.json";
-import { Question } from "@/types";
 
 // Training set definitions
 const TRAINING_SET_NAMES: { [key: number]: string } = {
@@ -42,7 +40,6 @@ function DashboardContent() {
   const training = useStore((state) => state.training);
   const getTrainingSetProgress = useStore((state) => state.getTrainingSetProgress);
   const getPassProbability = useStore((state) => state.getPassProbability);
-  const getQuestionPerformance = useStore((state) => state.getQuestionPerformance);
   const isOnboardingComplete = useStore((state) => state.isOnboardingComplete);
 
   // Paywall state
@@ -54,41 +51,6 @@ function DashboardContent() {
   const onboardingComplete = hydrated ? isOnboardingComplete() : true;
   const onboardingProgress = training.totalCorrectAllTime;
   const isPremium = hydrated ? hasPremiumAccess() : false;
-
-  // Compute weakest category for stats teaser
-  const weakestCategory = useMemo(() => {
-    if (!hydrated || !selectedState || isGuest || passProbability === 0) return null;
-    const performance = getQuestionPerformance();
-    const performanceMap = new Map(performance.map((p) => [p.questionId, p]));
-    const allQuestions = questionsData as Question[];
-    const stateQuestions = allQuestions.filter((q) => q.state === "ALL" || q.state === selectedState);
-
-    const categoryStats: { [cat: string]: { correct: number; wrong: number } } = {};
-    stateQuestions.forEach((q) => {
-      const perf = performanceMap.get(q.questionId);
-      if (!perf || perf.timesAnswered === 0) return;
-      if (!categoryStats[q.category]) categoryStats[q.category] = { correct: 0, wrong: 0 };
-      categoryStats[q.category].correct += perf.timesCorrect;
-      categoryStats[q.category].wrong += perf.timesWrong;
-    });
-
-    let worstCat = "";
-    let worstAcc = 101;
-    let worstWrong = 0;
-    Object.entries(categoryStats).forEach(([category, stats]) => {
-      const total = stats.correct + stats.wrong;
-      if (total > 0 && stats.wrong > 0) {
-        const accuracy = Math.round((stats.correct / total) * 100);
-        if (accuracy < worstAcc) {
-          worstCat = category;
-          worstAcc = accuracy;
-          worstWrong = stats.wrong;
-        }
-      }
-    });
-    if (!worstCat) return null;
-    return { category: worstCat, accuracy: worstAcc, wrong: worstWrong };
-  }, [hydrated, selectedState, isGuest, passProbability, getQuestionPerformance]);
 
   // Get state name from code
   const stateName = states.find((s) => s.code === selectedState)?.name || selectedState;
@@ -357,13 +319,7 @@ function DashboardContent() {
                         : <>{100 - passProbability}% chance of failing</>
                       }
                     </p>
-                    {weakestCategory ? (
-                      <p className="text-sm text-gray-500 mt-1">
-                        Weakest topic: <span className="font-medium text-red-600">{weakestCategory.category} ({weakestCategory.accuracy}%)</span>
-                      </p>
-                    ) : (
-                      <p className="text-sm text-gray-500 mt-1">Tap to see your full breakdown</p>
-                    )}
+                    <p className="text-sm text-gray-500 mt-1 md:hidden">Learn how to improve</p>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="text-sm text-gray-500 hidden md:inline">View stats</span>
@@ -379,24 +335,6 @@ function DashboardContent() {
                             : "text-red-400"
                   }`} />
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-          </Link>
-        )}
-        {onboardingComplete && !isGuest && passProbability === 0 && (
-          <Link href="/stats" className="block">
-            <Card className="mb-6 cursor-pointer transition-shadow hover:shadow-md bg-gradient-to-r from-gray-50 to-slate-50 border-gray-200">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
-                    <BarChart3 className="h-6 w-6 text-orange-600" />
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-lg font-bold text-gray-900">Track Your Progress</p>
-                    <p className="text-sm text-gray-500 mt-1">Start training to see per-question stats and pass probability</p>
-                  </div>
-                  <ChevronRight className="h-6 w-6 text-gray-400" />
                 </div>
               </CardContent>
             </Card>
