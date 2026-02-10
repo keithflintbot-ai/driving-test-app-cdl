@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { TrainingCard } from "@/components/TrainingCard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeft, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, CheckCircle2, BarChart3 } from "lucide-react";
 import { useStore } from "@/store/useStore";
 import { getTrainingQuestion, getNextTrainingSetQuestion, shuffleQuestionOptions } from "@/lib/testGenerator";
 import { Question } from "@/types";
@@ -259,18 +259,19 @@ function TrainingPageContent() {
               You&apos;ve correctly answered all 50 questions in this training set!
             </p>
             <div className="flex flex-col gap-3">
-              <Link href="/dashboard">
-                <Button className="w-full bg-black text-white hover:bg-gray-800 text-lg py-6">
-                  Back to Dashboard
-                </Button>
-              </Link>
               {!isGuest && (
                 <Link href="/stats">
-                  <Button variant="outline" className="w-full">
-                    View Stats
+                  <Button className="w-full bg-black text-white hover:bg-gray-800 text-lg py-6">
+                    <BarChart3 className="h-5 w-5 mr-2" />
+                    See Your Stats
                   </Button>
                 </Link>
               )}
+              <Link href="/dashboard">
+                <Button variant="outline" className="w-full">
+                  Back to Dashboard
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

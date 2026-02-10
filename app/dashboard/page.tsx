@@ -6,7 +6,7 @@ import { TestCard } from "@/components/TestCard";
 import { TrainingSetCard, TrainingSet } from "@/components/TrainingSetCard";
 import { PaywallModal } from "@/components/PaywallModal";
 import { Card, CardContent } from "@/components/ui/card";
-import { Zap, ChevronRight, CheckCircle } from "lucide-react";
+import { Zap, ChevronRight, CheckCircle, BarChart3 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { useStore } from "@/store/useStore";
@@ -335,6 +335,24 @@ function DashboardContent() {
                             : "text-red-400"
                   }`} />
                   </div>
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+        )}
+        {onboardingComplete && !isGuest && passProbability === 0 && (
+          <Link href="/stats" className="block">
+            <Card className="mb-6 cursor-pointer transition-shadow hover:shadow-md bg-gradient-to-r from-gray-50 to-slate-50 border-gray-200">
+              <CardContent className="p-6">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
+                    <BarChart3 className="h-6 w-6 text-orange-600" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-lg font-bold text-gray-900">Track Your Progress</p>
+                    <p className="text-sm text-gray-500 mt-1">Start training to see per-question stats and pass probability</p>
+                  </div>
+                  <ChevronRight className="h-6 w-6 text-gray-400" />
                 </div>
               </CardContent>
             </Card>
