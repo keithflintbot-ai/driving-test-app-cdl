@@ -41,6 +41,43 @@ function processFirestoreDoc(data: Record<string, unknown>) {
   };
 }
 
+// Calculate daily active users for the last 30 days (server-side)
+function calculateDailyActiveUsers(
+  usersWithDates: { activeDates: string[]; lastUpdated: string | null }[]
+) {
+  const days: { date: string; count: number; displayDate: string }[] = [];
+  const today = new Date();
+
+  for (let i = 29; i >= 0; i--) {
+    const date = new Date(today);
+    date.setDate(date.getDate() - i);
+    const dateStr = date.toISOString().split('T')[0]; // YYYY-MM-DD
+    const startOfDay = new Date(date);
+    startOfDay.setHours(0, 0, 0, 0);
+    const endOfDay = new Date(date);
+    endOfDay.setHours(23, 59, 59, 999);
+
+    const activeCount = usersWithDates.filter(u => {
+      if (u.activeDates.length > 0) {
+        return u.activeDates.includes(dateStr);
+      }
+      if (u.lastUpdated) {
+        const lastUpdated = new Date(u.lastUpdated);
+        return lastUpdated >= startOfDay && lastUpdated <= endOfDay;
+      }
+      return false;
+    }).length;
+
+    days.push({
+      date: dateStr,
+      count: activeCount,
+      displayDate: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+    });
+  }
+
+  return days;
+}
+
 export async function GET(request: NextRequest) {
   try {
     // Get the authorization header (Firebase ID token)
@@ -76,21 +113,46 @@ export async function GET(request: NextRequest) {
       usersSnapshot.docs.map(doc => [doc.id, doc.data()])
     );
 
-    // Combine Auth and Firestore data with detailed stats
+    // Aggregate stats as we build user list
+    const stateCounts: Record<string, number> = {};
+    let totalTrainingQuestions = 0;
+    let totalTestQuestions = 0;
+    let totalTestsCompleted = 0;
+    let payingUsers = 0;
+    const usersForDau: { activeDates: string[]; lastUpdated: string | null }[] = [];
+
+    // Combine Auth and Firestore data — omit activeDates from per-user response
     const users = authUsers.users.map(authUser => {
       const firestoreData = firestoreUserMap.get(authUser.uid);
       const stats = firestoreData ? processFirestoreDoc(firestoreData) : null;
+
+      const selectedState = (firestoreData?.selectedState as string) || null;
+      const lastUpdated = (firestoreData?.lastUpdated as string) || null;
+      const trainingQA = stats?.trainingQuestionsAnswered || 0;
+      const testQA = stats?.testQuestionsAnswered || 0;
+      const testsComp = stats?.testsCompleted || 0;
+      const premium = stats?.isPremium || false;
+
+      // Accumulate aggregate stats
+      if (selectedState) {
+        stateCounts[selectedState] = (stateCounts[selectedState] || 0) + 1;
+      }
+      totalTrainingQuestions += trainingQA;
+      totalTestQuestions += testQA;
+      totalTestsCompleted += testsComp;
+      if (premium) payingUsers++;
+      usersForDau.push({ activeDates: stats?.activeDates || [], lastUpdated });
+
       return {
         uid: authUser.uid,
         email: authUser.email || 'Unknown',
-        selectedState: (firestoreData?.selectedState as string) || null,
-        lastUpdated: (firestoreData?.lastUpdated as string) || null,
+        selectedState,
+        lastUpdated,
         createdAt: authUser.metadata.creationTime || null,
-        testsCompleted: stats?.testsCompleted || 0,
-        trainingQuestionsAnswered: stats?.trainingQuestionsAnswered || 0,
-        testQuestionsAnswered: stats?.testQuestionsAnswered || 0,
-        activeDates: stats?.activeDates || [],
-        isPremium: stats?.isPremium || false,
+        testsCompleted: testsComp,
+        trainingQuestionsAnswered: trainingQA,
+        testQuestionsAnswered: testQA,
+        isPremium: premium,
       };
     });
 
@@ -101,22 +163,50 @@ export async function GET(request: NextRequest) {
       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
     });
 
-    // Calculate stats by state
-    const stateCounts: Record<string, number> = {};
-    users.forEach(user => {
-      if (user.selectedState) {
-        stateCounts[user.selectedState] = (stateCounts[user.selectedState] || 0) + 1;
-      }
-    });
+    // Calculate DAU chart data server-side
+    const dailyActiveUsers = calculateDailyActiveUsers(usersForDau);
 
-    return NextResponse.json({
+    // Calculate 7-day active users
+    const last7Days = Array.from({ length: 7 }, (_, i) => {
+      const date = new Date();
+      date.setDate(date.getDate() - i);
+      return date.toISOString().split('T')[0];
+    });
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    const activeUsers7d = usersForDau.filter(u => {
+      if (u.activeDates.length > 0) {
+        return u.activeDates.some(d => last7Days.includes(d));
+      }
+      if (u.lastUpdated) {
+        return new Date(u.lastUpdated) >= sevenDaysAgo;
+      }
+      return false;
+    }).length;
+
+    const totalQuestionsAnswered = totalTrainingQuestions + totalTestQuestions;
+
+    const response = NextResponse.json({
       users,
+      dailyActiveUsers,
       stats: {
         totalUsers: users.length,
-        usersWithState: users.filter(u => u.selectedState).length,
+        usersWithState: Object.values(stateCounts).reduce((a, b) => a + b, 0),
         byState: stateCounts,
+        totalQuestionsAnswered,
+        totalTrainingQuestions,
+        totalTestQuestions,
+        activeUsers7d,
+        totalTestsCompleted,
+        avgQuestionsPerUser: users.length > 0 ? Math.round(totalQuestionsAnswered / users.length) : 0,
+        payingUsers,
       },
     });
+
+    // Cache for 30 seconds to avoid redundant Firebase calls on refresh
+    response.headers.set('Cache-Control', 'private, max-age=30');
+
+    return response;
   } catch (error) {
     console.error('Error fetching users:', error);
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';

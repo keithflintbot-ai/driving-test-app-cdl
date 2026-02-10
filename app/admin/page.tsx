@@ -22,7 +22,6 @@ interface UserData {
   testsCompleted: number;
   trainingQuestionsAnswered: number;
   testQuestionsAnswered: number;
-  activeDates: string[];
   isPremium: boolean;
 }
 
@@ -50,46 +49,6 @@ export default function AdminPage() {
   const [deleting, setDeleting] = useState<string | null>(null);
   const [dailyActiveUsers, setDailyActiveUsers] = useState<{ date: string; count: number; displayDate: string }[]>([]);
 
-  // Helper function to calculate daily active users for the last 30 days
-  const calculateDailyActiveUsers = (userData: UserData[]) => {
-    const days: { date: string; count: number; displayDate: string }[] = [];
-    const today = new Date();
-
-    for (let i = 29; i >= 0; i--) {
-      const date = new Date(today);
-      date.setDate(date.getDate() - i);
-      // Use local timezone for date string (matches how activeDates are stored)
-      const dateStr = date.toLocaleDateString('en-CA'); // YYYY-MM-DD in local timezone
-      const startOfDay = new Date(date);
-      startOfDay.setHours(0, 0, 0, 0);
-      const endOfDay = new Date(date);
-      endOfDay.setHours(23, 59, 59, 999);
-
-      // Count users who were active on this date
-      // Use activeDates if available, otherwise fall back to lastUpdated for legacy data
-      const activeCount = userData.filter(u => {
-        // First check activeDates (accurate tracking)
-        if (u.activeDates && u.activeDates.length > 0) {
-          return u.activeDates.includes(dateStr);
-        }
-        // Fall back to lastUpdated for users without activeDates yet
-        if (u.lastUpdated) {
-          const lastUpdated = new Date(u.lastUpdated);
-          return lastUpdated >= startOfDay && lastUpdated <= endOfDay;
-        }
-        return false;
-      }).length;
-
-      days.push({
-        date: dateStr,
-        count: activeCount,
-        displayDate: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
-      });
-    }
-
-    return days;
-  };
-
   const fetchUsers = async () => {
     setLoading(true);
     setError(null);
@@ -112,75 +71,12 @@ export default function AdminPage() {
         throw new Error(errorData.error || errorData.details || `API error: ${response.status}`);
       }
 
-      const { users: apiUsers } = await response.json();
+      const data = await response.json();
 
-      // API now returns all detailed stats - just map directly
-      const userData: UserData[] = apiUsers.map((u: UserData) => ({
-        uid: u.uid,
-        email: u.email,
-        selectedState: u.selectedState,
-        lastUpdated: u.lastUpdated,
-        createdAt: u.createdAt,
-        testsCompleted: u.testsCompleted || 0,
-        trainingQuestionsAnswered: u.trainingQuestionsAnswered || 0,
-        testQuestionsAnswered: u.testQuestionsAnswered || 0,
-        activeDates: u.activeDates || [],
-        isPremium: u.isPremium || false,
-      }));
-
-      // Calculate stats by state and totals
-      const stateCounts: Record<string, number> = {};
-      let totalTrainingQuestions = 0;
-      let totalTestQuestions = 0;
-      let totalTestsCompleted = 0;
-
-      userData.forEach(u => {
-        if (u.selectedState) {
-          stateCounts[u.selectedState] = (stateCounts[u.selectedState] || 0) + 1;
-        }
-        totalTrainingQuestions += u.trainingQuestionsAnswered;
-        totalTestQuestions += u.testQuestionsAnswered;
-        totalTestsCompleted += u.testsCompleted;
-      });
-
-      // Count active users in last 7 days
-      // Use activeDates if available, otherwise fall back to lastUpdated
-      const sevenDaysAgo = new Date();
-      sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-      const last7Days = Array.from({ length: 7 }, (_, i) => {
-        const date = new Date();
-        date.setDate(date.getDate() - i);
-        return date.toLocaleDateString('en-CA'); // YYYY-MM-DD in local timezone
-      });
-      const activeUsers7d = userData.filter(u => {
-        if (u.activeDates && u.activeDates.length > 0) {
-          return u.activeDates.some(d => last7Days.includes(d));
-        }
-        if (u.lastUpdated) {
-          return new Date(u.lastUpdated) >= sevenDaysAgo;
-        }
-        return false;
-      }).length;
-
-      const totalQuestionsAnswered = totalTrainingQuestions + totalTestQuestions;
-      const avgQuestionsPerUser = userData.length > 0
-        ? Math.round(totalQuestionsAnswered / userData.length)
-        : 0;
-
-      setUsers(userData);
-      setStats({
-        totalUsers: userData.length,
-        usersWithState: userData.filter(u => u.selectedState).length,
-        byState: stateCounts,
-        totalQuestionsAnswered,
-        totalTrainingQuestions,
-        totalTestQuestions,
-        activeUsers7d,
-        totalTestsCompleted,
-        avgQuestionsPerUser,
-        payingUsers: userData.filter(u => u.isPremium).length,
-      });
-      setDailyActiveUsers(calculateDailyActiveUsers(userData));
+      // API returns pre-computed stats, DAU chart data, and user list
+      setUsers(data.users);
+      setStats(data.stats);
+      setDailyActiveUsers(data.dailyActiveUsers);
     } catch (err) {
       console.error("Error fetching users:", err);
       setError(err instanceof Error ? err.message : "Failed to load users");
