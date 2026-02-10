@@ -15,7 +15,7 @@ import { Lock, Sparkles, CheckCircle } from "lucide-react";
 interface PaywallModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  feature: "training_set_4" | "practice_test_4";
+  feature: "training_set_4" | "practice_test_4" | "full_stats";
   onUpgrade: () => Promise<void>;
   isGuest?: boolean;
   onSignUp?: () => void;
@@ -24,6 +24,7 @@ interface PaywallModalProps {
 const FEATURE_NAMES = {
   training_set_4: "Training Set 4: State Laws",
   practice_test_4: "Practice Test 4",
+  full_stats: "Full Question Stats",
 };
 
 const BENEFITS = [

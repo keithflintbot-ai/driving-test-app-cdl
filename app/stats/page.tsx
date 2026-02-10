@@ -6,11 +6,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { Progress } from "@/components/ui/progress";
-import { ArrowLeft, ArrowUpDown, CheckCircle, XCircle, HelpCircle, ChevronRight } from "lucide-react";
+import { ArrowLeft, ArrowUpDown, CheckCircle, XCircle, HelpCircle, ChevronRight, Lock } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { useStore } from "@/store/useStore";
 import { useHydration } from "@/hooks/useHydration";
+import { useAuth } from "@/contexts/AuthContext";
+import { auth } from "@/lib/firebase";
+import { PaywallModal } from "@/components/PaywallModal";
 import { states } from "@/data/states";
 import { Question } from "@/types";
 import questionsData from "@/data/questions.json";
@@ -58,9 +61,60 @@ export default function StatsPage() {
   const getQuestionPerformance = useStore((state) => state.getQuestionPerformance);
   const getTestAttemptStats = useStore((state) => state.getTestAttemptStats);
   const getTrainingSetProgress = useStore((state) => state.getTrainingSetProgress);
+  const hasPremiumAccess = useStore((state) => state.hasPremiumAccess);
+
+  const { user } = useAuth();
+  const isPremium = hydrated ? hasPremiumAccess() : false;
+  const FREE_QUESTION_LIMIT = 5;
 
   const [sortField, setSortField] = useState<SortField>("wrong");
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
+  const [paywallOpen, setPaywallOpen] = useState(false);
+
+  const handleUpgrade = async () => {
+    if (!user?.email || !user?.uid) {
+      router.push("/signup");
+      return;
+    }
+
+    try {
+      const idToken = await auth.currentUser?.getIdToken();
+      if (!idToken) {
+        alert("Authentication error. Please sign in again.");
+        return;
+      }
+
+      const response = await fetch("/api/stripe/checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${idToken}`,
+        },
+        body: JSON.stringify({
+          email: user.email,
+          returnUrl: window.location.origin,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.error) {
+        console.error("Checkout error:", data.error);
+        alert(`Error: ${data.error}`);
+        return;
+      }
+
+      if (data.checkoutUrl) {
+        window.location.href = data.checkoutUrl;
+      } else {
+        console.error("No checkout URL returned:", data);
+        alert("Failed to start checkout. Please try again.");
+      }
+    } catch (error) {
+      console.error("Checkout error:", error);
+      alert("Failed to start checkout. Please check your connection and try again.");
+    }
+  };
 
   // Get state name from code
   const stateName = states.find((s) => s.code === selectedState)?.name || selectedState;
@@ -291,6 +345,16 @@ export default function StatsPage() {
     <div className="min-h-screen bg-white relative">
       <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-orange-50 to-white pointer-events-none" />
       <div className="relative container mx-auto px-4 py-8 max-w-6xl">
+        {/* Paywall Modal */}
+        <PaywallModal
+          open={paywallOpen}
+          onOpenChange={setPaywallOpen}
+          feature="full_stats"
+          onUpgrade={handleUpgrade}
+          isGuest={isGuest}
+          onSignUp={() => router.push("/signup")}
+        />
+
         {/* Header */}
         <div className="mb-6">
           <Link href="/dashboard">
@@ -409,59 +473,174 @@ export default function StatsPage() {
               </CardContent>
             </Card>
           ) : (
-            sortedQuestions.map((item) => (
-              <Card key={item.question.questionId} className="overflow-hidden">
-                <CardContent className="p-4">
-                  <div className="flex items-start gap-3 mb-3">
-                    <StatusIcon item={item} />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium leading-snug">{item.question.question}</p>
-                      <p className="text-xs text-gray-500 mt-1">
-                        {item.question.type === "Universal" ? "Universal" : `${selectedState}-specific`}
-                        {" "}&bull;{" "}
-                        {item.question.category}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between text-sm bg-gray-50 rounded-lg p-3">
-                    <div className="text-center">
-                      <div className={`font-semibold ${item.timesAnswered > 0 ? "text-gray-900" : "text-gray-400"}`}>
-                        {item.timesAnswered}
+            <>
+              {sortedQuestions.slice(0, FREE_QUESTION_LIMIT).map((item) => (
+                <Card key={item.question.questionId} className="overflow-hidden">
+                  <CardContent className="p-4">
+                    <div className="flex items-start gap-3 mb-3">
+                      <StatusIcon item={item} />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium leading-snug">{item.question.question}</p>
+                        <p className="text-xs text-gray-500 mt-1">
+                          {item.question.type === "Universal" ? "Universal" : `${selectedState}-specific`}
+                          {" "}&bull;{" "}
+                          {item.question.category}
+                        </p>
                       </div>
-                      <div className="text-xs text-gray-500">Answered</div>
                     </div>
-                    <div className="text-center">
-                      <div className={`font-semibold ${item.correct > 0 ? "text-green-600" : "text-gray-400"}`}>
-                        {item.correct}
-                      </div>
-                      <div className="text-xs text-gray-500">Correct</div>
-                    </div>
-                    <div className="text-center">
-                      <div className={`font-semibold ${item.wrong > 0 ? "text-red-600" : "text-gray-400"}`}>
-                        {item.wrong}
-                      </div>
-                      <div className="text-xs text-gray-500">Wrong</div>
-                    </div>
-                    <div className="text-center">
-                      {item.timesAnswered > 0 ? (
-                        <div className={`font-semibold ${
-                          item.accuracy === 100
-                            ? "text-green-600"
-                            : item.accuracy >= 50
-                              ? "text-yellow-600"
-                              : "text-red-600"
-                        }`}>
-                          {item.accuracy}%
+                    <div className="flex items-center justify-between text-sm bg-gray-50 rounded-lg p-3">
+                      <div className="text-center">
+                        <div className={`font-semibold ${item.timesAnswered > 0 ? "text-gray-900" : "text-gray-400"}`}>
+                          {item.timesAnswered}
                         </div>
-                      ) : (
-                        <div className="font-semibold text-gray-400">-</div>
-                      )}
-                      <div className="text-xs text-gray-500">Accuracy</div>
+                        <div className="text-xs text-gray-500">Answered</div>
+                      </div>
+                      <div className="text-center">
+                        <div className={`font-semibold ${item.correct > 0 ? "text-green-600" : "text-gray-400"}`}>
+                          {item.correct}
+                        </div>
+                        <div className="text-xs text-gray-500">Correct</div>
+                      </div>
+                      <div className="text-center">
+                        <div className={`font-semibold ${item.wrong > 0 ? "text-red-600" : "text-gray-400"}`}>
+                          {item.wrong}
+                        </div>
+                        <div className="text-xs text-gray-500">Wrong</div>
+                      </div>
+                      <div className="text-center">
+                        {item.timesAnswered > 0 ? (
+                          <div className={`font-semibold ${
+                            item.accuracy === 100
+                              ? "text-green-600"
+                              : item.accuracy >= 50
+                                ? "text-yellow-600"
+                                : "text-red-600"
+                          }`}>
+                            {item.accuracy}%
+                          </div>
+                        ) : (
+                          <div className="font-semibold text-gray-400">-</div>
+                        )}
+                        <div className="text-xs text-gray-500">Accuracy</div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+              {!isPremium && sortedQuestions.length > FREE_QUESTION_LIMIT && (
+                <div className="relative">
+                  <div className="space-y-3 blur-sm pointer-events-none select-none" aria-hidden="true">
+                    {sortedQuestions.slice(FREE_QUESTION_LIMIT, FREE_QUESTION_LIMIT + 3).map((item) => (
+                      <Card key={item.question.questionId} className="overflow-hidden">
+                        <CardContent className="p-4">
+                          <div className="flex items-start gap-3 mb-3">
+                            <StatusIcon item={item} />
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm font-medium leading-snug">{item.question.question}</p>
+                              <p className="text-xs text-gray-500 mt-1">
+                                {item.question.type === "Universal" ? "Universal" : `${selectedState}-specific`}
+                                {" "}&bull;{" "}
+                                {item.question.category}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="flex items-center justify-between text-sm bg-gray-50 rounded-lg p-3">
+                            <div className="text-center">
+                              <div className="font-semibold text-gray-400">{item.timesAnswered}</div>
+                              <div className="text-xs text-gray-500">Answered</div>
+                            </div>
+                            <div className="text-center">
+                              <div className="font-semibold text-gray-400">{item.correct}</div>
+                              <div className="text-xs text-gray-500">Correct</div>
+                            </div>
+                            <div className="text-center">
+                              <div className="font-semibold text-gray-400">{item.wrong}</div>
+                              <div className="text-xs text-gray-500">Wrong</div>
+                            </div>
+                            <div className="text-center">
+                              <div className="font-semibold text-gray-400">-</div>
+                              <div className="text-xs text-gray-500">Accuracy</div>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/60">
+                    <div className="text-center px-4">
+                      <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-orange-100 mb-3">
+                        <Lock className="h-6 w-6 text-orange-600" />
+                      </div>
+                      <h3 className="text-lg font-bold text-gray-900 mb-1">
+                        {sortedQuestions.length - FREE_QUESTION_LIMIT} more questions
+                      </h3>
+                      <p className="text-sm text-gray-600 mb-4">
+                        Unlock Premium to see all your question stats
+                      </p>
+                      <Button
+                        onClick={() => setPaywallOpen(true)}
+                        className="bg-black text-white hover:bg-gray-800"
+                      >
+                        Unlock with Premium
+                      </Button>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
-            ))
+                </div>
+              )}
+              {isPremium && sortedQuestions.slice(FREE_QUESTION_LIMIT).map((item) => (
+                <Card key={item.question.questionId} className="overflow-hidden">
+                  <CardContent className="p-4">
+                    <div className="flex items-start gap-3 mb-3">
+                      <StatusIcon item={item} />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium leading-snug">{item.question.question}</p>
+                        <p className="text-xs text-gray-500 mt-1">
+                          {item.question.type === "Universal" ? "Universal" : `${selectedState}-specific`}
+                          {" "}&bull;{" "}
+                          {item.question.category}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between text-sm bg-gray-50 rounded-lg p-3">
+                      <div className="text-center">
+                        <div className={`font-semibold ${item.timesAnswered > 0 ? "text-gray-900" : "text-gray-400"}`}>
+                          {item.timesAnswered}
+                        </div>
+                        <div className="text-xs text-gray-500">Answered</div>
+                      </div>
+                      <div className="text-center">
+                        <div className={`font-semibold ${item.correct > 0 ? "text-green-600" : "text-gray-400"}`}>
+                          {item.correct}
+                        </div>
+                        <div className="text-xs text-gray-500">Correct</div>
+                      </div>
+                      <div className="text-center">
+                        <div className={`font-semibold ${item.wrong > 0 ? "text-red-600" : "text-gray-400"}`}>
+                          {item.wrong}
+                        </div>
+                        <div className="text-xs text-gray-500">Wrong</div>
+                      </div>
+                      <div className="text-center">
+                        {item.timesAnswered > 0 ? (
+                          <div className={`font-semibold ${
+                            item.accuracy === 100
+                              ? "text-green-600"
+                              : item.accuracy >= 50
+                                ? "text-yellow-600"
+                                : "text-red-600"
+                          }`}>
+                            {item.accuracy}%
+                          </div>
+                        ) : (
+                          <div className="font-semibold text-gray-400">-</div>
+                        )}
+                        <div className="text-xs text-gray-500">Accuracy</div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </>
           )}
         </div>
 
@@ -500,98 +679,146 @@ export default function StatsPage() {
                       </td>
                     </tr>
                   ) : (
-                    sortedQuestions.map((item) => (
-                      <tr
-                        key={item.question.questionId}
-                        className="border-b last:border-b-0 hover:bg-gray-50"
-                      >
-                        <td className="py-3 px-4">
-                          <HoverCard openDelay={200} closeDelay={100}>
-                            <HoverCardTrigger asChild>
-                              <div className="flex items-start gap-2 cursor-default">
-                                <StatusIcon item={item} />
-                                <div>
-                                  <p className="text-sm line-clamp-2">{item.question.question}</p>
-                                  <p className="text-xs text-gray-500 mt-1">
-                                    {item.question.type === "Universal" ? "Universal" : `${selectedState}-specific`}
-                                    {" "}&bull;{" "}
-                                    {item.question.category}
-                                  </p>
+                    <>
+                      {(isPremium ? sortedQuestions : sortedQuestions.slice(0, FREE_QUESTION_LIMIT)).map((item) => (
+                        <tr
+                          key={item.question.questionId}
+                          className="border-b last:border-b-0 hover:bg-gray-50"
+                        >
+                          <td className="py-3 px-4">
+                            <HoverCard openDelay={200} closeDelay={100}>
+                              <HoverCardTrigger asChild>
+                                <div className="flex items-start gap-2 cursor-default">
+                                  <StatusIcon item={item} />
+                                  <div>
+                                    <p className="text-sm line-clamp-2">{item.question.question}</p>
+                                    <p className="text-xs text-gray-500 mt-1">
+                                      {item.question.type === "Universal" ? "Universal" : `${selectedState}-specific`}
+                                      {" "}&bull;{" "}
+                                      {item.question.category}
+                                    </p>
+                                  </div>
                                 </div>
-                              </div>
-                            </HoverCardTrigger>
-                            <HoverCardContent className="w-96" side="right" align="start">
-                              <div className="space-y-2">
-                                <p className="text-sm font-medium mb-3">{item.question.question}</p>
+                              </HoverCardTrigger>
+                              <HoverCardContent className="w-96" side="right" align="start">
                                 <div className="space-y-2">
-                                  {["A", "B", "C", "D"].map((letter) => {
-                                    const optionKey = `option${letter}` as keyof Question;
-                                    const optionText = item.question[optionKey] as string;
-                                    const isCorrect = item.question.correctAnswer === letter;
-                                    return (
-                                      <div
-                                        key={letter}
-                                        className={`flex items-start gap-2 p-2 rounded text-sm ${
-                                          isCorrect
-                                            ? "bg-green-50 border border-green-200"
-                                            : "bg-gray-50 border border-gray-200"
-                                        }`}
-                                      >
-                                        <span className={`font-semibold ${isCorrect ? "text-green-600" : "text-gray-500"}`}>
-                                          {letter}.
-                                        </span>
-                                        <span className={isCorrect ? "text-green-700" : "text-gray-600"}>
-                                          {optionText}
-                                        </span>
-                                        {isCorrect && (
-                                          <CheckCircle className="h-4 w-4 text-green-600 ml-auto flex-shrink-0" />
-                                        )}
-                                      </div>
-                                    );
-                                  })}
+                                  <p className="text-sm font-medium mb-3">{item.question.question}</p>
+                                  <div className="space-y-2">
+                                    {["A", "B", "C", "D"].map((letter) => {
+                                      const optionKey = `option${letter}` as keyof Question;
+                                      const optionText = item.question[optionKey] as string;
+                                      const isCorrect = item.question.correctAnswer === letter;
+                                      return (
+                                        <div
+                                          key={letter}
+                                          className={`flex items-start gap-2 p-2 rounded text-sm ${
+                                            isCorrect
+                                              ? "bg-green-50 border border-green-200"
+                                              : "bg-gray-50 border border-gray-200"
+                                          }`}
+                                        >
+                                          <span className={`font-semibold ${isCorrect ? "text-green-600" : "text-gray-500"}`}>
+                                            {letter}.
+                                          </span>
+                                          <span className={isCorrect ? "text-green-700" : "text-gray-600"}>
+                                            {optionText}
+                                          </span>
+                                          {isCorrect && (
+                                            <CheckCircle className="h-4 w-4 text-green-600 ml-auto flex-shrink-0" />
+                                          )}
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
                                 </div>
-                              </div>
-                            </HoverCardContent>
-                          </HoverCard>
-                        </td>
-                        <td className="text-center py-3 px-4">
-                          <span className={item.timesAnswered > 0 ? "font-semibold" : "text-gray-400"}>
-                            {item.timesAnswered}
-                          </span>
-                        </td>
-                        <td className="text-center py-3 px-4">
-                          <span className={item.correct > 0 ? "font-semibold text-green-600" : "text-gray-400"}>
-                            {item.correct}
-                          </span>
-                        </td>
-                        <td className="text-center py-3 px-4">
-                          <span className={item.wrong > 0 ? "font-semibold text-red-600" : "text-gray-400"}>
-                            {item.wrong}
-                          </span>
-                        </td>
-                        <td className="text-center py-3 px-4">
-                          {item.timesAnswered > 0 ? (
-                            <span
-                              className={`font-semibold ${
-                                item.accuracy === 100
-                                  ? "text-green-600"
-                                  : item.accuracy >= 50
-                                    ? "text-yellow-600"
-                                    : "text-red-600"
-                              }`}
-                            >
-                              {item.accuracy}%
+                              </HoverCardContent>
+                            </HoverCard>
+                          </td>
+                          <td className="text-center py-3 px-4">
+                            <span className={item.timesAnswered > 0 ? "font-semibold" : "text-gray-400"}>
+                              {item.timesAnswered}
                             </span>
-                          ) : (
-                            <span className="text-gray-400">-</span>
-                          )}
-                        </td>
-                      </tr>
-                    ))
+                          </td>
+                          <td className="text-center py-3 px-4">
+                            <span className={item.correct > 0 ? "font-semibold text-green-600" : "text-gray-400"}>
+                              {item.correct}
+                            </span>
+                          </td>
+                          <td className="text-center py-3 px-4">
+                            <span className={item.wrong > 0 ? "font-semibold text-red-600" : "text-gray-400"}>
+                              {item.wrong}
+                            </span>
+                          </td>
+                          <td className="text-center py-3 px-4">
+                            {item.timesAnswered > 0 ? (
+                              <span
+                                className={`font-semibold ${
+                                  item.accuracy === 100
+                                    ? "text-green-600"
+                                    : item.accuracy >= 50
+                                      ? "text-yellow-600"
+                                      : "text-red-600"
+                                }`}
+                              >
+                                {item.accuracy}%
+                              </span>
+                            ) : (
+                              <span className="text-gray-400">-</span>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </>
                   )}
                 </tbody>
               </table>
             </div>
+            {!isPremium && sortedQuestions.length > FREE_QUESTION_LIMIT && (
+              <div className="relative mt-0">
+                <div className="overflow-hidden">
+                  <table className="w-full blur-sm pointer-events-none select-none" aria-hidden="true">
+                    <tbody>
+                      {sortedQuestions.slice(FREE_QUESTION_LIMIT, FREE_QUESTION_LIMIT + 3).map((item) => (
+                        <tr key={item.question.questionId} className="border-b">
+                          <td className="py-3 px-4 w-1/2">
+                            <div className="flex items-start gap-2">
+                              <StatusIcon item={item} />
+                              <div>
+                                <p className="text-sm line-clamp-2">{item.question.question}</p>
+                                <p className="text-xs text-gray-500 mt-1">{item.question.category}</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="text-center py-3 px-4"><span className="text-gray-400">{item.timesAnswered}</span></td>
+                          <td className="text-center py-3 px-4"><span className="text-gray-400">{item.correct}</span></td>
+                          <td className="text-center py-3 px-4"><span className="text-gray-400">{item.wrong}</span></td>
+                          <td className="text-center py-3 px-4"><span className="text-gray-400">-</span></td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/60">
+                  <div className="text-center">
+                    <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-orange-100 mb-3">
+                      <Lock className="h-6 w-6 text-orange-600" />
+                    </div>
+                    <h3 className="text-lg font-bold text-gray-900 mb-1">
+                      {sortedQuestions.length - FREE_QUESTION_LIMIT} more questions
+                    </h3>
+                    <p className="text-sm text-gray-600 mb-4">
+                      Unlock Premium to see all your question stats
+                    </p>
+                    <Button
+                      onClick={() => setPaywallOpen(true)}
+                      className="bg-black text-white hover:bg-gray-800"
+                    >
+                      Unlock with Premium
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>
