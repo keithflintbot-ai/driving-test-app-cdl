@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { QuestionCard } from "@/components/QuestionCard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Trophy, XCircle, ChevronDown, ChevronUp, TrendingUp, Sparkles, ArrowLeft } from "lucide-react";
+import { Trophy, XCircle, ChevronDown, ChevronUp, TrendingUp, Sparkles, ArrowLeft, BarChart3, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { useStore } from "@/store/useStore";
 import { useHydration } from "@/hooks/useHydration";
@@ -21,6 +21,7 @@ export default function ResultsPage() {
 
   const getTestSession = useStore((state) => state.getTestSession);
   const getTestAttemptStats = useStore((state) => state.getTestAttemptStats);
+  const getQuestionPerformance = useStore((state) => state.getQuestionPerformance);
   const isGuest = useStore((state) => state.isGuest);
   const [expandedQuestions, setExpandedQuestions] = useState<Set<number>>(new Set());
   const [loading, setLoading] = useState(true);
@@ -48,6 +49,32 @@ export default function ResultsPage() {
       }
     }
   }, [testSession, testId, router, hydrated]);
+
+  // Compute weak categories from THIS test's wrong answers
+  const weakCategories = useMemo(() => {
+    if (!testSession) return [];
+    const categoryStats: { [cat: string]: { correct: number; wrong: number } } = {};
+    testSession.answers.forEach((answer, index) => {
+      const q = testSession.questions[index];
+      if (!q) return;
+      const cat = q.category;
+      if (!categoryStats[cat]) categoryStats[cat] = { correct: 0, wrong: 0 };
+      if (answer.isCorrect) {
+        categoryStats[cat].correct++;
+      } else {
+        categoryStats[cat].wrong++;
+      }
+    });
+    return Object.entries(categoryStats)
+      .filter(([, stats]) => stats.wrong > 0)
+      .map(([category, stats]) => ({
+        category,
+        wrong: stats.wrong,
+        total: stats.correct + stats.wrong,
+        accuracy: Math.round((stats.correct / (stats.correct + stats.wrong)) * 100),
+      }))
+      .sort((a, b) => a.accuracy - b.accuracy);
+  }, [testSession]);
 
   if (!testSession) {
     return null;
@@ -276,6 +303,50 @@ export default function ResultsPage() {
               )}
             </CardContent>
           </Card>
+        )}
+
+        {/* Weak Areas Insight → Stats CTA */}
+        {!isGuest && weakCategories.length > 0 && (
+          <Link href="/stats" className="block">
+            <Card className="mb-6 border-orange-200 bg-gradient-to-r from-orange-50 to-amber-50 cursor-pointer hover:shadow-md transition-shadow">
+              <CardContent className="p-6">
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
+                    <BarChart3 className="h-5 w-5 text-orange-600" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-bold text-gray-900 mb-2">
+                      {passed ? "Your Performance Breakdown" : "Topics to Focus On"}
+                    </h3>
+                    <div className="space-y-2">
+                      {weakCategories.slice(0, 3).map(({ category, wrong, total, accuracy }) => (
+                        <div key={category} className="flex items-center gap-3">
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center justify-between text-sm">
+                              <span className="text-gray-700 font-medium">{category}</span>
+                              <span className={`font-semibold ${accuracy >= 70 ? "text-green-600" : accuracy >= 50 ? "text-yellow-600" : "text-red-600"}`}>
+                                {accuracy}%
+                              </span>
+                            </div>
+                            <div className="w-full bg-gray-200 rounded-full h-1.5 mt-1">
+                              <div
+                                className={`h-1.5 rounded-full ${accuracy >= 70 ? "bg-green-500" : accuracy >= 50 ? "bg-yellow-500" : "bg-red-500"}`}
+                                style={{ width: `${accuracy}%` }}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <p className="text-sm text-orange-600 font-medium mt-3">
+                      View full stats breakdown →
+                    </p>
+                  </div>
+                  <ChevronRight className="h-5 w-5 text-orange-400 flex-shrink-0 mt-1" />
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
         )}
 
         {/* Question Review */}
