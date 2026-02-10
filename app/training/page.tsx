@@ -286,10 +286,10 @@ function TrainingPageContent() {
               Back
             </Button>
           </Link>
-          {isSetMode && (
-            <span className="text-sm font-medium text-gray-600">
-              {TRAINING_SET_NAMES[setNumber]}
-            </span>
+          {!isGuest && (
+            <Link href="/stats" className="text-sm font-medium text-orange-600 hover:text-orange-800 transition-colors">
+              View Stats
+            </Link>
           )}
         </div>
 
