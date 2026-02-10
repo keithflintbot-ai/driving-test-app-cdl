@@ -17,6 +17,8 @@ export function Header() {
   const photoURL = useStore((state) => state.photoURL);
   const isGuest = useStore((state) => state.isGuest);
   const isAdmin = useAdmin();
+  const hasPremiumAccess = useStore((state) => state.hasPremiumAccess);
+  const isPremium = hasPremiumAccess();
 
   const handleLogout = async () => {
     await logout();
@@ -36,10 +38,10 @@ export function Header() {
   }
 
   return (
-    <header className="border-b bg-white">
+    <header className={`border-b ${isPremium ? "bg-[#fffaf3] border-amber-100" : "bg-white"}`}>
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <Link href={user || isGuest ? "/dashboard" : "/"} className="flex items-center gap-2 group">
-            <Image src="/tiger.png" alt="tigertest.io" width={40} height={40} className="w-10 h-10" />
+            <Image src={isPremium ? "/tiger_face_01.png" : "/tiger.png"} alt="tigertest.io" width={40} height={40} className="w-10 h-10" />
             <span className="text-2xl font-bold text-gray-900 group-hover:opacity-80 transition-opacity">
               tigertest.io
             </span>
