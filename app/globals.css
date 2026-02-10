@@ -66,4 +66,13 @@
   body {
     @apply bg-background text-foreground;
   }
+  body.premium-theme {
+    background-color: #fffaf3;
+  }
+  body.premium-theme .bg-white {
+    background-color: #fffaf3;
+  }
+  body.premium-theme .from-orange-50 {
+    --tw-gradient-from: #fff3e0;
+  }
 }
