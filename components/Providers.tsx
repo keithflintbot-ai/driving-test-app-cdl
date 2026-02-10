@@ -18,8 +18,10 @@ function DataResetNotificationWrapper() {
 }
 
 function PremiumTheme() {
-  const hasPremiumAccess = useStore((state) => state.hasPremiumAccess);
-  const isPremium = hasPremiumAccess();
+  const subscription = useStore((state) => state.subscription);
+  const userId = useStore((state) => state.userId);
+  const isGuest = useStore((state) => state.isGuest);
+  const isPremium = !isGuest && !!userId && subscription?.isPremium === true;
 
   useEffect(() => {
     if (isPremium) {

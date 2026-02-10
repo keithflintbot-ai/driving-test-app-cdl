@@ -7,6 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAuth } from "@/contexts/AuthContext";
 import { useStore } from "@/store/useStore";
 import { useAdmin } from "@/hooks/useAdmin";
+import { useHydration } from "@/hooks/useHydration";
 import Image from "next/image";
 import { Shield } from "lucide-react";
 
@@ -17,8 +18,9 @@ export function Header() {
   const photoURL = useStore((state) => state.photoURL);
   const isGuest = useStore((state) => state.isGuest);
   const isAdmin = useAdmin();
-  const hasPremiumAccess = useStore((state) => state.hasPremiumAccess);
-  const isPremium = hasPremiumAccess();
+  const hydrated = useHydration();
+  const subscription = useStore((state) => state.subscription);
+  const isPremium = hydrated && !isGuest && !!user && subscription?.isPremium === true;
 
   const handleLogout = async () => {
     await logout();
