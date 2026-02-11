@@ -38,6 +38,13 @@ export function Header() {
   // Hide sign up prompt on onboarding pages (too early in flow)
   const isOnboarding = pathname?.startsWith("/onboarding");
 
+  // Hide language toggle on SEO landing pages (they have dedicated /es/ versions)
+  const isSeoPage =
+    pathname?.endsWith("-dmv-practice-test") ||
+    pathname?.endsWith("-examen-practica-dmv") ||
+    pathname === "/practice-tests-by-state" ||
+    pathname === "/es/examenes-practica-por-estado";
+
   if (hideHeader) {
     return null;
   }
@@ -53,22 +60,24 @@ export function Header() {
           </Link>
 
           <div className="flex items-center gap-2 sm:gap-4">
-            {/* Language Toggle */}
-            <div className="flex items-center bg-gray-100 rounded-full p-0.5">
-              {([["en", "\u{1F1FA}\u{1F1F8}"], ["es", "\u{1F1EA}\u{1F1F8}"]] as [Language, string][]).map(([lang, flag]) => (
-                <button
-                  key={lang}
-                  onClick={() => setLanguage(lang)}
-                  className={`px-1.5 py-1 text-sm rounded-full transition-colors ${
-                    language === lang
-                      ? "bg-white shadow-sm"
-                      : "opacity-50 hover:opacity-75"
-                  }`}
-                >
-                  {flag}
-                </button>
-              ))}
-            </div>
+            {/* Language Toggle - hidden on SEO pages which have dedicated /es/ versions */}
+            {!isSeoPage && (
+              <div className="flex items-center bg-gray-100 rounded-full p-0.5">
+                {([["en", "\u{1F1FA}\u{1F1F8}"], ["es", "\u{1F1EA}\u{1F1F8}"]] as [Language, string][]).map(([lang, flag]) => (
+                  <button
+                    key={lang}
+                    onClick={() => setLanguage(lang)}
+                    className={`px-1.5 py-1 text-sm rounded-full transition-colors ${
+                      language === lang
+                        ? "bg-white shadow-sm"
+                        : "opacity-50 hover:opacity-75"
+                    }`}
+                  >
+                    {flag}
+                  </button>
+                ))}
+              </div>
+            )}
 
             {user ? (
               <>

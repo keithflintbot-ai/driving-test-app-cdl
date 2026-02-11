@@ -6,27 +6,28 @@ import { states } from "@/data/states";
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://tigertest.io";
 
 export const metadata: Metadata = {
-  title: "DMV Practice Tests by State 2026 - Free Permit Practice | TigerTest",
+  title:
+    "Exámenes de Práctica DMV por Estado 2026 - Gratis | TigerTest",
   description:
-    "Free DMV practice tests for all 50 states. Choose your state and start practicing with 200 questions based on your state's driver's manual. Pass your permit test on the first try.",
+    "Exámenes de práctica DMV gratuitos para los 50 estados. Elige tu estado y empieza a practicar con 200 preguntas basadas en el manual de conducir de tu estado. Aprueba tu examen de permiso en el primer intento.",
   alternates: {
-    canonical: `${siteUrl}/practice-tests-by-state`,
+    canonical: `${siteUrl}/es/examenes-practica-por-estado`,
     languages: {
       en: `${siteUrl}/practice-tests-by-state`,
       es: `${siteUrl}/es/examenes-practica-por-estado`,
     },
   },
   openGraph: {
-    title: "DMV Practice Tests by State 2026 | TigerTest",
+    title: "Exámenes de Práctica DMV por Estado 2026 | TigerTest",
     description:
-      "Free DMV practice tests for all 50 states. 200 questions per state with instant feedback.",
+      "Exámenes de práctica DMV gratuitos para los 50 estados. 200 preguntas por estado con retroalimentación instantánea.",
     type: "website",
-    url: `${siteUrl}/practice-tests-by-state`,
+    locale: "es_US",
+    url: `${siteUrl}/es/examenes-practica-por-estado`,
     images: [{ url: "/tiger.png", width: 512, height: 512 }],
   },
 };
 
-// Group states by first letter for organized display
 function groupStatesByLetter() {
   const groups: Record<string, typeof states> = {};
   for (const state of states) {
@@ -37,7 +38,7 @@ function groupStatesByLetter() {
   return groups;
 }
 
-export default function PracticeTestsByStatePage() {
+export default function SpanishPracticeTestsByStatePage() {
   const grouped = groupStatesByLetter();
   const letters = Object.keys(grouped).sort();
 
@@ -48,14 +49,14 @@ export default function PracticeTestsByStatePage() {
       {
         "@type": "ListItem",
         position: 1,
-        name: "Home",
+        name: "Inicio",
         item: siteUrl,
       },
       {
         "@type": "ListItem",
         position: 2,
-        name: "Practice Tests by State",
-        item: `${siteUrl}/practice-tests-by-state`,
+        name: "Exámenes de Práctica por Estado",
+        item: `${siteUrl}/es/examenes-practica-por-estado`,
       },
     ],
   };
@@ -75,14 +76,14 @@ export default function PracticeTestsByStatePage() {
           <ol className="flex items-center gap-1">
             <li>
               <Link href="/" className="hover:text-orange-600">
-                Home
+                Inicio
               </Link>
             </li>
             <li>
               <ChevronRight className="h-3 w-3 inline" />
             </li>
             <li className="text-gray-900 font-medium">
-              Practice Tests by State
+              Exámenes de Práctica por Estado
             </li>
           </ol>
         </nav>
@@ -90,12 +91,12 @@ export default function PracticeTestsByStatePage() {
         {/* Hero */}
         <div className="text-center mb-12">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-            DMV Practice Tests by State
+            Exámenes de Práctica DMV por Estado
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Choose your state below to access free practice questions based on
-            your state&apos;s official driver&apos;s manual. All 50 states plus
-            Washington D.C. are covered.
+            Elige tu estado a continuación para acceder a preguntas de práctica
+            gratuitas basadas en el manual oficial de conducir de tu estado.
+            Los 50 estados más Washington D.C. están cubiertos.
           </p>
         </div>
 
@@ -110,7 +111,7 @@ export default function PracticeTestsByStatePage() {
                 {grouped[letter].map((state) => (
                   <Link
                     key={state.slug}
-                    href={`/${state.slug}-dmv-practice-test`}
+                    href={`/es/${state.slug}-examen-practica-dmv`}
                     className="flex items-center justify-between bg-gray-50 border border-gray-200 rounded-lg p-3 hover:border-orange-300 hover:bg-orange-50 transition-colors group"
                   >
                     <div>
@@ -118,7 +119,7 @@ export default function PracticeTestsByStatePage() {
                         {state.name}
                       </span>
                       <span className="text-sm text-gray-500 ml-2">
-                        {state.writtenTestQuestions}q &middot;{" "}
+                        {state.writtenTestQuestions}p &middot;{" "}
                         {state.passingScore}%
                       </span>
                     </div>
@@ -133,25 +134,27 @@ export default function PracticeTestsByStatePage() {
         {/* Summary Section */}
         <div className="bg-gray-50 rounded-2xl p-6 md:p-8 mb-12">
           <h2 className="text-xl font-bold text-gray-900 mb-4">
-            About TigerTest State Practice Tests
+            Sobre los Exámenes de Práctica por Estado de TigerTest
           </h2>
           <div className="text-gray-600 space-y-3">
             <p>
-              Every state has different driving laws, test formats, and passing
-              requirements. TigerTest provides <strong>200 questions per state</strong>,
-              including state-specific questions about local traffic laws, speed
-              limits, and regulations unique to your state.
+              Cada estado tiene diferentes leyes de tránsito, formatos de examen
+              y requisitos para aprobar. TigerTest ofrece{" "}
+              <strong>200 preguntas por estado</strong>, incluyendo preguntas
+              específicas sobre leyes de tránsito locales, límites de velocidad
+              y regulaciones únicas de tu estado.
             </p>
             <p>
-              Each practice test mirrors the format of your state&apos;s actual
-              DMV written exam. Study in training mode on your phone for quick
-              practice, then take full 50-question tests when you&apos;re ready
-              to simulate the real exam.
+              Cada examen de práctica refleja el formato del examen escrito real
+              del DMV de tu estado. Estudia en modo entrenamiento en tu teléfono
+              para práctica rápida, luego toma exámenes completos de 50
+              preguntas cuando estés listo para simular el examen real.
             </p>
             <p>
-              All practice tests are <strong>free to start</strong> with no
-              account required. Track your progress, see detailed explanations,
-              and build confidence before test day.
+              Todos los exámenes de práctica son{" "}
+              <strong>gratuitos para empezar</strong> sin necesidad de crear una
+              cuenta. Sigue tu progreso, ve explicaciones detalladas y gana
+              confianza antes del día del examen.
             </p>
           </div>
         </div>
