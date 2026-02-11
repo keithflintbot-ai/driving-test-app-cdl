@@ -6,6 +6,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle2, FileText, Target, Clock } from "lucide-react";
 import { states, getStateBySlug } from "@/data/states";
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://tigertest.io";
+
 interface StatePageProps {
   params: Promise<{ slug: string }>;
 }
@@ -26,12 +28,15 @@ export async function generateMetadata({ params }: StatePageProps): Promise<Meta
     };
   }
 
-  const title = `${state.name} DMV Practice Test 2025 | Free ${state.dmvName} Test Prep`;
+  const title = `${state.name} DMV Practice Test 2026 | Free ${state.dmvName} Test Prep`;
   const description = `Free ${state.name} DMV practice test with 200 questions. Pass your ${state.dmvName} written test on the first try. ${state.writtenTestQuestions} questions, ${state.passingScore}% to pass.`;
 
   return {
     title,
     description,
+    alternates: {
+      canonical: `${siteUrl}/${state.slug}-dmv-practice-test`,
+    },
     openGraph: {
       title,
       description,
@@ -96,7 +101,7 @@ export default async function StatePage({ params }: StatePageProps) {
         {/* Hero */}
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
-            {state.name} DMV Practice Test 2025
+            {state.name} DMV Practice Test 2026
           </h1>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
             Free practice questions for the {state.dmvName} written knowledge test.

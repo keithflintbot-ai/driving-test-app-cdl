@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: siteUrl,
     siteName: "TigerTest",
-    title: "Free DMV Practice Test 2025 | TigerTest",
+    title: "Free DMV Practice Test 2026 | TigerTest",
     description:
       "Free DMV practice tests for all 50 states. 200+ questions per state with instant feedback and detailed explanations.",
     images: [
@@ -60,7 +60,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Free DMV Practice Test 2025 | TigerTest",
+    title: "Free DMV Practice Test 2026 | TigerTest",
     description:
       "Free DMV practice tests for all 50 states. 200+ questions with instant feedback.",
     images: ["/tiger.png"],
