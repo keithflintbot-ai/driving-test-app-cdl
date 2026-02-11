@@ -28,7 +28,8 @@ const popularStates = popularStateSlugs
   .filter(Boolean);
 
 export function Footer() {
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
+  const isEs = language === "es";
 
   return (
     <footer className="border-t bg-gray-50 mt-auto">
@@ -39,7 +40,11 @@ export function Footer() {
               state && (
                 <Link
                   key={state.slug}
-                  href={`/${state.slug}-dmv-practice-test`}
+                  href={
+                    isEs
+                      ? `/es/${state.slug}-examen-practica-dmv`
+                      : `/${state.slug}-dmv-practice-test`
+                  }
                   className="hover:text-orange-600"
                 >
                   {state.name}
@@ -47,7 +52,11 @@ export function Footer() {
               )
           )}
           <Link
-            href="/practice-tests-by-state"
+            href={
+              isEs
+                ? "/es/examenes-practica-por-estado"
+                : "/practice-tests-by-state"
+            }
             className="text-orange-600 hover:text-orange-700 font-medium"
           >
             {t("footer.allStates")}

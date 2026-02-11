@@ -40,6 +40,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
+  // Spanish state DMV practice test landing pages
+  const stateDmvPagesEs: MetadataRoute.Sitemap = states.map((state) => ({
+    url: `${siteUrl}/es/${state.slug}-examen-practica-dmv`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  // Spanish index page
+  const spanishIndexPage: MetadataRoute.Sitemap = [
+    {
+      url: `${siteUrl}/es/examenes-practica-por-estado`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.8,
+    },
+  ];
+
   // Legacy state pages
   const statePages: MetadataRoute.Sitemap = states.map((state) => ({
     url: `${siteUrl}/states/${state.slug}`,
@@ -48,5 +66,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  return [...corePages, ...stateDmvPages, ...statePages];
+  return [...corePages, ...stateDmvPages, ...stateDmvPagesEs, ...spanishIndexPage, ...statePages];
 }
