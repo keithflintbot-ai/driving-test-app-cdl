@@ -55,17 +55,17 @@ export function Header() {
           <div className="flex items-center gap-2 sm:gap-4">
             {/* Language Toggle */}
             <div className="flex items-center bg-gray-100 rounded-full p-0.5">
-              {(["en", "es"] as Language[]).map((lang) => (
+              {([["en", "\u{1F1FA}\u{1F1F8}"], ["es", "\u{1F1EA}\u{1F1F8}"]] as [Language, string][]).map(([lang, flag]) => (
                 <button
                   key={lang}
                   onClick={() => setLanguage(lang)}
-                  className={`px-2 py-1 text-xs font-semibold rounded-full transition-colors ${
+                  className={`px-1.5 py-1 text-sm rounded-full transition-colors ${
                     language === lang
-                      ? "bg-white text-gray-900 shadow-sm"
-                      : "text-gray-500 hover:text-gray-700"
+                      ? "bg-white shadow-sm"
+                      : "opacity-50 hover:opacity-75"
                   }`}
                 >
-                  {lang.toUpperCase()}
+                  {flag}
                 </button>
               ))}
             </div>
