@@ -45,27 +45,27 @@ export function Header() {
   return (
     <header className="border-b bg-white">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <Link href={user || isGuest ? "/dashboard" : "/"} className="flex items-center gap-2 group">
+        <Link href={user || isGuest ? "/dashboard" : "/"} className="flex items-center gap-2 group flex-shrink-0">
             <Image src={isPremium ? "/tiger_face_01.png" : "/tiger.png"} alt="tigertest.io" width={40} height={40} className="w-10 h-10" />
-            <span className="text-2xl font-bold text-gray-900 group-hover:opacity-80 transition-opacity">
+            <span className="text-2xl font-bold text-gray-900 group-hover:opacity-80 transition-opacity hidden sm:inline">
               tigertest.io
             </span>
           </Link>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
             {/* Language Toggle */}
             <div className="flex items-center bg-gray-100 rounded-full p-0.5">
               {(["en", "es"] as Language[]).map((lang) => (
                 <button
                   key={lang}
                   onClick={() => setLanguage(lang)}
-                  className={`px-2.5 py-1 text-xs font-semibold rounded-full transition-colors ${
+                  className={`px-2 py-1 text-xs font-semibold rounded-full transition-colors ${
                     language === lang
                       ? "bg-white text-gray-900 shadow-sm"
                       : "text-gray-500 hover:text-gray-700"
                   }`}
                 >
-                  {t(`language.${lang}`)}
+                  {lang.toUpperCase()}
                 </button>
               ))}
             </div>
