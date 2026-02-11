@@ -17,7 +17,7 @@ import { auth } from "@/lib/firebase";
 import { PaywallModal } from "@/components/PaywallModal";
 import { states } from "@/data/states";
 import { Question } from "@/types";
-import questionsData from "@/data/questions.json";
+import { getQuestionsData } from "@/lib/testGenerator";
 
 type SortField = "question" | "timesAnswered" | "correct" | "wrong" | "accuracy";
 type SortDirection = "asc" | "desc";
@@ -48,7 +48,7 @@ const CATEGORY_TO_SET: { [key: string]: number } = {
 export default function StatsPage() {
   const router = useRouter();
   const hydrated = useHydration();
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
 
   const selectedState = useStore((state) => state.selectedState);
   const isGuest = useStore((state) => state.isGuest);
@@ -145,11 +145,11 @@ export default function StatsPage() {
   // Get all questions for the current state
   const stateQuestions = useMemo(() => {
     if (!selectedState) return [];
-    const allQuestions = questionsData as Question[];
+    const allQuestions = getQuestionsData(language);
     return allQuestions.filter(
       (q) => q.state === "ALL" || q.state === selectedState
     );
-  }, [selectedState]);
+  }, [selectedState, language]);
 
   // Get performance data and merge with questions
   const questionsWithPerformance = useMemo((): QuestionWithPerformance[] => {

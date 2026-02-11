@@ -20,7 +20,7 @@ export default function TestPage() {
   const testId = parseInt(params.id as string);
   const hydrated = useHydration();
   const initialized = useRef(false);
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
 
   const selectedState = useStore((state) => state.selectedState);
   const getCurrentTest = useStore((state) => state.getCurrentTest);
@@ -77,7 +77,7 @@ export default function TestPage() {
         }
       } else {
         // Generate new test
-        const testQuestions = generateTest(testId, state).map(shuffleQuestionOptions);
+        const testQuestions = generateTest(testId, state, language).map(shuffleQuestionOptions);
         setQuestions(testQuestions);
         startTest(testId, testQuestions);
       }

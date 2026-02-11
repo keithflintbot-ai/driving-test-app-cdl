@@ -20,7 +20,7 @@ function TrainingPageContent() {
   const searchParams = useSearchParams();
   const hydrated = useHydration();
   const { playCorrectSound, playIncorrectSound } = useSound();
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
 
   const selectedState = useStore((state) => state.selectedState);
   const isGuest = useStore((state) => state.isGuest);
@@ -110,7 +110,8 @@ function TrainingPageContent() {
         selectedState,
         currentSetData.masteredIds,
         currentSetData.wrongQueue,
-        currentQuestionIdRef.current  // Use ref for reliable current question ID
+        currentQuestionIdRef.current,  // Use ref for reliable current question ID
+        language
       );
 
       // If all questions are mastered, show fireworks then completion
@@ -133,13 +134,14 @@ function TrainingPageContent() {
       question = getTrainingQuestion(
         selectedState,
         freshTraining.masteredQuestionIds,
-        freshTraining.lastQuestionId
+        freshTraining.lastQuestionId,
+        language
       );
 
       // If all questions are mastered, reset and start fresh
       if (!question) {
         resetMasteredQuestions();
-        question = getTrainingQuestion(selectedState, [], freshTraining.lastQuestionId);
+        question = getTrainingQuestion(selectedState, [], freshTraining.lastQuestionId, language);
       }
     }
 
