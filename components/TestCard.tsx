@@ -1,8 +1,11 @@
+"use client";
+
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ChevronRight } from "lucide-react";
 import { PremiumBadge } from "@/components/PremiumBadge";
+import { useTranslation } from "@/contexts/LanguageContext";
 
 interface TestCardProps {
   testNumber: number;
@@ -28,6 +31,7 @@ export function TestCard({
   isPremiumLocked = false,
   onPremiumClick,
 }: TestCardProps) {
+  const { t } = useTranslation();
   const bestPercentage = bestScore ? Math.round((bestScore / totalQuestions) * 100) : 0;
 
   const getStatusBadge = () => {
@@ -35,22 +39,22 @@ export function TestCard({
       return <PremiumBadge variant="locked" size="sm" />;
     }
     if (locked) {
-      return <Badge variant="outline" className="bg-gray-100 hover:bg-gray-100 text-xs">Locked</Badge>;
+      return <Badge variant="outline" className="bg-gray-100 hover:bg-gray-100 text-xs">{t("common.locked")}</Badge>;
     }
 
     if (status === "completed" && bestScore !== undefined) {
       if (bestPercentage === 100) {
-        return <Badge className="bg-green-500 hover:bg-green-500 text-xs">Mastered</Badge>;
+        return <Badge className="bg-green-500 hover:bg-green-500 text-xs">{t("testCard.mastered")}</Badge>;
       } else if (bestPercentage >= 70) {
-        return <Badge className="bg-green-500 hover:bg-green-500 text-xs">Passed</Badge>;
+        return <Badge className="bg-green-500 hover:bg-green-500 text-xs">{t("testCard.passed")}</Badge>;
       } else {
-        return <Badge className="bg-orange-500 hover:bg-orange-500 text-xs">Keep Practicing</Badge>;
+        return <Badge className="bg-orange-500 hover:bg-orange-500 text-xs">{t("testCard.keepPracticing")}</Badge>;
       }
     }
 
     switch (status) {
       case "in-progress":
-        return <Badge className="bg-yellow-500 hover:bg-yellow-500 text-xs">In Progress</Badge>;
+        return <Badge className="bg-yellow-500 hover:bg-yellow-500 text-xs">{t("testCard.inProgress")}</Badge>;
       default:
         return null;
     }
@@ -58,13 +62,13 @@ export function TestCard({
 
   const getSubtext = () => {
     if (locked) {
-      return <span className="text-gray-400">Locked</span>;
+      return <span className="text-gray-400">{t("common.locked")}</span>;
     }
     if (isPremiumLocked) {
-      return <span className="text-orange-600">Unlock with Premium</span>;
+      return <span className="text-orange-600">{t("common.unlockWithPremium")}</span>;
     }
     if (status === "in-progress") {
-      return <span className="text-yellow-600">{progress}% done</span>;
+      return <span className="text-yellow-600">{progress}% {t("testCard.done")}</span>;
     }
     if (status === "completed" && bestScore !== undefined) {
       return (
@@ -73,7 +77,7 @@ export function TestCard({
         </span>
       );
     }
-    return <span className="text-gray-400">50 questions</span>;
+    return <span className="text-gray-400">{t("testCard.fiftyQuestions")}</span>;
   };
 
   const cardContent = (
@@ -87,7 +91,7 @@ export function TestCard({
       <CardContent className="p-4 flex items-center justify-between">
         <div className="flex flex-col">
           <div className="flex items-center gap-2 mb-1">
-            <h3 className="font-semibold text-sm leading-tight">Test {testNumber}</h3>
+            <h3 className="font-semibold text-sm leading-tight">{t("testCard.test")} {testNumber}</h3>
             {getStatusBadge()}
           </div>
           <p className="text-xs">

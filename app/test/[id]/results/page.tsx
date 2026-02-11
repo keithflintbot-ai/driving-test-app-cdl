@@ -12,12 +12,14 @@ import { useStore } from "@/store/useStore";
 import { useHydration } from "@/hooks/useHydration";
 import { Cloud } from "lucide-react";
 import { Fireworks } from "@/components/Fireworks";
+import { useTranslation } from "@/contexts/LanguageContext";
 
 export default function ResultsPage() {
   const params = useParams();
   const router = useRouter();
   const testId = parseInt(params.id as string);
   const hydrated = useHydration();
+  const { t } = useTranslation();
 
   const getTestSession = useStore((state) => state.getTestSession);
   const getTestAttemptStats = useStore((state) => state.getTestAttemptStats);
@@ -122,7 +124,7 @@ export default function ResultsPage() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="text-xl font-semibold mb-2">Loading results...</div>
+          <div className="text-xl font-semibold mb-2">{t("results.loadingResults")}</div>
         </div>
       </div>
     );
@@ -141,7 +143,7 @@ export default function ResultsPage() {
           <Link href="/dashboard">
             <Button variant="ghost" className="mb-4">
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Dashboard
+              {t("common.backToDashboard")}
             </Button>
           </Link>
         </div>
@@ -161,13 +163,13 @@ export default function ResultsPage() {
               </div>
 
               <h1 className="text-4xl md:text-5xl font-bold mb-3">
-                {passed ? "Congratulations!" : "Keep Practicing!"}
+                {passed ? t("results.congratulations") : t("results.keepPracticing")}
               </h1>
 
               <p className="text-lg text-gray-700 mb-6 max-w-2xl mx-auto">
                 {passed
-                  ? "You passed the test with flying colors!"
-                  : "You need 70% to pass. Review the questions below and try again."}
+                  ? t("results.passedWithFlyingColors")
+                  : t("results.need70ToPass")}
               </p>
 
               {/* Main Score Display */}
@@ -176,34 +178,34 @@ export default function ResultsPage() {
                   {percentage}%
                 </div>
                 <div className="text-2xl text-gray-700 mb-4">
-                  {score} out of {totalQuestions} correct
+                  {score} {t("results.outOf")} {totalQuestions} {t("results.correctLabel")}
                 </div>
                 <Badge
                   className={`text-lg px-6 py-2 ${
                     passed ? "bg-green-600 hover:bg-green-700" : "bg-orange-600 hover:bg-orange-700"
                   }`}
                 >
-                  {passed ? "PASSED" : "FAILED"}
+                  {passed ? t("results.passed") : t("results.failed")}
                 </Badge>
               </div>
 
               {/* Action Buttons */}
               <div className="flex flex-col sm:flex-row gap-3 justify-center mt-8 max-w-2xl mx-auto">
                 <Button className="bg-black text-white hover:bg-gray-800 flex-1 sm:flex-initial" onClick={() => router.push("/dashboard")}>
-                  Back to Dashboard
+                  {t("common.backToDashboard")}
                 </Button>
                 <Button
                   className="bg-white text-black hover:bg-gray-100 border-2 border-gray-300 flex-1 sm:flex-initial"
                   onClick={() => router.push(`/test/${testId}`)}
                 >
-                  Retake Test
+                  {t("results.retakeTest")}
                 </Button>
                 {!isGuest && (
                   <Button
                     className="bg-white text-black hover:bg-gray-100 border-2 border-gray-300 flex-1 sm:flex-initial"
                     onClick={() => router.push("/stats")}
                   >
-                    View Stats
+                    {t("results.viewStats")}
                   </Button>
                 )}
               </div>
@@ -222,14 +224,14 @@ export default function ResultsPage() {
                   </div>
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-1">Save Your Progress</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-1">{t("results.saveYourProgress")}</h3>
                   <p className="text-gray-600">
-                    Your score is only saved on this device. Create a free account to save your progress to the cloud and track your improvement over time.
+                    {t("results.scoreOnlyOnDevice")}
                   </p>
                 </div>
                 <Link href="/signup">
                   <Button className="bg-blue-600 text-white hover:bg-blue-700 whitespace-nowrap">
-                    Sign Up Free
+                    {t("results.signUpFree")}
                   </Button>
                 </Link>
               </div>
@@ -241,20 +243,20 @@ export default function ResultsPage() {
         {attemptStats && attemptStats.attemptCount > 1 && (
           <Card className="mb-6">
             <CardHeader>
-              <CardTitle className="text-center">Your Progress</CardTitle>
-              <p className="text-center text-sm text-gray-600">Attempt #{attemptNumber}</p>
+              <CardTitle className="text-center">{t("results.yourProgress")}</CardTitle>
+              <p className="text-center text-sm text-gray-600">{t("results.attempt")} #{attemptNumber}</p>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                 {/* First Attempt */}
                 <Card className="bg-gray-50 border-gray-200">
                   <CardContent className="pt-6 text-center">
-                    <div className="text-sm font-medium text-gray-600 mb-2">First Attempt</div>
+                    <div className="text-sm font-medium text-gray-600 mb-2">{t("results.firstAttempt")}</div>
                     <div className="text-4xl font-bold text-gray-700 mb-1">
                       {firstPercentage}%
                     </div>
                     <div className="text-sm text-gray-500">
-                      {firstScore}/{totalQuestions} correct
+                      {firstScore}/{totalQuestions} {t("results.correctLabel")}
                     </div>
                   </CardContent>
                 </Card>
@@ -262,17 +264,17 @@ export default function ResultsPage() {
                 {/* This Attempt */}
                 <Card className="bg-orange-50 border-orange-200 border-2">
                   <CardContent className="pt-6 text-center">
-                    <div className="text-sm font-medium text-orange-700 mb-2">This Attempt</div>
+                    <div className="text-sm font-medium text-orange-700 mb-2">{t("results.thisAttempt")}</div>
                     <div className="text-4xl font-bold text-orange-600 mb-1">
                       {percentage}%
                     </div>
                     <div className="text-sm text-gray-600">
-                      {score}/{totalQuestions} correct
+                      {score}/{totalQuestions} {t("results.correctLabel")}
                     </div>
                     {isNewBest && (
                       <div className="flex items-center justify-center gap-1 text-yellow-600 font-semibold mt-2">
                         <Sparkles className="h-4 w-4" />
-                        <span className="text-sm">NEW BEST!</span>
+                        <span className="text-sm">{t("results.newBest")}</span>
                       </div>
                     )}
                   </CardContent>
@@ -281,12 +283,12 @@ export default function ResultsPage() {
                 {/* Best Score */}
                 <Card className="bg-green-50 border-green-200">
                   <CardContent className="pt-6 text-center">
-                    <div className="text-sm font-medium text-green-700 mb-2">Best Score</div>
+                    <div className="text-sm font-medium text-green-700 mb-2">{t("results.bestScore")}</div>
                     <div className="text-4xl font-bold text-green-600 mb-1">
                       {bestPercentage}%
                     </div>
                     <div className="text-sm text-gray-600">
-                      {bestScore}/{totalQuestions} correct
+                      {bestScore}/{totalQuestions} {t("results.correctLabel")}
                     </div>
                   </CardContent>
                 </Card>
@@ -297,7 +299,7 @@ export default function ResultsPage() {
                 <div className="flex items-center justify-center gap-2 bg-green-50 border-2 border-green-300 rounded-lg p-4">
                   <TrendingUp className="h-6 w-6 text-green-600" />
                   <span className="text-lg font-semibold text-green-700">
-                    Improved by {improvement}% since first attempt! 🚀
+                    {t("results.improvedBy")} {improvement}% {t("results.sinceFirstAttempt")} 🚀
                   </span>
                 </div>
               )}
@@ -316,7 +318,7 @@ export default function ResultsPage() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <h3 className="font-bold text-gray-900 mb-2">
-                      {passed ? "Your Performance Breakdown" : "Topics to Focus On"}
+                      {passed ? t("results.yourPerformanceBreakdown") : t("results.topicsToFocusOn")}
                     </h3>
                     <div className="space-y-2">
                       {weakCategories.slice(0, 3).map(({ category, wrong, total, accuracy }) => (
@@ -339,7 +341,7 @@ export default function ResultsPage() {
                       ))}
                     </div>
                     <p className="text-sm text-orange-600 font-medium mt-3">
-                      View full stats breakdown →
+                      {t("results.viewFullStats")}
                     </p>
                   </div>
                   <ChevronRight className="h-5 w-5 text-orange-400 flex-shrink-0 mt-1" />
@@ -351,13 +353,13 @@ export default function ResultsPage() {
 
         {/* Question Review */}
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-2xl font-bold">Review Questions</h2>
+          <h2 className="text-2xl font-bold">{t("results.reviewQuestions")}</h2>
           <div className="flex gap-2">
             <Button size="sm" className="bg-white text-black hover:bg-gray-100 border-2 border-gray-300" onClick={expandAll}>
-              Expand All
+              {t("results.expandAll")}
             </Button>
             <Button size="sm" className="bg-white text-black hover:bg-gray-100 border-2 border-gray-300" onClick={collapseAll}>
-              Collapse All
+              {t("results.collapseAll")}
             </Button>
           </div>
         </div>
@@ -386,10 +388,10 @@ export default function ResultsPage() {
                       <div className="flex-1">
                         <div className="font-medium">{question.question}</div>
                         <div className="text-sm text-gray-600 mt-1">
-                          Your answer: <span className="font-semibold">{userAnswer || "Not answered"}</span>
+                          {t("results.yourAnswer")}: <span className="font-semibold">{userAnswer || t("results.notAnswered")}</span>
                           {!isCorrect && (
                             <span className="ml-2">
-                              • Correct: <span className="font-semibold text-green-600">{question.correctAnswer}</span>
+                              • {t("results.correctAnswer")}: <span className="font-semibold text-green-600">{question.correctAnswer}</span>
                             </span>
                           )}
                         </div>
@@ -397,7 +399,7 @@ export default function ResultsPage() {
                     </div>
                     <div className="flex items-center gap-3">
                       <Badge className={isCorrect ? "bg-green-500" : "bg-red-500"}>
-                        {isCorrect ? "Correct" : "Wrong"}
+                        {isCorrect ? t("results.correctAnswer") : t("results.wrong")}
                       </Badge>
                       {isExpanded ? (
                         <ChevronUp className="w-5 h-5 text-gray-400" />

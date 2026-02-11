@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
+import { useTranslation } from "@/contexts/LanguageContext";
 import { useStore } from "@/store/useStore";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,6 +23,7 @@ export default function LoginPage() {
   const { login, loginWithGoogle, resetPassword } = useAuth();
   const router = useRouter();
   const selectedState = useStore((state) => state.selectedState);
+  const { t } = useTranslation();
 
   const handleResetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,11 +33,11 @@ export default function LoginPage() {
 
     try {
       await resetPassword(email);
-      setSuccess("Password reset email sent! Check your inbox.");
+      setSuccess(t("login.passwordResetSent"));
       setShowResetPassword(false);
     } catch (err: any) {
       if (err.code === "auth/user-not-found") {
-        setError("No account found with this email");
+        setError(t("login.noAccountFound"));
       } else {
         setError(err.message || "Failed to send reset email");
       }
@@ -89,9 +91,9 @@ export default function LoginPage() {
       <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-orange-50 to-white pointer-events-none" />
       <Card className="relative w-full max-w-2xl">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold text-center">Welcome Back</CardTitle>
+          <CardTitle className="text-2xl font-bold text-center">{t("login.welcomeBack")}</CardTitle>
           <CardDescription className="text-center">
-            Log in to continue your driving test practice
+            {t("login.logInToContinue")}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -119,14 +121,14 @@ export default function LoginPage() {
                 <span className="w-full border-t" />
               </div>
               <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-white px-2 text-muted-foreground">Or continue with email</span>
+                <span className="bg-white px-2 text-muted-foreground">{t("common.orContinueWithEmail")}</span>
               </div>
             </div>
 
             {/* Email/Password Form */}
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">{t("common.email")}</Label>
               <Input
                 id="email"
                 type="email"
@@ -140,13 +142,13 @@ export default function LoginPage() {
 
             <div className="space-y-2">
               <div className="flex justify-between items-center">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">{t("common.password")}</Label>
                 <button
                   type="button"
                   onClick={() => setShowResetPassword(true)}
                   className="text-sm text-orange-600 hover:underline"
                 >
-                  Forgot password?
+                  {t("common.forgotPassword")}
                 </button>
               </div>
               <Input
@@ -161,13 +163,13 @@ export default function LoginPage() {
             </div>
 
             <Button type="submit" className="w-full bg-black text-white hover:bg-gray-800" disabled={loading}>
-              {loading ? "Logging in..." : "Log In"}
+              {loading ? t("login.loggingIn") : t("login.logIn")}
             </Button>
 
               <div className="text-center text-sm text-gray-600">
-                Don&apos;t have an account?{" "}
+                {t("common.noAccount")}{" "}
                 <Link href="/signup" className="text-orange-600 hover:underline font-semibold">
-                  Sign up
+                  {t("common.signUp")}
                 </Link>
               </div>
             </form>
@@ -176,9 +178,9 @@ export default function LoginPage() {
             {showResetPassword && (
               <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
                 <div className="bg-white rounded-lg p-6 max-w-md w-full">
-                  <h3 className="text-lg font-semibold mb-2">Reset Password</h3>
+                  <h3 className="text-lg font-semibold mb-2">{t("login.resetPassword")}</h3>
                   <p className="text-gray-600 text-sm mb-4">
-                    Enter your email address and we&apos;ll send you a link to reset your password.
+                    {t("login.resetPasswordDesc")}
                   </p>
                   <form onSubmit={handleResetPassword} className="space-y-4">
                     <Input
@@ -196,14 +198,14 @@ export default function LoginPage() {
                         disabled={loading}
                         className="w-full bg-white text-black hover:bg-gray-100 border-2 border-gray-300"
                       >
-                        Cancel
+                        {t("common.cancel")}
                       </Button>
                       <Button
                         type="submit"
                         disabled={loading || !email}
                         className="w-full bg-black text-white hover:bg-gray-800"
                       >
-                        {loading ? "Sending..." : "Send Reset Link"}
+                        {loading ? t("login.sending") : t("login.sendResetLink")}
                       </Button>
                     </div>
                   </form>

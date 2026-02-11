@@ -1,7 +1,10 @@
+"use client";
+
 import { Question } from "@/types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle2, XCircle } from "lucide-react";
+import { useTranslation } from "@/contexts/LanguageContext";
 
 interface QuestionCardProps {
   question: Question;
@@ -20,6 +23,7 @@ export function QuestionCard({
   onAnswerChange,
   showResult = false,
 }: QuestionCardProps) {
+  const { t } = useTranslation();
   const options = [
     { value: "A", label: question.optionA },
     { value: "B", label: question.optionB },
@@ -52,7 +56,7 @@ export function QuestionCard({
       <CardHeader>
         <div className="flex items-center justify-between mb-4">
           <div className="text-sm text-gray-600">
-            Question {questionNumber} of {totalQuestions}
+            {t("questionCard.questionOf")} {questionNumber} {t("questionCard.of")} {totalQuestions}
           </div>
           <Badge variant="outline">{question.category}</Badge>
         </div>
@@ -87,7 +91,7 @@ export function QuestionCard({
 
         {showResult && (
           <div className="mt-6 p-4 bg-orange-50 border border-orange-200 rounded-lg">
-            <div className="font-semibold text-orange-900 mb-2">Explanation:</div>
+            <div className="font-semibold text-orange-900 mb-2">{t("questionCard.explanation")}</div>
             <div className="text-orange-800">{question.explanation}</div>
           </div>
         )}

@@ -9,6 +9,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "@/contexts/LanguageContext";
 
 interface AccountConflictDialogProps {
   open: boolean;
@@ -23,24 +24,26 @@ export function AccountConflictDialog({
   onCancel,
   userEmail,
 }: AccountConflictDialogProps) {
+  const { t } = useTranslation();
+
   return (
     <Dialog open={open} onOpenChange={(isOpen) => !isOpen && onCancel()}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Existing Account Found</DialogTitle>
+          <DialogTitle>{t("accountConflict.existingAccountFound")}</DialogTitle>
           <DialogDescription className="pt-2">
             {userEmail ? (
               <>
-                The account <strong>{userEmail}</strong> already has saved progress.
+                <strong>{userEmail}</strong> {t("accountConflict.accountHasProgress")}
               </>
             ) : (
-              "This account already has saved progress."
+              t("accountConflict.thisAccountHasProgress")
             )}
           </DialogDescription>
         </DialogHeader>
         <div className="py-4">
           <p className="text-sm text-gray-600">
-            Would you like to log in to your existing account, or use a different account to start fresh?
+            {t("accountConflict.wouldYouLikeToLogIn")}
           </p>
         </div>
         <DialogFooter className="flex gap-2 sm:gap-0">
@@ -49,13 +52,13 @@ export function AccountConflictDialog({
             onClick={onCancel}
             className="flex-1 sm:flex-none"
           >
-            Use Different Account
+            {t("accountConflict.useDifferentAccount")}
           </Button>
           <Button
             onClick={onUseExisting}
             className="flex-1 sm:flex-none bg-black text-white hover:bg-gray-800"
           >
-            Log In to Existing
+            {t("accountConflict.logInToExisting")}
           </Button>
         </DialogFooter>
       </DialogContent>

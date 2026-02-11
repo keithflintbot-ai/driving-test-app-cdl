@@ -4,6 +4,7 @@ import { useState, Suspense } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
+import { useTranslation } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -29,6 +30,7 @@ function SignupPageContent() {
 
   const { signup, loginWithGoogle } = useAuth();
   const router = useRouter();
+  const { t } = useTranslation();
   const setStoreState = useStore((state) => state.setSelectedState);
   const storeSelectedState = useStore((state) => state.selectedState);
   const isGuest = useStore((state) => state.isGuest);
@@ -39,7 +41,7 @@ function SignupPageContent() {
 
   const handleStateSelect = () => {
     if (!selectedState) {
-      setError("Please select a location");
+      setError(t("signup.pleaseSelectLocation"));
       return;
     }
     setError("");
@@ -51,7 +53,7 @@ function SignupPageContent() {
     // For guests, use existing state; otherwise require selection
     const stateToUse = guestHasState ? storeSelectedState : selectedState;
     if (!stateToUse) {
-      setError("Please select a location first");
+      setError(t("signup.pleaseSelectLocation"));
       return;
     }
 
@@ -81,11 +83,11 @@ function SignupPageContent() {
     setError("");
 
     if (password !== confirmPassword) {
-      return setError("Passwords do not match");
+      return setError(t("signup.passwordsDontMatch"));
     }
 
     if (password.length < 6) {
-      return setError("Password must be at least 6 characters");
+      return setError(t("signup.passwordTooShort"));
     }
 
     setLoading(true);
@@ -122,10 +124,10 @@ function SignupPageContent() {
           )}
 
           <div className="flex flex-wrap items-center justify-center gap-2 text-2xl md:text-3xl font-medium text-gray-800">
-            <span>I need to pass the</span>
+            <span>{t("signup.iNeedToPass")}</span>
             <Select onValueChange={setSelectedState} value={selectedState || undefined}>
               <SelectTrigger className="w-auto inline-flex text-2xl md:text-3xl font-semibold text-orange-600 border-none shadow-none focus:ring-0 focus:ring-offset-0 px-1 underline decoration-orange-300 decoration-2 underline-offset-4 hover:decoration-orange-500 h-auto">
-                <SelectValue placeholder="select location" />
+                <SelectValue placeholder={t("signup.selectLocation")} />
               </SelectTrigger>
               <SelectContent>
                 {states.map((state) => (
@@ -135,7 +137,7 @@ function SignupPageContent() {
                 ))}
               </SelectContent>
             </Select>
-            <span>driving test.</span>
+            <span>{t("signup.drivingTest")}</span>
           </div>
 
           <Button
@@ -143,13 +145,13 @@ function SignupPageContent() {
             disabled={!selectedState || loading}
             className="bg-black text-white hover:bg-gray-800 px-8 py-3 text-lg"
           >
-            Continue
+            {t("common.continue")}
           </Button>
 
           <div className="text-center text-sm text-gray-600">
-            Already have an account?{" "}
+            {t("common.alreadyHaveAccount")}{" "}
             <Link href="/login" className="text-orange-600 hover:underline font-semibold">
-              Log in
+              {t("common.logIn")}
             </Link>
           </div>
         </div>
@@ -163,12 +165,12 @@ function SignupPageContent() {
       <Card className="relative w-full max-w-2xl">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center">
-            {guestHasState ? "Save Your Progress" : "Create Account"}
+            {guestHasState ? t("signup.saveYourProgress") : t("common.createAccount")}
           </CardTitle>
           <CardDescription className="text-center">
             {guestHasState
-              ? "Create a free account to save your progress to the cloud"
-              : "Sign up to start practicing for your driving test"}
+              ? t("signup.createFreeAccountCloud")
+              : t("signup.signUpToStart")}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -190,14 +192,14 @@ function SignupPageContent() {
                   <span className="w-full border-t" />
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-white px-2 text-muted-foreground">Or sign up with email</span>
+                  <span className="bg-white px-2 text-muted-foreground">{t("common.orSignUpWithEmail")}</span>
                 </div>
               </div>
 
               {/* Email/Password Form */}
               <form onSubmit={handleStep2Submit} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
+                  <Label htmlFor="email">{t("common.email")}</Label>
                   <Input
                     id="email"
                     type="email"
@@ -210,7 +212,7 @@ function SignupPageContent() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="password">Password</Label>
+                  <Label htmlFor="password">{t("common.password")}</Label>
                   <Input
                     id="password"
                     type="password"
@@ -223,7 +225,7 @@ function SignupPageContent() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="confirmPassword">Confirm Password</Label>
+                  <Label htmlFor="confirmPassword">{t("common.confirmPassword")}</Label>
                   <Input
                     id="confirmPassword"
                     type="password"
@@ -242,10 +244,10 @@ function SignupPageContent() {
                     disabled={loading}
                     className="w-full bg-white text-black hover:bg-gray-100 border-2 border-gray-300"
                   >
-                    {guestHasState ? "Continue as Guest" : "Back"}
+                    {guestHasState ? t("signup.continueAsGuest") : t("common.back")}
                   </Button>
                   <Button type="submit" className="w-full bg-black text-white hover:bg-gray-800" disabled={loading}>
-                    {loading ? "Creating account..." : guestHasState ? "Save Progress" : "Create Account"}
+                    {loading ? t("signup.creatingAccount") : guestHasState ? t("signup.saveProgress") : t("common.createAccount")}
                   </Button>
                 </div>
               </form>

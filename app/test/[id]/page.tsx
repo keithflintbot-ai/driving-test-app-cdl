@@ -12,6 +12,7 @@ import { generateTest, shuffleQuestionOptions } from "@/lib/testGenerator";
 import { Question } from "@/types";
 import { useStore } from "@/store/useStore";
 import { useHydration } from "@/hooks/useHydration";
+import { useTranslation } from "@/contexts/LanguageContext";
 
 export default function TestPage() {
   const params = useParams();
@@ -19,6 +20,7 @@ export default function TestPage() {
   const testId = parseInt(params.id as string);
   const hydrated = useHydration();
   const initialized = useRef(false);
+  const { t, language } = useTranslation();
 
   const selectedState = useStore((state) => state.selectedState);
   const getCurrentTest = useStore((state) => state.getCurrentTest);
@@ -75,7 +77,7 @@ export default function TestPage() {
         }
       } else {
         // Generate new test
-        const testQuestions = generateTest(testId, state).map(shuffleQuestionOptions);
+        const testQuestions = generateTest(testId, state, language).map(shuffleQuestionOptions);
         setQuestions(testQuestions);
         startTest(testId, testQuestions);
       }
@@ -136,8 +138,8 @@ export default function TestPage() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="text-xl font-semibold mb-2">Loading test...</div>
-          <div className="text-gray-600">Preparing your questions</div>
+          <div className="text-xl font-semibold mb-2">{t("testPage.loadingTest")}</div>
+          <div className="text-gray-600">{t("testPage.preparingQuestions")}</div>
         </div>
       </div>
     );
@@ -148,10 +150,10 @@ export default function TestPage() {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <Card className="max-w-md">
           <CardContent className="p-8 text-center">
-            <div className="text-xl font-semibold mb-2">No questions available</div>
-            <div className="text-gray-600 mb-4">Unable to load test questions.</div>
+            <div className="text-xl font-semibold mb-2">{t("testPage.noQuestionsAvailable")}</div>
+            <div className="text-gray-600 mb-4">{t("testPage.unableToLoad")}</div>
             <Button className="bg-black text-white hover:bg-gray-800" onClick={() => router.push("/dashboard")}>
-              Back to Dashboard
+              {t("common.backToDashboard")}
             </Button>
           </CardContent>
         </Card>
@@ -167,7 +169,7 @@ export default function TestPage() {
           <Link href="/dashboard">
             <Button variant="ghost" className="mb-4">
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Dashboard
+              {t("common.backToDashboard")}
             </Button>
           </Link>
         </div>
@@ -175,9 +177,9 @@ export default function TestPage() {
         {/* Header */}
         <div className="mb-6">
           <div className="flex items-center justify-between mb-4">
-            <h1 className="text-3xl font-bold">Test {testId}</h1>
+            <h1 className="text-3xl font-bold">{t("testCard.test")} {testId}</h1>
             <div className="text-sm text-gray-600">
-              {answeredCount} of {totalQuestions} answered
+              {answeredCount} {t("questionCard.of")} {totalQuestions} {t("testPage.answered")}
             </div>
           </div>
 
@@ -185,9 +187,9 @@ export default function TestPage() {
           <div className="space-y-2">
             <Progress value={progress} className="h-2 [&>div]:bg-orange-600" />
             <div className="flex justify-between text-xs text-gray-600">
-              <span>Progress: {Math.round(progress)}%</span>
+              <span>{t("testPage.progress")}: {Math.round(progress)}%</span>
               <span>
-                {canSubmit ? "Ready to submit!" : `${totalQuestions - answeredCount} questions remaining`}
+                {canSubmit ? t("testPage.readyToSubmit") : `${totalQuestions - answeredCount} ${t("testPage.questionsRemaining")}`}
               </span>
             </div>
           </div>
@@ -212,14 +214,14 @@ export default function TestPage() {
               onClick={handleSubmit}
               className="bg-black hover:bg-gray-800 text-white text-lg px-8 py-6"
             >
-              Submit Test
+              {t("testPage.submitTest")}
             </Button>
           )}
         </div>
 
         {/* Progress Overview - View Only */}
         <div className="mt-8">
-          <div className="text-sm font-semibold mb-3">Progress Overview</div>
+          <div className="text-sm font-semibold mb-3">{t("testPage.progressOverview")}</div>
           <div className="grid grid-cols-10 gap-2">
             {questions.map((_, index) => (
               <div
@@ -239,7 +241,7 @@ export default function TestPage() {
             ))}
           </div>
           <div className="text-xs text-gray-500 mt-2 text-center">
-            Select your answer to automatically advance to the next question
+            {t("testPage.selectAnswerToAdvance")}
           </div>
         </div>
       </div>

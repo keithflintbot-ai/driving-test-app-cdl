@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useTranslation } from "@/contexts/LanguageContext";
 import { states } from "@/data/states";
 
 // Popular states to feature in the footer
@@ -25,6 +28,8 @@ const popularStates = popularStateSlugs
   .filter(Boolean);
 
 export function Footer() {
+  const { t } = useTranslation();
+
   return (
     <footer className="border-t bg-gray-50 mt-auto">
       <div className="container mx-auto px-4 py-6">
@@ -45,15 +50,15 @@ export function Footer() {
             href="/practice-tests-by-state"
             className="text-orange-600 hover:text-orange-700 font-medium"
           >
-            All States &rarr;
+            {t("footer.allStates")}
           </Link>
         </div>
         <p className="text-center text-sm text-gray-600 mt-4">
-          This site was made with AI and{" "}
+          {t("footer.madeWith")}{" "}
           <span className="text-red-500" aria-label="love">
             ❤️
           </span>{" "}
-          by{" "}
+          {t("footer.by")}{" "}
           <a
             href="https://x.com/JohnBr0"
             target="_blank"
@@ -62,16 +67,18 @@ export function Footer() {
           >
             @JohnBr0
           </a>
-          .{" "}
+          .
+        </p>
+        <p className="text-center text-sm text-gray-600 mt-1">
           <a
             href="https://www.johnbrophy.net/contact"
             target="_blank"
             rel="noopener noreferrer"
             className="text-orange-600 hover:text-orange-700 font-medium hover:underline"
           >
-            Send me
+            {t("footer.sendMe")}
           </a>{" "}
-          a quote for the homepage if you pass!
+          {t("footer.quoteIfPass")}
         </p>
       </div>
     </footer>

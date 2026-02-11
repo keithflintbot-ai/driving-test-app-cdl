@@ -1,8 +1,11 @@
+"use client";
+
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ChevronRight } from "lucide-react";
 import { PremiumBadge } from "@/components/PremiumBadge";
+import { useTranslation } from "@/contexts/LanguageContext";
 
 export interface TrainingSet {
   id: number;
@@ -19,6 +22,7 @@ interface TrainingSetCardProps {
 }
 
 export function TrainingSetCard({ set, locked = false, isPremiumLocked = false, onPremiumClick }: TrainingSetCardProps) {
+  const { t } = useTranslation();
   const isComplete = set.correctCount >= set.targetCount;
   const progress = Math.min(100, Math.round((set.correctCount / set.targetCount) * 100));
 
@@ -36,10 +40,10 @@ export function TrainingSetCard({ set, locked = false, isPremiumLocked = false, 
       return <PremiumBadge variant="locked" size="sm" />;
     }
     if (locked) {
-      return <Badge variant="outline" className="bg-gray-100 hover:bg-gray-100 text-xs">Locked</Badge>;
+      return <Badge variant="outline" className="bg-gray-100 hover:bg-gray-100 text-xs">{t("common.locked")}</Badge>;
     }
     if (isComplete) {
-      return <Badge className="bg-emerald-400 hover:bg-emerald-400 text-xs">Complete</Badge>;
+      return <Badge className="bg-emerald-400 hover:bg-emerald-400 text-xs">{t("common.complete")}</Badge>;
     }
     if (set.correctCount > 0) {
       return <Badge className={`${getProgressBadgeColor()} text-xs`}>{progress}%</Badge>;
@@ -65,9 +69,9 @@ export function TrainingSetCard({ set, locked = false, isPremiumLocked = false, 
           </div>
           <p className="text-xs">
             {locked ? (
-              <span className="text-gray-400">Locked</span>
+              <span className="text-gray-400">{t("common.locked")}</span>
             ) : isPremiumLocked ? (
-              <span className="text-orange-600">Unlock with Premium</span>
+              <span className="text-orange-600">{t("common.unlockWithPremium")}</span>
             ) : (
               <span className={isComplete ? 'text-green-600' : 'text-gray-500'}>
                 {set.correctCount}/{set.targetCount}

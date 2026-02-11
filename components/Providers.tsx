@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 import { DataResetNotification } from "@/components/DataResetNotification";
 import { useStore } from "@/store/useStore";
 
@@ -40,9 +41,11 @@ function PremiumTheme() {
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <AuthProvider>
-      {children}
-      <DataResetNotificationWrapper />
-      <PremiumTheme />
+      <LanguageProvider>
+        {children}
+        <DataResetNotificationWrapper />
+        <PremiumTheme />
+      </LanguageProvider>
     </AuthProvider>
   );
 }

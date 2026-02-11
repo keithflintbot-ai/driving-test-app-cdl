@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { isEmbeddedBrowser, openInDefaultBrowser } from "@/lib/webview-detect";
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "@/contexts/LanguageContext";
 
 interface WebViewGoogleWarningProps {
   onGoogleSignIn: () => void;
@@ -10,6 +11,7 @@ interface WebViewGoogleWarningProps {
 }
 
 export function WebViewGoogleWarning({ onGoogleSignIn, disabled }: WebViewGoogleWarningProps) {
+  const { t } = useTranslation();
   const [isWebView, setIsWebView] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -71,19 +73,19 @@ export function WebViewGoogleWarning({ onGoogleSignIn, disabled }: WebViewGoogle
             d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
           />
         </svg>
-        Continue with Google
+        {t("common.continueWithGoogle")}
       </Button>
 
       {/* WebView Warning Modal */}
       {showWarning && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-lg p-6 max-w-md w-full">
-            <h3 className="text-lg font-semibold mb-2">Open in Browser</h3>
+            <h3 className="text-lg font-semibold mb-2">{t("webView.openInBrowser")}</h3>
             <p className="text-gray-600 text-sm mb-4">
-              Google Sign-In doesn&apos;t work in this in-app browser. To sign in with Google, please open this page in Safari, Chrome, or another browser.
+              {t("webView.googleSignInWarning")}
             </p>
             <p className="text-gray-600 text-sm mb-4">
-              You can also sign up with <strong>email and password</strong> below instead.
+              {t("webView.canAlsoUseEmail")}
             </p>
 
             <div className="space-y-3">
@@ -94,7 +96,7 @@ export function WebViewGoogleWarning({ onGoogleSignIn, disabled }: WebViewGoogle
                 <svg className="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                 </svg>
-                Open in Browser
+                {t("webView.openInBrowser")}
               </Button>
 
               <Button
@@ -106,14 +108,14 @@ export function WebViewGoogleWarning({ onGoogleSignIn, disabled }: WebViewGoogle
                     <svg className="mr-2 h-4 w-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    Link Copied!
+                    {t("webView.linkCopied")}
                   </>
                 ) : (
                   <>
                     <svg className="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
                     </svg>
-                    Copy Link
+                    {t("webView.copyLink")}
                   </>
                 )}
               </Button>
@@ -122,7 +124,7 @@ export function WebViewGoogleWarning({ onGoogleSignIn, disabled }: WebViewGoogle
                 onClick={() => setShowWarning(false)}
                 className="w-full bg-white text-gray-600 hover:bg-gray-50 border border-gray-200"
               >
-                Use Email Instead
+                {t("webView.useEmailInstead")}
               </Button>
             </div>
           </div>

@@ -13,20 +13,14 @@ import { useHydration } from "@/hooks/useHydration";
 import { useSound } from "@/hooks/useSound";
 import { Fireworks } from "@/components/Fireworks";
 import Link from "next/link";
-
-// Training set names for display
-const TRAINING_SET_NAMES: { [key: number]: string } = {
-  1: "Signs & Signals",
-  2: "Rules of the Road",
-  3: "Safety & Emergencies",
-  4: "State Laws",
-};
+import { useTranslation } from "@/contexts/LanguageContext";
 
 function TrainingPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const hydrated = useHydration();
   const { playCorrectSound, playIncorrectSound } = useSound();
+  const { t, language } = useTranslation();
 
   const selectedState = useStore((state) => state.selectedState);
   const isGuest = useStore((state) => state.isGuest);
@@ -116,7 +110,8 @@ function TrainingPageContent() {
         selectedState,
         currentSetData.masteredIds,
         currentSetData.wrongQueue,
-        currentQuestionIdRef.current  // Use ref for reliable current question ID
+        currentQuestionIdRef.current,  // Use ref for reliable current question ID
+        language
       );
 
       // If all questions are mastered, show fireworks then completion
@@ -139,13 +134,14 @@ function TrainingPageContent() {
       question = getTrainingQuestion(
         selectedState,
         freshTraining.masteredQuestionIds,
-        freshTraining.lastQuestionId
+        freshTraining.lastQuestionId,
+        language
       );
 
       // If all questions are mastered, reset and start fresh
       if (!question) {
         resetMasteredQuestions();
-        question = getTrainingQuestion(selectedState, [], freshTraining.lastQuestionId);
+        question = getTrainingQuestion(selectedState, [], freshTraining.lastQuestionId, language);
       }
     }
 
@@ -216,18 +212,18 @@ function TrainingPageContent() {
               />
             </div>
             <h2 className="text-3xl font-bold text-gray-900 mb-2">
-              Congratulations!
+              {t("trainingPage.congratulations")}
             </h2>
             <p className="text-xl text-orange-600 font-semibold mb-4">
-              You unlocked Training & Tests!
+              {t("trainingPage.youUnlocked")}
             </p>
             <p className="text-gray-600 mb-6">
-              You&apos;ve answered 10 questions correctly. Now you can pick specific topics to master!
+              {t("trainingPage.answeredTenCorrectly")}
             </p>
             <div className="flex flex-col gap-3">
               <Link href="/dashboard">
                 <Button className="w-full bg-black text-white hover:bg-gray-800 text-lg py-6">
-                  Choose a Training Set
+                  {t("trainingPage.chooseTrainingSet")}
                 </Button>
               </Link>
               <Button
@@ -235,7 +231,7 @@ function TrainingPageContent() {
                 className="w-full"
                 onClick={() => setShowCelebration(false)}
               >
-                Keep Going
+                {t("trainingPage.keepGoing")}
               </Button>
             </div>
           </div>
@@ -250,26 +246,26 @@ function TrainingPageContent() {
               <CheckCircle2 className="w-24 h-24 mx-auto text-green-500" />
             </div>
             <h2 className="text-3xl font-bold text-gray-900 mb-2">
-              Set Complete!
+              {t("trainingPage.setComplete")}
             </h2>
             <p className="text-xl text-green-600 font-semibold mb-4">
-              {TRAINING_SET_NAMES[setNumber]} Mastered
+              {t(`trainingSets.${setNumber}`)} {t("trainingPage.masteredSet")}
             </p>
             <p className="text-gray-600 mb-6">
-              You&apos;ve correctly answered all 50 questions in this training set!
+              {t("trainingPage.answeredAll50")}
             </p>
             <div className="flex flex-col gap-3">
               {!isGuest && (
                 <Link href="/stats">
                   <Button className="w-full bg-black text-white hover:bg-gray-800 text-lg py-6">
                     <BarChart3 className="h-5 w-5 mr-2" />
-                    See Your Stats
+                    {t("trainingPage.seeYourStats")}
                   </Button>
                 </Link>
               )}
               <Link href="/dashboard">
                 <Button variant="outline" className="w-full">
-                  Back to Dashboard
+                  {t("common.backToDashboard")}
                 </Button>
               </Link>
             </div>
@@ -283,12 +279,12 @@ function TrainingPageContent() {
           <Link href="/dashboard">
             <Button variant="ghost" size="sm">
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Back
+              {t("common.back")}
             </Button>
           </Link>
           {!isGuest && (
             <Link href="/stats" className="text-sm font-medium text-orange-600 hover:text-orange-800 transition-colors">
-              View Stats
+              {t("trainingPage.viewStats")}
             </Link>
           )}
         </div>
@@ -305,9 +301,9 @@ function TrainingPageContent() {
         ) : (
           <Card className="w-full">
             <CardContent className="p-8 text-center">
-              <p className="text-gray-600 mb-4">No more questions available</p>
+              <p className="text-gray-600 mb-4">{t("trainingPage.noMoreQuestions")}</p>
               <Button className="bg-black text-white hover:bg-gray-800" onClick={() => router.push("/dashboard")}>
-                Back to Dashboard
+                {t("common.backToDashboard")}
               </Button>
             </CardContent>
           </Card>
@@ -322,7 +318,7 @@ function TrainingPageContent() {
                 <span className="font-bold text-xl md:text-2xl text-orange-600">{setProgress.correct}</span>
                 <span className="text-gray-500">/{setProgress.total}</span>
                 <span className="text-gray-500 text-xs md:text-base ml-1">
-                  questions correct
+                  {t("trainingPage.questionsCorrect")}
                 </span>
               </div>
               <div className="w-full bg-orange-200 rounded-full h-2 mt-2 max-w-md mx-auto">
@@ -339,7 +335,7 @@ function TrainingPageContent() {
                 <span className="font-bold text-xl md:text-2xl text-orange-600">{training.totalCorrectAllTime}</span>
                 <span className="text-gray-500">/10</span>
                 <span className="text-gray-500 text-xs md:text-base ml-1">
-                  ({10 - training.totalCorrectAllTime} more to unlock)
+                  ({10 - training.totalCorrectAllTime} {t("trainingPage.moreToUnlock")})
                 </span>
               </div>
               <div className="w-full bg-orange-200 rounded-full h-2 mt-2 max-w-md mx-auto">
@@ -354,7 +350,7 @@ function TrainingPageContent() {
             <div className="flex items-center justify-center gap-1 text-sm md:text-lg text-gray-700">
               <span className="font-bold text-xl md:text-2xl text-orange-600">{training.currentStreak}</span>
               <span className="text-gray-500 text-xs md:text-base ml-1">
-                streak
+                {t("trainingPage.streak")}
               </span>
             </div>
           )}

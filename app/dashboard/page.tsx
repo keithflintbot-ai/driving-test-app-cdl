@@ -14,20 +14,14 @@ import { useHydration } from "@/hooks/useHydration";
 import { useAuth } from "@/contexts/AuthContext";
 import { auth } from "@/lib/firebase";
 import { states } from "@/data/states";
-
-// Training set definitions
-const TRAINING_SET_NAMES: { [key: number]: string } = {
-  1: "Signs & Signals",
-  2: "Rules of the Road",
-  3: "Safety & Emergencies",
-  4: "State Laws",
-};
+import { useTranslation } from "@/contexts/LanguageContext";
 
 function DashboardContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const hydrated = useHydration();
   const { user } = useAuth();
+  const { t } = useTranslation();
   const isGuest = useStore((state) => state.isGuest);
   const selectedState = useStore((state) => state.selectedState);
   const getTestSession = useStore((state) => state.getTestSession);
@@ -61,7 +55,7 @@ function DashboardContent() {
       const progress = getTrainingSetProgress(id);
       return {
         id,
-        name: TRAINING_SET_NAMES[id],
+        name: t(`trainingSets.${id}`),
         correctCount: progress.correct,
         targetCount: progress.total,
       };
@@ -205,7 +199,7 @@ function DashboardContent() {
 
   const trainingSets = hydrated ? getTrainingSets() : [1, 2, 3, 4].map((id) => ({
     id,
-    name: TRAINING_SET_NAMES[id],
+    name: t(`trainingSets.${id}`),
     correctCount: 0,
     targetCount: 50,
   }));
@@ -233,10 +227,10 @@ function DashboardContent() {
                 <CheckCircle className="h-12 w-12 text-green-500" />
                 <div className="flex-1">
                   <p className="text-xl font-bold text-green-900">
-                    Welcome to Premium!
+                    {t("dashboard.welcomePremium")}
                   </p>
                   <p className="text-sm text-green-700 mt-1">
-                    Training Set 4 and Practice Test 4 are now unlocked
+                    {t("dashboard.premiumUnlocked")}
                   </p>
                 </div>
                 <button
@@ -262,7 +256,7 @@ function DashboardContent() {
                       {onboardingProgress}/10
                     </p>
                     <p className="text-sm text-orange-700 mt-1">
-                      {10 - onboardingProgress} more to unlock training & tests
+                      {10 - onboardingProgress} {t("dashboard.moreToUnlock")}
                     </p>
                   </div>
                   <ChevronRight className="h-6 w-6 text-orange-400" />
@@ -280,10 +274,10 @@ function DashboardContent() {
                 <div className="text-4xl">📊</div>
                 <div className="flex-1">
                   <p className="text-lg text-gray-700">
-                    <span className="font-bold">Sign up</span> to track your pass probability and detailed statistics
+                    <span className="font-bold">{t("common.signUp")}</span> {t("dashboard.signUpPrompt")}
                   </p>
                   <Link href="/signup" className="text-sm text-orange-600 hover:text-orange-800 font-medium mt-1 inline-block">
-                    Create free account →
+                    {t("dashboard.createFreeAccount")}
                   </Link>
                 </div>
               </div>
@@ -315,14 +309,14 @@ function DashboardContent() {
                   <div className="flex-1">
                     <p className="text-xl font-bold text-gray-900">
                       {passProbability > 50
-                        ? <>{passProbability}% chance of passing</>
-                        : <>{100 - passProbability}% chance of failing</>
+                        ? <>{passProbability}% {t("dashboard.chanceOfPassing")}</>
+                        : <>{100 - passProbability}% {t("dashboard.chanceOfFailing")}</>
                       }
                     </p>
-                    <p className="text-sm text-gray-500 mt-1 md:hidden">Learn how to improve</p>
+                    <p className="text-sm text-gray-500 mt-1 md:hidden">{t("dashboard.learnHowToImprove")}</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-sm text-gray-500 hidden md:inline">View stats</span>
+                    <span className="text-sm text-gray-500 hidden md:inline">{t("dashboard.viewStats")}</span>
                     <ChevronRight className={`h-6 w-6 ${
                     passProbability >= 80
                       ? "text-emerald-400"
@@ -345,9 +339,9 @@ function DashboardContent() {
         {onboardingComplete && (
           <div className="mb-8">
             <div className="mb-3">
-              <h2 className="text-xl font-bold">Training</h2>
+              <h2 className="text-xl font-bold">{t("dashboard.training")}</h2>
             </div>
-            <p className="text-sm text-gray-500 mb-4">Get all 50 questions correct to complete each set</p>
+            <p className="text-sm text-gray-500 mb-4">{t("dashboard.trainingSubtitle")}</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {trainingSets.map((set) => {
                 const isPremiumLocked = set.id === 4 && !isPremium && onboardingComplete;
@@ -366,9 +360,9 @@ function DashboardContent() {
 
         {/* Practice Tests */}
         <div className="mb-6">
-          <h2 className="text-xl font-bold mb-3">Practice Tests</h2>
+          <h2 className="text-xl font-bold mb-3">{t("dashboard.practiceTests")}</h2>
           <p className="text-sm text-gray-500 mb-4">
-            {onboardingComplete ? "Simulate the real exam experience" : "Complete onboarding to unlock"}
+            {onboardingComplete ? t("dashboard.simulateExam") : t("dashboard.completeOnboarding")}
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {[1, 2, 3, 4].map((testNumber) => {
