@@ -635,7 +635,6 @@ export const useStore = create<AppState>()(
               trainingAnswerHistory: data.trainingAnswerHistory || [],
               activeDates: data.activeDates || [],
               photoURL: data.photoURL || null,
-              language: data.language || 'en',
               userId,
               subscription: data.subscription || {
                 isPremium: false,
