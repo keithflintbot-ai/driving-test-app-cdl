@@ -23,7 +23,9 @@ export function Footer() {
           >
             @JohnBr0
           </a>
-          .{" "}
+          .
+        </p>
+        <p className="text-center text-sm text-gray-600 mt-1">
           <a
             href="https://www.johnbrophy.net/contact"
             target="_blank"
