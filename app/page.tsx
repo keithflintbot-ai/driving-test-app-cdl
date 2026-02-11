@@ -21,10 +21,18 @@ function shuffleArray<T>(array: T[]): T[] {
 }
 
 function useTypewriter(phrases: string[], typingSpeed = 80, deletingSpeed = 50, pauseDuration = 2000) {
-  const [shuffledPhrases] = useState(() => shuffleArray(phrases));
+  const [shuffledPhrases, setShuffledPhrases] = useState(() => shuffleArray(phrases));
   const [displayText, setDisplayText] = useState("");
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
+
+  // Re-shuffle when phrases change (e.g. language switch)
+  useEffect(() => {
+    setShuffledPhrases(shuffleArray(phrases));
+    setPhraseIndex(0);
+    setDisplayText("");
+    setIsDeleting(false);
+  }, [phrases]);
 
   useEffect(() => {
     const currentPhrase = shuffledPhrases[phraseIndex];
@@ -252,7 +260,7 @@ export default function Home() {
       <div className="bg-gray-50 py-12">
         <div className="max-w-2xl mx-auto px-6 text-center">
           <p className="text-xl md:text-2xl text-gray-700 italic mb-4">
-            &quot;felt confident after just studying the previous day&quot;
+            &quot;{t("landing.testimonial1")}&quot;
           </p>
           <p className="text-gray-500 text-sm">JayjayX12</p>
         </div>
@@ -288,7 +296,7 @@ export default function Home() {
       <div className="bg-gray-50 py-12">
         <div className="max-w-2xl mx-auto px-6 text-center">
           <p className="text-xl md:text-2xl text-gray-700 italic mb-4">
-            &quot;it really helped me prepare, and I passed my exam today&quot;
+            &quot;{t("landing.testimonial2")}&quot;
           </p>
           <p className="text-gray-500 text-sm">Big-Burrito-8765</p>
         </div>
@@ -317,22 +325,22 @@ export default function Home() {
             rel="noopener noreferrer"
             className="block bg-gray-50 border border-gray-200 rounded-xl p-6 hover:border-gray-300 transition-colors"
           >
-            <p className="text-gray-800 mb-3">&quot;Used this to help me study. Passed today! Thank you :)&quot;</p>
+            <p className="text-gray-800 mb-3">&quot;{t("landing.testimonial3")}&quot;</p>
             <p className="text-gray-500 text-sm">u/Naive_Usual1910</p>
           </a>
 
           <div className="bg-gray-50 border border-gray-200 rounded-xl p-6">
-            <p className="text-gray-800 mb-3">&quot;passed within seven minutes&quot;</p>
+            <p className="text-gray-800 mb-3">&quot;{t("landing.testimonial4")}&quot;</p>
             <p className="text-gray-500 text-sm">vivacious-vi</p>
           </div>
 
           <div className="bg-gray-50 border border-gray-200 rounded-xl p-6">
-            <p className="text-gray-800 mb-3">&quot;it was very helpful... I passed the written test this morning&quot;</p>
+            <p className="text-gray-800 mb-3">&quot;{t("landing.testimonial5")}&quot;</p>
             <p className="text-gray-500 text-sm">ideapad101</p>
           </div>
 
           <div className="bg-gray-50 border border-gray-200 rounded-xl p-6">
-            <p className="text-gray-800 mb-3">&quot;helped a lot&quot;</p>
+            <p className="text-gray-800 mb-3">&quot;{t("landing.testimonial6")}&quot;</p>
             <p className="text-gray-500 text-sm">WorthEducational523</p>
           </div>
 
@@ -342,12 +350,12 @@ export default function Home() {
             rel="noopener noreferrer"
             className="block bg-gray-50 border border-gray-200 rounded-xl p-6 hover:border-gray-300 transition-colors"
           >
-            <p className="text-gray-800 mb-3">&quot;i passed in 3 minutes&quot;</p>
+            <p className="text-gray-800 mb-3">&quot;{t("landing.testimonial7")}&quot;</p>
             <p className="text-gray-500 text-sm">u/Curdled_Cave</p>
           </a>
 
           <div className="bg-gray-50 border border-gray-200 rounded-xl p-6">
-            <p className="text-gray-800 mb-3">&quot;felt confident after just studying the previous day&quot;</p>
+            <p className="text-gray-800 mb-3">&quot;{t("landing.testimonial1")}&quot;</p>
             <p className="text-gray-500 text-sm">JayjayX12</p>
           </div>
         </div>

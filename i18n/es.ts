@@ -59,6 +59,13 @@ export const es: TranslationKeys = {
     fromReddit: "De r/driving y r/DMV en",
     readyToPass: "¿Listo para aprobar tu examen de permiso?",
     freeToStart: "Gratis para empezar. No se requiere cuenta.",
+    testimonial1: "me sentí seguro después de estudiar solo el día anterior",
+    testimonial2: "realmente me ayudó a prepararme, y aprobé mi examen hoy",
+    testimonial3: "Usé esto para estudiar. ¡Aprobé hoy! Gracias :)",
+    testimonial4: "aprobé en siete minutos",
+    testimonial5: "fue muy útil... aprobé el examen escrito esta mañana",
+    testimonial6: "ayudó mucho",
+    testimonial7: "aprobé en 3 minutos",
     phrases: [
       "en la cama",
       "viendo la tele",

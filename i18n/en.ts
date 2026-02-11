@@ -59,6 +59,13 @@ export const en = {
     fromReddit: "From r/driving and r/DMV on",
     readyToPass: "Ready to pass your permit test?",
     freeToStart: "Free to start. No account required.",
+    testimonial1: "felt confident after just studying the previous day",
+    testimonial2: "it really helped me prepare, and I passed my exam today",
+    testimonial3: "Used this to help me study. Passed today! Thank you :)",
+    testimonial4: "passed within seven minutes",
+    testimonial5: "it was very helpful... I passed the written test this morning",
+    testimonial6: "helped a lot",
+    testimonial7: "i passed in 3 minutes",
     phrases: [
       "in bed",
       "while watching TV",
