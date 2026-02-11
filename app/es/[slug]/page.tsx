@@ -14,7 +14,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { states, getStateBySlug } from "@/data/states";
-import { stateLandingData, getStateLandingInfo } from "@/data/stateLandingData";
+import { getStateLandingInfoEs } from "@/data/stateLandingDataEs";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://tigertest.io";
 
@@ -23,7 +23,7 @@ interface PageProps {
 }
 
 function parseStateSlug(slug: string): string | null {
-  const match = slug.match(/^(.+)-dmv-practice-test$/);
+  const match = slug.match(/^(.+)-examen-practica-dmv$/);
   return match ? match[1] : null;
 }
 
@@ -31,7 +31,7 @@ export const dynamicParams = false;
 
 export async function generateStaticParams() {
   return states.map((state) => ({
-    slug: `${state.slug}-dmv-practice-test`,
+    slug: `${state.slug}-examen-practica-dmv`,
   }));
 }
 
@@ -43,15 +43,13 @@ export async function generateMetadata({
   const state = stateSlug ? getStateBySlug(stateSlug) : undefined;
 
   if (!state) {
-    return { title: "State Not Found" };
+    return { title: "Estado No Encontrado" };
   }
 
-  const rawPassing = Math.ceil(
-    (state.writtenTestQuestions * state.passingScore) / 100
-  );
-  const title = `${state.name} DMV Practice Test 2026 - Free Permit Practice | TigerTest`;
-  const description = `Pass your ${state.name} permit test on the first try. ${state.writtenTestQuestions} free practice questions based on the ${state.name} driver's manual. Start practicing now.`;
-  const canonicalUrl = `${siteUrl}/${state.slug}-dmv-practice-test`;
+  const title = `Examen de Práctica DMV de ${state.name} 2026 - Gratis | TigerTest`;
+  const description = `Aprueba tu examen de permiso de ${state.name} en el primer intento. ${state.writtenTestQuestions} preguntas de práctica gratuitas basadas en el manual de conducir de ${state.name}. Empieza a practicar ahora.`;
+  const canonicalUrl = `${siteUrl}/es/${state.slug}-examen-practica-dmv`;
+  const enUrl = `${siteUrl}/${state.slug}-dmv-practice-test`;
 
   return {
     title,
@@ -59,8 +57,8 @@ export async function generateMetadata({
     alternates: {
       canonical: canonicalUrl,
       languages: {
-        "en": canonicalUrl,
-        "es": `${siteUrl}/es/${state.slug}-examen-practica-dmv`,
+        "en": enUrl,
+        "es": canonicalUrl,
       },
     },
     openGraph: {
@@ -68,13 +66,14 @@ export async function generateMetadata({
       description,
       type: "website",
       url: canonicalUrl,
+      locale: "es_US",
       siteName: "TigerTest",
       images: [
         {
           url: "/tiger.png",
           width: 512,
           height: 512,
-          alt: `${state.name} DMV Practice Test - TigerTest`,
+          alt: `Examen de Práctica DMV de ${state.name} - TigerTest`,
         },
       ],
     },
@@ -87,9 +86,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function StateDMVPracticeTestPage({
-  params,
-}: PageProps) {
+export default async function SpanishStateDMVPage({ params }: PageProps) {
   const { slug } = await params;
   const stateSlug = parseStateSlug(slug);
   const state = stateSlug ? getStateBySlug(stateSlug) : undefined;
@@ -98,7 +95,7 @@ export default async function StateDMVPracticeTestPage({
     notFound();
   }
 
-  const landingInfo = getStateLandingInfo(state.code);
+  const landingInfo = getStateLandingInfoEs(state.code);
   if (!landingInfo) {
     notFound();
   }
@@ -111,31 +108,30 @@ export default async function StateDMVPracticeTestPage({
     .map((s) => getStateBySlug(s))
     .filter(Boolean);
 
-  // FAQ data
+  // FAQ data in Spanish
   const faqItems = [
     {
-      question: `How many questions are on the ${state.name} permit test?`,
-      answer: `The ${state.name} ${state.dmvName} written knowledge test has ${state.writtenTestQuestions} questions. You need to answer at least ${rawPassing} correctly (${state.passingScore}%) to pass. TigerTest provides 200 practice questions to thoroughly prepare you.`,
+      question: `¿Cuántas preguntas tiene el examen de permiso de ${state.name}?`,
+      answer: `El examen escrito de conocimientos del ${state.dmvName} de ${state.name} tiene ${state.writtenTestQuestions} preguntas. Necesitas responder correctamente al menos ${rawPassing} (${state.passingScore}%) para aprobar. TigerTest ofrece 200 preguntas de práctica para prepararte a fondo.`,
     },
     {
-      question: `What score do I need to pass the ${state.name} DMV test?`,
-      answer: `You need a score of ${state.passingScore}% or higher to pass the ${state.name} ${state.dmvName} written test. That means getting at least ${rawPassing} out of ${state.writtenTestQuestions} questions correct.`,
+      question: `¿Qué calificación necesito para aprobar el examen del DMV de ${state.name}?`,
+      answer: `Necesitas una calificación de ${state.passingScore}% o más para aprobar el examen escrito del ${state.dmvName} de ${state.name}. Eso significa responder correctamente al menos ${rawPassing} de ${state.writtenTestQuestions} preguntas.`,
     },
     {
-      question: `Can I take the ${state.name} permit test online?`,
+      question: `¿Puedo tomar el examen de permiso de ${state.name} en línea?`,
       answer: landingInfo.onlineTestInfo,
     },
     {
-      question: `How old do I have to be to get a learner's permit in ${state.name}?`,
-      answer: `In ${state.name}, you can apply for a learner's permit at ${state.minPermitAge} years old. You must pass the written knowledge test and a vision screening to receive your permit.`,
+      question: `¿Qué edad debo tener para obtener un permiso de aprendiz en ${state.name}?`,
+      answer: `En ${state.name}, puedes solicitar un permiso de aprendiz a los ${state.minPermitAge} años. Debes aprobar el examen escrito de conocimientos y un examen de visión para recibir tu permiso.`,
     },
     {
-      question: `What happens if I fail the ${state.name} permit test?`,
+      question: `¿Qué pasa si repruebo el examen de permiso de ${state.name}?`,
       answer: landingInfo.retakeInfo,
     },
   ];
 
-  // JSON-LD: FAQ schema
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -149,7 +145,6 @@ export default async function StateDMVPracticeTestPage({
     })),
   };
 
-  // JSON-LD: BreadcrumbList schema
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -157,49 +152,48 @@ export default async function StateDMVPracticeTestPage({
       {
         "@type": "ListItem",
         position: 1,
-        name: "Home",
+        name: "Inicio",
         item: siteUrl,
       },
       {
         "@type": "ListItem",
         position: 2,
-        name: `${state.name} DMV Practice Test`,
-        item: `${siteUrl}/${state.slug}-dmv-practice-test`,
+        name: "Exámenes de Práctica por Estado",
+        item: `${siteUrl}/es/examenes-practica-por-estado`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: `Examen de Práctica DMV de ${state.name}`,
+        item: `${siteUrl}/es/${state.slug}-examen-practica-dmv`,
       },
     ],
   };
 
-  // Testimonials data (reusing existing social proof from homepage)
   const testimonials = [
     {
-      quote: "Used this to help me study. Passed today! Thank you :)",
+      quote: "Usé esto para estudiar. ¡Aprobé hoy! Gracias :)",
       author: "Naive_Usual1910",
-      source: "Reddit",
     },
     {
-      quote: "passed within seven minutes",
+      quote: "aprobé en siete minutos",
       author: "vivacious-vi",
-      source: "Reddit",
     },
     {
-      quote: "it really helped me prepare, and I passed my exam today",
+      quote: "realmente me ayudó a prepararme, y aprobé mi examen hoy",
       author: "Big-Burrito-8765",
-      source: "Reddit",
     },
     {
-      quote: "felt confident after just studying the previous day",
+      quote: "me sentí seguro después de estudiar solo el día anterior",
       author: "JayjayX12",
-      source: "Reddit",
     },
     {
-      quote: "i passed in 3 minutes",
+      quote: "aprobé en 3 minutos",
       author: "Curdled_Cave",
-      source: "Reddit",
     },
     {
-      quote: "helped a lot",
+      quote: "ayudó mucho",
       author: "WorthEducational523",
-      source: "Reddit",
     },
   ];
 
@@ -218,14 +212,11 @@ export default async function StateDMVPracticeTestPage({
 
       <div className="relative container mx-auto px-4 py-8 md:py-12 max-w-4xl">
         {/* Breadcrumb */}
-        <nav
-          className="text-sm text-gray-500 mb-6"
-          aria-label="Breadcrumb"
-        >
+        <nav className="text-sm text-gray-500 mb-6" aria-label="Breadcrumb">
           <ol className="flex items-center gap-1 flex-wrap">
             <li>
               <Link href="/" className="hover:text-orange-600">
-                Home
+                Inicio
               </Link>
             </li>
             <li>
@@ -233,10 +224,10 @@ export default async function StateDMVPracticeTestPage({
             </li>
             <li>
               <Link
-                href="/practice-tests-by-state"
+                href="/es/examenes-practica-por-estado"
                 className="hover:text-orange-600"
               >
-                Practice Tests by State
+                Exámenes por Estado
               </Link>
             </li>
             <li>
@@ -249,19 +240,19 @@ export default async function StateDMVPracticeTestPage({
         {/* Hero */}
         <div className="text-center mb-12">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-            Free {state.name} DMV Practice Test 2026
+            Examen de Práctica DMV Gratis de {state.name} 2026
           </h1>
           <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            Pass your {state.name} {state.dmvName} permit test on the first
-            try. Practice with 200 {state.name}-specific questions based on
-            the official driver&apos;s manual.
+            Aprueba tu examen de permiso del {state.dmvName} de {state.name} en
+            el primer intento. Practica con 200 preguntas específicas de{" "}
+            {state.name} basadas en el manual oficial de conducir.
           </p>
           <Link href="/onboarding/select-state">
             <Button
               size="lg"
               className="text-lg px-8 py-6 bg-gray-900 text-white hover:bg-gray-800 font-bold rounded-xl"
             >
-              Start Practicing Free
+              Empezar a Practicar Gratis
             </Button>
           </Link>
         </div>
@@ -274,7 +265,7 @@ export default async function StateDMVPracticeTestPage({
               <div className="text-2xl md:text-3xl font-bold text-gray-900 mb-1">
                 {state.writtenTestQuestions}
               </div>
-              <div className="text-sm text-gray-600">Questions on Test</div>
+              <div className="text-sm text-gray-600">Preguntas en el Examen</div>
             </CardContent>
           </Card>
 
@@ -284,7 +275,7 @@ export default async function StateDMVPracticeTestPage({
               <div className="text-2xl md:text-3xl font-bold text-gray-900 mb-1">
                 {state.passingScore}%
               </div>
-              <div className="text-sm text-gray-600">Passing Score</div>
+              <div className="text-sm text-gray-600">Calificación para Aprobar</div>
             </CardContent>
           </Card>
 
@@ -294,7 +285,7 @@ export default async function StateDMVPracticeTestPage({
               <div className="text-2xl md:text-3xl font-bold text-gray-900 mb-1">
                 {state.minPermitAge}
               </div>
-              <div className="text-sm text-gray-600">Min. Permit Age</div>
+              <div className="text-sm text-gray-600">Edad Mín. para Permiso</div>
             </CardContent>
           </Card>
 
@@ -304,7 +295,7 @@ export default async function StateDMVPracticeTestPage({
               <div className="text-2xl md:text-3xl font-bold text-gray-900 mb-1">
                 {rawPassing}/{state.writtenTestQuestions}
               </div>
-              <div className="text-sm text-gray-600">Correct to Pass</div>
+              <div className="text-sm text-gray-600">Correctas para Aprobar</div>
             </CardContent>
           </Card>
         </div>
@@ -313,54 +304,54 @@ export default async function StateDMVPracticeTestPage({
         <Card className="mb-12">
           <CardContent className="p-6 md:p-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">
-              {state.name} {state.dmvName} Written Test: What You Need to
-              Know
+              Examen Escrito del {state.dmvName} de {state.name}: Lo Que
+              Necesitas Saber
             </h2>
 
             <div className="space-y-6">
               <div>
                 <h3 className="font-semibold text-lg text-gray-900 mb-2">
-                  Test Format
+                  Formato del Examen
                 </h3>
                 <p className="text-gray-600">
-                  The {state.name} {state.dmvName} written knowledge test
-                  consists of{" "}
-                  <strong>{state.writtenTestQuestions} multiple-choice questions</strong>{" "}
-                  covering traffic laws, road signs, safe driving practices,
-                  and {state.name}-specific regulations. You must score at
-                  least{" "}
+                  El examen escrito de conocimientos del {state.dmvName} de{" "}
+                  {state.name} consiste en{" "}
                   <strong>
-                    {state.passingScore}% ({rawPassing} correct answers)
+                    {state.writtenTestQuestions} preguntas de opción múltiple
                   </strong>{" "}
-                  to pass.
+                  que cubren leyes de tránsito, señales viales, prácticas de
+                  conducción segura y regulaciones específicas de {state.name}.
+                  Debes obtener al menos{" "}
+                  <strong>
+                    {state.passingScore}% ({rawPassing} respuestas correctas)
+                  </strong>{" "}
+                  para aprobar.
                 </p>
               </div>
 
               <div>
                 <h3 className="font-semibold text-lg text-gray-900 mb-2">
-                  Minimum Age &amp; Eligibility
+                  Edad Mínima y Elegibilidad
                 </h3>
                 <p className="text-gray-600">
-                  You must be at least{" "}
-                  <strong>{state.minPermitAge} years old</strong> to apply for
-                  a learner&apos;s permit in {state.name}. You will need to
-                  pass the written knowledge test and a vision screening before
-                  your permit is issued.
+                  Debes tener al menos{" "}
+                  <strong>{state.minPermitAge} años</strong> para solicitar un
+                  permiso de aprendiz en {state.name}. Necesitarás aprobar el
+                  examen escrito de conocimientos y un examen de visión antes de
+                  que se emita tu permiso.
                 </p>
               </div>
 
               <div>
                 <h3 className="font-semibold text-lg text-gray-900 mb-2">
-                  If You Fail
+                  Si Repruebas
                 </h3>
-                <p className="text-gray-600">
-                  {landingInfo.retakeInfo}
-                </p>
+                <p className="text-gray-600">{landingInfo.retakeInfo}</p>
               </div>
 
               <div>
                 <h3 className="font-semibold text-lg text-gray-900 mb-2">
-                  {state.name}-Specific Rules
+                  Reglas Específicas de {state.name}
                 </h3>
                 <ul className="space-y-2">
                   {landingInfo.notableRules.map((rule, index) => (
@@ -374,13 +365,13 @@ export default async function StateDMVPracticeTestPage({
 
               <div>
                 <h3 className="font-semibold text-lg text-gray-900 mb-2">
-                  Official Driver&apos;s Manual
+                  Manual Oficial del Conductor
                 </h3>
                 <p className="text-gray-600 mb-3">
-                  Study the{" "}
-                  <strong>{landingInfo.handbookName}</strong> to
-                  prepare for the written test. TigerTest&apos;s practice
-                  questions are based on the material in this manual.
+                  Estudia el{" "}
+                  <strong>{landingInfo.handbookName}</strong> para prepararte
+                  para el examen escrito. Las preguntas de práctica de TigerTest
+                  están basadas en el material de este manual.
                 </p>
                 <a
                   href={landingInfo.handbookUrl}
@@ -389,7 +380,7 @@ export default async function StateDMVPracticeTestPage({
                   className="inline-flex items-center gap-2 text-orange-600 hover:text-orange-700 font-medium"
                 >
                   <BookOpen className="h-4 w-4" />
-                  Download the {landingInfo.handbookName}
+                  Descargar el {landingInfo.handbookName}
                   <ExternalLink className="h-3 w-3" />
                 </a>
               </div>
@@ -401,43 +392,44 @@ export default async function StateDMVPracticeTestPage({
         <Card className="mb-12">
           <CardContent className="p-6 md:p-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">
-              What&apos;s Included in Our {state.name} Practice Test
+              Qué Incluye Nuestro Examen de Práctica de {state.name}
             </h2>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <CheckCircle2 className="h-6 w-6 text-green-600 flex-shrink-0 mt-0.5" />
                 <span className="text-gray-700">
-                  <strong>200 practice questions</strong> covering all topics
-                  on the {state.dmvName} written test, including{" "}
-                  {state.name}-specific laws
+                  <strong>200 preguntas de práctica</strong> que cubren todos los
+                  temas del examen escrito del {state.dmvName}, incluyendo leyes
+                  específicas de {state.name}
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle2 className="h-6 w-6 text-green-600 flex-shrink-0 mt-0.5" />
                 <span className="text-gray-700">
-                  <strong>4 full practice tests</strong> with 50 questions
-                  each, simulating the real {state.dmvName} exam experience
+                  <strong>4 exámenes de práctica completos</strong> con 50
+                  preguntas cada uno, simulando la experiencia real del examen del{" "}
+                  {state.dmvName}
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle2 className="h-6 w-6 text-green-600 flex-shrink-0 mt-0.5" />
                 <span className="text-gray-700">
-                  <strong>Training mode</strong> with instant feedback and
-                  detailed explanations for every answer
+                  <strong>Modo de entrenamiento</strong> con retroalimentación
+                  instantánea y explicaciones detalladas para cada respuesta
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle2 className="h-6 w-6 text-green-600 flex-shrink-0 mt-0.5" />
                 <span className="text-gray-700">
-                  <strong>Progress tracking</strong> to see your pass
-                  probability increase as you study
+                  <strong>Seguimiento de progreso</strong> para ver cómo aumenta
+                  tu probabilidad de aprobar mientras estudias
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle2 className="h-6 w-6 text-green-600 flex-shrink-0 mt-0.5" />
                 <span className="text-gray-700">
-                  <strong>Mobile-friendly</strong> — study on your phone in
-                  bed, on the couch, or anywhere else
+                  <strong>Compatible con móviles</strong> — estudia en tu
+                  teléfono en la cama, en el sofá o donde sea
                 </span>
               </li>
             </ul>
@@ -447,18 +439,18 @@ export default async function StateDMVPracticeTestPage({
         {/* CTA Banner */}
         <div className="text-center bg-gradient-to-br from-orange-600 to-orange-700 rounded-2xl p-8 md:p-12 mb-12">
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
-            Ready to Pass Your {state.name} DMV Test?
+            ¿Listo para Aprobar tu Examen del DMV de {state.name}?
           </h2>
           <p className="text-orange-100 text-lg mb-6">
-            Join thousands of {state.name} drivers who passed on their first
-            try with TigerTest
+            Únete a miles de conductores de {state.name} que aprobaron en su
+            primer intento con TigerTest
           </p>
           <Link href="/onboarding/select-state">
             <Button
               size="lg"
               className="text-lg px-8 py-6 bg-white text-orange-700 hover:bg-gray-100 font-bold rounded-xl"
             >
-              Start Practicing Now — It&apos;s Free
+              Empezar a Practicar Ahora — Es Gratis
             </Button>
           </Link>
         </div>
@@ -466,7 +458,7 @@ export default async function StateDMVPracticeTestPage({
         {/* Testimonials */}
         <div className="mb-12">
           <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-            What Students Are Saying
+            Lo Que Dicen los Estudiantes
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             {testimonials.map((t, i) => (
@@ -486,7 +478,7 @@ export default async function StateDMVPracticeTestPage({
         {/* FAQ Section */}
         <div className="mb-12">
           <h2 className="text-2xl font-bold text-gray-900 mb-6">
-            Frequently Asked Questions About the {state.name} DMV Test
+            Preguntas Frecuentes Sobre el Examen del DMV de {state.name}
           </h2>
           <div className="space-y-6">
             {faqItems.map((item, i) => (
@@ -504,7 +496,7 @@ export default async function StateDMVPracticeTestPage({
         {neighboringStates.length > 0 && (
           <div className="mb-12">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">
-              Practice Tests for Nearby States
+              Exámenes de Práctica de Estados Cercanos
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               {neighboringStates.slice(0, 5).map(
@@ -512,7 +504,7 @@ export default async function StateDMVPracticeTestPage({
                   neighbor && (
                     <Link
                       key={neighbor.slug}
-                      href={`/${neighbor.slug}-dmv-practice-test`}
+                      href={`/es/${neighbor.slug}-examen-practica-dmv`}
                       className="flex items-center justify-between bg-gray-50 border border-gray-200 rounded-xl p-4 hover:border-orange-300 hover:bg-orange-50 transition-colors"
                     >
                       <span className="font-medium text-gray-900">
@@ -529,18 +521,19 @@ export default async function StateDMVPracticeTestPage({
         {/* Final CTA */}
         <div className="text-center py-8">
           <p className="text-gray-600 mb-4">
-            Ready to start studying for your {state.name} permit test?
+            ¿Listo para empezar a estudiar para tu examen de permiso de{" "}
+            {state.name}?
           </p>
           <Link href="/onboarding/select-state">
             <Button
               size="lg"
               className="text-lg px-8 py-6 bg-gray-900 text-white hover:bg-gray-800 font-bold rounded-xl"
             >
-              Start Practicing Free
+              Empezar a Practicar Gratis
             </Button>
           </Link>
           <p className="text-sm text-gray-500 mt-3">
-            No account required. Free to start.
+            No se requiere cuenta. Gratis para empezar.
           </p>
         </div>
       </div>
