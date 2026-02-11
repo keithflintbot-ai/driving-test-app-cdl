@@ -13,6 +13,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
+      url: `${siteUrl}/practice-tests-by-state`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
       url: `${siteUrl}/login`,
       lastModified: new Date(),
       changeFrequency: "monthly",
@@ -26,13 +32,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  // State landing pages
-  const statePages: MetadataRoute.Sitemap = states.map((state) => ({
-    url: `${siteUrl}/states/${state.slug}`,
+  // State DMV practice test landing pages (primary SEO pages)
+  const stateDmvPages: MetadataRoute.Sitemap = states.map((state) => ({
+    url: `${siteUrl}/${state.slug}-dmv-practice-test`,
     lastModified: new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.8,
   }));
 
-  return [...corePages, ...statePages];
+  // Legacy state pages
+  const statePages: MetadataRoute.Sitemap = states.map((state) => ({
+    url: `${siteUrl}/states/${state.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
+  }));
+
+  return [...corePages, ...stateDmvPages, ...statePages];
 }
