@@ -110,6 +110,9 @@ export default function Home() {
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 tracking-tight">
             Free DMV Practice Tests for All 50 States
           </h1>
+          <p className="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
+            200 state-specific questions. Tuned for mobile. No account needed.
+          </p>
           <HomeHero />
         </div>
       </div>
