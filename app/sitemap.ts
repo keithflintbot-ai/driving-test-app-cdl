@@ -8,34 +8,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const corePages: MetadataRoute.Sitemap = [
     {
       url: siteUrl,
-      lastModified: new Date(),
+      lastModified: new Date("2026-02-12"),
       changeFrequency: "weekly",
       priority: 1,
     },
     {
       url: `${siteUrl}/practice-tests-by-state`,
-      lastModified: new Date(),
+      lastModified: new Date("2026-02-12"),
       changeFrequency: "weekly",
       priority: 0.9,
-    },
-    {
-      url: `${siteUrl}/login`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.5,
-    },
-    {
-      url: `${siteUrl}/signup`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.5,
     },
   ];
 
   // State DMV practice test landing pages (primary SEO pages)
   const stateDmvPages: MetadataRoute.Sitemap = states.map((state) => ({
     url: `${siteUrl}/${state.slug}-dmv-practice-test`,
-    lastModified: new Date(),
+    lastModified: new Date("2026-02-12"),
     changeFrequency: "monthly" as const,
     priority: 0.8,
   }));
@@ -43,7 +31,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Spanish state DMV practice test landing pages
   const stateDmvPagesEs: MetadataRoute.Sitemap = states.map((state) => ({
     url: `${siteUrl}/es/${state.slug}-examen-practica-dmv`,
-    lastModified: new Date(),
+    lastModified: new Date("2026-02-12"),
     changeFrequency: "monthly" as const,
     priority: 0.7,
   }));
@@ -52,19 +40,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const spanishIndexPage: MetadataRoute.Sitemap = [
     {
       url: `${siteUrl}/es/examenes-practica-por-estado`,
-      lastModified: new Date(),
+      lastModified: new Date("2026-02-12"),
       changeFrequency: "weekly" as const,
       priority: 0.8,
     },
   ];
 
-  // Legacy state pages
-  const statePages: MetadataRoute.Sitemap = states.map((state) => ({
-    url: `${siteUrl}/states/${state.slug}`,
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.6,
-  }));
-
-  return [...corePages, ...stateDmvPages, ...stateDmvPagesEs, ...spanishIndexPage, ...statePages];
+  return [...corePages, ...stateDmvPages, ...stateDmvPagesEs, ...spanishIndexPage];
 }
