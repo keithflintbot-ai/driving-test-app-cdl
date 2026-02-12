@@ -149,6 +149,29 @@ export default async function StateDMVPracticeTestPage({
     })),
   };
 
+  // JSON-LD: Course/WebApplication schema with AggregateRating
+  const courseJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    name: `${state.name} DMV Practice Test - TigerTest`,
+    description: `Free ${state.name} DMV practice test with 200 questions based on the official ${state.dmvName} driver's manual.`,
+    url: `${siteUrl}/${state.slug}-dmv-practice-test`,
+    applicationCategory: "EducationalApplication",
+    operatingSystem: "Any",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.8",
+      reviewCount: "6",
+      bestRating: "5",
+      worstRating: "1",
+    },
+  };
+
   // JSON-LD: BreadcrumbList schema
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
@@ -214,6 +237,10 @@ export default async function StateDMVPracticeTestPage({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(courseJsonLd) }}
       />
 
       <div className="relative container mx-auto px-4 py-8 md:py-12 max-w-4xl">

@@ -10,7 +10,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://tigertest.io";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "TigerTest - The DMV app for studying while watching TV",
+    default: "Free DMV Practice Test 2026 - All 50 States | TigerTest",
     template: "%s | TigerTest",
   },
   description:
@@ -80,7 +80,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
+      <body className="antialiased flex flex-col min-h-screen">
+        <Providers>
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </Providers>
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-28J0RC9MJ5"
           strategy="afterInteractive"
@@ -93,13 +98,6 @@ export default function RootLayout({
             gtag('config', 'G-28J0RC9MJ5');
           `}
         </Script>
-      </head>
-      <body className="antialiased flex flex-col min-h-screen">
-        <Providers>
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </Providers>
       </body>
     </html>
   );
