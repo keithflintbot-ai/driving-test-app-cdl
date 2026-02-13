@@ -231,10 +231,12 @@ export const es: TranslationKeys = {
     notAnswered: "Sin responder",
     correctAnswer: "Correcto",
     wrong: "Incorrecto",
+    share: "Compartir",
     shareScore: "Compartir resultado",
     downloadToShare: "Descargar para compartir",
     sharing: "Compartiendo...",
     shareError: "Error al compartir",
+    tryAgain: "Intentar de nuevo",
   },
 
   // Settings page

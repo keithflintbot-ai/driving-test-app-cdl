@@ -14,6 +14,7 @@ interface ShareButtonProps {
   setId?: number;
   stateCode: string;
   className?: string;
+  children?: React.ReactNode;
 }
 
 export function ShareButton({
@@ -25,6 +26,7 @@ export function ShareButton({
   setId,
   stateCode,
   className,
+  children,
 }: ShareButtonProps) {
   const { t, language } = useTranslation();
   const [loading, setLoading] = useState(false);
@@ -32,8 +34,6 @@ export function ShareButton({
   const [canNativeShare, setCanNativeShare] = useState(false);
 
   useEffect(() => {
-    // Detect if the device supports native sharing with files
-    // This is true on mobile (iOS/Android) but not on desktop browsers
     setCanNativeShare(
       typeof navigator !== "undefined" &&
       !!navigator.share &&
@@ -84,6 +84,18 @@ export function ShareButton({
     }
   };
 
+  const defaultContent = canNativeShare ? (
+    <>
+      <Share2 className="h-4 w-4 mr-2" />
+      {t("results.shareScore")}
+    </>
+  ) : (
+    <>
+      <Download className="h-4 w-4 mr-2" />
+      {t("results.downloadToShare")}
+    </>
+  );
+
   return (
     <div className="relative">
       <Button
@@ -96,17 +108,7 @@ export function ShareButton({
             <Loader2 className="h-4 w-4 mr-2 animate-spin" />
             {t("results.sharing")}
           </>
-        ) : canNativeShare ? (
-          <>
-            <Share2 className="h-4 w-4 mr-2" />
-            {t("results.shareScore")}
-          </>
-        ) : (
-          <>
-            <Download className="h-4 w-4 mr-2" />
-            {t("results.downloadToShare")}
-          </>
-        )}
+        ) : children || defaultContent}
       </Button>
       {error && (
         <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 whitespace-nowrap text-sm text-red-600 bg-red-50 border border-red-200 rounded-md px-3 py-1">
