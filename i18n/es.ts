@@ -44,7 +44,6 @@ export const es: TranslationKeys = {
 
   // Landing page
   landing: {
-    heroPrefix: "La app del DMV para estudiar",
     heroSubtitle: "200 preguntas específicas por estado. Optimizada para móvil. Sin necesidad de cuenta.",
     trainOnMobile: "Entrena en el móvil",
     testOnDesktop: "Examínate en el escritorio",
@@ -67,24 +66,6 @@ export const es: TranslationKeys = {
     testimonial5: "fue muy útil... aprobé el examen escrito esta mañana",
     testimonial6: "ayudó mucho",
     testimonial7: "aprobé en 3 minutos",
-    phrases: [
-      "en la cama",
-      "viendo la tele",
-      "en el baño",
-      "en la sala de espera",
-      "en tu hora de almuerzo",
-      "la noche anterior",
-      "en la fila del supermercado",
-      "en los comerciales",
-      "entre reuniones",
-      "en el tren",
-      "en la parte trasera de un Uber",
-      "mientras la cena está en el horno",
-      "mientras te cepillas los dientes",
-      "cuando deberías estar trabajando",
-      "en la caminadora",
-      "cuando no puedes dormir",
-    ],
   },
 
   // Dashboard
