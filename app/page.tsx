@@ -57,10 +57,10 @@ const jsonLd = {
         },
         {
           "@type": "Question",
-          name: "Is TigerTest really free?",
+          name: "Can I use TigerTest for free?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Yes, TigerTest is 100% free forever. All 50 states, all questions, no premium tiers or hidden costs.",
+            text: "Yes! You can take practice tests and train with questions for free across all 50 states.",
           },
         },
         {
@@ -110,9 +110,6 @@ export default function Home() {
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 tracking-tight">
             Free DMV Practice Tests for All 50 States
           </h1>
-          <p className="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
-            200 state-specific questions. Tuned for mobile. No account needed.
-          </p>
           <HomeHero />
         </div>
       </div>
@@ -361,10 +358,10 @@ export default function Home() {
 
           <div>
             <h3 className="font-semibold text-lg text-gray-900 mb-2">
-              Is TigerTest really free?
+              Can I use TigerTest for free?
             </h3>
             <p className="text-gray-600">
-              Yes, TigerTest is 100% free. All 50 states, all 200 questions per state, training mode, and practice tests — no premium tiers or hidden costs.
+              Yes! You can take practice tests and train with questions for free across all 50 states.
             </p>
           </div>
 
