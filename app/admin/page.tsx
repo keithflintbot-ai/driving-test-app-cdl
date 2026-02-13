@@ -8,7 +8,7 @@ import { db } from "@/lib/firebase";
 import { deleteDoc, doc } from "firebase/firestore";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { states } from "@/data/states";
-import { ArrowLeft, Users, RefreshCw, Trash2, HelpCircle, Activity, ClipboardCheck } from "lucide-react";
+import { ArrowLeft, Users, RefreshCw, Trash2, HelpCircle, Activity, ClipboardCheck, Share2 } from "lucide-react";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -36,6 +36,8 @@ interface Stats {
   totalTestsCompleted: number;
   avgQuestionsPerUser: number;
   payingUsers: number;
+  totalShareClicks: number;
+  shareClicksDaily: Record<string, number>;
 }
 
 export default function AdminPage() {
@@ -121,6 +123,8 @@ export default function AdminPage() {
           totalTestsCompleted: stats.totalTestsCompleted - deletedUser.testsCompleted,
           avgQuestionsPerUser: newTotalUsers > 0 ? Math.round(newTotalQuestions / newTotalUsers) : 0,
           payingUsers: stats.payingUsers - (deletedUser.isPremium ? 1 : 0),
+          totalShareClicks: stats.totalShareClicks,
+          shareClicksDaily: stats.shareClicksDaily,
         });
       }
     } catch (err) {
@@ -215,7 +219,7 @@ export default function AdminPage() {
         </div>
 
         {/* Summary Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
           <Card>
             <CardContent className="p-6">
               <div className="flex items-center gap-4">
@@ -267,6 +271,24 @@ export default function AdminPage() {
                   <p className="text-sm text-gray-500">Tests Completed</p>
                   <p className="text-xs text-gray-400">
                     {stats?.totalUsers ? (stats.totalTestsCompleted / stats.totalUsers).toFixed(1) : 0} avg/user
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="p-6">
+              <div className="flex items-center gap-4">
+                <Share2 className="h-8 w-8 text-pink-500" />
+                <div>
+                  <p className="text-2xl font-bold">{stats?.totalShareClicks || 0}</p>
+                  <p className="text-sm text-gray-500">Share Clicks</p>
+                  <p className="text-xs text-gray-400">
+                    {(() => {
+                      const today = new Date().toISOString().split('T')[0];
+                      const todayCount = stats?.shareClicksDaily?.[today] || 0;
+                      return todayCount > 0 ? `${todayCount} today` : 'none today';
+                    })()}
                   </p>
                 </div>
               </div>

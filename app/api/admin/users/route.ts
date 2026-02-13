@@ -102,11 +102,12 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
-    // Fetch Auth users and Firestore data in parallel
+    // Fetch Auth users, Firestore data, and share analytics in parallel
     const db = getAdminDb();
-    const [authUsers, usersSnapshot] = await Promise.all([
+    const [authUsers, usersSnapshot, sharesDoc] = await Promise.all([
       auth.listUsers(1000),
       db.collection('users').get(),
+      db.doc('analytics/shares').get(),
     ]);
 
     const firestoreUserMap = new Map(
@@ -186,6 +187,11 @@ export async function GET(request: NextRequest) {
 
     const totalQuestionsAnswered = totalTrainingQuestions + totalTestQuestions;
 
+    // Share analytics
+    const sharesData = sharesDoc.exists ? sharesDoc.data() : null;
+    const totalShareClicks = (sharesData?.total as number) || 0;
+    const shareClicksDaily = (sharesData?.daily as Record<string, number>) || {};
+
     const response = NextResponse.json({
       users,
       dailyActiveUsers,
@@ -200,6 +206,8 @@ export async function GET(request: NextRequest) {
         totalTestsCompleted,
         avgQuestionsPerUser: users.length > 0 ? Math.round(totalQuestionsAnswered / users.length) : 0,
         payingUsers,
+        totalShareClicks,
+        shareClicksDaily,
       },
     });
 

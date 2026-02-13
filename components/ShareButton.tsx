@@ -74,6 +74,9 @@ export function ShareButton({
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
       }
+
+      // Track share click (fire and forget)
+      fetch("/api/analytics/share", { method: "POST" }).catch(() => {});
     } catch (err: unknown) {
       // User cancelling share is not an error
       if (err instanceof Error && err.name === "AbortError") return;
