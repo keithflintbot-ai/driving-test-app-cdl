@@ -44,7 +44,6 @@ export const en = {
 
   // Landing page
   landing: {
-    heroPrefix: "The DMV app for studying",
     heroSubtitle: "200 state-specific questions. Tuned for mobile. No account needed.",
     trainOnMobile: "Train on mobile",
     testOnDesktop: "Test on desktop",
@@ -67,24 +66,6 @@ export const en = {
     testimonial5: "it was very helpful... I passed the written test this morning",
     testimonial6: "helped a lot",
     testimonial7: "i passed in 3 minutes",
-    phrases: [
-      "in bed",
-      "while watching TV",
-      "on the toilet",
-      "in the waiting room",
-      "on your lunch break",
-      "the night before",
-      "in line at the grocery store",
-      "during a commercial break",
-      "between meetings",
-      "on the train",
-      "in the back of an Uber",
-      "while dinner's in the oven",
-      "while brushing your teeth",
-      "when you should be working",
-      "on the treadmill",
-      "when you can't sleep",
-    ],
   },
 
   // Dashboard
