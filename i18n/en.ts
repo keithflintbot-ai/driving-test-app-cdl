@@ -297,6 +297,7 @@ export const en = {
     keepPracticing: "Keep practicing",
     continueTraining: "Continue training to improve your score",
     completeAllTrainingSets: "Complete all 4 training sets before taking practice tests",
+    answers: "Answers",
   },
 
   // Paywall modal

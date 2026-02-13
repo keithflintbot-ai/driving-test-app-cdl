@@ -297,6 +297,7 @@ export const es: TranslationKeys = {
     keepPracticing: "Sigue practicando",
     continueTraining: "Continúa entrenando para mejorar tu puntuación",
     completeAllTrainingSets: "Completa los 4 conjuntos de entrenamiento antes de los exámenes",
+    answers: "Respuestas",
   },
 
   // Paywall modal
