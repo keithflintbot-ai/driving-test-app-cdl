@@ -232,6 +232,7 @@ export const en = {
     correctAnswer: "Correct",
     wrong: "Wrong",
     shareScore: "Share Score",
+    downloadToShare: "Download to Share",
     sharing: "Sharing...",
     shareError: "Failed to share",
   },

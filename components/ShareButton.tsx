@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Share2, Loader2 } from "lucide-react";
+import { Share2, Download, Loader2 } from "lucide-react";
 import { useTranslation } from "@/contexts/LanguageContext";
 
 interface ShareButtonProps {
@@ -29,6 +29,17 @@ export function ShareButton({
   const { t, language } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [canNativeShare, setCanNativeShare] = useState(false);
+
+  useEffect(() => {
+    // Detect if the device supports native sharing with files
+    // This is true on mobile (iOS/Android) but not on desktop browsers
+    setCanNativeShare(
+      typeof navigator !== "undefined" &&
+      !!navigator.share &&
+      !!navigator.canShare
+    );
+  }, []);
 
   const handleShare = async () => {
     setLoading(true);
@@ -85,10 +96,15 @@ export function ShareButton({
             <Loader2 className="h-4 w-4 mr-2 animate-spin" />
             {t("results.sharing")}
           </>
-        ) : (
+        ) : canNativeShare ? (
           <>
             <Share2 className="h-4 w-4 mr-2" />
             {t("results.shareScore")}
+          </>
+        ) : (
+          <>
+            <Download className="h-4 w-4 mr-2" />
+            {t("results.downloadToShare")}
           </>
         )}
       </Button>

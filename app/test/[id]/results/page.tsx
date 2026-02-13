@@ -6,7 +6,8 @@ import { QuestionCard } from "@/components/QuestionCard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Trophy, XCircle, ChevronDown, ChevronUp, TrendingUp, Sparkles, ArrowLeft, BarChart3, ChevronRight } from "lucide-react";
+import { ChevronDown, ChevronUp, TrendingUp, Sparkles, ArrowLeft, BarChart3, ChevronRight } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useStore } from "@/store/useStore";
 import { useHydration } from "@/hooks/useHydration";
@@ -14,13 +15,47 @@ import { Cloud } from "lucide-react";
 import { Fireworks } from "@/components/Fireworks";
 import { ShareButton } from "@/components/ShareButton";
 import { useTranslation } from "@/contexts/LanguageContext";
+import { states } from "@/data/states";
+
+function getTigerFace(percentage: number): string {
+  if (percentage >= 100) return "/tiger_face_01.png";
+  if (percentage >= 85) return "/tiger_face_02.png";
+  if (percentage >= 70) return "/tiger_face_03.png";
+  if (percentage >= 55) return "/tiger_face_04.png";
+  if (percentage >= 40) return "/tiger_face_05.png";
+  if (percentage >= 25) return "/tiger_face_06.png";
+  if (percentage >= 10) return "/tiger_face_07.png";
+  return "/tiger_face_08.png";
+}
+
+function getTagline(percentage: number, lang: string): string {
+  if (lang === "es") {
+    if (percentage >= 100) return "PUNTUACIÓN PERFECTA";
+    if (percentage >= 90) return "LISTO PARA EL DMV";
+    if (percentage >= 80) return "APROBÉ MI EXAMEN DEL DMV";
+    if (percentage >= 70) return "APROBÉ POR POCO";
+    if (percentage >= 50) return "REPROBÉ MI EXAMEN DEL DMV";
+    if (percentage >= 30) return "EL DMV PUEDE ESPERAR";
+    if (percentage >= 10) return "NECESITO MÁS PRÁCTICA";
+    return "CREO QUE TOMARÉ EL AUTOBÚS";
+  }
+
+  if (percentage >= 100) return "PERFECT SCORE";
+  if (percentage >= 90) return "READY FOR THE DMV";
+  if (percentage >= 80) return "PASSED MY DMV PRACTICE TEST";
+  if (percentage >= 70) return "BARELY PASSED";
+  if (percentage >= 50) return "FAILED MY DMV PRACTICE TEST";
+  if (percentage >= 30) return "THE DMV CAN WAIT";
+  if (percentage >= 10) return "NEED MORE PRACTICE";
+  return "GUESS I'M TAKING THE BUS";
+}
 
 export default function ResultsPage() {
   const params = useParams();
   const router = useRouter();
   const testId = parseInt(params.id as string);
   const hydrated = useHydration();
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
 
   const getTestSession = useStore((state) => state.getTestSession);
   const getTestAttemptStats = useStore((state) => state.getTestAttemptStats);
@@ -93,6 +128,7 @@ export default function ResultsPage() {
   const totalQuestions = questions.length;
   const percentage = totalQuestions > 0 ? Math.round((score / totalQuestions) * 100) : 0;
   const passed = percentage >= 70;
+  const stateName = states.find((s) => s.code === testSession.state)?.name || testSession.state;
 
   // Calculate improvement metrics
   const firstScore = attemptStats?.firstScore || score;
@@ -149,78 +185,80 @@ export default function ResultsPage() {
           </Link>
         </div>
 
-        {/* Results Header - Main Score */}
-        <Card className={`mb-6 ${passed ? "bg-gradient-to-br from-green-50 to-emerald-50 border-green-200" : "bg-gradient-to-br from-orange-50 to-amber-50 border-orange-300"}`}>
-          <CardContent className="pt-8 pb-8">
-            <div className="text-center">
-              <div className={`inline-flex items-center justify-center w-24 h-24 rounded-full mb-6 ${
-                passed ? "bg-green-100 border-4 border-green-300" : "bg-orange-100 border-4 border-orange-300"
-              }`}>
-                {passed ? (
-                  <Trophy className="w-12 h-12 text-green-600" />
-                ) : (
-                  <XCircle className="w-12 h-12 text-orange-600" />
-                )}
-              </div>
-
-              <h1 className="text-4xl md:text-5xl font-bold mb-3">
-                {passed ? t("results.congratulations") : t("results.keepPracticing")}
-              </h1>
-
-              <p className="text-lg text-gray-700 mb-6 max-w-2xl mx-auto">
-                {passed
-                  ? t("results.passedWithFlyingColors")
-                  : t("results.need70ToPass")}
-              </p>
-
-              {/* Main Score Display */}
-              <div className="mb-6">
-                <div className={`text-7xl md:text-8xl font-bold mb-3 ${passed ? "text-green-600" : "text-orange-600"}`}>
-                  {percentage}%
-                </div>
-                <div className="text-2xl text-gray-700 mb-4">
-                  {score} {t("results.outOf")} {totalQuestions} {t("results.correctLabel")}
-                </div>
-                <Badge
-                  className={`text-lg px-6 py-2 ${
-                    passed ? "bg-green-600 hover:bg-green-700" : "bg-orange-600 hover:bg-orange-700"
-                  }`}
-                >
-                  {passed ? t("results.passed") : t("results.failed")}
-                </Badge>
-              </div>
-
-              {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row gap-3 justify-center mt-8 max-w-2xl mx-auto">
-                <Button className="bg-black text-white hover:bg-gray-800 flex-1 sm:flex-initial" onClick={() => router.push("/dashboard")}>
-                  {t("common.backToDashboard")}
-                </Button>
-                <Button
-                  className="bg-white text-black hover:bg-gray-100 border-2 border-gray-300 flex-1 sm:flex-initial"
-                  onClick={() => router.push(`/test/${testId}`)}
-                >
-                  {t("results.retakeTest")}
-                </Button>
-                {!isGuest && (
-                  <Button
-                    className="bg-white text-black hover:bg-gray-100 border-2 border-gray-300 flex-1 sm:flex-initial"
-                    onClick={() => router.push("/stats")}
-                  >
-                    {t("results.viewStats")}
-                  </Button>
-                )}
-                <ShareButton
-                  score={score}
-                  totalQuestions={totalQuestions}
-                  percentage={percentage}
-                  passed={passed}
-                  testId={testId}
-                  stateCode={testSession.state}
-                />
-              </div>
+        {/* Results Header - Dark Gradient Score Card */}
+        <div className={`mb-6 rounded-xl overflow-hidden ${passed ? "bg-gradient-to-b from-gray-950 to-green-950" : "bg-gradient-to-b from-gray-950 to-orange-950"}`}>
+          <div className="text-center py-10 px-6 md:py-14">
+            {/* Tiger face */}
+            <div className="flex justify-center mb-5">
+              <Image
+                src={getTigerFace(percentage)}
+                alt="Tiger mascot"
+                width={160}
+                height={160}
+                className="w-[120px] h-[120px] md:w-[160px] md:h-[160px]"
+                priority
+              />
             </div>
-          </CardContent>
-        </Card>
+
+            {/* Tagline */}
+            <div className={`text-base md:text-lg font-extrabold uppercase tracking-widest mb-4 ${passed ? "text-green-300" : "text-orange-300"}`}>
+              {getTagline(percentage, language)}
+            </div>
+
+            {/* Giant percentage */}
+            <div className={`text-7xl md:text-8xl font-black mb-3 leading-none ${passed ? "text-green-500" : "text-orange-500"}`}>
+              {percentage}%
+            </div>
+
+            {/* X out of 50 correct */}
+            <div className="text-xl md:text-2xl text-gray-400 mb-5">
+              {score} {t("results.outOf")} {totalQuestions} {t("results.correctLabel")}
+            </div>
+
+            {/* PASSED/FAILED badge */}
+            <Badge
+              className={`text-lg px-6 py-2 mb-5 ${
+                passed ? "bg-green-600 hover:bg-green-700" : "bg-orange-600 hover:bg-orange-700"
+              }`}
+            >
+              {passed ? t("results.passed") : t("results.failed")}
+            </Badge>
+
+            {/* State + Test label */}
+            <div className="text-gray-400 text-base">
+              {stateName} · {language === "es" ? `Examen ${testId}` : `Test ${testId}`}
+            </div>
+          </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6 max-w-2xl mx-auto">
+          <Button className="bg-black text-white hover:bg-gray-800 flex-1 sm:flex-initial" onClick={() => router.push("/dashboard")}>
+            {t("common.backToDashboard")}
+          </Button>
+          <Button
+            className="bg-white text-black hover:bg-gray-100 border-2 border-gray-300 flex-1 sm:flex-initial"
+            onClick={() => router.push(`/test/${testId}`)}
+          >
+            {t("results.retakeTest")}
+          </Button>
+          {!isGuest && (
+            <Button
+              className="bg-white text-black hover:bg-gray-100 border-2 border-gray-300 flex-1 sm:flex-initial"
+              onClick={() => router.push("/stats")}
+            >
+              {t("results.viewStats")}
+            </Button>
+          )}
+          <ShareButton
+            score={score}
+            totalQuestions={totalQuestions}
+            percentage={percentage}
+            passed={passed}
+            testId={testId}
+            stateCode={testSession.state}
+          />
+        </div>
 
         {/* Guest Signup Prompt */}
         {isGuest && (
