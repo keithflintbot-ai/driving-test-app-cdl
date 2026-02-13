@@ -4,9 +4,8 @@ import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { Progress } from "@/components/ui/progress";
-import { ArrowLeft, ArrowUpDown, CheckCircle, XCircle, HelpCircle, ChevronRight, Lock } from "lucide-react";
+import { ArrowLeft, ArrowUpDown, CheckCircle, XCircle, HelpCircle, ChevronRight, Lock, X } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { useStore } from "@/store/useStore";
@@ -32,17 +31,21 @@ interface QuestionWithPerformance {
 
 // Category to training set mapping
 const CATEGORY_TO_SET: { [key: string]: number } = {
-  "Signs": 1,
-  "Signals": 1,
-  "Traffic Signs": 1,
-  "Rules of the Road": 2,
-  "Right of Way": 2,
-  "Parking": 2,
-  "Safety": 3,
-  "Emergencies": 3,
-  "DUI": 3,
-  "State Laws": 4,
-  "Licensing": 4,
+  roadSigns: 1,
+  rulesOfRoad: 2,
+  safeDriving: 3,
+  specialSituations: 3,
+  alcoholDUI: 3,
+  duiStateLaws: 3,
+  duiBac: 3,
+  stateUnique: 4,
+  gdlLicensing: 4,
+  cellPhone: 4,
+  insurance: 4,
+  seatbeltPhone: 4,
+  pointsPenalties: 4,
+  speedLimits: 2,
+  general: 2,
 };
 
 export default function StatsPage() {
@@ -65,6 +68,7 @@ export default function StatsPage() {
   const [sortField, setSortField] = useState<SortField>("wrong");
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
   const [paywallOpen, setPaywallOpen] = useState(false);
+  const [expandedQuestionId, setExpandedQuestionId] = useState<string | null>(null);
 
   const handleUpgrade = async () => {
     if (!user?.email || !user?.uid) {
@@ -286,7 +290,7 @@ export default function StatsPage() {
 
       return {
         title: `${t("stats.practice")} "${t(`trainingSets.${setNumber}`)}"`,
-        description: `${t("stats.youreGetting")} ${wrongPercent}% ${t("stats.wrongOn")} ${worstCategory.toLowerCase()} ${t("stats.questions")}`,
+        description: `${t("stats.youreGetting")} ${wrongPercent}% ${t("stats.wrongOn")} ${t(`categories.${worstCategory}`).toLowerCase()} ${t("stats.questions")}`,
         href: `/training?set=${setNumber}`,
       };
     }
@@ -469,19 +473,61 @@ export default function StatsPage() {
           ) : (
             <>
               {sortedQuestions.slice(0, FREE_QUESTION_LIMIT).map((item) => (
-                <Card key={item.question.questionId} className="overflow-hidden">
+                <Card
+                  key={item.question.questionId}
+                  className="overflow-hidden cursor-pointer"
+                  onClick={() => setExpandedQuestionId(
+                    expandedQuestionId === item.question.questionId ? null : item.question.questionId
+                  )}
+                >
                   <CardContent className="p-4">
                     <div className="flex items-start gap-3 mb-3">
                       <StatusIcon item={item} />
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium leading-snug">{item.question.question}</p>
                         <p className="text-xs text-gray-500 mt-1">
-                          {item.question.type === "Universal" ? t("stats.universal") : `${selectedState}${t("stats.specific")}`}
-                          {" "}&bull;{" "}
-                          {item.question.category}
+                          {t(`categories.${item.question.category}`)}
                         </p>
                       </div>
                     </div>
+                    {expandedQuestionId === item.question.questionId && (
+                      <div className="mb-3 space-y-2">
+                        <div className="flex items-center justify-between">
+                          <p className="text-xs font-semibold text-gray-500 uppercase">{t("stats.answers")}</p>
+                          <button
+                            onClick={(e) => { e.stopPropagation(); setExpandedQuestionId(null); }}
+                            className="p-1 rounded-full hover:bg-gray-100"
+                          >
+                            <X className="h-4 w-4 text-gray-400" />
+                          </button>
+                        </div>
+                        {["A", "B", "C", "D"].map((letter) => {
+                          const optionKey = `option${letter}` as keyof Question;
+                          const optionText = item.question[optionKey] as string;
+                          const isCorrect = item.question.correctAnswer === letter;
+                          return (
+                            <div
+                              key={letter}
+                              className={`flex items-start gap-2 p-2 rounded text-sm ${
+                                isCorrect
+                                  ? "bg-green-50 border border-green-200"
+                                  : "bg-gray-50 border border-gray-200"
+                              }`}
+                            >
+                              <span className={`font-semibold ${isCorrect ? "text-green-600" : "text-gray-500"}`}>
+                                {letter}.
+                              </span>
+                              <span className={isCorrect ? "text-green-700" : "text-gray-600"}>
+                                {optionText}
+                              </span>
+                              {isCorrect && (
+                                <CheckCircle className="h-4 w-4 text-green-600 ml-auto flex-shrink-0" />
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
                     <div className="flex items-center justify-between text-sm bg-gray-50 rounded-lg p-3">
                       <div className="text-center">
                         <div className={`font-semibold ${item.timesAnswered > 0 ? "text-gray-900" : "text-gray-400"}`}>
@@ -532,9 +578,7 @@ export default function StatsPage() {
                             <div className="flex-1 min-w-0">
                               <p className="text-sm font-medium leading-snug">{item.question.question}</p>
                               <p className="text-xs text-gray-500 mt-1">
-                                {item.question.type === "Universal" ? t("stats.universal") : `${selectedState}${t("stats.specific")}`}
-                                {" "}&bull;{" "}
-                                {item.question.category}
+                                {t(`categories.${item.question.category}`)}
                               </p>
                             </div>
                           </div>
@@ -582,19 +626,61 @@ export default function StatsPage() {
                 </div>
               )}
               {isPremium && sortedQuestions.slice(FREE_QUESTION_LIMIT).map((item) => (
-                <Card key={item.question.questionId} className="overflow-hidden">
+                <Card
+                  key={item.question.questionId}
+                  className="overflow-hidden cursor-pointer"
+                  onClick={() => setExpandedQuestionId(
+                    expandedQuestionId === item.question.questionId ? null : item.question.questionId
+                  )}
+                >
                   <CardContent className="p-4">
                     <div className="flex items-start gap-3 mb-3">
                       <StatusIcon item={item} />
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium leading-snug">{item.question.question}</p>
                         <p className="text-xs text-gray-500 mt-1">
-                          {item.question.type === "Universal" ? t("stats.universal") : `${selectedState}${t("stats.specific")}`}
-                          {" "}&bull;{" "}
-                          {item.question.category}
+                          {t(`categories.${item.question.category}`)}
                         </p>
                       </div>
                     </div>
+                    {expandedQuestionId === item.question.questionId && (
+                      <div className="mb-3 space-y-2">
+                        <div className="flex items-center justify-between">
+                          <p className="text-xs font-semibold text-gray-500 uppercase">{t("stats.answers")}</p>
+                          <button
+                            onClick={(e) => { e.stopPropagation(); setExpandedQuestionId(null); }}
+                            className="p-1 rounded-full hover:bg-gray-100"
+                          >
+                            <X className="h-4 w-4 text-gray-400" />
+                          </button>
+                        </div>
+                        {["A", "B", "C", "D"].map((letter) => {
+                          const optionKey = `option${letter}` as keyof Question;
+                          const optionText = item.question[optionKey] as string;
+                          const isCorrect = item.question.correctAnswer === letter;
+                          return (
+                            <div
+                              key={letter}
+                              className={`flex items-start gap-2 p-2 rounded text-sm ${
+                                isCorrect
+                                  ? "bg-green-50 border border-green-200"
+                                  : "bg-gray-50 border border-gray-200"
+                              }`}
+                            >
+                              <span className={`font-semibold ${isCorrect ? "text-green-600" : "text-gray-500"}`}>
+                                {letter}.
+                              </span>
+                              <span className={isCorrect ? "text-green-700" : "text-gray-600"}>
+                                {optionText}
+                              </span>
+                              {isCorrect && (
+                                <CheckCircle className="h-4 w-4 text-green-600 ml-auto flex-shrink-0" />
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
                     <div className="flex items-center justify-between text-sm bg-gray-50 rounded-lg p-3">
                       <div className="text-center">
                         <div className={`font-semibold ${item.timesAnswered > 0 ? "text-gray-900" : "text-gray-400"}`}>
@@ -677,27 +763,30 @@ export default function StatsPage() {
                       {(isPremium ? sortedQuestions : sortedQuestions.slice(0, FREE_QUESTION_LIMIT)).map((item) => (
                         <tr
                           key={item.question.questionId}
-                          className="border-b last:border-b-0 hover:bg-gray-50"
+                          className="border-b last:border-b-0 hover:bg-gray-50 cursor-pointer"
+                          onClick={() => setExpandedQuestionId(
+                            expandedQuestionId === item.question.questionId ? null : item.question.questionId
+                          )}
                         >
                           <td className="py-3 px-4">
-                            <HoverCard openDelay={200} closeDelay={100}>
-                              <HoverCardTrigger asChild>
-                                <div className="flex items-start gap-2 cursor-default">
-                                  <StatusIcon item={item} />
-                                  <div>
-                                    <p className="text-sm line-clamp-2">{item.question.question}</p>
-                                    <p className="text-xs text-gray-500 mt-1">
-                                      {item.question.type === "Universal" ? t("stats.universal") : `${selectedState}${t("stats.specific")}`}
-                                      {" "}&bull;{" "}
-                                      {item.question.category}
-                                    </p>
-                                  </div>
-                                </div>
-                              </HoverCardTrigger>
-                              <HoverCardContent className="w-96" side="right" align="start">
-                                <div className="space-y-2">
-                                  <p className="text-sm font-medium mb-3">{item.question.question}</p>
-                                  <div className="space-y-2">
+                            <div className="flex items-start gap-2">
+                              <StatusIcon item={item} />
+                              <div>
+                                <p className="text-sm line-clamp-2">{item.question.question}</p>
+                                <p className="text-xs text-gray-500 mt-1">
+                                  {t(`categories.${item.question.category}`)}
+                                </p>
+                                {expandedQuestionId === item.question.questionId && (
+                                  <div className="mt-3 space-y-2">
+                                    <div className="flex items-center justify-between">
+                                      <p className="text-xs font-semibold text-gray-500 uppercase">{t("stats.answers")}</p>
+                                      <button
+                                        onClick={(e) => { e.stopPropagation(); setExpandedQuestionId(null); }}
+                                        className="p-1 rounded-full hover:bg-gray-200"
+                                      >
+                                        <X className="h-4 w-4 text-gray-400" />
+                                      </button>
+                                    </div>
                                     {["A", "B", "C", "D"].map((letter) => {
                                       const optionKey = `option${letter}` as keyof Question;
                                       const optionText = item.question[optionKey] as string;
@@ -724,9 +813,9 @@ export default function StatsPage() {
                                       );
                                     })}
                                   </div>
-                                </div>
-                              </HoverCardContent>
-                            </HoverCard>
+                                )}
+                              </div>
+                            </div>
                           </td>
                           <td className="text-center py-3 px-4">
                             <span className={item.timesAnswered > 0 ? "font-semibold" : "text-gray-400"}>
@@ -779,7 +868,7 @@ export default function StatsPage() {
                               <StatusIcon item={item} />
                               <div>
                                 <p className="text-sm line-clamp-2">{item.question.question}</p>
-                                <p className="text-xs text-gray-500 mt-1">{item.question.category}</p>
+                                <p className="text-xs text-gray-500 mt-1">{t(`categories.${item.question.category}`)}</p>
                               </div>
                             </div>
                           </td>

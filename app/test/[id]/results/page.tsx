@@ -325,7 +325,7 @@ export default function ResultsPage() {
                         <div key={category} className="flex items-center gap-3">
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center justify-between text-sm">
-                              <span className="text-gray-700 font-medium">{category}</span>
+                              <span className="text-gray-700 font-medium">{t(`categories.${category}`)}</span>
                               <span className={`font-semibold ${accuracy >= 70 ? "text-green-600" : accuracy >= 50 ? "text-yellow-600" : "text-red-600"}`}>
                                 {accuracy}%
                               </span>
