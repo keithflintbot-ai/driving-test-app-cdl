@@ -231,10 +231,12 @@ export const en = {
     notAnswered: "Not answered",
     correctAnswer: "Correct",
     wrong: "Wrong",
+    share: "Share",
     shareScore: "Share Score",
     downloadToShare: "Download to Share",
     sharing: "Sharing...",
     shareError: "Failed to share",
+    tryAgain: "Try Again",
   },
 
   // Settings page

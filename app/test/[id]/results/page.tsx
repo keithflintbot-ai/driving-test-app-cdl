@@ -174,92 +174,107 @@ export default function ResultsPage() {
         <Fireworks duration={3000} onComplete={() => setShowFireworks(false)} />
       )}
 
-      <div className="container mx-auto px-4 py-8 max-w-6xl">
-        {/* Back Button */}
-        <div className="mb-6">
+      {/* Full-bleed Score Card */}
+      <div className={`${passed ? "bg-gradient-to-b from-gray-950 to-green-950" : "bg-gradient-to-b from-gray-950 to-orange-950"}`}>
+        {/* Back button */}
+        <div className="max-w-6xl mx-auto px-4 pt-4">
           <Link href="/dashboard">
-            <Button variant="ghost" className="mb-4">
+            <Button variant="ghost" className="text-gray-400 hover:text-white hover:bg-white/10 -ml-2">
               <ArrowLeft className="h-4 w-4 mr-2" />
               {t("common.backToDashboard")}
             </Button>
           </Link>
         </div>
 
-        {/* Results Header - Dark Gradient Score Card */}
-        <div className={`mb-6 rounded-xl overflow-hidden ${passed ? "bg-gradient-to-b from-gray-950 to-green-950" : "bg-gradient-to-b from-gray-950 to-orange-950"}`}>
-          <div className="text-center py-10 px-6 md:py-14">
-            {/* Tiger face */}
-            <div className="flex justify-center mb-5">
-              <Image
-                src={getTigerFace(percentage)}
-                alt="Tiger mascot"
-                width={160}
-                height={160}
-                className="w-[120px] h-[120px] md:w-[160px] md:h-[160px]"
-                priority
-              />
-            </div>
-
-            {/* Tagline */}
-            <div className={`text-base md:text-lg font-extrabold uppercase tracking-widest mb-4 ${passed ? "text-green-300" : "text-orange-300"}`}>
-              {getTagline(percentage, language)}
-            </div>
-
-            {/* Giant percentage */}
-            <div className={`text-7xl md:text-8xl font-black mb-3 leading-none ${passed ? "text-green-500" : "text-orange-500"}`}>
-              {percentage}%
-            </div>
-
-            {/* X out of 50 correct */}
-            <div className="text-xl md:text-2xl text-gray-400 mb-5">
-              {score} {t("results.outOf")} {totalQuestions} {t("results.correctLabel")}
-            </div>
-
-            {/* PASSED/FAILED badge */}
-            <Badge
-              className={`text-lg px-6 py-2 mb-5 ${
-                passed ? "bg-green-600 hover:bg-green-700" : "bg-orange-600 hover:bg-orange-700"
-              }`}
-            >
-              {passed ? t("results.passed") : t("results.failed")}
-            </Badge>
-
-            {/* State + Test label */}
-            <div className="text-gray-400 text-base">
-              {stateName} · {language === "es" ? `Examen ${testId}` : `Test ${testId}`}
+        <div className="text-center px-6 pt-4 pb-10 max-w-lg mx-auto">
+          {/* Branding header */}
+          <div className="mb-6">
+            <div className="text-gray-300 text-lg font-bold tracking-widest">tigertest.io</div>
+            <div className="text-gray-500 text-xs uppercase tracking-widest mt-1">
+              {language === "es" ? "EXAMEN DE PRÁCTICA DEL DMV" : "DMV PRACTICE TEST"}
             </div>
           </div>
-        </div>
 
-        {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6 max-w-2xl mx-auto">
-          <Button className="bg-black text-white hover:bg-gray-800 flex-1 sm:flex-initial" onClick={() => router.push("/dashboard")}>
-            {t("common.backToDashboard")}
-          </Button>
-          <Button
-            className="bg-white text-black hover:bg-gray-100 border-2 border-gray-300 flex-1 sm:flex-initial"
-            onClick={() => router.push(`/test/${testId}`)}
+          {/* Tiger face */}
+          <div className="flex justify-center mb-5">
+            <Image
+              src={getTigerFace(percentage)}
+              alt="Tiger mascot"
+              width={160}
+              height={160}
+              className="w-[120px] h-[120px] md:w-[160px] md:h-[160px]"
+              priority
+            />
+          </div>
+
+          {/* Tagline */}
+          <div className={`text-base md:text-lg font-extrabold uppercase tracking-widest mb-4 ${passed ? "text-green-300" : "text-orange-300"}`}>
+            {getTagline(percentage, language)}
+          </div>
+
+          {/* Giant percentage */}
+          <div className={`text-7xl md:text-8xl font-black mb-3 leading-none ${passed ? "text-green-500" : "text-orange-500"}`}>
+            {percentage}%
+          </div>
+
+          {/* X out of 50 correct */}
+          <div className="text-xl md:text-2xl text-gray-400 mb-5">
+            {score} {t("results.outOf")} {totalQuestions} {t("results.correctLabel")}
+          </div>
+
+          {/* PASSED/FAILED badge */}
+          <Badge
+            className={`text-lg px-6 py-2 mb-5 ${
+              passed ? "bg-green-600 hover:bg-green-700" : "bg-orange-600 hover:bg-orange-700"
+            }`}
           >
-            {t("results.retakeTest")}
-          </Button>
-          {!isGuest && (
-            <Button
-              className="bg-white text-black hover:bg-gray-100 border-2 border-gray-300 flex-1 sm:flex-initial"
-              onClick={() => router.push("/stats")}
-            >
-              {t("results.viewStats")}
-            </Button>
-          )}
-          <ShareButton
-            score={score}
-            totalQuestions={totalQuestions}
-            percentage={percentage}
-            passed={passed}
-            testId={testId}
-            stateCode={testSession.state}
-          />
-        </div>
+            {passed ? t("results.passed") : t("results.failed")}
+          </Badge>
 
+          {/* State + Test label */}
+          <div className="text-gray-400 text-base mb-2">
+            {stateName} · {language === "es" ? `Examen ${testId}` : `Test ${testId}`}
+          </div>
+
+          {/* Branding footer */}
+          <div className="text-gray-600 text-sm tracking-wider mb-8">tigertest.io</div>
+
+          {/* SHARE + TRY AGAIN buttons */}
+          <div className="flex gap-3 max-w-xs mx-auto">
+            <ShareButton
+              score={score}
+              totalQuestions={totalQuestions}
+              percentage={percentage}
+              passed={passed}
+              testId={testId}
+              stateCode={testSession.state}
+              className="flex-1 bg-white text-black hover:bg-gray-100 font-bold uppercase tracking-wide h-12 text-base"
+            >
+              {t("results.share")}
+            </ShareButton>
+            <Button
+              className="flex-1 bg-transparent text-white hover:bg-white/10 border border-white/30 font-bold uppercase tracking-wide h-12 text-base"
+              onClick={() => router.push(`/test/${testId}`)}
+            >
+              {t("results.tryAgain")}
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      {/* See Stats arrow */}
+      <div className="text-center py-5 bg-gray-50">
+        <button
+          onClick={() => document.getElementById("stats-section")?.scrollIntoView({ behavior: "smooth" })}
+          className="text-gray-500 hover:text-gray-700 flex flex-col items-center gap-1 mx-auto transition-colors"
+        >
+          <span className="text-sm font-medium">{t("results.viewStats")}</span>
+          <ChevronDown className="h-4 w-4 animate-bounce" />
+        </button>
+      </div>
+
+      {/* Stats & Details Section */}
+      <div id="stats-section" className="container mx-auto px-4 pb-8 max-w-6xl">
         {/* Guest Signup Prompt */}
         {isGuest && (
           <Card className="mb-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
