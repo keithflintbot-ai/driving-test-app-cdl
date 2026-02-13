@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     languages: {
       en: `${siteUrl}/practice-tests-by-state`,
       es: `${siteUrl}/es/examenes-practica-por-estado`,
+      "x-default": `${siteUrl}/practice-tests-by-state`,
     },
   },
   openGraph: {
@@ -41,6 +42,19 @@ export default function PracticeTestsByStatePage() {
   const grouped = groupStatesByLetter();
   const letters = Object.keys(grouped).sort();
 
+  const itemListJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "DMV Practice Tests by State",
+    numberOfItems: states.length,
+    itemListElement: states.map((state, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: `${state.name} DMV Practice Test`,
+      url: `${siteUrl}/${state.slug}-dmv-practice-test`,
+    })),
+  };
+
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -64,6 +78,10 @@ export default function PracticeTestsByStatePage() {
     <div className="min-h-screen bg-white relative">
       <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-orange-50 to-white pointer-events-none" />
 
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}

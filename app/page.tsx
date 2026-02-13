@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { Smartphone, Monitor } from "lucide-react";
@@ -6,6 +7,12 @@ import { HomeHero, HomeCTA } from "@/components/HomeHero";
 import { T } from "@/components/T";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://tigertest.io";
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: siteUrl,
+  },
+};
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -31,13 +38,6 @@ const jsonLd = {
         "Detailed analytics and progress tracking",
         "Auto-save progress",
       ],
-      aggregateRating: {
-        "@type": "AggregateRating",
-        ratingValue: "4.8",
-        reviewCount: "6",
-        bestRating: "5",
-        worstRating: "1",
-      },
     },
     {
       "@type": "Organization",
@@ -53,7 +53,7 @@ const jsonLd = {
           name: "How many questions are on the DMV written test?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Most states have between 20-50 questions on the DMV written test. TigerTest offers 200 practice questions per state so you're fully prepared.",
+            text: "Most states have between 20-50 questions on the DMV written test. TigerTest offers 200 practice questions per state so you're fully prepared for every possible question topic.",
           },
         },
         {
@@ -69,7 +69,7 @@ const jsonLd = {
           name: "What score do I need to pass the DMV test?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Most states require a score of 80% or higher to pass. TigerTest tracks your progress and shows your pass probability as you practice.",
+            text: "Most states require a score of 80% or higher to pass. Some states like New York require only 70%, while states like Idaho and Maryland require 85%. TigerTest tracks your progress and shows your pass probability as you practice.",
           },
         },
         {

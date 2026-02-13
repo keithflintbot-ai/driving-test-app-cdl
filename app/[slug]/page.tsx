@@ -61,6 +61,7 @@ export async function generateMetadata({
       languages: {
         "en": canonicalUrl,
         "es": `${siteUrl}/es/${state.slug}-examen-practica-dmv`,
+        "x-default": canonicalUrl,
       },
     },
     openGraph: {
@@ -162,13 +163,6 @@ export default async function StateDMVPracticeTestPage({
       "@type": "Offer",
       price: "0",
       priceCurrency: "USD",
-    },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.8",
-      reviewCount: "6",
-      bestRating: "5",
-      worstRating: "1",
     },
   };
 
