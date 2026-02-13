@@ -31,17 +31,21 @@ interface QuestionWithPerformance {
 
 // Category to training set mapping
 const CATEGORY_TO_SET: { [key: string]: number } = {
-  "Signs": 1,
-  "Signals": 1,
-  "Traffic Signs": 1,
-  "Rules of the Road": 2,
-  "Right of Way": 2,
-  "Parking": 2,
-  "Safety": 3,
-  "Emergencies": 3,
-  "DUI": 3,
-  "State Laws": 4,
-  "Licensing": 4,
+  roadSigns: 1,
+  rulesOfRoad: 2,
+  safeDriving: 3,
+  specialSituations: 3,
+  alcoholDUI: 3,
+  duiStateLaws: 3,
+  duiBac: 3,
+  stateUnique: 4,
+  gdlLicensing: 4,
+  cellPhone: 4,
+  insurance: 4,
+  seatbeltPhone: 4,
+  pointsPenalties: 4,
+  speedLimits: 2,
+  general: 2,
 };
 
 export default function StatsPage() {
@@ -286,7 +290,7 @@ export default function StatsPage() {
 
       return {
         title: `${t("stats.practice")} "${t(`trainingSets.${setNumber}`)}"`,
-        description: `${t("stats.youreGetting")} ${wrongPercent}% ${t("stats.wrongOn")} ${worstCategory.toLowerCase()} ${t("stats.questions")}`,
+        description: `${t("stats.youreGetting")} ${wrongPercent}% ${t("stats.wrongOn")} ${t(`categories.${worstCategory}`).toLowerCase()} ${t("stats.questions")}`,
         href: `/training?set=${setNumber}`,
       };
     }
@@ -482,9 +486,7 @@ export default function StatsPage() {
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium leading-snug">{item.question.question}</p>
                         <p className="text-xs text-gray-500 mt-1">
-                          {item.question.type === "Universal" ? t("stats.universal") : `${selectedState}${t("stats.specific")}`}
-                          {" "}&bull;{" "}
-                          {item.question.category}
+                          {t(`categories.${item.question.category}`)}
                         </p>
                       </div>
                     </div>
@@ -576,9 +578,7 @@ export default function StatsPage() {
                             <div className="flex-1 min-w-0">
                               <p className="text-sm font-medium leading-snug">{item.question.question}</p>
                               <p className="text-xs text-gray-500 mt-1">
-                                {item.question.type === "Universal" ? t("stats.universal") : `${selectedState}${t("stats.specific")}`}
-                                {" "}&bull;{" "}
-                                {item.question.category}
+                                {t(`categories.${item.question.category}`)}
                               </p>
                             </div>
                           </div>
@@ -639,9 +639,7 @@ export default function StatsPage() {
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium leading-snug">{item.question.question}</p>
                         <p className="text-xs text-gray-500 mt-1">
-                          {item.question.type === "Universal" ? t("stats.universal") : `${selectedState}${t("stats.specific")}`}
-                          {" "}&bull;{" "}
-                          {item.question.category}
+                          {t(`categories.${item.question.category}`)}
                         </p>
                       </div>
                     </div>
@@ -776,9 +774,7 @@ export default function StatsPage() {
                               <div>
                                 <p className="text-sm line-clamp-2">{item.question.question}</p>
                                 <p className="text-xs text-gray-500 mt-1">
-                                  {item.question.type === "Universal" ? t("stats.universal") : `${selectedState}${t("stats.specific")}`}
-                                  {" "}&bull;{" "}
-                                  {item.question.category}
+                                  {t(`categories.${item.question.category}`)}
                                 </p>
                                 {expandedQuestionId === item.question.questionId && (
                                   <div className="mt-3 space-y-2">
@@ -872,7 +868,7 @@ export default function StatsPage() {
                               <StatusIcon item={item} />
                               <div>
                                 <p className="text-sm line-clamp-2">{item.question.question}</p>
-                                <p className="text-xs text-gray-500 mt-1">{item.question.category}</p>
+                                <p className="text-xs text-gray-500 mt-1">{t(`categories.${item.question.category}`)}</p>
                               </div>
                             </div>
                           </td>

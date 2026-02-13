@@ -86,6 +86,25 @@ export const es: TranslationKeys = {
     moreToUnlock: "más para desbloquear entrenamiento y exámenes",
   },
 
+  // Question categories (human-friendly display names)
+  categories: {
+    gdlLicensing: "Licencias y permisos",
+    stateUnique: "Leyes estatales",
+    duiStateLaws: "DUI y leyes estatales",
+    cellPhone: "Leyes de celular",
+    insurance: "Seguro",
+    roadSigns: "Señales de tránsito",
+    rulesOfRoad: "Reglas de tránsito",
+    safeDriving: "Conducción segura",
+    specialSituations: "Situaciones especiales",
+    alcoholDUI: "Alcohol y DUI",
+    general: "General",
+    speedLimits: "Límites de velocidad",
+    duiBac: "DUI y BAC",
+    seatbeltPhone: "Cinturón y celular",
+    pointsPenalties: "Puntos y penalidades",
+  } as Record<string, string>,
+
   // Training set names
   trainingSets: {
     1: "Señales y semáforos",

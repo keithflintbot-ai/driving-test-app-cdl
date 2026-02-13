@@ -86,6 +86,25 @@ export const en = {
     moreToUnlock: "more to unlock training & tests",
   },
 
+  // Question categories (human-friendly display names)
+  categories: {
+    gdlLicensing: "Licensing & Permits",
+    stateUnique: "State Laws",
+    duiStateLaws: "DUI & State Laws",
+    cellPhone: "Cell Phone Laws",
+    insurance: "Insurance",
+    roadSigns: "Road Signs",
+    rulesOfRoad: "Rules of the Road",
+    safeDriving: "Safe Driving",
+    specialSituations: "Special Situations",
+    alcoholDUI: "Alcohol & DUI",
+    general: "General",
+    speedLimits: "Speed Limits",
+    duiBac: "DUI & BAC",
+    seatbeltPhone: "Seatbelt & Phone",
+    pointsPenalties: "Points & Penalties",
+  } as Record<string, string>,
+
   // Training set names
   trainingSets: {
     1: "Signs & Signals",

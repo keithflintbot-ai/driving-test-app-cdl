@@ -58,7 +58,7 @@ export function QuestionCard({
           <div className="text-sm text-gray-600">
             {t("questionCard.questionOf")} {questionNumber} {t("questionCard.of")} {totalQuestions}
           </div>
-          <Badge variant="outline">{question.category}</Badge>
+          <Badge variant="outline">{t(`categories.${question.category}`)}</Badge>
         </div>
         <CardTitle className="text-xl">{question.question}</CardTitle>
       </CardHeader>
