@@ -231,6 +231,9 @@ export const es: TranslationKeys = {
     notAnswered: "Sin responder",
     correctAnswer: "Correcto",
     wrong: "Incorrecto",
+    shareScore: "Compartir resultado",
+    sharing: "Compartiendo...",
+    shareError: "Error al compartir",
   },
 
   // Settings page

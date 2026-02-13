@@ -6,6 +6,7 @@ import { TrainingCard } from "@/components/TrainingCard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, CheckCircle2, BarChart3 } from "lucide-react";
+import { ShareButton } from "@/components/ShareButton";
 import { useStore } from "@/store/useStore";
 import { getTrainingQuestion, getNextTrainingSetQuestion, shuffleQuestionOptions } from "@/lib/testGenerator";
 import { Question } from "@/types";
@@ -268,6 +269,17 @@ function TrainingPageContent() {
                   {t("common.backToDashboard")}
                 </Button>
               </Link>
+              {selectedState && setNumber && (
+                <ShareButton
+                  score={50}
+                  totalQuestions={50}
+                  percentage={100}
+                  passed={true}
+                  setId={setNumber}
+                  stateCode={selectedState}
+                  className="w-full bg-white text-black hover:bg-gray-100 border-2 border-gray-300"
+                />
+              )}
             </div>
           </div>
         </div>

@@ -231,6 +231,9 @@ export const en = {
     notAnswered: "Not answered",
     correctAnswer: "Correct",
     wrong: "Wrong",
+    shareScore: "Share Score",
+    sharing: "Sharing...",
+    shareError: "Failed to share",
   },
 
   // Settings page

@@ -12,6 +12,7 @@ import { useStore } from "@/store/useStore";
 import { useHydration } from "@/hooks/useHydration";
 import { Cloud } from "lucide-react";
 import { Fireworks } from "@/components/Fireworks";
+import { ShareButton } from "@/components/ShareButton";
 import { useTranslation } from "@/contexts/LanguageContext";
 
 export default function ResultsPage() {
@@ -208,6 +209,14 @@ export default function ResultsPage() {
                     {t("results.viewStats")}
                   </Button>
                 )}
+                <ShareButton
+                  score={score}
+                  totalQuestions={totalQuestions}
+                  percentage={percentage}
+                  passed={passed}
+                  testId={testId}
+                  stateCode={testSession.state}
+                />
               </div>
             </div>
           </CardContent>
