@@ -1,0 +1,38 @@
+declare global {
+  interface Window {
+    gtag?: (...args: unknown[]) => void;
+  }
+}
+
+const PREMIUM_ITEM = {
+  item_id: "tigertest_premium",
+  item_name: "TigerTest Premium",
+  price: 9.99,
+  currency: "USD",
+  quantity: 1,
+};
+
+export function trackViewItem() {
+  window.gtag?.("event", "view_item", {
+    currency: "USD",
+    value: 9.99,
+    items: [PREMIUM_ITEM],
+  });
+}
+
+export function trackBeginCheckout() {
+  window.gtag?.("event", "begin_checkout", {
+    currency: "USD",
+    value: 9.99,
+    items: [PREMIUM_ITEM],
+  });
+}
+
+export function trackPurchase(transactionId: string) {
+  window.gtag?.("event", "purchase", {
+    transaction_id: transactionId,
+    currency: "USD",
+    value: 9.99,
+    items: [PREMIUM_ITEM],
+  });
+}
