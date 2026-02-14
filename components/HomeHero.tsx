@@ -26,30 +26,26 @@ export function HomeHero() {
         {t("landing.heroSubtitle")}
       </p>
 
-      {!loading && (
-        <>
-          {user || isGuest ? (
-            <Link href="/dashboard">
-              <Button className="bg-gray-900 text-white hover:bg-gray-800 px-8 py-6 text-lg rounded-full">
-                {t("common.goToDashboard")}
-              </Button>
-            </Link>
-          ) : (
-            <div className="flex flex-col items-center gap-3">
-              <Link href="/signup">
-                <Button className="bg-gray-900 text-white hover:bg-gray-800 px-8 py-6 text-lg rounded-full">
-                  {t("common.startPracticing")}
-                </Button>
-              </Link>
-              <button
-                onClick={handleTryFree}
-                className="text-sm text-gray-500 hover:text-gray-700 underline"
-              >
-                {t("common.tryItFirst")}
-              </button>
-            </div>
-          )}
-        </>
+      {!loading && (user || isGuest) ? (
+        <Link href="/dashboard">
+          <Button className="bg-gray-900 text-white hover:bg-gray-800 px-8 py-6 text-lg rounded-full">
+            {t("common.goToDashboard")}
+          </Button>
+        </Link>
+      ) : (
+        <div className="flex flex-col items-center gap-3">
+          <Link href="/signup">
+            <Button className="bg-gray-900 text-white hover:bg-gray-800 px-8 py-6 text-lg rounded-full">
+              {t("common.startPracticing")}
+            </Button>
+          </Link>
+          <button
+            onClick={handleTryFree}
+            className="text-sm text-gray-500 hover:text-gray-700 underline"
+          >
+            {t("common.tryItFirst")}
+          </button>
+        </div>
       )}
 
       {/* Product Screenshots */}
@@ -98,7 +94,13 @@ export function HomeCTA() {
 
   return (
     <>
-      {!loading && !user && !isGuest && (
+      {!loading && (user || isGuest) ? (
+        <Link href="/dashboard">
+          <Button className="bg-gray-900 text-white hover:bg-gray-800 px-8 py-6 text-lg rounded-full">
+            {t("common.goToDashboard")}
+          </Button>
+        </Link>
+      ) : (
         <div className="flex flex-col items-center gap-3">
           <Link href="/signup">
             <Button className="bg-gray-900 text-white hover:bg-gray-800 px-8 py-6 text-lg rounded-full">
@@ -112,14 +114,6 @@ export function HomeCTA() {
             {t("common.tryItFirst")}
           </button>
         </div>
-      )}
-
-      {!loading && (user || isGuest) && (
-        <Link href="/dashboard">
-          <Button className="bg-gray-900 text-white hover:bg-gray-800 px-8 py-6 text-lg rounded-full">
-            {t("common.goToDashboard")}
-          </Button>
-        </Link>
       )}
     </>
   );
