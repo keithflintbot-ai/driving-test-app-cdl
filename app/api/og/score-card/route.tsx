@@ -6,6 +6,22 @@ import { states } from "@/data/states";
 
 export const runtime = "nodejs";
 
+// Cache font data at module level so it's only loaded once
+let interBoldData: ArrayBuffer | null = null;
+let interBlackData: ArrayBuffer | null = null;
+
+async function loadFonts() {
+  if (!interBoldData) {
+    const res = await fetch("https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuFuYMZhrib2Bg-4.ttf");
+    interBoldData = await res.arrayBuffer();
+  }
+  if (!interBlackData) {
+    const res = await fetch("https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuDyfMZhrib2Bg-4.ttf");
+    interBlackData = await res.arrayBuffer();
+  }
+  return { interBoldData, interBlackData };
+}
+
 function getTigerFace(percentage: number): string {
   if (percentage >= 100) return "tiger_face_01.png";
   if (percentage >= 85) return "tiger_face_02.png";
@@ -81,10 +97,10 @@ export async function GET(request: NextRequest) {
   const percentage = Math.round((score / total) * 100);
   const passed = percentage >= 70;
 
-  // Load tiger face image
+  // Load tiger face image and fonts in parallel
   const tigerFile = getTigerFace(percentage);
   const tigerPath = join(process.cwd(), "public", tigerFile);
-  const tigerData = await readFile(tigerPath);
+  const [tigerData, fonts] = await Promise.all([readFile(tigerPath), loadFonts()]);
   const tigerBase64 = `data:image/png;base64,${tigerData.toString("base64")}`;
 
   const tagline = isTraining
@@ -123,9 +139,9 @@ export async function GET(request: NextRequest) {
           alignItems: "center",
           justifyContent: "center",
           background: (passed || isTraining)
-            ? "linear-gradient(180deg, #0a0a0a 0%, #052e16 100%)"
-            : "linear-gradient(180deg, #0a0a0a 0%, #431407 100%)",
-          fontFamily: "sans-serif",
+            ? "linear-gradient(180deg, #0a0a0a 0%, #091a0f 25%, #0c2414 50%, #042a12 75%, #052e16 100%)"
+            : "linear-gradient(180deg, #0a0a0a 0%, #1a0f09 25%, #241409 50%, #2e1a07 75%, #431407 100%)",
+          fontFamily: "Inter",
           color: "white",
           padding: "60px",
         }}
@@ -260,6 +276,10 @@ export async function GET(request: NextRequest) {
     {
       width: 1080,
       height: 1920,
+      fonts: [
+        { name: "Inter", data: fonts.interBoldData!, weight: 700, style: "normal" as const },
+        { name: "Inter", data: fonts.interBlackData!, weight: 900, style: "normal" as const },
+      ],
       headers: {
         "Cache-Control": "public, max-age=86400",
       },
