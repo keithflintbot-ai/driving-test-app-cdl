@@ -170,6 +170,8 @@ export const en = {
     questionsCorrect: "questions correct",
     moreToUnlock: "more to unlock",
     streak: "streak",
+    resetConfirm: "This will reset your progress on this training set. Are you sure?",
+    resetYes: "Reset",
     congratulations: "Congratulations!",
     youUnlocked: "You unlocked Training & Tests!",
     answeredTenCorrectly: "You've answered 10 questions correctly. Now you can pick specific topics to master!",

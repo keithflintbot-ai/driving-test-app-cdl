@@ -52,6 +52,7 @@ function TrainingPageContent() {
   const [showFireworks, setShowFireworks] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
   const [showSetComplete, setShowSetComplete] = useState(false);
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [prevCorrectCount, setPrevCorrectCount] = useState(training.totalCorrectAllTime);
 
   // Get current set progress
@@ -323,11 +324,34 @@ function TrainingPageContent() {
                 )}
                 <Button
                   className="flex-1 bg-transparent text-white hover:bg-white/10 border border-white/30 font-bold uppercase tracking-wide h-12 text-base"
-                  onClick={handlePracticeAgain}
+                  onClick={() => setShowResetConfirm(true)}
                 >
                   {t("results.tryAgain")}
                 </Button>
               </div>
+
+              {/* Reset confirmation */}
+              {showResetConfirm && (
+                <div className="mt-4 bg-white/10 backdrop-blur-sm rounded-xl p-4 max-w-xs mx-auto animate-in fade-in duration-200">
+                  <p className="text-gray-200 text-sm mb-3">
+                    {t("trainingPage.resetConfirm")}
+                  </p>
+                  <div className="flex gap-2">
+                    <Button
+                      className="flex-1 bg-white text-black hover:bg-gray-200 font-semibold h-10 text-sm"
+                      onClick={handlePracticeAgain}
+                    >
+                      {t("trainingPage.resetYes")}
+                    </Button>
+                    <Button
+                      className="flex-1 bg-transparent text-white hover:bg-white/10 border border-white/30 font-semibold h-10 text-sm"
+                      onClick={() => setShowResetConfirm(false)}
+                    >
+                      {t("common.cancel")}
+                    </Button>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* See Stats link */}
