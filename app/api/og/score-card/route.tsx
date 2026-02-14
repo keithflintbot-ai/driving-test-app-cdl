@@ -10,16 +10,22 @@ export const runtime = "nodejs";
 let interBoldData: ArrayBuffer | null = null;
 let interBlackData: ArrayBuffer | null = null;
 
-async function loadFonts() {
-  if (!interBoldData) {
-    const res = await fetch("https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuFuYMZhrib2Bg-4.ttf");
-    interBoldData = await res.arrayBuffer();
+async function loadFonts(): Promise<{ interBoldData: ArrayBuffer; interBlackData: ArrayBuffer } | null> {
+  try {
+    if (!interBoldData) {
+      const res = await fetch("https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuFuYMZhrib2Bg-4.ttf");
+      if (!res.ok) return null;
+      interBoldData = await res.arrayBuffer();
+    }
+    if (!interBlackData) {
+      const res = await fetch("https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuDyfMZhrib2Bg-4.ttf");
+      if (!res.ok) return null;
+      interBlackData = await res.arrayBuffer();
+    }
+    return { interBoldData, interBlackData };
+  } catch {
+    return null;
   }
-  if (!interBlackData) {
-    const res = await fetch("https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuDyfMZhrib2Bg-4.ttf");
-    interBlackData = await res.arrayBuffer();
-  }
-  return { interBoldData, interBlackData };
 }
 
 function getTigerFace(percentage: number): string {
@@ -276,10 +282,12 @@ export async function GET(request: NextRequest) {
     {
       width: 1080,
       height: 1920,
-      fonts: [
-        { name: "Inter", data: fonts.interBoldData!, weight: 700, style: "normal" as const },
-        { name: "Inter", data: fonts.interBlackData!, weight: 900, style: "normal" as const },
-      ],
+      ...(fonts && {
+        fonts: [
+          { name: "Inter", data: fonts.interBoldData, weight: 700 as const, style: "normal" as const },
+          { name: "Inter", data: fonts.interBlackData, weight: 900 as const, style: "normal" as const },
+        ],
+      }),
       headers: {
         "Cache-Control": "public, max-age=86400",
       },
