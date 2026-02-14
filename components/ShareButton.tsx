@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Share2, Download, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { useTranslation } from "@/contexts/LanguageContext";
 
 interface ShareButtonProps {
@@ -14,7 +14,6 @@ interface ShareButtonProps {
   setId?: number;
   stateCode: string;
   className?: string;
-  children?: React.ReactNode;
 }
 
 export function ShareButton({
@@ -26,7 +25,6 @@ export function ShareButton({
   setId,
   stateCode,
   className,
-  children,
 }: ShareButtonProps) {
   const { t, language } = useTranslation();
   const [loading, setLoading] = useState(false);
@@ -87,17 +85,7 @@ export function ShareButton({
     }
   };
 
-  const defaultContent = canNativeShare ? (
-    <>
-      <Share2 className="h-4 w-4 mr-2" />
-      {t("results.shareScore")}
-    </>
-  ) : (
-    <>
-      <Download className="h-4 w-4 mr-2" />
-      {t("results.downloadToShare")}
-    </>
-  );
+  const label = canNativeShare ? t("results.share") : t("results.downloadToShare");
 
   return (
     <div className="relative">
@@ -111,7 +99,7 @@ export function ShareButton({
             <Loader2 className="h-4 w-4 mr-2 animate-spin" />
             {t("results.sharing")}
           </>
-        ) : children || defaultContent}
+        ) : label}
       </Button>
       {error && (
         <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 whitespace-nowrap text-sm text-red-600 bg-red-50 border border-red-200 rounded-md px-3 py-1">
