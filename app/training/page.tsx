@@ -6,7 +6,7 @@ import { TrainingCard } from "@/components/TrainingCard";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeft, ChevronDown } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import { ShareButton } from "@/components/ShareButton";
 import { useStore } from "@/store/useStore";
@@ -330,15 +330,14 @@ function TrainingPageContent() {
               </div>
             </div>
 
-            {/* See Stats arrow */}
+            {/* See Stats link */}
             {!isGuest && (
               <div className="text-center py-5">
                 <Link
                   href="/stats"
-                  className="text-gray-500 hover:text-gray-300 flex flex-col items-center gap-1 mx-auto transition-colors"
+                  className="text-gray-500 hover:text-gray-300 text-sm font-medium transition-colors"
                 >
-                  <span className="text-sm font-medium">{t("results.viewStats")}</span>
-                  <ChevronDown className="h-4 w-4 animate-bounce" />
+                  {t("results.viewStats")} →
                 </Link>
               </div>
             )}
