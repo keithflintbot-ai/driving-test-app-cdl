@@ -32,11 +32,17 @@ export function ShareButton({
   const [canNativeShare, setCanNativeShare] = useState(false);
 
   useEffect(() => {
-    setCanNativeShare(
-      typeof navigator !== "undefined" &&
-      !!navigator.share &&
-      !!navigator.canShare
-    );
+    // Check if the browser can actually share files (not just text/URLs).
+    // Desktop browsers expose navigator.share but usually can't share files,
+    // so we test with a dummy file to get an accurate label.
+    try {
+      if ("share" in navigator && "canShare" in navigator) {
+        const testFile = new File([], "test.png", { type: "image/png" });
+        setCanNativeShare(navigator.canShare({ files: [testFile] }));
+      }
+    } catch {
+      setCanNativeShare(false);
+    }
   }, []);
 
   const handleShare = async () => {
