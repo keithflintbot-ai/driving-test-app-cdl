@@ -6,7 +6,7 @@ import { TrainingCard } from "@/components/TrainingCard";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeft, ChevronDown } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import { ShareButton } from "@/components/ShareButton";
 import { useStore } from "@/store/useStore";
@@ -52,6 +52,7 @@ function TrainingPageContent() {
   const [showFireworks, setShowFireworks] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
   const [showSetComplete, setShowSetComplete] = useState(false);
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [prevCorrectCount, setPrevCorrectCount] = useState(training.totalCorrectAllTime);
 
   // Get current set progress
@@ -84,7 +85,8 @@ function TrainingPageContent() {
   const handleFireworksComplete = () => {
     setShowFireworks(false);
     if (isSetMode) {
-      setShowSetComplete(true);
+      // Set complete overlay is already showing — just dismiss fireworks
+      if (!showSetComplete) setShowSetComplete(true);
     } else {
       setShowCelebration(true);
     }
@@ -118,8 +120,9 @@ function TrainingPageContent() {
         language
       );
 
-      // If all questions are mastered, show fireworks then completion
+      // If all questions are mastered, show completion overlay with fireworks on top
       if (!question) {
+        setShowSetComplete(true);
         setShowFireworks(true);
         return;
       }
@@ -321,22 +324,44 @@ function TrainingPageContent() {
                 )}
                 <Button
                   className="flex-1 bg-transparent text-white hover:bg-white/10 border border-white/30 font-bold uppercase tracking-wide h-12 text-base"
-                  onClick={handlePracticeAgain}
+                  onClick={() => setShowResetConfirm(true)}
                 >
                   {t("results.tryAgain")}
                 </Button>
               </div>
+
+              {/* Reset confirmation */}
+              {showResetConfirm && (
+                <div className="mt-4 bg-white/10 backdrop-blur-sm rounded-xl p-4 max-w-xs mx-auto animate-in fade-in duration-200">
+                  <p className="text-gray-200 text-sm mb-3">
+                    {t("trainingPage.resetConfirm")}
+                  </p>
+                  <div className="flex gap-2">
+                    <Button
+                      className="flex-1 bg-white text-black hover:bg-gray-200 font-semibold h-10 text-sm"
+                      onClick={handlePracticeAgain}
+                    >
+                      {t("trainingPage.resetYes")}
+                    </Button>
+                    <Button
+                      className="flex-1 bg-transparent text-white hover:bg-white/10 border border-white/30 font-semibold h-10 text-sm"
+                      onClick={() => setShowResetConfirm(false)}
+                    >
+                      {t("common.cancel")}
+                    </Button>
+                  </div>
+                </div>
+              )}
             </div>
 
-            {/* See Stats arrow */}
+            {/* See Stats link */}
             {!isGuest && (
               <div className="text-center py-5">
                 <Link
                   href="/stats"
-                  className="text-gray-500 hover:text-gray-300 flex flex-col items-center gap-1 mx-auto transition-colors"
+                  className="text-gray-500 hover:text-gray-300 text-sm font-medium transition-colors"
                 >
-                  <span className="text-sm font-medium">{t("results.viewStats")}</span>
-                  <ChevronDown className="h-4 w-4 animate-bounce" />
+                  {t("results.viewStats")} →
                 </Link>
               </div>
             )}

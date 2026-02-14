@@ -170,6 +170,8 @@ export const es: TranslationKeys = {
     questionsCorrect: "preguntas correctas",
     moreToUnlock: "más para desbloquear",
     streak: "racha",
+    resetConfirm: "Esto reiniciará tu progreso en este conjunto de entrenamiento. ¿Estás seguro/a?",
+    resetYes: "Reiniciar",
     congratulations: "¡Felicidades!",
     youUnlocked: "¡Desbloqueaste entrenamiento y exámenes!",
     answeredTenCorrectly: "Has respondido correctamente 10 preguntas. ¡Ahora puedes elegir temas específicos para dominar!",
