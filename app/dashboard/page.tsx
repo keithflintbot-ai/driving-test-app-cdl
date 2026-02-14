@@ -15,6 +15,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { auth } from "@/lib/firebase";
 import { states } from "@/data/states";
 import { useTranslation } from "@/contexts/LanguageContext";
+import { trackBeginCheckout, trackPurchase, trackViewItem } from "@/lib/analytics";
 
 function DashboardContent() {
   const router = useRouter();
@@ -106,6 +107,7 @@ function DashboardContent() {
         .then((data) => {
           if (!data) return;
           if (data.isPremium) {
+            trackPurchase(sessionId);
             setPremiumStatus({
               isPremium: true,
               purchasedAt: data.purchasedAt || new Date().toISOString(),
@@ -128,6 +130,7 @@ function DashboardContent() {
 
   // Handle paywall click
   const handlePremiumClick = (feature: "training_set_4" | "practice_test_4") => {
+    trackViewItem();
     setPaywallFeature(feature);
     setPaywallOpen(true);
   };
@@ -167,6 +170,7 @@ function DashboardContent() {
       }
 
       if (data.checkoutUrl) {
+        trackBeginCheckout();
         window.location.href = data.checkoutUrl;
       } else {
         console.error("No checkout URL returned:", data);
