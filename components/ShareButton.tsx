@@ -45,6 +45,17 @@ export function ShareButton({
     }
   }, []);
 
+  const downloadBlob = (blob: Blob) => {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "tigertest-score.png";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
   const handleShare = async () => {
     setLoading(true);
     setError(null);
@@ -65,24 +76,21 @@ export function ShareButton({
       const blob = await res.blob();
       const file = new File([blob], "tigertest-score.png", { type: "image/png" });
 
-      if (navigator.share && navigator.canShare?.({ files: [file] })) {
-        await navigator.share({ files: [file] });
+      if (canNativeShare) {
+        try {
+          await navigator.share({ files: [file] });
+        } catch (shareErr: unknown) {
+          if (shareErr instanceof Error && shareErr.name === "AbortError") return;
+          // Native share failed (e.g. activation expired) — fall back to download
+          downloadBlob(blob);
+        }
       } else {
-        // Desktop fallback: download the image
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "tigertest-score.png";
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
+        downloadBlob(blob);
       }
 
       // Track share click (fire and forget)
       fetch("/api/analytics/share", { method: "POST" }).catch(() => {});
     } catch (err: unknown) {
-      // User cancelling share is not an error
       if (err instanceof Error && err.name === "AbortError") return;
       setError(t("results.shareError"));
       setTimeout(() => setError(null), 3000);
