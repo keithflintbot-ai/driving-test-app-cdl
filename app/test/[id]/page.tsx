@@ -101,10 +101,8 @@ export default function TestPage() {
       return;
     }
 
-    setAnswers((prev) => ({
-      ...prev,
-      [currentQuestionIndex]: answer,
-    }));
+    const updatedAnswers = { ...answers, [currentQuestionIndex]: answer };
+    setAnswers(updatedAnswers);
     // Save to store
     setAnswer(testId, currentQuestionIndex, answer);
 
@@ -112,6 +110,16 @@ export default function TestPage() {
     setTimeout(() => {
       if (currentQuestionIndex < totalQuestions - 1) {
         setCurrentQuestionIndex(currentQuestionIndex + 1);
+      } else {
+        // Last question answered — auto-submit
+        let correctCount = 0;
+        questions.forEach((question, index) => {
+          if (updatedAnswers[index] === question.correctAnswer) {
+            correctCount++;
+          }
+        });
+        completeTest(testId, correctCount, questions, updatedAnswers);
+        router.push(`/test/${testId}/results`);
       }
     }, 300);
   };
@@ -205,18 +213,6 @@ export default function TestPage() {
             selectedAnswer={answers[currentQuestionIndex]}
             onAnswerChange={handleAnswerChange}
           />
-        </div>
-
-        {/* Navigation - Forward Only */}
-        <div className="flex items-center justify-center mt-6">
-          {answeredCount === totalQuestions && (
-            <Button
-              onClick={handleSubmit}
-              className="bg-black hover:bg-gray-800 text-white text-lg px-8 py-6"
-            >
-              {t("testPage.submitTest")}
-            </Button>
-          )}
         </div>
 
         {/* Progress Overview - View Only */}
