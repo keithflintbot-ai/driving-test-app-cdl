@@ -249,9 +249,7 @@ export default function ResultsPage() {
               testId={testId}
               stateCode={testSession.state}
               className="flex-1 bg-white text-black hover:bg-gray-100 font-bold uppercase tracking-wide h-12 text-base"
-            >
-              {t("results.share")}
-            </ShareButton>
+            />
             <Button
               className="flex-1 bg-transparent text-white hover:bg-white/10 border border-white/30 font-bold uppercase tracking-wide h-12 text-base"
               onClick={() => router.push(`/test/${testId}`)}
