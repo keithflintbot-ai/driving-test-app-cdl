@@ -84,7 +84,8 @@ function TrainingPageContent() {
   const handleFireworksComplete = () => {
     setShowFireworks(false);
     if (isSetMode) {
-      setShowSetComplete(true);
+      // Set complete overlay is already showing — just dismiss fireworks
+      if (!showSetComplete) setShowSetComplete(true);
     } else {
       setShowCelebration(true);
     }
@@ -118,8 +119,9 @@ function TrainingPageContent() {
         language
       );
 
-      // If all questions are mastered, show fireworks then completion
+      // If all questions are mastered, show completion overlay with fireworks on top
       if (!question) {
+        setShowSetComplete(true);
         setShowFireworks(true);
         return;
       }
