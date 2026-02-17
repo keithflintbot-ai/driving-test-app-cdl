@@ -247,52 +247,24 @@ export default function CDLLandingPage() {
         </div>
       </div>
 
-      {/* Reddit proof section adapted for CDL */}
-      <div className="max-w-5xl mx-auto px-6 py-16 md:py-24">
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-4">
-          Built for Aspiring Truck Drivers
-        </h2>
-        <p className="text-gray-600 text-center mb-12 flex items-center justify-center gap-2">
-          Trusted by drivers from r/Truckers and r/CDL on
-          <Image
-            src="/reddit.png"
-            alt="Reddit"
-            width={72}
-            height={24}
-            className="h-[55px] w-auto inline-block"
-          />
-        </p>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div className="bg-gray-50 border border-gray-200 rounded-xl p-6">
-            <p className="text-gray-800 mb-3">&quot;Used TigerTest to study for my CDL. Passed with flying colors!&quot;</p>
-            <p className="text-gray-500 text-sm">u/TruckingLife2024</p>
-          </div>
-
-          <div className="bg-gray-50 border border-gray-200 rounded-xl p-6">
-            <p className="text-gray-800 mb-3">&quot;Best CDL practice test site I found. Free and comprehensive.&quot;</p>
-            <p className="text-gray-500 text-sm">HighwayHero</p>
-          </div>
-
-          <div className="bg-gray-50 border border-gray-200 rounded-xl p-6">
-            <p className="text-gray-800 mb-3">&quot;The vehicle inspection questions helped me ace that section&quot;</p>
-            <p className="text-gray-500 text-sm">BigRigOperator</p>
-          </div>
-
-          <div className="bg-gray-50 border border-gray-200 rounded-xl p-6">
-            <p className="text-gray-800 mb-3">&quot;Questions were spot on with what I saw on the actual test&quot;</p>
-            <p className="text-gray-500 text-sm">CDL_StudyBuddy</p>
-          </div>
-
-          <div className="bg-gray-50 border border-gray-200 rounded-xl p-6">
-            <p className="text-gray-800 mb-3">&quot;12 practice tests gave me all the confidence I needed&quot;</p>
-            <p className="text-gray-500 text-sm">u/RoadWarrior2025</p>
-          </div>
-
-          <div className="bg-gray-50 border border-gray-200 rounded-xl p-6">
-            <p className="text-gray-800 mb-3">&quot;Passed my CDL test on the first try after using TigerTest for just one week&quot;</p>
-            <p className="text-gray-500 text-sm">TruckDriver2024</p>
-          </div>
+      {/* Just Launched CTA */}
+      <div className="max-w-3xl mx-auto px-6 py-16 md:py-24 text-center">
+        <div className="bg-brand-light border border-brand-border-light rounded-2xl p-8 md:p-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            We Just Launched!
+          </h2>
+          <p className="text-lg text-gray-600 mb-6 max-w-xl mx-auto">
+            Our CDL practice tests are brand new and we&apos;d love your feedback. 
+            Try a test and let us know what you think.
+          </p>
+          <a
+            href="https://www.johnbrophy.net/contact"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-brand text-white px-6 py-3 rounded-xl font-medium hover:bg-brand-hover transition-colors"
+          >
+            Send Us Feedback
+          </a>
         </div>
       </div>
 
@@ -443,7 +415,7 @@ export default function CDLLandingPage() {
             Start Your Free CDL Practice Test
           </Link>
           <p className="text-gray-500 text-sm mt-6">
-            Join thousands of drivers who passed their CDL test with TigerTest
+            No credit card. No sign up. Just practice.
           </p>
         </div>
       </div>
