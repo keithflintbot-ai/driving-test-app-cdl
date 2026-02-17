@@ -13,6 +13,7 @@ import { useStore } from "@/store/useStore";
 import { useHydration } from "@/hooks/useHydration";
 import { useAuth } from "@/contexts/AuthContext";
 import { auth } from "@/lib/firebase";
+import { TestThemeProvider } from "@/contexts/TestThemeContext";
 import { useTranslation } from "@/contexts/LanguageContext";
 import { trackBeginCheckout, trackPurchase, trackViewItem } from "@/lib/analytics";
 
@@ -372,7 +373,6 @@ function CDLDashboardContent() {
                     isPremiumLocked={false}
                     onPremiumClick={() => {}}
                     href={`/cdl/training?set=${setNumber}`}
-                    variant="blue"
                   />
                 );
               })}
@@ -407,7 +407,6 @@ function CDLDashboardContent() {
                   isPremiumLocked={false}
                   onPremiumClick={() => {}}
                   href={`/cdl/test/${cdlId}`}
-                  variant="blue"
                 />
               );
             })}
@@ -420,8 +419,10 @@ function CDLDashboardContent() {
 
 export default function CDLDashboardPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-white" />}>
-      <CDLDashboardContent />
-    </Suspense>
+    <TestThemeProvider theme="cdl">
+      <Suspense fallback={<div className="min-h-screen bg-white" />}>
+        <CDLDashboardContent />
+      </Suspense>
+    </TestThemeProvider>
   );
 }

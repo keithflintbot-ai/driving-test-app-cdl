@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { ChevronRight } from "lucide-react";
 import { PremiumBadge } from "@/components/PremiumBadge";
 import { useTranslation } from "@/contexts/LanguageContext";
+import { useTestTheme, themeClasses } from "@/contexts/TestThemeContext";
 
 export interface TrainingSet {
   id: number;
@@ -20,16 +21,16 @@ interface TrainingSetCardProps {
   isPremiumLocked?: boolean;
   onPremiumClick?: () => void;
   href?: string;
-  variant?: "default" | "blue";
 }
 
-export function TrainingSetCard({ set, locked = false, isPremiumLocked = false, onPremiumClick, href, variant = "default" }: TrainingSetCardProps) {
+export function TrainingSetCard({ set, locked = false, isPremiumLocked = false, onPremiumClick, href }: TrainingSetCardProps) {
   const { t } = useTranslation();
+  const theme = useTestTheme();
+  const tc = themeClasses(theme);
   const isComplete = set.correctCount >= set.targetCount;
   const progress = Math.min(100, Math.round((set.correctCount / set.targetCount) * 100));
 
   const getProgressBadgeColor = () => {
-    // Gradient from red (0%) to green (100%) - pastel shades
     if (progress < 20) return "bg-red-400 hover:bg-red-400";
     if (progress < 40) return "bg-orange-400 hover:bg-orange-400";
     if (progress < 60) return "bg-amber-400 hover:bg-amber-400";
@@ -53,15 +54,13 @@ export function TrainingSetCard({ set, locked = false, isPremiumLocked = false, 
     return null;
   };
 
-  const isDisabled = locked || isPremiumLocked;
-
   const cardContent = (
     <Card className={`h-full transition-all ${
       locked
         ? "bg-gray-100 border-gray-200 opacity-60"
         : isPremiumLocked
           ? "bg-gradient-to-r from-orange-50 to-amber-50 border-orange-200 hover:shadow-md hover:border-orange-300 cursor-pointer"
-          : `bg-gray-50 hover:shadow-md cursor-pointer ${variant === "blue" ? "hover:border-blue-300" : "hover:border-orange-300"}`
+          : `bg-gray-50 hover:shadow-md cursor-pointer ${tc.hoverBorder}`
     }`}>
       <CardContent className="p-4 flex items-center justify-between">
         <div className="flex flex-col">

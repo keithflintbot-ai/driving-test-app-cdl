@@ -7,7 +7,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAuth } from "@/contexts/AuthContext";
 import { useStore } from "@/store/useStore";
 import { useHydration } from "@/hooks/useHydration";
+import { useTestTheme, themeClasses } from "@/contexts/TestThemeContext";
 import { Truck } from "lucide-react";
+import Image from "next/image";
 
 export function CDLHeader() {
   const { user, logout } = useAuth();
@@ -16,6 +18,8 @@ export function CDLHeader() {
   const photoURL = useStore((state) => state.photoURL);
   const isGuest = useStore((state) => state.isGuest);
   const hydrated = useHydration();
+  const theme = useTestTheme();
+  const tc = themeClasses(theme);
 
   const handleLogout = async () => {
     await logout();
@@ -24,28 +28,26 @@ export function CDLHeader() {
 
   const displayPhotoURL = photoURL || user?.photoURL;
 
-  // Hide header on CDL test and training pages (full-screen experience)
-  const hideHeader = pathname?.startsWith("/cdl/test") || pathname === "/cdl/training";
+  // Hide header on test and training pages (full-screen experience)
+  const hideHeader = pathname?.startsWith(`${theme.routeBase}/test`) || pathname === `${theme.routeBase}/training`;
 
   if (hideHeader) {
-    return null;
-  }
-
-  // Only render on CDL pages
-  const isCDLPage = pathname?.startsWith("/cdl") || pathname === "/cdl-practice-test";
-  if (!isCDLPage) {
     return null;
   }
 
   return (
     <header className="border-b bg-white">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <Link href="/cdl-practice-test" className="flex items-center gap-2 group flex-shrink-0">
-          <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
-            <Truck className="h-6 w-6 text-white" />
-          </div>
+        <Link href={theme.logoHome} className="flex items-center gap-2 group flex-shrink-0">
+          {theme.logoIcon ? (
+            <Image src={theme.logoIcon} alt={theme.name} width={40} height={40} className="w-10 h-10" />
+          ) : (
+            <div className={`w-10 h-10 ${tc.bgSolid} rounded-lg flex items-center justify-center`}>
+              <Truck className="h-6 w-6 text-white" />
+            </div>
+          )}
           <span className="text-2xl font-bold text-gray-900 group-hover:opacity-80 transition-opacity hidden sm:inline">
-            CDL Practice Test
+            {theme.headerTitle}
           </span>
         </Link>
 
