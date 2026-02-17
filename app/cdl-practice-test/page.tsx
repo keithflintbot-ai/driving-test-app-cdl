@@ -100,7 +100,7 @@ const jsonLd = {
 
 export default function CDLLandingPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div data-theme="cdl" className="min-h-screen bg-white">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

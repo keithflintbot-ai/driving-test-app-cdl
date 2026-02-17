@@ -15,7 +15,7 @@ import { Cloud } from "lucide-react";
 import { Fireworks } from "@/components/Fireworks";
 import { ShareButton } from "@/components/ShareButton";
 import { useTranslation } from "@/contexts/LanguageContext";
-import { TestThemeProvider } from "@/contexts/TestThemeContext";
+
 
 function getTigerFace(percentage: number): string {
   if (percentage >= 100) return "/tiger_face_01.png";
@@ -479,8 +479,8 @@ function CDLResultsPageContent() {
 }
 export default function CDLResultsPage() {
   return (
-    <TestThemeProvider theme="cdl">
+    
       <CDLResultsPageContent />
-    </TestThemeProvider>
+    
   );
 }
