@@ -19,6 +19,7 @@ interface TestCardProps {
   lockMessage?: string;
   isPremiumLocked?: boolean;
   onPremiumClick?: () => void;
+  href?: string;
 }
 
 export function TestCard({
@@ -30,6 +31,7 @@ export function TestCard({
   locked = false,
   isPremiumLocked = false,
   onPremiumClick,
+  href,
 }: TestCardProps) {
   const { t } = useTranslation();
   const bestPercentage = bestScore ? Math.round((bestScore / totalQuestions) * 100) : 0;
@@ -116,7 +118,7 @@ export function TestCard({
   }
 
   return (
-    <Link href={`/test/${testNumber}`} className="block h-full">
+    <Link href={href || `/test/${testNumber}`} className="block h-full">
       {cardContent}
     </Link>
   );

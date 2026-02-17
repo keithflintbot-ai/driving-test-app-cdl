@@ -366,13 +366,13 @@ function CDLDashboardContent() {
                 const setNumber = index + 1;
                 // All CDL training sets are free for now
                 return (
-                  <Link key={set.id} href={`/cdl/training?set=${setNumber}`}>
-                    <TrainingSetCard
-                      set={set}
-                      isPremiumLocked={false}
-                      onPremiumClick={() => {}} // No premium gate
-                    />
-                  </Link>
+                  <TrainingSetCard
+                    key={set.id}
+                    set={set}
+                    isPremiumLocked={false}
+                    onPremiumClick={() => {}}
+                    href={`/cdl/training?set=${setNumber}`}
+                  />
                 );
               })}
             </div>
@@ -394,19 +394,19 @@ function CDLDashboardContent() {
               const locked = !onboardingComplete;
               // All CDL tests are free for now
               return (
-                <Link key={testNumber} href={`/cdl/test/${cdlId}`}>
-                  <TestCard
-                    testNumber={testNumber}
-                    status={locked ? "not-started" : status}
-                    score={session?.score}
-                    progress={getCDLTestProgress(testNumber)}
-                    totalQuestions={50}
-                    bestScore={attemptStats?.bestScore}
-                    locked={locked}
-                    isPremiumLocked={false} // No premium gate
-                    onPremiumClick={() => {}} // No premium gate
-                  />
-                </Link>
+                <TestCard
+                  key={testNumber}
+                  testNumber={testNumber}
+                  status={locked ? "not-started" : status}
+                  score={session?.score}
+                  progress={getCDLTestProgress(testNumber)}
+                  totalQuestions={50}
+                  bestScore={attemptStats?.bestScore}
+                  locked={locked}
+                  isPremiumLocked={false}
+                  onPremiumClick={() => {}}
+                  href={`/cdl/test/${cdlId}`}
+                />
               );
             })}
           </div>

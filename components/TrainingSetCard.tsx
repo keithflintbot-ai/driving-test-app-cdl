@@ -19,9 +19,10 @@ interface TrainingSetCardProps {
   locked?: boolean;
   isPremiumLocked?: boolean;
   onPremiumClick?: () => void;
+  href?: string;
 }
 
-export function TrainingSetCard({ set, locked = false, isPremiumLocked = false, onPremiumClick }: TrainingSetCardProps) {
+export function TrainingSetCard({ set, locked = false, isPremiumLocked = false, onPremiumClick, href }: TrainingSetCardProps) {
   const { t } = useTranslation();
   const isComplete = set.correctCount >= set.targetCount;
   const progress = Math.min(100, Math.round((set.correctCount / set.targetCount) * 100));
@@ -97,7 +98,7 @@ export function TrainingSetCard({ set, locked = false, isPremiumLocked = false, 
   }
 
   return (
-    <Link href={`/training?set=${set.id}`} className="block h-full">
+    <Link href={href || `/training?set=${set.id}`} className="block h-full">
       {cardContent}
     </Link>
   );
