@@ -6,7 +6,6 @@ import { Badge } from "@/components/ui/badge";
 import { ChevronRight } from "lucide-react";
 import { PremiumBadge } from "@/components/PremiumBadge";
 import { useTranslation } from "@/contexts/LanguageContext";
-import { useTestTheme, themeClasses } from "@/contexts/TestThemeContext";
 
 export interface TrainingSet {
   id: number;
@@ -25,8 +24,6 @@ interface TrainingSetCardProps {
 
 export function TrainingSetCard({ set, locked = false, isPremiumLocked = false, onPremiumClick, href }: TrainingSetCardProps) {
   const { t } = useTranslation();
-  const theme = useTestTheme();
-  const tc = themeClasses(theme);
   const isComplete = set.correctCount >= set.targetCount;
   const progress = Math.min(100, Math.round((set.correctCount / set.targetCount) * 100));
 
@@ -59,8 +56,8 @@ export function TrainingSetCard({ set, locked = false, isPremiumLocked = false, 
       locked
         ? "bg-gray-100 border-gray-200 opacity-60"
         : isPremiumLocked
-          ? "bg-gradient-to-r from-orange-50 to-amber-50 border-orange-200 hover:shadow-md hover:border-orange-300 cursor-pointer"
-          : `bg-gray-50 hover:shadow-md cursor-pointer ${tc.hoverBorder}`
+          ? "bg-gradient-to-r from-brand-light to-brand-gradient-to border-brand-border-light hover:shadow-md hover:border-brand-border cursor-pointer"
+          : "bg-gray-50 hover:shadow-md cursor-pointer hover:border-brand-border"
     }`}>
       <CardContent className="p-4 flex items-center justify-between">
         <div className="flex flex-col">
@@ -72,7 +69,7 @@ export function TrainingSetCard({ set, locked = false, isPremiumLocked = false, 
             {locked ? (
               <span className="text-gray-400">{t("common.locked")}</span>
             ) : isPremiumLocked ? (
-              <span className="text-orange-600">{t("common.unlockWithPremium")}</span>
+              <span className="text-brand">{t("common.unlockWithPremium")}</span>
             ) : (
               <span className={isComplete ? 'text-green-600' : 'text-gray-500'}>
                 {set.correctCount}/{set.targetCount}
@@ -80,7 +77,7 @@ export function TrainingSetCard({ set, locked = false, isPremiumLocked = false, 
             )}
           </p>
         </div>
-        {!locked && <ChevronRight className={`h-5 w-5 ${isPremiumLocked ? "text-orange-400" : "text-gray-400"}`} />}
+        {!locked && <ChevronRight className={`h-5 w-5 ${isPremiumLocked ? "text-brand-muted" : "text-gray-400"}`} />}
       </CardContent>
     </Card>
   );

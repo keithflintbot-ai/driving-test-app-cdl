@@ -201,7 +201,7 @@ function TrainingPageContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 to-amber-50">
+    <div className="min-h-screen bg-gradient-to-br from-brand-light to-brand-gradient-to">
       {/* Fireworks Animation */}
       {showFireworks && (
         <Fireworks duration={3000} onComplete={handleFireworksComplete} />
@@ -221,7 +221,7 @@ function TrainingPageContent() {
             <h2 className="text-3xl font-bold text-gray-900 mb-2">
               {t("trainingPage.congratulations")}
             </h2>
-            <p className="text-xl text-orange-600 font-semibold mb-4">
+            <p className="text-xl text-brand font-semibold mb-4">
               {t("trainingPage.youUnlocked")}
             </p>
             <p className="text-gray-600 mb-6">
@@ -377,7 +377,7 @@ function TrainingPageContent() {
             </Button>
           </Link>
           {!isGuest && (
-            <Link href="/stats" className="text-sm font-medium text-orange-600 hover:text-orange-800 transition-colors">
+            <Link href="/stats" className="text-sm font-medium text-brand hover:text-brand-dark transition-colors">
               {t("trainingPage.viewStats")}
             </Link>
           )}
@@ -409,15 +409,15 @@ function TrainingPageContent() {
             // Set-based progress
             <>
               <div className="flex items-center justify-center gap-1 text-sm md:text-lg text-gray-700">
-                <span className="font-bold text-xl md:text-2xl text-orange-600">{setProgress.correct}</span>
+                <span className="font-bold text-xl md:text-2xl text-brand">{setProgress.correct}</span>
                 <span className="text-gray-500">/{setProgress.total}</span>
                 <span className="text-gray-500 text-xs md:text-base ml-1">
                   {t("trainingPage.questionsCorrect")}
                 </span>
               </div>
-              <div className="w-full bg-orange-200 rounded-full h-2 mt-2 max-w-md mx-auto">
+              <div className="w-full bg-brand-border-light rounded-full h-2 mt-2 max-w-md mx-auto">
                 <div
-                  className="bg-orange-600 h-2 rounded-full transition-all"
+                  className="bg-brand h-2 rounded-full transition-all"
                   style={{ width: `${(setProgress.correct / setProgress.total) * 100}%` }}
                 />
               </div>
@@ -426,15 +426,15 @@ function TrainingPageContent() {
             // Onboarding progress
             <>
               <div className="flex items-center justify-center gap-1 text-sm md:text-lg text-gray-700">
-                <span className="font-bold text-xl md:text-2xl text-orange-600">{training.totalCorrectAllTime}</span>
+                <span className="font-bold text-xl md:text-2xl text-brand">{training.totalCorrectAllTime}</span>
                 <span className="text-gray-500">/10</span>
                 <span className="text-gray-500 text-xs md:text-base ml-1">
                   ({10 - training.totalCorrectAllTime} {t("trainingPage.moreToUnlock")})
                 </span>
               </div>
-              <div className="w-full bg-orange-200 rounded-full h-2 mt-2 max-w-md mx-auto">
+              <div className="w-full bg-brand-border-light rounded-full h-2 mt-2 max-w-md mx-auto">
                 <div
-                  className="bg-orange-600 h-2 rounded-full transition-all"
+                  className="bg-brand h-2 rounded-full transition-all"
                   style={{ width: `${Math.min(100, (training.totalCorrectAllTime / 10) * 100)}%` }}
                 />
               </div>
@@ -442,7 +442,7 @@ function TrainingPageContent() {
           ) : (
             // Post-onboarding without set - show current streak
             <div className="flex items-center justify-center gap-1 text-sm md:text-lg text-gray-700">
-              <span className="font-bold text-xl md:text-2xl text-orange-600">{training.currentStreak}</span>
+              <span className="font-bold text-xl md:text-2xl text-brand">{training.currentStreak}</span>
               <span className="text-gray-500 text-xs md:text-base ml-1">
                 {t("trainingPage.streak")}
               </span>
@@ -456,7 +456,7 @@ function TrainingPageContent() {
 
 export default function TrainingPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-gradient-to-br from-orange-50 to-amber-50" />}>
+    <Suspense fallback={<div className="min-h-screen bg-gradient-to-br from-brand-light to-brand-gradient-to" />}>
       <TrainingPageContent />
     </Suspense>
   );

@@ -7,7 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAuth } from "@/contexts/AuthContext";
 import { useStore } from "@/store/useStore";
 import { useHydration } from "@/hooks/useHydration";
-import { useTestTheme, themeClasses } from "@/contexts/TestThemeContext";
+import { useTestTheme } from "@/contexts/TestThemeContext";
 import { Truck } from "lucide-react";
 import Image from "next/image";
 
@@ -19,7 +19,6 @@ export function CDLHeader() {
   const isGuest = useStore((state) => state.isGuest);
   const hydrated = useHydration();
   const theme = useTestTheme();
-  const tc = themeClasses(theme);
 
   const handleLogout = async () => {
     await logout();
@@ -28,7 +27,6 @@ export function CDLHeader() {
 
   const displayPhotoURL = photoURL || user?.photoURL;
 
-  // Hide header on test and training pages (full-screen experience)
   const hideHeader = pathname?.startsWith(`${theme.routeBase}/test`) || pathname === `${theme.routeBase}/training`;
 
   if (hideHeader) {
@@ -42,7 +40,7 @@ export function CDLHeader() {
           {theme.logoIcon ? (
             <Image src={theme.logoIcon} alt={theme.name} width={40} height={40} className="w-10 h-10" />
           ) : (
-            <div className={`w-10 h-10 ${tc.bgSolid} rounded-lg flex items-center justify-center`}>
+            <div className="w-10 h-10 bg-brand rounded-lg flex items-center justify-center">
               <Truck className="h-6 w-6 text-white" />
             </div>
           )}

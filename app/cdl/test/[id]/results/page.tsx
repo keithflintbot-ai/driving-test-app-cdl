@@ -162,7 +162,7 @@ function CDLResultsPageContent() {
       )}
 
       {/* Full-bleed Score Card */}
-      <div className={`${passed ? "bg-gradient-to-b from-gray-950 to-blue-950" : "bg-gradient-to-b from-gray-950 to-blue-950"}`}>
+      <div className={`${passed ? "bg-gradient-to-b from-gray-950 to-brand-darker" : "bg-gradient-to-b from-gray-950 to-brand-darker"}`}>
         {/* Back button */}
         <div className="max-w-6xl mx-auto px-4 pt-4">
           <Link href="/cdl/dashboard">
@@ -195,12 +195,12 @@ function CDLResultsPageContent() {
           </div>
 
           {/* Tagline */}
-          <div className={`text-base md:text-lg font-extrabold uppercase tracking-widest mb-4 ${passed ? "text-blue-300" : "text-blue-300"}`}>
+          <div className={`text-base md:text-lg font-extrabold uppercase tracking-widest mb-4 ${passed ? "text-brand-border" : "text-brand-border"}`}>
             {getCDLTagline(percentage)}
           </div>
 
           {/* Giant percentage */}
-          <div className={`text-7xl md:text-8xl font-black mb-3 leading-none ${passed ? "text-blue-500" : "text-blue-500"}`}>
+          <div className={`text-7xl md:text-8xl font-black mb-3 leading-none ${passed ? "text-brand" : "text-brand"}`}>
             {percentage}%
           </div>
 
@@ -212,7 +212,7 @@ function CDLResultsPageContent() {
           {/* PASSED/FAILED badge */}
           <Badge
             className={`text-lg px-6 py-2 mb-5 ${
-              passed ? "bg-blue-600 hover:bg-blue-700" : "bg-blue-600 hover:bg-blue-700"
+              passed ? "bg-brand hover:bg-brand-hover" : "bg-brand hover:bg-brand-hover"
             }`}
           >
             {passed ? t("results.passed") : t("results.failed")}
@@ -262,12 +262,12 @@ function CDLResultsPageContent() {
       <div id="stats-section" className="container mx-auto px-4 pb-8 max-w-6xl">
         {/* Guest Signup Prompt */}
         {isGuest && (
-          <Card className="mb-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
+          <Card className="mb-6 bg-gradient-to-r from-brand-light to-brand-gradient-to border-brand-border-light">
             <CardContent className="py-6">
               <div className="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
                 <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                    <Cloud className="w-6 h-6 text-blue-600" />
+                  <div className="w-12 h-12 bg-brand-light rounded-full flex items-center justify-center">
+                    <Cloud className="w-6 h-6 text-brand" />
                   </div>
                 </div>
                 <div className="flex-1">
@@ -277,7 +277,7 @@ function CDLResultsPageContent() {
                   </p>
                 </div>
                 <Link href="/signup">
-                  <Button className="bg-blue-600 text-white hover:bg-blue-700 whitespace-nowrap">
+                  <Button className="bg-brand text-white hover:bg-brand-hover whitespace-nowrap">
                     {t("results.signUpFree")}
                   </Button>
                 </Link>
@@ -309,10 +309,10 @@ function CDLResultsPageContent() {
                 </Card>
 
                 {/* This Attempt */}
-                <Card className="bg-blue-50 border-blue-200 border-2">
+                <Card className="bg-brand-light border-brand-border-light border-2">
                   <CardContent className="pt-6 text-center">
-                    <div className="text-sm font-medium text-blue-700 mb-2">{t("results.thisAttempt")}</div>
-                    <div className="text-4xl font-bold text-blue-600 mb-1">
+                    <div className="text-sm font-medium text-brand-dark mb-2">{t("results.thisAttempt")}</div>
+                    <div className="text-4xl font-bold text-brand mb-1">
                       {percentage}%
                     </div>
                     <div className="text-sm text-gray-600">
@@ -328,10 +328,10 @@ function CDLResultsPageContent() {
                 </Card>
 
                 {/* Best Score */}
-                <Card className="bg-blue-50 border-blue-200">
+                <Card className="bg-brand-light border-brand-border-light">
                   <CardContent className="pt-6 text-center">
-                    <div className="text-sm font-medium text-blue-700 mb-2">{t("results.bestScore")}</div>
-                    <div className="text-4xl font-bold text-blue-600 mb-1">
+                    <div className="text-sm font-medium text-brand-dark mb-2">{t("results.bestScore")}</div>
+                    <div className="text-4xl font-bold text-brand mb-1">
                       {bestPercentage}%
                     </div>
                     <div className="text-sm text-gray-600">
@@ -343,9 +343,9 @@ function CDLResultsPageContent() {
 
               {/* Improvement Message */}
               {improvement > 0 && (
-                <div className="flex items-center justify-center gap-2 bg-blue-50 border-2 border-blue-300 rounded-lg p-4">
-                  <TrendingUp className="h-6 w-6 text-blue-600" />
-                  <span className="text-lg font-semibold text-blue-700">
+                <div className="flex items-center justify-center gap-2 bg-brand-light border-2 border-brand-border rounded-lg p-4">
+                  <TrendingUp className="h-6 w-6 text-brand" />
+                  <span className="text-lg font-semibold text-brand-dark">
                     {t("results.improvedBy")} {improvement}% {t("results.sinceFirstAttempt")} 🚀
                   </span>
                 </div>
@@ -357,11 +357,11 @@ function CDLResultsPageContent() {
         {/* Weak Areas Insight → Stats CTA */}
         {!isGuest && weakCategories.length > 0 && (
           <Link href="/cdl/dashboard" className="block">
-            <Card className="mb-6 border-blue-200 bg-gradient-to-r from-blue-50 to-sky-50 cursor-pointer hover:shadow-md transition-shadow">
+            <Card className="mb-6 border-brand-border-light bg-gradient-to-r from-brand-light to-brand-gradient-to cursor-pointer hover:shadow-md transition-shadow">
               <CardContent className="p-6">
                 <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                    <BarChart3 className="h-5 w-5 text-blue-600" />
+                  <div className="flex-shrink-0 w-10 h-10 bg-brand-light rounded-full flex items-center justify-center">
+                    <BarChart3 className="h-5 w-5 text-brand" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <h3 className="font-bold text-gray-900 mb-2">
@@ -373,13 +373,13 @@ function CDLResultsPageContent() {
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center justify-between text-sm">
                               <span className="text-gray-700 font-medium">{t(`categories.${category}`) || category}</span>
-                              <span className={`font-semibold ${accuracy >= 80 ? "text-blue-600" : accuracy >= 60 ? "text-yellow-600" : "text-red-600"}`}>
+                              <span className={`font-semibold ${accuracy >= 80 ? "text-brand" : accuracy >= 60 ? "text-yellow-600" : "text-red-600"}`}>
                                 {accuracy}%
                               </span>
                             </div>
                             <div className="w-full bg-gray-200 rounded-full h-1.5 mt-1">
                               <div
-                                className={`h-1.5 rounded-full ${accuracy >= 80 ? "bg-blue-500" : accuracy >= 60 ? "bg-yellow-500" : "bg-red-500"}`}
+                                className={`h-1.5 rounded-full ${accuracy >= 80 ? "bg-brand" : accuracy >= 60 ? "bg-yellow-500" : "bg-red-500"}`}
                                 style={{ width: `${accuracy}%` }}
                               />
                             </div>
@@ -387,11 +387,11 @@ function CDLResultsPageContent() {
                         </div>
                       ))}
                     </div>
-                    <p className="text-sm text-blue-600 font-medium mt-3">
+                    <p className="text-sm text-brand font-medium mt-3">
                       View CDL Dashboard
                     </p>
                   </div>
-                  <ChevronRight className="h-5 w-5 text-blue-400 flex-shrink-0 mt-1" />
+                  <ChevronRight className="h-5 w-5 text-brand-muted flex-shrink-0 mt-1" />
                 </div>
               </CardContent>
             </Card>
@@ -427,7 +427,7 @@ function CDLResultsPageContent() {
                     <div className="flex items-center gap-4 flex-1">
                       <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-semibold ${
                         isCorrect
-                          ? "bg-blue-100 text-blue-700"
+                          ? "bg-brand-light text-brand-dark"
                           : "bg-red-100 text-red-700"
                       }`}>
                         {index + 1}
@@ -438,14 +438,14 @@ function CDLResultsPageContent() {
                           {t("results.yourAnswer")}: <span className="font-semibold">{userAnswer || t("results.notAnswered")}</span>
                           {!isCorrect && (
                             <span className="ml-2">
-                              • {t("results.correctAnswer")}: <span className="font-semibold text-blue-600">{question.correctAnswer}</span>
+                              • {t("results.correctAnswer")}: <span className="font-semibold text-brand">{question.correctAnswer}</span>
                             </span>
                           )}
                         </div>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
-                      <Badge className={isCorrect ? "bg-blue-500" : "bg-red-500"}>
+                      <Badge className={isCorrect ? "bg-brand" : "bg-red-500"}>
                         {isCorrect ? t("results.correctAnswer") : t("results.wrong")}
                       </Badge>
                       {isExpanded ? (

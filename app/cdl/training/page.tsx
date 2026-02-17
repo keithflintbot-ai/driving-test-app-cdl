@@ -182,7 +182,7 @@ function CDLTrainingPageContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-sky-50">
+    <div className="min-h-screen bg-gradient-to-br from-brand-light to-brand-gradient-to">
       {/* Fireworks Animation */}
       {showFireworks && (
         <Fireworks duration={3000} onComplete={handleFireworksComplete} />
@@ -202,7 +202,7 @@ function CDLTrainingPageContent() {
             <h2 className="text-3xl font-bold text-gray-900 mb-2">
               {t("trainingPage.congratulations")}
             </h2>
-            <p className="text-xl text-blue-600 font-semibold mb-4">
+            <p className="text-xl text-brand font-semibold mb-4">
               You Unlocked CDL Training Sets!
             </p>
             <p className="text-gray-600 mb-6">
@@ -229,7 +229,7 @@ function CDLTrainingPageContent() {
       {/* Set Complete - Full-bleed Score Card */}
       {showSetComplete && isSetMode && (
         <div className="fixed inset-0 z-50 overflow-y-auto animate-in fade-in duration-300">
-          <div className="min-h-screen bg-gradient-to-b from-gray-950 to-blue-950">
+          <div className="min-h-screen bg-gradient-to-b from-gray-950 to-brand-darker">
             {/* Back button */}
             <div className="max-w-6xl mx-auto px-4 pt-4">
               <Link href="/cdl/dashboard">
@@ -261,12 +261,12 @@ function CDLTrainingPageContent() {
               </div>
 
               {/* Tagline */}
-              <div className="text-base md:text-lg font-extrabold uppercase tracking-widest mb-4 text-blue-300">
+              <div className="text-base md:text-lg font-extrabold uppercase tracking-widest mb-4 text-brand-border">
                 MASTERED MY CDL TRAINING
               </div>
 
               {/* Giant percentage */}
-              <div className="text-7xl md:text-8xl font-black mb-3 leading-none text-blue-500">
+              <div className="text-7xl md:text-8xl font-black mb-3 leading-none text-brand">
                 100%
               </div>
 
@@ -276,7 +276,7 @@ function CDLTrainingPageContent() {
               </div>
 
               {/* MASTERED badge */}
-              <Badge className="text-lg px-6 py-2 mb-5 bg-blue-600 hover:bg-blue-700">
+              <Badge className="text-lg px-6 py-2 mb-5 bg-brand hover:bg-brand-hover">
                 MASTERED
               </Badge>
 
@@ -358,7 +358,7 @@ function CDLTrainingPageContent() {
             </Button>
           </Link>
           {!isGuest && (
-            <Link href="/cdl/dashboard" className="text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors">
+            <Link href="/cdl/dashboard" className="text-sm font-medium text-brand hover:text-brand-dark transition-colors">
               View CDL Dashboard
             </Link>
           )}
@@ -390,15 +390,15 @@ function CDLTrainingPageContent() {
             // Set-based progress
             <>
               <div className="flex items-center justify-center gap-1 text-sm md:text-lg text-gray-700">
-                <span className="font-bold text-xl md:text-2xl text-blue-600">{setProgress.correct}</span>
+                <span className="font-bold text-xl md:text-2xl text-brand">{setProgress.correct}</span>
                 <span className="text-gray-500">/{setProgress.total}</span>
                 <span className="text-gray-500 text-xs md:text-base ml-1">
                   {t("trainingPage.questionsCorrect")}
                 </span>
               </div>
-              <div className="w-full bg-blue-200 rounded-full h-2 mt-2 max-w-md mx-auto">
+              <div className="w-full bg-brand-border-light rounded-full h-2 mt-2 max-w-md mx-auto">
                 <div
-                  className="bg-blue-600 h-2 rounded-full transition-all"
+                  className="bg-brand h-2 rounded-full transition-all"
                   style={{ width: `${(setProgress.correct / setProgress.total) * 100}%` }}
                 />
               </div>
@@ -407,15 +407,15 @@ function CDLTrainingPageContent() {
             // Onboarding progress
             <>
               <div className="flex items-center justify-center gap-1 text-sm md:text-lg text-gray-700">
-                <span className="font-bold text-xl md:text-2xl text-blue-600">{training.totalCorrectAllTime}</span>
+                <span className="font-bold text-xl md:text-2xl text-brand">{training.totalCorrectAllTime}</span>
                 <span className="text-gray-500">/10</span>
                 <span className="text-gray-500 text-xs md:text-base ml-1">
                   ({10 - training.totalCorrectAllTime} more to unlock CDL sets)
                 </span>
               </div>
-              <div className="w-full bg-blue-200 rounded-full h-2 mt-2 max-w-md mx-auto">
+              <div className="w-full bg-brand-border-light rounded-full h-2 mt-2 max-w-md mx-auto">
                 <div
-                  className="bg-blue-600 h-2 rounded-full transition-all"
+                  className="bg-brand h-2 rounded-full transition-all"
                   style={{ width: `${Math.min(100, (training.totalCorrectAllTime / 10) * 100)}%` }}
                 />
               </div>
@@ -423,7 +423,7 @@ function CDLTrainingPageContent() {
           ) : (
             // Post-onboarding without set - show current streak
             <div className="flex items-center justify-center gap-1 text-sm md:text-lg text-gray-700">
-              <span className="font-bold text-xl md:text-2xl text-blue-600">{training.currentStreak}</span>
+              <span className="font-bold text-xl md:text-2xl text-brand">{training.currentStreak}</span>
               <span className="text-gray-500 text-xs md:text-base ml-1">
                 {t("trainingPage.streak")}
               </span>
@@ -438,7 +438,7 @@ function CDLTrainingPageContent() {
 export default function CDLTrainingPage() {
   return (
     <TestThemeProvider theme="cdl">
-      <Suspense fallback={<div className="min-h-screen bg-gradient-to-br from-blue-50 to-sky-50" />}>
+      <Suspense fallback={<div className="min-h-screen bg-gradient-to-br from-brand-light to-brand-gradient-to" />}>
         <CDLTrainingPageContent />
       </Suspense>
     </TestThemeProvider>

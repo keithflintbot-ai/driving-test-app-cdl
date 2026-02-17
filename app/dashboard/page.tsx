@@ -210,7 +210,7 @@ function DashboardContent() {
 
   return (
     <div className="min-h-screen bg-white relative">
-      <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-orange-50 to-white pointer-events-none" />
+      <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-brand-light to-white pointer-events-none" />
       <div className="relative container mx-auto px-4 py-8 max-w-6xl">
 
         {/* Paywall Modal */}
@@ -251,19 +251,19 @@ function DashboardContent() {
         {/* Onboarding Card - shown during onboarding */}
         {!onboardingComplete && (
           <Link href="/training" className="block">
-            <Card className="mb-6 bg-gradient-to-r from-orange-50 to-amber-50 border-orange-200 hover:shadow-md transition-all cursor-pointer">
+            <Card className="mb-6 bg-gradient-to-r from-brand-light to-brand-gradient-to border-brand-border-light hover:shadow-md transition-all cursor-pointer">
               <CardContent className="p-6">
                 <div className="flex items-center gap-4">
-                  <Zap className="h-12 w-12 text-orange-500" />
+                  <Zap className="h-12 w-12 text-brand" />
                   <div className="flex-1">
-                    <p className="text-2xl font-bold text-orange-900">
+                    <p className="text-2xl font-bold text-brand-darker">
                       {onboardingProgress}/10
                     </p>
-                    <p className="text-sm text-orange-700 mt-1">
+                    <p className="text-sm text-brand-dark mt-1">
                       {10 - onboardingProgress} {t("dashboard.moreToUnlock")}
                     </p>
                   </div>
-                  <ChevronRight className="h-6 w-6 text-orange-400" />
+                  <ChevronRight className="h-6 w-6 text-brand-muted" />
                 </div>
               </CardContent>
             </Card>
@@ -272,7 +272,7 @@ function DashboardContent() {
 
         {/* Pass Probability / Stats Card - shown after onboarding when there's data */}
         {onboardingComplete && isGuest && (
-          <Card className="mb-6 bg-gradient-to-r from-orange-50 to-amber-50 border-orange-200">
+          <Card className="mb-6 bg-gradient-to-r from-brand-light to-brand-gradient-to border-brand-border-light">
             <CardContent className="p-6">
               <div className="flex items-center gap-4">
                 <div className="text-4xl">📊</div>
@@ -280,7 +280,7 @@ function DashboardContent() {
                   <p className="text-lg text-gray-700">
                     <span className="font-bold">{t("common.signUp")}</span> {t("dashboard.signUpPrompt")}
                   </p>
-                  <Link href="/signup" className="text-sm text-orange-600 hover:text-orange-800 font-medium mt-1 inline-block">
+                  <Link href="/signup" className="text-sm text-brand hover:text-brand-dark font-medium mt-1 inline-block">
                     {t("dashboard.createFreeAccount")}
                   </Link>
                 </div>

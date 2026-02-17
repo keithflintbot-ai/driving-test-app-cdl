@@ -175,7 +175,7 @@ export default function ResultsPage() {
       )}
 
       {/* Full-bleed Score Card */}
-      <div className={`${passed ? "bg-gradient-to-b from-gray-950 to-green-950" : "bg-gradient-to-b from-gray-950 to-orange-950"}`}>
+      <div className={`${passed ? "bg-gradient-to-b from-gray-950 to-green-950" : "bg-gradient-to-b from-gray-950 to-brand-darker"}`}>
         {/* Back button */}
         <div className="max-w-6xl mx-auto px-4 pt-4">
           <Link href="/dashboard">
@@ -208,12 +208,12 @@ export default function ResultsPage() {
           </div>
 
           {/* Tagline */}
-          <div className={`text-base md:text-lg font-extrabold uppercase tracking-widest mb-4 ${passed ? "text-green-300" : "text-orange-300"}`}>
+          <div className={`text-base md:text-lg font-extrabold uppercase tracking-widest mb-4 ${passed ? "text-green-300" : "text-brand-border"}`}>
             {getTagline(percentage, language)}
           </div>
 
           {/* Giant percentage */}
-          <div className={`text-7xl md:text-8xl font-black mb-3 leading-none ${passed ? "text-green-500" : "text-orange-500"}`}>
+          <div className={`text-7xl md:text-8xl font-black mb-3 leading-none ${passed ? "text-green-500" : "text-brand"}`}>
             {percentage}%
           </div>
 
@@ -225,7 +225,7 @@ export default function ResultsPage() {
           {/* PASSED/FAILED badge */}
           <Badge
             className={`text-lg px-6 py-2 mb-5 ${
-              passed ? "bg-green-600 hover:bg-green-700" : "bg-orange-600 hover:bg-orange-700"
+              passed ? "bg-green-600 hover:bg-green-700" : "bg-brand hover:bg-brand-dark"
             }`}
           >
             {passed ? t("results.passed") : t("results.failed")}
@@ -275,12 +275,12 @@ export default function ResultsPage() {
       <div id="stats-section" className="container mx-auto px-4 pb-8 max-w-6xl">
         {/* Guest Signup Prompt */}
         {isGuest && (
-          <Card className="mb-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
+          <Card className="mb-6 bg-gradient-to-r from-brand-light to-brand-gradient-to border-brand-border-light">
             <CardContent className="py-6">
               <div className="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
                 <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                    <Cloud className="w-6 h-6 text-blue-600" />
+                  <div className="w-12 h-12 bg-brand-light rounded-full flex items-center justify-center">
+                    <Cloud className="w-6 h-6 text-brand" />
                   </div>
                 </div>
                 <div className="flex-1">
@@ -290,7 +290,7 @@ export default function ResultsPage() {
                   </p>
                 </div>
                 <Link href="/signup">
-                  <Button className="bg-blue-600 text-white hover:bg-blue-700 whitespace-nowrap">
+                  <Button className="bg-brand text-white hover:bg-brand-hover whitespace-nowrap">
                     {t("results.signUpFree")}
                   </Button>
                 </Link>
@@ -322,10 +322,10 @@ export default function ResultsPage() {
                 </Card>
 
                 {/* This Attempt */}
-                <Card className="bg-orange-50 border-orange-200 border-2">
+                <Card className="bg-brand-light border-brand-border-light border-2">
                   <CardContent className="pt-6 text-center">
-                    <div className="text-sm font-medium text-orange-700 mb-2">{t("results.thisAttempt")}</div>
-                    <div className="text-4xl font-bold text-orange-600 mb-1">
+                    <div className="text-sm font-medium text-brand-dark mb-2">{t("results.thisAttempt")}</div>
+                    <div className="text-4xl font-bold text-brand mb-1">
                       {percentage}%
                     </div>
                     <div className="text-sm text-gray-600">
@@ -370,11 +370,11 @@ export default function ResultsPage() {
         {/* Weak Areas Insight → Stats CTA */}
         {!isGuest && weakCategories.length > 0 && (
           <Link href="/stats" className="block">
-            <Card className="mb-6 border-orange-200 bg-gradient-to-r from-orange-50 to-amber-50 cursor-pointer hover:shadow-md transition-shadow">
+            <Card className="mb-6 border-brand-border-light bg-gradient-to-r from-brand-light to-brand-gradient-to cursor-pointer hover:shadow-md transition-shadow">
               <CardContent className="p-6">
                 <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
-                    <BarChart3 className="h-5 w-5 text-orange-600" />
+                  <div className="flex-shrink-0 w-10 h-10 bg-brand-light rounded-full flex items-center justify-center">
+                    <BarChart3 className="h-5 w-5 text-brand" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <h3 className="font-bold text-gray-900 mb-2">
@@ -400,11 +400,11 @@ export default function ResultsPage() {
                         </div>
                       ))}
                     </div>
-                    <p className="text-sm text-orange-600 font-medium mt-3">
+                    <p className="text-sm text-brand font-medium mt-3">
                       {t("results.viewFullStats")}
                     </p>
                   </div>
-                  <ChevronRight className="h-5 w-5 text-orange-400 flex-shrink-0 mt-1" />
+                  <ChevronRight className="h-5 w-5 text-brand-muted flex-shrink-0 mt-1" />
                 </div>
               </CardContent>
             </Card>

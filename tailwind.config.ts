@@ -8,29 +8,22 @@ export default {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./contexts/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  safelist: [
-    // Theme system classes - must be safelisted because they're in object literals
-    "hover:border-orange-300", "hover:border-blue-300", "hover:border-green-300",
-    "border-orange-500", "border-blue-500", "border-green-500",
-    "bg-orange-50", "bg-blue-50", "bg-green-50",
-    "bg-orange-600", "bg-blue-600", "bg-green-600",
-    "from-orange-50", "from-blue-50", "from-green-50",
-    "to-amber-50", "to-indigo-50", "to-emerald-50",
-    "text-orange-600", "text-blue-600", "text-green-600",
-    "text-orange-700", "text-blue-700", "text-green-700",
-    "text-orange-400", "text-blue-400", "text-green-400",
-    "[&>div]:bg-orange-600", "[&>div]:bg-blue-600", "[&>div]:bg-green-600",
-    "hover:bg-orange-50", "hover:bg-blue-50", "hover:bg-green-50",
-    // QuestionCard theme classes
-    "[@media(hover:hover)]:hover:border-blue-500", "[@media(hover:hover)]:hover:bg-blue-50",
-    "active:border-blue-500", "active:bg-blue-50",
-    "bg-blue-50", "border-blue-200", "text-blue-900", "text-blue-800",
-    // Footer theme classes
-    "text-blue-600", "hover:text-blue-600", "text-blue-700", "hover:text-blue-700",
-  ],
+  safelist: [],
   theme: {
     extend: {
       colors: {
+        brand: {
+          DEFAULT: "hsl(var(--brand))",
+          foreground: "hsl(var(--brand-foreground))",
+          light: "hsl(var(--brand-light))",
+          hover: "hsl(var(--brand-hover))",
+          dark: "hsl(var(--brand-dark))",
+          darker: "hsl(var(--brand-darker))",
+          muted: "hsl(var(--brand-muted))",
+          border: "hsl(var(--brand-border))",
+          "border-light": "hsl(var(--brand-border-light))",
+          "gradient-to": "hsl(var(--brand-gradient-to))",
+        },
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {

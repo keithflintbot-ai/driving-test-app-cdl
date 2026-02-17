@@ -5,23 +5,10 @@ import { usePathname } from "next/navigation";
 import { useTranslation } from "@/contexts/LanguageContext";
 import { states } from "@/data/states";
 
-// Popular states to feature in the footer
 const popularStateSlugs = [
-  "california",
-  "texas",
-  "florida",
-  "new-york",
-  "pennsylvania",
-  "illinois",
-  "ohio",
-  "georgia",
-  "north-carolina",
-  "michigan",
-  "new-jersey",
-  "virginia",
-  "washington",
-  "arizona",
-  "massachusetts",
+  "california", "texas", "florida", "new-york", "pennsylvania",
+  "illinois", "ohio", "georgia", "north-carolina", "michigan",
+  "new-jersey", "virginia", "washington", "arizona", "massachusetts",
 ];
 
 const popularStates = popularStateSlugs
@@ -33,8 +20,6 @@ export function Footer() {
   const pathname = usePathname();
   const isEs = language === "es";
   const isCDL = pathname?.startsWith("/cdl") || pathname === "/cdl-practice-test";
-  const linkColor = isCDL ? "text-blue-600 hover:text-blue-700" : "text-orange-600 hover:text-orange-700";
-  const hoverColor = isCDL ? "hover:text-blue-600" : "hover:text-orange-600";
 
   return (
     <footer className="border-t bg-gray-50 mt-auto">
@@ -51,7 +36,7 @@ export function Footer() {
                         ? `/es/${state.slug}-examen-practica-dmv`
                         : `/${state.slug}-dmv-practice-test`
                     }
-                    className={hoverColor}
+                    className="hover:text-brand"
                   >
                     {state.name}
                   </Link>
@@ -63,7 +48,7 @@ export function Footer() {
                   ? "/es/examenes-practica-por-estado"
                   : "/practice-tests-by-state"
               }
-              className={`${linkColor} font-medium`}
+              className="text-brand hover:text-brand-dark font-medium"
             >
               {t("footer.allStates")}
             </Link>
@@ -79,7 +64,7 @@ export function Footer() {
             href="https://x.com/JohnBr0"
             target="_blank"
             rel="noopener noreferrer"
-            className={`${linkColor} font-medium hover:underline`}
+            className="text-brand hover:text-brand-dark font-medium hover:underline"
           >
             @JohnBr0
           </a>
@@ -90,7 +75,7 @@ export function Footer() {
             href="https://www.johnbrophy.net/contact"
             target="_blank"
             rel="noopener noreferrer"
-            className={`${linkColor} font-medium hover:underline`}
+            className="text-brand hover:text-brand-dark font-medium hover:underline"
           >
             {t("footer.sendMe")}
           </a>{" "}

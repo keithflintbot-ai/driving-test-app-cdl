@@ -5,7 +5,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle2, XCircle } from "lucide-react";
 import { useTranslation } from "@/contexts/LanguageContext";
-import { useTestTheme } from "@/contexts/TestThemeContext";
 
 interface QuestionCardProps {
   question: Question;
@@ -25,8 +24,6 @@ export function QuestionCard({
   showResult = false,
 }: QuestionCardProps) {
   const { t } = useTranslation();
-  const theme = useTestTheme();
-  const isBlue = theme.primary === "blue";
   const options = [
     { value: "A", label: question.optionA },
     { value: "B", label: question.optionB },
@@ -49,11 +46,7 @@ export function QuestionCard({
       return "border-gray-300 opacity-50";
     }
 
-    // During test - use active for touch feedback, hover only on desktop
-    // The [@media(hover:hover)] prefix ensures hover only applies on devices with true hover support
-    return isBlue
-      ? "border-gray-300 [@media(hover:hover)]:hover:border-blue-500 [@media(hover:hover)]:hover:bg-blue-50 active:border-blue-500 active:bg-blue-50 cursor-pointer"
-      : "border-gray-300 [@media(hover:hover)]:hover:border-orange-500 [@media(hover:hover)]:hover:bg-orange-50 active:border-orange-500 active:bg-orange-50 cursor-pointer";
+    return "border-gray-300 [@media(hover:hover)]:hover:border-brand [@media(hover:hover)]:hover:bg-brand-light active:border-brand active:bg-brand-light cursor-pointer";
   };
 
   return (
@@ -95,9 +88,9 @@ export function QuestionCard({
         </div>
 
         {showResult && (
-          <div className={`mt-6 p-4 border rounded-lg ${isBlue ? "bg-blue-50 border-blue-200" : "bg-orange-50 border-orange-200"}`}>
-            <div className={`font-semibold mb-2 ${isBlue ? "text-blue-900" : "text-orange-900"}`}>{t("questionCard.explanation")}</div>
-            <div className={isBlue ? "text-blue-800" : "text-orange-800"}>{question.explanation}</div>
+          <div className="mt-6 p-4 border rounded-lg bg-brand-light border-brand-border-light">
+            <div className="font-semibold mb-2 text-brand-darker">{t("questionCard.explanation")}</div>
+            <div className="text-brand-dark">{question.explanation}</div>
           </div>
         )}
       </CardContent>

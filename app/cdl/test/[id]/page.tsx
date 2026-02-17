@@ -192,7 +192,7 @@ function CDLTestPageContent() {
 
           {/* Progress Bar */}
           <div className="space-y-2">
-            <Progress value={progress} className="h-2 [&>div]:bg-blue-600" />
+            <Progress value={progress} className="h-2 [&>div]:bg-brand" />
             <div className="flex justify-between text-xs text-gray-600">
               <span>{t("testPage.progress")}: {Math.round(progress)}%</span>
               <span>
@@ -224,9 +224,9 @@ function CDLTestPageContent() {
                 className={`
                   aspect-square rounded-lg border-2 text-sm font-semibold transition-colors flex items-center justify-center
                   ${currentQuestionIndex === index
-                    ? "border-blue-500 bg-blue-500 text-white"
+                    ? "border-brand bg-brand text-white"
                     : answers[index]
-                    ? "border-blue-500 bg-blue-50 text-blue-700"
+                    ? "border-brand bg-brand-light text-brand-dark"
                     : "border-gray-300 bg-white text-gray-400"
                   }
                 `}

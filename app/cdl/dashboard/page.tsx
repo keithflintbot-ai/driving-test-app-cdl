@@ -205,14 +205,14 @@ function CDLDashboardContent() {
 
   return (
     <div className="min-h-screen bg-white relative">
-      <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-blue-50 to-white pointer-events-none" />
+      <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-brand-light to-white pointer-events-none" />
       <div className="relative container mx-auto px-4 py-8 max-w-6xl">
 
         {/* Back to CDL Landing Page */}
         <div className="mb-6">
           <Link
             href="/cdl-practice-test"
-            className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium"
+            className="inline-flex items-center gap-2 text-brand hover:text-brand-dark font-medium"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to CDL Practice Test
@@ -267,19 +267,19 @@ function CDLDashboardContent() {
         {/* Onboarding Card - shown during onboarding */}
         {!onboardingComplete && (
           <Link href="/cdl/training?set=1" className="block">
-            <Card className="mb-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200 hover:shadow-md transition-all cursor-pointer">
+            <Card className="mb-6 bg-gradient-to-r from-brand-light to-brand-gradient-to border-brand-border-light hover:shadow-md transition-all cursor-pointer">
               <CardContent className="p-6">
                 <div className="flex items-center gap-4">
-                  <Zap className="h-12 w-12 text-blue-500" />
+                  <Zap className="h-12 w-12 text-brand" />
                   <div className="flex-1">
-                    <p className="text-2xl font-bold text-blue-900">
+                    <p className="text-2xl font-bold text-brand-darker">
                       {onboardingProgress}/10
                     </p>
-                    <p className="text-sm text-blue-700 mt-1">
+                    <p className="text-sm text-brand-dark mt-1">
                       {10 - onboardingProgress} more correct to unlock CDL tests
                     </p>
                   </div>
-                  <ChevronRight className="h-6 w-6 text-blue-400" />
+                  <ChevronRight className="h-6 w-6 text-brand-muted" />
                 </div>
               </CardContent>
             </Card>
@@ -288,7 +288,7 @@ function CDLDashboardContent() {
 
         {/* Pass Probability / Stats Card - shown after onboarding when there's data */}
         {onboardingComplete && isGuest && (
-          <Card className="mb-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
+          <Card className="mb-6 bg-gradient-to-r from-brand-light to-brand-gradient-to border-brand-border-light">
             <CardContent className="p-6">
               <div className="flex items-center gap-4">
                 <div className="text-4xl">📊</div>
@@ -296,7 +296,7 @@ function CDLDashboardContent() {
                   <p className="text-lg text-gray-700">
                     <span className="font-bold">Sign Up</span> to track your CDL progress and view detailed statistics
                   </p>
-                  <Link href="/signup" className="text-sm text-blue-600 hover:text-blue-800 font-medium mt-1 inline-block">
+                  <Link href="/signup" className="text-sm text-brand hover:text-brand-dark font-medium mt-1 inline-block">
                     Create Free Account
                   </Link>
                 </div>
@@ -314,7 +314,7 @@ function CDLDashboardContent() {
                   : passProbability >= 40
                     ? "bg-gradient-to-r from-amber-50 to-yellow-50 border-amber-200"
                     : passProbability >= 20
-                      ? "bg-gradient-to-r from-orange-50 to-amber-50 border-orange-200"
+                      ? "bg-gradient-to-r from-brand-light to-brand-gradient-to border-brand-border-light"
                       : "bg-gradient-to-r from-red-50 to-rose-50 border-red-200"
             }`}>
               <CardContent className="p-6">
@@ -345,7 +345,7 @@ function CDLDashboardContent() {
                         : passProbability >= 40
                           ? "text-amber-400"
                           : passProbability >= 20
-                            ? "text-orange-400"
+                            ? "text-brand-muted"
                             : "text-red-400"
                   }`} />
                   </div>

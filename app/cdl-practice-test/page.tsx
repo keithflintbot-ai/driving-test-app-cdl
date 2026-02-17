@@ -108,7 +108,7 @@ export default function CDLLandingPage() {
 
       {/* Hero Section */}
       <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-blue-50 to-white pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-brand-light to-white pointer-events-none" />
         <div className="relative max-w-4xl mx-auto px-6 pt-16 pb-20 md:pt-24 md:pb-28 text-center">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 tracking-tight">
             Free CDL Practice Test 2026 - General Knowledge
@@ -120,13 +120,13 @@ export default function CDLLandingPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <Link
               href="/cdl/dashboard"
-              className="inline-flex items-center px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors shadow-lg hover:shadow-xl"
+              className="inline-flex items-center px-8 py-4 bg-brand hover:bg-brand-hover text-white font-semibold rounded-xl transition-colors shadow-lg hover:shadow-xl"
             >
               Start Free Practice Test
             </Link>
             <Link
               href="#how-it-works"
-              className="inline-flex items-center px-8 py-4 bg-white border-2 border-blue-600 text-blue-600 hover:bg-blue-50 font-semibold rounded-xl transition-colors"
+              className="inline-flex items-center px-8 py-4 bg-white border-2 border-brand text-brand hover:bg-brand-light font-semibold rounded-xl transition-colors"
             >
               Learn How It Works
             </Link>
@@ -145,8 +145,8 @@ export default function CDLLandingPage() {
 
         <div className="grid md:grid-cols-2 gap-8 md:gap-12">
           <div className="relative pt-8">
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-16 bg-white border-2 border-blue-200 rounded-full flex items-center justify-center shadow-sm">
-              <Smartphone className="w-7 h-7 text-blue-500" />
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-16 bg-white border-2 border-brand-border-light rounded-full flex items-center justify-center shadow-sm">
+              <Smartphone className="w-7 h-7 text-brand" />
             </div>
             <div className="bg-gray-50 rounded-2xl p-8 pt-12 text-center">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">
@@ -200,27 +200,27 @@ export default function CDLLandingPage() {
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-600">
               <div className="flex items-start gap-2">
-                <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-2 h-2 bg-brand rounded-full mt-2 flex-shrink-0"></div>
                 <span>Vehicle Inspection</span>
               </div>
               <div className="flex items-start gap-2">
-                <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-2 h-2 bg-brand rounded-full mt-2 flex-shrink-0"></div>
                 <span>Safe Driving Practices</span>
               </div>
               <div className="flex items-start gap-2">
-                <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-2 h-2 bg-brand rounded-full mt-2 flex-shrink-0"></div>
                 <span>Braking Systems</span>
               </div>
               <div className="flex items-start gap-2">
-                <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-2 h-2 bg-brand rounded-full mt-2 flex-shrink-0"></div>
                 <span>Cargo Handling</span>
               </div>
               <div className="flex items-start gap-2">
-                <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-2 h-2 bg-brand rounded-full mt-2 flex-shrink-0"></div>
                 <span>Hazmat Basics</span>
               </div>
               <div className="flex items-start gap-2">
-                <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-2 h-2 bg-brand rounded-full mt-2 flex-shrink-0"></div>
                 <span>Air Brake Systems</span>
               </div>
             </div>
@@ -428,7 +428,7 @@ export default function CDLLandingPage() {
 
       {/* Final CTA */}
       <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-t from-blue-50 to-white pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-brand-light to-white pointer-events-none" />
         <div className="relative max-w-4xl mx-auto px-6 py-16 md:py-24 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
             Ready to Get Your CDL?
@@ -438,7 +438,7 @@ export default function CDLLandingPage() {
           </p>
           <Link
             href="/cdl/dashboard"
-            className="inline-flex items-center px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors shadow-lg hover:shadow-xl text-lg"
+            className="inline-flex items-center px-8 py-4 bg-brand hover:bg-brand-hover text-white font-semibold rounded-xl transition-colors shadow-lg hover:shadow-xl text-lg"
           >
             Start Your Free CDL Practice Test
           </Link>
