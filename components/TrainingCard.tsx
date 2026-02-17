@@ -4,6 +4,7 @@ import { CheckCircle2, XCircle } from "lucide-react";
 import { Question } from "@/types";
 import { useState, useEffect } from "react";
 import { useTranslation } from "@/contexts/LanguageContext";
+import { useTestTheme } from "@/contexts/TestThemeContext";
 
 interface TrainingCardProps {
   question: Question;
@@ -19,6 +20,8 @@ export function TrainingCard({
   onNext,
 }: TrainingCardProps) {
   const { t } = useTranslation();
+  const theme = useTestTheme();
+  const isBlue = theme.primary === "blue";
   // Prevent ghost clicks on mobile: when tapping "Next Question", the delayed
   // click event can fire on the new question's answer options. We disable
   // answer selection briefly after component mounts to prevent this.
@@ -46,7 +49,9 @@ export function TrainingCard({
       }
       // Use [@media(hover:hover)] to prevent sticky hover states on touch devices
       // Use active: for touch feedback on mobile
-      return "border-gray-300 [@media(hover:hover)]:hover:border-orange-500 [@media(hover:hover)]:hover:bg-orange-50 active:border-orange-500 active:bg-orange-50 cursor-pointer";
+      return isBlue
+        ? "border-gray-300 [@media(hover:hover)]:hover:border-blue-500 [@media(hover:hover)]:hover:bg-blue-50 active:border-blue-500 active:bg-blue-50 cursor-pointer"
+        : "border-gray-300 [@media(hover:hover)]:hover:border-orange-500 [@media(hover:hover)]:hover:bg-orange-50 active:border-orange-500 active:bg-orange-50 cursor-pointer";
     }
 
     if (optionLetter === question.correctAnswer) {

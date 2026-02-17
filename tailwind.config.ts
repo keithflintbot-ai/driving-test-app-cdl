@@ -25,6 +25,8 @@ export default {
     "[@media(hover:hover)]:hover:border-blue-500", "[@media(hover:hover)]:hover:bg-blue-50",
     "active:border-blue-500", "active:bg-blue-50",
     "bg-blue-50", "border-blue-200", "text-blue-900", "text-blue-800",
+    // Footer theme classes
+    "text-blue-600", "hover:text-blue-600", "text-blue-700", "hover:text-blue-700",
   ],
   theme: {
     extend: {
