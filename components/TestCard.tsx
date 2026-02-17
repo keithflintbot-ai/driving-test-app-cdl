@@ -20,6 +20,7 @@ interface TestCardProps {
   isPremiumLocked?: boolean;
   onPremiumClick?: () => void;
   href?: string;
+  variant?: "default" | "blue";
 }
 
 export function TestCard({
@@ -32,6 +33,7 @@ export function TestCard({
   isPremiumLocked = false,
   onPremiumClick,
   href,
+  variant = "default",
 }: TestCardProps) {
   const { t } = useTranslation();
   const bestPercentage = bestScore ? Math.round((bestScore / totalQuestions) * 100) : 0;
@@ -88,7 +90,7 @@ export function TestCard({
         ? "bg-gray-100 border-gray-200 opacity-60"
         : isPremiumLocked
           ? "bg-gradient-to-r from-orange-50 to-amber-50 border-orange-200 hover:shadow-md hover:border-orange-300 cursor-pointer"
-          : "bg-gray-50 hover:shadow-md hover:border-gray-300 cursor-pointer"
+          : `bg-gray-50 hover:shadow-md cursor-pointer ${variant === "blue" ? "hover:border-blue-300" : "hover:border-gray-300"}`
     }`}>
       <CardContent className="p-4 flex items-center justify-between">
         <div className="flex flex-col">

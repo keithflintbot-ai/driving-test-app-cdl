@@ -372,6 +372,7 @@ function CDLDashboardContent() {
                     isPremiumLocked={false}
                     onPremiumClick={() => {}}
                     href={`/cdl/training?set=${setNumber}`}
+                    variant="blue"
                   />
                 );
               })}
@@ -406,6 +407,7 @@ function CDLDashboardContent() {
                   isPremiumLocked={false}
                   onPremiumClick={() => {}}
                   href={`/cdl/test/${cdlId}`}
+                  variant="blue"
                 />
               );
             })}

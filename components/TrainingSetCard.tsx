@@ -20,9 +20,10 @@ interface TrainingSetCardProps {
   isPremiumLocked?: boolean;
   onPremiumClick?: () => void;
   href?: string;
+  variant?: "default" | "blue";
 }
 
-export function TrainingSetCard({ set, locked = false, isPremiumLocked = false, onPremiumClick, href }: TrainingSetCardProps) {
+export function TrainingSetCard({ set, locked = false, isPremiumLocked = false, onPremiumClick, href, variant = "default" }: TrainingSetCardProps) {
   const { t } = useTranslation();
   const isComplete = set.correctCount >= set.targetCount;
   const progress = Math.min(100, Math.round((set.correctCount / set.targetCount) * 100));
@@ -60,7 +61,7 @@ export function TrainingSetCard({ set, locked = false, isPremiumLocked = false, 
         ? "bg-gray-100 border-gray-200 opacity-60"
         : isPremiumLocked
           ? "bg-gradient-to-r from-orange-50 to-amber-50 border-orange-200 hover:shadow-md hover:border-orange-300 cursor-pointer"
-          : "bg-gray-50 hover:shadow-md hover:border-orange-300 cursor-pointer"
+          : `bg-gray-50 hover:shadow-md cursor-pointer ${variant === "blue" ? "hover:border-blue-300" : "hover:border-orange-300"}`
     }`}>
       <CardContent className="p-4 flex items-center justify-between">
         <div className="flex flex-col">
