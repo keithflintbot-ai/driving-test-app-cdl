@@ -394,9 +394,7 @@ export default function StatsPage() {
                 <h1 className="text-2xl md:text-3xl font-bold">
                   {passProbability === 0
                     ? t("stats.noDataYet")
-                    : passProbability > 50
-                      ? `${passProbability}% ${t("stats.chanceOfPassing")}`
-                      : `${100 - passProbability}% ${t("stats.chanceOfFailing")}`
+                    : `${passProbability}% ${t("stats.chanceOfPassing")}`
                   }
                 </h1>
                 {passProbability > 0 && (
