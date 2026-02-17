@@ -294,6 +294,26 @@ export default function Home() {
         </div>
       </div>
 
+      {/* CDL Cross-sell */}
+      <div className="bg-blue-50 py-12 md:py-16">
+        <div className="max-w-3xl mx-auto px-6 text-center">
+          <p className="text-sm font-semibold text-blue-600 uppercase tracking-wide mb-2">New</p>
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+            CDL Practice Tests Now Available
+          </h2>
+          <p className="text-gray-600 mb-6 max-w-xl mx-auto">
+            Getting your Commercial Driver&apos;s License? Practice with 600 CDL General Knowledge questions across 12 tests.
+          </p>
+          <Link
+            href="/cdl-practice-test"
+            className="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-xl font-medium hover:bg-blue-700 transition-colors"
+          >
+            Start CDL Practice
+            <span aria-hidden="true">&rarr;</span>
+          </Link>
+        </div>
+      </div>
+
       {/* How to Study for Your DMV Test - SEO content section */}
       <div className="bg-gray-50 py-16 md:py-24">
         <div className="max-w-3xl mx-auto px-6">

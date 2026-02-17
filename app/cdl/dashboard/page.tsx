@@ -225,7 +225,7 @@ function CDLDashboardContent() {
             CDL Practice Dashboard
           </h1>
           <p className="text-gray-600">
-            Master your Commercial Driver's License test with 600 practice questions and 12 comprehensive tests
+            Master your Commercial Driver&apos;s License test with 600 practice questions and 12 comprehensive tests
           </p>
         </div>
 
