@@ -18,6 +18,7 @@ import { useSound } from "@/hooks/useSound";
 import { Fireworks } from "@/components/Fireworks";
 import Link from "next/link";
 import { useTranslation } from "@/contexts/LanguageContext";
+import { TestThemeProvider } from "@/contexts/TestThemeContext";
 
 function CDLTrainingPageContent() {
   const router = useRouter();
@@ -436,8 +437,10 @@ function CDLTrainingPageContent() {
 
 export default function CDLTrainingPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-gradient-to-br from-blue-50 to-sky-50" />}>
-      <CDLTrainingPageContent />
-    </Suspense>
+    <TestThemeProvider theme="cdl">
+      <Suspense fallback={<div className="min-h-screen bg-gradient-to-br from-blue-50 to-sky-50" />}>
+        <CDLTrainingPageContent />
+      </Suspense>
+    </TestThemeProvider>
   );
 }

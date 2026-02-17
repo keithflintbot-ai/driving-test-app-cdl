@@ -14,8 +14,9 @@ import { Question } from "@/types";
 import { useStore } from "@/store/useStore";
 import { useHydration } from "@/hooks/useHydration";
 import { useTranslation } from "@/contexts/LanguageContext";
+import { TestThemeProvider } from "@/contexts/TestThemeContext";
 
-export default function CDLTestPage() {
+function CDLTestPageContent() {
   const params = useParams();
   const router = useRouter();
   const testId = parseInt(params.id as string);
@@ -240,5 +241,12 @@ export default function CDLTestPage() {
         </div>
       </div>
     </div>
+  );
+}
+export default function CDLTestPage() {
+  return (
+    <TestThemeProvider theme="cdl">
+      <CDLTestPageContent />
+    </TestThemeProvider>
   );
 }
