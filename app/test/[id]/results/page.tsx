@@ -34,20 +34,20 @@ function getTagline(percentage: number, lang: string): string {
     if (percentage >= 90) return "LISTO PARA EL DMV";
     if (percentage >= 80) return "APROBÉ MI EXAMEN DEL DMV";
     if (percentage >= 70) return "APROBÉ POR POCO";
-    if (percentage >= 50) return "REPROBÉ MI EXAMEN DEL DMV";
-    if (percentage >= 30) return "EL DMV PUEDE ESPERAR";
-    if (percentage >= 10) return "NECESITO MÁS PRÁCTICA";
-    return "CREO QUE TOMARÉ EL AUTOBÚS";
+    if (percentage >= 50) return "CASI LO LOGRAS";
+    if (percentage >= 30) return "SIGUE ESTUDIANDO";
+    if (percentage >= 10) return "APENAS COMENZANDO";
+    return "TODO EXPERTO FUE PRINCIPIANTE";
   }
 
   if (percentage >= 100) return "PERFECT SCORE";
   if (percentage >= 90) return "READY FOR THE DMV";
   if (percentage >= 80) return "PASSED MY DMV PRACTICE TEST";
   if (percentage >= 70) return "BARELY PASSED";
-  if (percentage >= 50) return "FAILED MY DMV PRACTICE TEST";
-  if (percentage >= 30) return "THE DMV CAN WAIT";
-  if (percentage >= 10) return "NEED MORE PRACTICE";
-  return "GUESS I'M TAKING THE BUS";
+  if (percentage >= 50) return "ALMOST THERE";
+  if (percentage >= 30) return "KEEP STUDYING";
+  if (percentage >= 10) return "JUST GETTING STARTED";
+  return "EVERY EXPERT WAS ONCE A BEGINNER";
 }
 
 export default function ResultsPage() {

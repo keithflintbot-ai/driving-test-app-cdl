@@ -312,10 +312,7 @@ function DashboardContent() {
                   />
                   <div className="flex-1">
                     <p className="text-xl font-bold text-gray-900">
-                      {passProbability > 50
-                        ? <>{passProbability}% {t("dashboard.chanceOfPassing")}</>
-                        : <>{100 - passProbability}% {t("dashboard.chanceOfFailing")}</>
-                      }
+                      {passProbability}% {t("dashboard.chanceOfPassing")}
                     </p>
                     <p className="text-sm text-gray-500 mt-1 md:hidden">{t("dashboard.learnHowToImprove")}</p>
                   </div>
