@@ -215,6 +215,18 @@ export default function TestPage() {
           />
         </div>
 
+        {/* Submit Button - shown when all questions answered */}
+        {canSubmit && (
+          <div className="flex justify-center mt-4 mb-2">
+            <Button
+              onClick={handleSubmit}
+              className="bg-brand hover:bg-brand-dark text-white px-8 py-3 text-base font-semibold rounded-lg"
+            >
+              Submit Test
+            </Button>
+          </div>
+        )}
+
         {/* Progress Overview - View Only */}
         <div className="mt-8">
           <div className="text-sm font-semibold mb-3">{t("testPage.progressOverview")}</div>
