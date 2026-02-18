@@ -161,6 +161,7 @@ export const es: TranslationKeys = {
     inProgress: "En progreso",
     fiftyQuestions: "50 preguntas",
     done: "completado",
+    answered: "respondidas",
   },
 
   // Question card

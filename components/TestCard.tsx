@@ -70,7 +70,8 @@ export function TestCard({
       return <span className="text-brand">{t("common.unlockWithPremium")}</span>;
     }
     if (status === "in-progress") {
-      return <span className="text-yellow-600">{progress}% {t("testCard.done")}</span>;
+      const answeredCount = Math.round((progress / 100) * totalQuestions);
+      return <span className="text-yellow-600">{answeredCount}/{totalQuestions} {t("testCard.answered")}</span>;
     }
     if (status === "completed" && bestScore !== undefined) {
       return (
