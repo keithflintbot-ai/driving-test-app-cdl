@@ -93,6 +93,14 @@ interface AppState {
     averageScore: number;
   };
   getPassProbability: () => number;
+  getCDLProgress: () => {
+    testsCompleted: number;
+    questionsAnswered: number;
+    totalCorrect: number;
+    accuracy: number;
+    averageScore: number;
+  };
+  getCDLPassProbability: () => number;
   getQuestionPerformance: () => QuestionPerformance[];
 
   // Firebase sync
@@ -555,6 +563,73 @@ export const useStore = create<AppState>()(
         // Practice tests (4 × 12.5% = 50%)
         for (let testNum = 1; testNum <= 4; testNum++) {
           const attempt = stateAttempts.find(a => a.testNumber === testNum);
+          if (attempt) {
+            const testScore = (attempt.bestScore / 50) * 100;
+            totalPassProbability += testScore * (WEIGHT_PER_COMPONENT / 100);
+          }
+        }
+
+        return Math.round(totalPassProbability);
+      },
+
+      getCDLProgress: () => {
+        const { completedTests, testAttempts } = get();
+        // CDL tests are stored with state === 'CDL' (set in completeTest when testId >= 101)
+        const cdlTests = completedTests.filter((t) => t.state === 'CDL');
+        const cdlAttempts = testAttempts.filter((a) => a.state === 'CDL');
+
+        const testsCompleted = cdlAttempts.length;
+
+        if (testsCompleted === 0) {
+          return {
+            testsCompleted: 0,
+            questionsAnswered: 0,
+            totalCorrect: 0,
+            accuracy: 0,
+            averageScore: 0,
+          };
+        }
+
+        const totalCorrect = cdlTests.reduce((sum, test) => sum + (test.score || 0), 0);
+        const questionsAnswered = cdlTests.reduce((sum, test) => sum + test.totalQuestions, 0);
+        const accuracy = questionsAnswered > 0 ? (totalCorrect / questionsAnswered) * 100 : 0;
+        const averageBestScore =
+          cdlAttempts.reduce((sum, a) => sum + a.bestScore, 0) / cdlAttempts.length;
+
+        return {
+          testsCompleted,
+          questionsAnswered,
+          totalCorrect,
+          accuracy: Math.round(accuracy),
+          averageScore: Math.round(averageBestScore * 10) / 10,
+        };
+      },
+
+      getCDLPassProbability: () => {
+        const { testAttempts, trainingSets } = get();
+        // CDL test attempts are stored with state === 'CDL'
+        const cdlAttempts = testAttempts.filter((a) => a.state === 'CDL');
+
+        // 12 CDL training sets + 12 CDL practice tests = 24 components
+        // Each component worth 100/24 ≈ 4.167% of total pass probability
+        const WEIGHT_PER_COMPONENT = 100 / 24;
+        let totalPassProbability = 0;
+
+        // CDL Training sets (IDs 101–112 in the store)
+        for (let setNum = 1; setNum <= 12; setNum++) {
+          const cdlSetId = 100 + setNum;
+          const setData = trainingSets[cdlSetId];
+          const masteredCount = setData?.masteredIds?.length || 0;
+          if (masteredCount > 0) {
+            const setScore = (masteredCount / 50) * 100;
+            totalPassProbability += setScore * (WEIGHT_PER_COMPONENT / 100);
+          }
+        }
+
+        // CDL Practice tests (IDs 101–112 stored under state 'CDL')
+        for (let testNum = 1; testNum <= 12; testNum++) {
+          const cdlTestId = 100 + testNum;
+          const attempt = cdlAttempts.find((a) => a.testNumber === cdlTestId);
           if (attempt) {
             const testScore = (attempt.bestScore / 50) * 100;
             totalPassProbability += testScore * (WEIGHT_PER_COMPONENT / 100);

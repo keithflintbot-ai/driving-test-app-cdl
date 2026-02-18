@@ -31,7 +31,8 @@ function CDLDashboardContent() {
   const setPremiumStatus = useStore((state) => state.setPremiumStatus);
   const training = useStore((state) => state.training);
   const getTrainingSetProgress = useStore((state) => state.getTrainingSetProgress);
-  const getPassProbability = useStore((state) => state.getPassProbability);
+  const getCDLPassProbability = useStore((state) => state.getCDLPassProbability);
+  const getCDLProgress = useStore((state) => state.getCDLProgress);
   const isOnboardingComplete = useStore((state) => state.isOnboardingComplete);
 
   // CDL helper functions for ID mapping
@@ -43,7 +44,7 @@ function CDLDashboardContent() {
   const [paywallFeature, setPaywallFeature] = useState<"training_set_4" | "practice_test_4">("training_set_4");
   const [showPurchaseSuccess, setShowPurchaseSuccess] = useState(false);
 
-  const passProbability = hydrated ? getPassProbability() : 0;
+  const passProbability = hydrated ? getCDLPassProbability() : 0;
   const onboardingComplete = hydrated ? isOnboardingComplete() : true;
   const onboardingProgress = training.totalCorrectAllTime;
   const isPremium = hydrated ? hasPremiumAccess() : false;
