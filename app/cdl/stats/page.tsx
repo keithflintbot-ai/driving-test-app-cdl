@@ -59,27 +59,9 @@ export default function CDLStatsPage() {
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
   const [expandedQuestionId, setExpandedQuestionId] = useState<string | null>(null);
 
-  // Redirect guests to signup
-  if (hydrated && isGuest) {
-    router.push("/signup");
-    return null;
-  }
-
   const passProbability = hydrated ? getCDLPassProbability() : 0;
 
-  // Get tiger face image based on percentage
-  const getTigerFace = (percentage: number): string => {
-    if (percentage >= 100) return "/tiger_face_01.png";
-    if (percentage >= 85) return "/tiger_face_02.png";
-    if (percentage >= 70) return "/tiger_face_03.png";
-    if (percentage >= 55) return "/tiger_face_04.png";
-    if (percentage >= 40) return "/tiger_face_05.png";
-    if (percentage >= 25) return "/tiger_face_06.png";
-    if (percentage >= 10) return "/tiger_face_07.png";
-    return "/tiger_face_08.png";
-  };
-
-  // Get all CDL questions
+  // All hooks must be called before any early returns (React Rules of Hooks)
   const cdlQuestions = useMemo(() => getCDLQuestionsData(), []);
 
   // Build CDL question performance from store data
@@ -249,6 +231,24 @@ export default function CDLStatsPage() {
       href: "/cdl/dashboard",
     };
   }, [hydrated, questionsWithPerformance, passProbability, getTestAttemptStats, getTrainingSetProgress]);
+
+  // Redirect guests to signup (after all hooks)
+  if (hydrated && isGuest) {
+    router.push("/signup");
+    return null;
+  }
+
+  // Get tiger face image based on percentage
+  const getTigerFace = (percentage: number): string => {
+    if (percentage >= 100) return "/tiger_face_01.png";
+    if (percentage >= 85) return "/tiger_face_02.png";
+    if (percentage >= 70) return "/tiger_face_03.png";
+    if (percentage >= 55) return "/tiger_face_04.png";
+    if (percentage >= 40) return "/tiger_face_05.png";
+    if (percentage >= 25) return "/tiger_face_06.png";
+    if (percentage >= 10) return "/tiger_face_07.png";
+    return "/tiger_face_08.png";
+  };
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
