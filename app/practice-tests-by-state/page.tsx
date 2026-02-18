@@ -76,7 +76,7 @@ export default function PracticeTestsByStatePage() {
 
   return (
     <div className="min-h-screen bg-white relative">
-      <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-orange-50 to-white pointer-events-none" />
+      <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-brand-light to-white pointer-events-none" />
 
       <script
         type="application/ld+json"
@@ -92,7 +92,7 @@ export default function PracticeTestsByStatePage() {
         <nav className="text-sm text-gray-500 mb-6" aria-label="Breadcrumb">
           <ol className="flex items-center gap-1">
             <li>
-              <Link href="/" className="hover:text-orange-600">
+              <Link href="/" className="hover:text-brand">
                 Home
               </Link>
             </li>
@@ -129,10 +129,10 @@ export default function PracticeTestsByStatePage() {
                   <Link
                     key={state.slug}
                     href={`/${state.slug}-dmv-practice-test`}
-                    className="flex items-center justify-between bg-gray-50 border border-gray-200 rounded-lg p-3 hover:border-orange-300 hover:bg-orange-50 transition-colors group"
+                    className="flex items-center justify-between bg-gray-50 border border-gray-200 rounded-lg p-3 hover:border-brand-border hover:bg-brand-light transition-colors group"
                   >
                     <div>
-                      <span className="font-medium text-gray-900 group-hover:text-orange-700">
+                      <span className="font-medium text-gray-900 group-hover:text-brand-dark">
                         {state.name}
                       </span>
                       <span className="text-sm text-gray-500 ml-2">
@@ -140,7 +140,7 @@ export default function PracticeTestsByStatePage() {
                         {state.passingScore}%
                       </span>
                     </div>
-                    <ChevronRight className="h-4 w-4 text-gray-400 group-hover:text-orange-500" />
+                    <ChevronRight className="h-4 w-4 text-gray-400 group-hover:text-brand" />
                   </Link>
                 ))}
               </div>

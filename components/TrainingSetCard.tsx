@@ -19,15 +19,15 @@ interface TrainingSetCardProps {
   locked?: boolean;
   isPremiumLocked?: boolean;
   onPremiumClick?: () => void;
+  href?: string;
 }
 
-export function TrainingSetCard({ set, locked = false, isPremiumLocked = false, onPremiumClick }: TrainingSetCardProps) {
+export function TrainingSetCard({ set, locked = false, isPremiumLocked = false, onPremiumClick, href }: TrainingSetCardProps) {
   const { t } = useTranslation();
   const isComplete = set.correctCount >= set.targetCount;
   const progress = Math.min(100, Math.round((set.correctCount / set.targetCount) * 100));
 
   const getProgressBadgeColor = () => {
-    // Gradient from red (0%) to green (100%) - pastel shades
     if (progress < 20) return "bg-red-400 hover:bg-red-400";
     if (progress < 40) return "bg-orange-400 hover:bg-orange-400";
     if (progress < 60) return "bg-amber-400 hover:bg-amber-400";
@@ -51,15 +51,13 @@ export function TrainingSetCard({ set, locked = false, isPremiumLocked = false, 
     return null;
   };
 
-  const isDisabled = locked || isPremiumLocked;
-
   const cardContent = (
     <Card className={`h-full transition-all ${
       locked
         ? "bg-gray-100 border-gray-200 opacity-60"
         : isPremiumLocked
-          ? "bg-gradient-to-r from-orange-50 to-amber-50 border-orange-200 hover:shadow-md hover:border-orange-300 cursor-pointer"
-          : "bg-gray-50 hover:shadow-md hover:border-orange-300 cursor-pointer"
+          ? "bg-gradient-to-r from-brand-light to-brand-gradient-to border-brand-border-light hover:shadow-md hover:border-brand-border cursor-pointer"
+          : "bg-gray-50 hover:shadow-md cursor-pointer hover:border-brand-border"
     }`}>
       <CardContent className="p-4 flex items-center justify-between">
         <div className="flex flex-col">
@@ -71,7 +69,7 @@ export function TrainingSetCard({ set, locked = false, isPremiumLocked = false, 
             {locked ? (
               <span className="text-gray-400">{t("common.locked")}</span>
             ) : isPremiumLocked ? (
-              <span className="text-orange-600">{t("common.unlockWithPremium")}</span>
+              <span className="text-brand">{t("common.unlockWithPremium")}</span>
             ) : (
               <span className={isComplete ? 'text-green-600' : 'text-gray-500'}>
                 {set.correctCount}/{set.targetCount}
@@ -79,7 +77,7 @@ export function TrainingSetCard({ set, locked = false, isPremiumLocked = false, 
             )}
           </p>
         </div>
-        {!locked && <ChevronRight className={`h-5 w-5 ${isPremiumLocked ? "text-orange-400" : "text-gray-400"}`} />}
+        {!locked && <ChevronRight className={`h-5 w-5 ${isPremiumLocked ? "text-brand-muted" : "text-gray-400"}`} />}
       </CardContent>
     </Card>
   );
@@ -97,7 +95,7 @@ export function TrainingSetCard({ set, locked = false, isPremiumLocked = false, 
   }
 
   return (
-    <Link href={`/training?set=${set.id}`} className="block h-full">
+    <Link href={href || `/training?set=${set.id}`} className="block h-full">
       {cardContent}
     </Link>
   );

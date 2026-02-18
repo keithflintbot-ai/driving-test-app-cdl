@@ -10,23 +10,23 @@ import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import { ShareButton } from "@/components/ShareButton";
 import { useStore } from "@/store/useStore";
-import { getTrainingQuestion, getNextTrainingSetQuestion, shuffleQuestionOptions } from "@/lib/testGenerator";
+import { getNextCDLTrainingSetQuestion, getCDLTrainingQuestion } from "@/lib/cdlTestGenerator";
+import { shuffleQuestionOptions } from "@/lib/testGenerator";
 import { Question } from "@/types";
 import { useHydration } from "@/hooks/useHydration";
 import { useSound } from "@/hooks/useSound";
 import { Fireworks } from "@/components/Fireworks";
 import Link from "next/link";
 import { useTranslation } from "@/contexts/LanguageContext";
-import { states } from "@/data/states";
 
-function TrainingPageContent() {
+
+function CDLTrainingPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const hydrated = useHydration();
   const { playCorrectSound, playIncorrectSound } = useSound();
-  const { t, language } = useTranslation();
+  const { t } = useTranslation();
 
-  const selectedState = useStore((state) => state.selectedState);
   const isGuest = useStore((state) => state.isGuest);
   const training = useStore((state) => state.training);
   const trainingSets = useStore((state) => state.trainingSets);
@@ -35,13 +35,12 @@ function TrainingPageContent() {
   const getTrainingSetProgress = useStore((state) => state.getTrainingSetProgress);
   const resetMasteredQuestions = useStore((state) => state.resetMasteredQuestions);
   const resetTrainingSet = useStore((state) => state.resetTrainingSet);
-  const isOnboardingComplete = useStore((state) => state.isOnboardingComplete);
-  const isTrainingSetUnlocked = useStore((state) => state.isTrainingSetUnlocked);
 
-  // Get set number from URL if present
+  // Get set number from URL if present (1-12 for CDL)
   const setParam = searchParams.get('set');
   const setNumber = setParam ? parseInt(setParam) : null;
-  const isSetMode = setNumber !== null && setNumber >= 1 && setNumber <= 4 && isOnboardingComplete();
+  const isOnboardingComplete = training.totalCorrectAllTime >= 10;
+  const isSetMode = setNumber !== null && setNumber >= 1 && setNumber <= 12 && isOnboardingComplete;
 
   const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
@@ -55,24 +54,12 @@ function TrainingPageContent() {
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [prevCorrectCount, setPrevCorrectCount] = useState(training.totalCorrectAllTime);
 
-  // Get current set progress
-  const setProgress = isSetMode ? getTrainingSetProgress(setNumber) : null;
-  const setData = isSetMode ? (trainingSets[setNumber] || { masteredIds: [], wrongQueue: [] }) : null;
+  // Get current set progress (CDL set IDs are 100 + setNumber)
+  const cdlSetId = setNumber ? 100 + setNumber : null;
+  const setProgress = isSetMode && cdlSetId ? getTrainingSetProgress(cdlSetId) : null;
+  const setData = isSetMode && cdlSetId ? (trainingSets[cdlSetId] || { masteredIds: [], wrongQueue: [] }) : null;
   const setMasteredIds = setData?.masteredIds || [];
   const setWrongQueue = setData?.wrongQueue || [];
-
-  // Redirect to onboarding if no state selected, or to dashboard if premium required
-  useEffect(() => {
-    if (hydrated && !selectedState) {
-      router.push("/onboarding/select-state");
-      return;
-    }
-    // Check if trying to access set 4 without premium
-    if (hydrated && setNumber === 4 && !isTrainingSetUnlocked(4)) {
-      router.push("/dashboard");
-      return;
-    }
-  }, [hydrated, selectedState, setNumber, isTrainingSetUnlocked, router]);
 
   // Detect when user unlocks practice tests (crosses 10 correct answers) - onboarding only
   useEffect(() => {
@@ -94,30 +81,26 @@ function TrainingPageContent() {
 
   // Load first question on mount
   useEffect(() => {
-    if (hydrated && selectedState && !currentQuestion) {
+    if (hydrated && !currentQuestion) {
       loadNextQuestion();
     }
-  }, [hydrated, selectedState, currentQuestion]);
+  }, [hydrated, currentQuestion]);
 
   const loadNextQuestion = () => {
-    if (!selectedState) return;
-
     let question: Question | null = null;
 
-    if (isSetMode) {
+    if (isSetMode && setNumber) {
       // Set-based training: get next unmastered question from the set
       // Wrong questions are pushed to the back via wrongQueue
       // IMPORTANT: Get fresh state from store to ensure we have the latest wrongQueue
       // (the captured trainingSets variable may be stale after answering a question)
       const freshTrainingSets = useStore.getState().trainingSets;
-      const currentSetData = freshTrainingSets[setNumber] || { masteredIds: [], wrongQueue: [] };
-      question = getNextTrainingSetQuestion(
+      const currentSetData = freshTrainingSets[100 + setNumber] || { masteredIds: [], wrongQueue: [] };
+      question = getNextCDLTrainingSetQuestion(
         setNumber,
-        selectedState,
         currentSetData.masteredIds,
         currentSetData.wrongQueue,
-        currentQuestionIdRef.current,  // Use ref for reliable current question ID
-        language
+        currentQuestionIdRef.current  // Use ref for reliable current question ID
       );
 
       // If all questions are mastered, show completion overlay with fireworks on top
@@ -130,7 +113,7 @@ function TrainingPageContent() {
       // If this question was previously answered wrong, shuffle the options
       // so users can't just memorize the slot position
       // Note: Use freshTrainingSets here too for consistency
-      const freshWrongQueue = freshTrainingSets[setNumber]?.wrongQueue || [];
+      const freshWrongQueue = freshTrainingSets[100 + setNumber]?.wrongQueue || [];
       if (freshWrongQueue.includes(question.questionId)) {
         question = shuffleQuestionOptions(question);
       }
@@ -138,17 +121,15 @@ function TrainingPageContent() {
       // Onboarding mode: random questions
       // IMPORTANT: Get fresh state from store to ensure we have the latest masteredQuestionIds
       const freshTraining = useStore.getState().training;
-      question = getTrainingQuestion(
-        selectedState,
+      question = getCDLTrainingQuestion(
         freshTraining.masteredQuestionIds,
-        freshTraining.lastQuestionId,
-        language
+        freshTraining.lastQuestionId
       );
 
       // If all questions are mastered, reset and start fresh
       if (!question) {
         resetMasteredQuestions();
-        question = getTrainingQuestion(selectedState, [], freshTraining.lastQuestionId, language);
+        question = getCDLTrainingQuestion([], freshTraining.lastQuestionId);
       }
     }
 
@@ -176,8 +157,8 @@ function TrainingPageContent() {
     }
 
     // Track progress
-    if (isSetMode) {
-      answerTrainingSetQuestion(setNumber, currentQuestion.questionId, isCorrect);
+    if (isSetMode && cdlSetId) {
+      answerTrainingSetQuestion(cdlSetId, currentQuestion.questionId, isCorrect);
     } else {
       answerTrainingQuestion(currentQuestion.questionId, isCorrect);
     }
@@ -188,15 +169,15 @@ function TrainingPageContent() {
   };
 
   const handlePracticeAgain = () => {
-    if (setNumber) {
-      resetTrainingSet(setNumber);
+    if (setNumber && cdlSetId) {
+      resetTrainingSet(cdlSetId);
       setShowSetComplete(false);
       // Load the first question after reset
       setTimeout(() => loadNextQuestion(), 0);
     }
   };
 
-  if (!hydrated || !selectedState) {
+  if (!hydrated) {
     return null;
   }
 
@@ -222,15 +203,15 @@ function TrainingPageContent() {
               {t("trainingPage.congratulations")}
             </h2>
             <p className="text-xl text-brand font-semibold mb-4">
-              {t("trainingPage.youUnlocked")}
+              You Unlocked CDL Training Sets!
             </p>
             <p className="text-gray-600 mb-6">
               {t("trainingPage.answeredTenCorrectly")}
             </p>
             <div className="flex flex-col gap-3">
-              <Link href="/dashboard">
+              <Link href="/cdl/dashboard">
                 <Button className="w-full bg-black text-white hover:bg-gray-800 text-lg py-6">
-                  {t("trainingPage.chooseTrainingSet")}
+                  Choose CDL Training Set
                 </Button>
               </Link>
               <Button
@@ -248,13 +229,13 @@ function TrainingPageContent() {
       {/* Set Complete - Full-bleed Score Card */}
       {showSetComplete && isSetMode && (
         <div className="fixed inset-0 z-50 overflow-y-auto animate-in fade-in duration-300">
-          <div className="min-h-screen bg-gradient-to-b from-gray-950 to-green-950">
+          <div className="min-h-screen bg-gradient-to-b from-gray-950 to-brand-darker">
             {/* Back button */}
             <div className="max-w-6xl mx-auto px-4 pt-4">
-              <Link href="/dashboard">
+              <Link href="/cdl/dashboard">
                 <Button variant="ghost" className="text-gray-400 hover:text-white hover:bg-white/10 -ml-2">
                   <ArrowLeft className="h-4 w-4 mr-2" />
-                  {t("common.backToDashboard")}
+                  Back to CDL Dashboard
                 </Button>
               </Link>
             </div>
@@ -264,7 +245,7 @@ function TrainingPageContent() {
               <div className="mb-6">
                 <div className="text-gray-300 text-lg font-bold tracking-widest">tigertest.io</div>
                 <div className="text-gray-500 text-xs uppercase tracking-widest mt-1">
-                  {language === "es" ? "ENTRENAMIENTO DMV" : "DMV TRAINING"}
+                  CDL TRAINING
                 </div>
               </div>
 
@@ -280,12 +261,12 @@ function TrainingPageContent() {
               </div>
 
               {/* Tagline */}
-              <div className="text-base md:text-lg font-extrabold uppercase tracking-widest mb-4 text-green-300">
-                {language === "es" ? "DOMINÉ MI ENTRENAMIENTO DEL DMV" : "MASTERED MY DMV TRAINING"}
+              <div className="text-base md:text-lg font-extrabold uppercase tracking-widest mb-4 text-brand-border">
+                MASTERED MY CDL TRAINING
               </div>
 
               {/* Giant percentage */}
-              <div className="text-7xl md:text-8xl font-black mb-3 leading-none text-green-500">
+              <div className="text-7xl md:text-8xl font-black mb-3 leading-none text-brand">
                 100%
               </div>
 
@@ -295,13 +276,13 @@ function TrainingPageContent() {
               </div>
 
               {/* MASTERED badge */}
-              <Badge className="text-lg px-6 py-2 mb-5 bg-green-600 hover:bg-green-700">
-                {language === "es" ? "DOMINADO" : "MASTERED"}
+              <Badge className="text-lg px-6 py-2 mb-5 bg-brand hover:bg-brand-hover">
+                MASTERED
               </Badge>
 
-              {/* State + Set name */}
+              {/* CDL Set name */}
               <div className="text-gray-400 text-base mb-2">
-                {states.find((s) => s.code === selectedState)?.name || selectedState} · {t(`trainingSets.${setNumber}`)}
+                CDL Training Set {setNumber}
               </div>
 
               {/* Branding footer */}
@@ -309,14 +290,14 @@ function TrainingPageContent() {
 
               {/* SHARE + TRY AGAIN buttons */}
               <div className="flex gap-3 max-w-xs mx-auto">
-                {selectedState && setNumber && (
+                {setNumber && (
                   <ShareButton
                     score={50}
                     totalQuestions={50}
                     percentage={100}
                     passed={true}
                     setId={setNumber}
-                    stateCode={selectedState}
+                    stateCode="CDL"
                     className="flex-1 bg-white text-black hover:bg-gray-100 font-bold uppercase tracking-wide h-12 text-base"
                   />
                 )}
@@ -356,10 +337,10 @@ function TrainingPageContent() {
             {!isGuest && (
               <div className="text-center py-5">
                 <Link
-                  href="/stats"
+                  href="/cdl/dashboard"
                   className="text-gray-500 hover:text-gray-300 text-sm font-medium transition-colors"
                 >
-                  {t("results.viewStats")} →
+                  View CDL Dashboard →
                 </Link>
               </div>
             )}
@@ -370,15 +351,15 @@ function TrainingPageContent() {
       <div className="container mx-auto px-4 py-4 max-w-6xl">
         {/* Header */}
         <div className="mb-4 flex items-center justify-between">
-          <Link href="/dashboard">
+          <Link href="/cdl/dashboard">
             <Button variant="ghost" size="sm">
               <ArrowLeft className="h-4 w-4 mr-2" />
               {t("common.back")}
             </Button>
           </Link>
           {!isGuest && (
-            <Link href="/stats" className="text-sm font-medium text-brand hover:text-brand-dark transition-colors">
-              {t("trainingPage.viewStats")}
+            <Link href="/cdl/dashboard" className="text-sm font-medium text-brand hover:text-brand-dark transition-colors">
+              View CDL Dashboard
             </Link>
           )}
         </div>
@@ -396,8 +377,8 @@ function TrainingPageContent() {
           <Card className="w-full">
             <CardContent className="p-8 text-center">
               <p className="text-gray-600 mb-4">{t("trainingPage.noMoreQuestions")}</p>
-              <Button className="bg-black text-white hover:bg-gray-800" onClick={() => router.push("/dashboard")}>
-                {t("common.backToDashboard")}
+              <Button className="bg-black text-white hover:bg-gray-800" onClick={() => router.push("/cdl/dashboard")}>
+                Back to CDL Dashboard
               </Button>
             </CardContent>
           </Card>
@@ -422,14 +403,14 @@ function TrainingPageContent() {
                 />
               </div>
             </>
-          ) : !isOnboardingComplete() ? (
+          ) : !isOnboardingComplete ? (
             // Onboarding progress
             <>
               <div className="flex items-center justify-center gap-1 text-sm md:text-lg text-gray-700">
                 <span className="font-bold text-xl md:text-2xl text-brand">{training.totalCorrectAllTime}</span>
                 <span className="text-gray-500">/10</span>
                 <span className="text-gray-500 text-xs md:text-base ml-1">
-                  ({10 - training.totalCorrectAllTime} {t("trainingPage.moreToUnlock")})
+                  ({10 - training.totalCorrectAllTime} more to unlock CDL sets)
                 </span>
               </div>
               <div className="w-full bg-brand-border-light rounded-full h-2 mt-2 max-w-md mx-auto">
@@ -454,10 +435,12 @@ function TrainingPageContent() {
   );
 }
 
-export default function TrainingPage() {
+export default function CDLTrainingPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-gradient-to-br from-brand-light to-brand-gradient-to" />}>
-      <TrainingPageContent />
-    </Suspense>
+    
+      <Suspense fallback={<div className="min-h-screen bg-gradient-to-br from-brand-light to-brand-gradient-to" />}>
+        <CDLTrainingPageContent />
+      </Suspense>
+    
   );
 }

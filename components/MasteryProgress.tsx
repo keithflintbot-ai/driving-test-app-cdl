@@ -15,7 +15,7 @@ export function MasteryProgress({ totalBestScore, totalPossible }: MasteryProgre
   const masteryPercentage = totalPossible > 0 ? Math.round((totalBestScore / totalPossible) * 100) : 0;
 
   return (
-    <Card className="bg-gradient-to-br from-orange-50 to-amber-50 border-orange-200">
+    <Card className="bg-gradient-to-br from-brand-light to-brand-gradient-to border-brand-border-light">
       <CardHeader>
         <div className="flex items-center gap-3">
           <Trophy className="h-8 w-8 text-yellow-600" />
@@ -28,10 +28,10 @@ export function MasteryProgress({ totalBestScore, totalPossible }: MasteryProgre
       <CardContent>
         <div className="space-y-4">
           <div className="flex items-baseline gap-2">
-            <span className="text-5xl font-bold text-orange-600">{masteryPercentage}%</span>
+            <span className="text-5xl font-bold text-brand">{masteryPercentage}%</span>
             <span className="text-gray-600">{t("mastery.masteredSuffix")}</span>
           </div>
-          <Progress value={masteryPercentage} className="h-4 [&>div]:bg-orange-600" />
+          <Progress value={masteryPercentage} className="h-4 [&>div]:bg-brand" />
           <p className="text-sm text-gray-600">
             {totalBestScore} {t("questionCard.of")} {totalPossible} {t("mastery.questionsCorrectBest")}
           </p>

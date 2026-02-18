@@ -15,7 +15,7 @@ import { Cloud } from "lucide-react";
 import { Fireworks } from "@/components/Fireworks";
 import { ShareButton } from "@/components/ShareButton";
 import { useTranslation } from "@/contexts/LanguageContext";
-import { states } from "@/data/states";
+
 
 function getTigerFace(percentage: number): string {
   if (percentage >= 100) return "/tiger_face_01.png";
@@ -28,34 +28,22 @@ function getTigerFace(percentage: number): string {
   return "/tiger_face_08.png";
 }
 
-function getTagline(percentage: number, lang: string): string {
-  if (lang === "es") {
-    if (percentage >= 100) return "PUNTUACIÓN PERFECTA";
-    if (percentage >= 90) return "LISTO PARA EL DMV";
-    if (percentage >= 80) return "APROBÉ MI EXAMEN DEL DMV";
-    if (percentage >= 70) return "APROBÉ POR POCO";
-    if (percentage >= 50) return "REPROBÉ MI EXAMEN DEL DMV";
-    if (percentage >= 30) return "EL DMV PUEDE ESPERAR";
-    if (percentage >= 10) return "NECESITO MÁS PRÁCTICA";
-    return "CREO QUE TOMARÉ EL AUTOBÚS";
-  }
-
+function getCDLTagline(percentage: number): string {
   if (percentage >= 100) return "PERFECT SCORE";
-  if (percentage >= 90) return "READY FOR THE DMV";
-  if (percentage >= 80) return "PASSED MY DMV PRACTICE TEST";
-  if (percentage >= 70) return "BARELY PASSED";
-  if (percentage >= 50) return "FAILED MY DMV PRACTICE TEST";
-  if (percentage >= 30) return "THE DMV CAN WAIT";
-  if (percentage >= 10) return "NEED MORE PRACTICE";
-  return "GUESS I'M TAKING THE BUS";
+  if (percentage >= 90) return "READY FOR THE CDL TEST";
+  if (percentage >= 80) return "PASSED MY CDL PRACTICE TEST";
+  if (percentage >= 70) return "CLOSE BUT NOT QUITE";
+  if (percentage >= 50) return "FAILED MY CDL PRACTICE TEST";
+  if (percentage >= 30) return "NEED MORE STUDY TIME";
+  return "BACK TO THE HANDBOOK";
 }
 
-export default function ResultsPage() {
+function CDLResultsPageContent() {
   const params = useParams();
   const router = useRouter();
   const testId = parseInt(params.id as string);
   const hydrated = useHydration();
-  const { t, language } = useTranslation();
+  const { t } = useTranslation();
 
   const getTestSession = useStore((state) => state.getTestSession);
   const getTestAttemptStats = useStore((state) => state.getTestAttemptStats);
@@ -75,14 +63,14 @@ export default function ResultsPage() {
 
     if (!testSession) {
       // No test session found, redirect to test
-      router.push(`/test/${testId}`);
+      router.push(`/cdl/test/${testId}`);
     } else {
       setLoading(false);
-      // Show fireworks if passed (70% or higher)
+      // Show fireworks if passed (80% or higher for CDL)
       const score = testSession.score || 0;
       const total = testSession.questions.length;
       const percentage = total > 0 ? Math.round((score / total) * 100) : 0;
-      if (percentage >= 70) {
+      if (percentage >= 80) {
         setShowFireworks(true);
       }
     }
@@ -127,8 +115,7 @@ export default function ResultsPage() {
 
   const totalQuestions = questions.length;
   const percentage = totalQuestions > 0 ? Math.round((score / totalQuestions) * 100) : 0;
-  const passed = percentage >= 70;
-  const stateName = states.find((s) => s.code === testSession.state)?.name || testSession.state;
+  const passed = percentage >= 80; // CDL passing score is 80%
 
   // Calculate improvement metrics
   const firstScore = attemptStats?.firstScore || score;
@@ -175,13 +162,13 @@ export default function ResultsPage() {
       )}
 
       {/* Full-bleed Score Card */}
-      <div className={`${passed ? "bg-gradient-to-b from-gray-950 to-green-950" : "bg-gradient-to-b from-gray-950 to-brand-darker"}`}>
+      <div className={`${passed ? "bg-gradient-to-b from-gray-950 to-brand-darker" : "bg-gradient-to-b from-gray-950 to-brand-darker"}`}>
         {/* Back button */}
         <div className="max-w-6xl mx-auto px-4 pt-4">
-          <Link href="/dashboard">
+          <Link href="/cdl/dashboard">
             <Button variant="ghost" className="text-gray-400 hover:text-white hover:bg-white/10 -ml-2">
               <ArrowLeft className="h-4 w-4 mr-2" />
-              {t("common.backToDashboard")}
+              Back to CDL Dashboard
             </Button>
           </Link>
         </div>
@@ -191,7 +178,7 @@ export default function ResultsPage() {
           <div className="mb-6">
             <div className="text-gray-300 text-lg font-bold tracking-widest">tigertest.io</div>
             <div className="text-gray-500 text-xs uppercase tracking-widest mt-1">
-              {language === "es" ? "EXAMEN DE PRÁCTICA DEL DMV" : "DMV PRACTICE TEST"}
+              CDL PRACTICE TEST
             </div>
           </div>
 
@@ -208,12 +195,12 @@ export default function ResultsPage() {
           </div>
 
           {/* Tagline */}
-          <div className={`text-base md:text-lg font-extrabold uppercase tracking-widest mb-4 ${passed ? "text-green-300" : "text-brand-border"}`}>
-            {getTagline(percentage, language)}
+          <div className={`text-base md:text-lg font-extrabold uppercase tracking-widest mb-4 ${passed ? "text-brand-border" : "text-brand-border"}`}>
+            {getCDLTagline(percentage)}
           </div>
 
           {/* Giant percentage */}
-          <div className={`text-7xl md:text-8xl font-black mb-3 leading-none ${passed ? "text-green-500" : "text-brand"}`}>
+          <div className={`text-7xl md:text-8xl font-black mb-3 leading-none ${passed ? "text-brand" : "text-brand"}`}>
             {percentage}%
           </div>
 
@@ -225,15 +212,15 @@ export default function ResultsPage() {
           {/* PASSED/FAILED badge */}
           <Badge
             className={`text-lg px-6 py-2 mb-5 ${
-              passed ? "bg-green-600 hover:bg-green-700" : "bg-brand hover:bg-brand-dark"
+              passed ? "bg-brand hover:bg-brand-hover" : "bg-brand hover:bg-brand-hover"
             }`}
           >
             {passed ? t("results.passed") : t("results.failed")}
           </Badge>
 
-          {/* State + Test label */}
+          {/* CDL Test label */}
           <div className="text-gray-400 text-base mb-2">
-            {stateName} · {language === "es" ? `Examen ${testId}` : `Test ${testId}`}
+            CDL Test {testId}
           </div>
 
           {/* Branding footer */}
@@ -247,12 +234,12 @@ export default function ResultsPage() {
               percentage={percentage}
               passed={passed}
               testId={testId}
-              stateCode={testSession.state}
+              stateCode="CDL"
               className="flex-1 bg-white text-black hover:bg-gray-100 font-bold uppercase tracking-wide h-12 text-base"
             />
             <Button
               className="flex-1 bg-transparent text-white hover:bg-white/10 border border-white/30 font-bold uppercase tracking-wide h-12 text-base"
-              onClick={() => router.push(`/test/${testId}`)}
+              onClick={() => router.push(`/cdl/test/${testId}`)}
             >
               {t("results.tryAgain")}
             </Button>
@@ -341,10 +328,10 @@ export default function ResultsPage() {
                 </Card>
 
                 {/* Best Score */}
-                <Card className="bg-green-50 border-green-200">
+                <Card className="bg-brand-light border-brand-border-light">
                   <CardContent className="pt-6 text-center">
-                    <div className="text-sm font-medium text-green-700 mb-2">{t("results.bestScore")}</div>
-                    <div className="text-4xl font-bold text-green-600 mb-1">
+                    <div className="text-sm font-medium text-brand-dark mb-2">{t("results.bestScore")}</div>
+                    <div className="text-4xl font-bold text-brand mb-1">
                       {bestPercentage}%
                     </div>
                     <div className="text-sm text-gray-600">
@@ -356,9 +343,9 @@ export default function ResultsPage() {
 
               {/* Improvement Message */}
               {improvement > 0 && (
-                <div className="flex items-center justify-center gap-2 bg-green-50 border-2 border-green-300 rounded-lg p-4">
-                  <TrendingUp className="h-6 w-6 text-green-600" />
-                  <span className="text-lg font-semibold text-green-700">
+                <div className="flex items-center justify-center gap-2 bg-brand-light border-2 border-brand-border rounded-lg p-4">
+                  <TrendingUp className="h-6 w-6 text-brand" />
+                  <span className="text-lg font-semibold text-brand-dark">
                     {t("results.improvedBy")} {improvement}% {t("results.sinceFirstAttempt")} 🚀
                   </span>
                 </div>
@@ -369,7 +356,7 @@ export default function ResultsPage() {
 
         {/* Weak Areas Insight → Stats CTA */}
         {!isGuest && weakCategories.length > 0 && (
-          <Link href="/stats" className="block">
+          <Link href="/cdl/dashboard" className="block">
             <Card className="mb-6 border-brand-border-light bg-gradient-to-r from-brand-light to-brand-gradient-to cursor-pointer hover:shadow-md transition-shadow">
               <CardContent className="p-6">
                 <div className="flex items-start gap-4">
@@ -378,21 +365,21 @@ export default function ResultsPage() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <h3 className="font-bold text-gray-900 mb-2">
-                      {passed ? t("results.yourPerformanceBreakdown") : t("results.topicsToFocusOn")}
+                      {passed ? "Your Performance Breakdown" : "Topics to Focus On"}
                     </h3>
                     <div className="space-y-2">
                       {weakCategories.slice(0, 3).map(({ category, wrong, total, accuracy }) => (
                         <div key={category} className="flex items-center gap-3">
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center justify-between text-sm">
-                              <span className="text-gray-700 font-medium">{t(`categories.${category}`)}</span>
-                              <span className={`font-semibold ${accuracy >= 70 ? "text-green-600" : accuracy >= 50 ? "text-yellow-600" : "text-red-600"}`}>
+                              <span className="text-gray-700 font-medium">{t(`categories.${category}`) || category}</span>
+                              <span className={`font-semibold ${accuracy >= 80 ? "text-brand" : accuracy >= 60 ? "text-yellow-600" : "text-red-600"}`}>
                                 {accuracy}%
                               </span>
                             </div>
                             <div className="w-full bg-gray-200 rounded-full h-1.5 mt-1">
                               <div
-                                className={`h-1.5 rounded-full ${accuracy >= 70 ? "bg-green-500" : accuracy >= 50 ? "bg-yellow-500" : "bg-red-500"}`}
+                                className={`h-1.5 rounded-full ${accuracy >= 80 ? "bg-brand" : accuracy >= 60 ? "bg-yellow-500" : "bg-red-500"}`}
                                 style={{ width: `${accuracy}%` }}
                               />
                             </div>
@@ -401,7 +388,7 @@ export default function ResultsPage() {
                       ))}
                     </div>
                     <p className="text-sm text-brand font-medium mt-3">
-                      {t("results.viewFullStats")}
+                      View CDL Dashboard
                     </p>
                   </div>
                   <ChevronRight className="h-5 w-5 text-brand-muted flex-shrink-0 mt-1" />
@@ -440,7 +427,7 @@ export default function ResultsPage() {
                     <div className="flex items-center gap-4 flex-1">
                       <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-semibold ${
                         isCorrect
-                          ? "bg-green-100 text-green-700"
+                          ? "bg-brand-light text-brand-dark"
                           : "bg-red-100 text-red-700"
                       }`}>
                         {index + 1}
@@ -451,14 +438,14 @@ export default function ResultsPage() {
                           {t("results.yourAnswer")}: <span className="font-semibold">{userAnswer || t("results.notAnswered")}</span>
                           {!isCorrect && (
                             <span className="ml-2">
-                              • {t("results.correctAnswer")}: <span className="font-semibold text-green-600">{question.correctAnswer}</span>
+                              • {t("results.correctAnswer")}: <span className="font-semibold text-brand">{question.correctAnswer}</span>
                             </span>
                           )}
                         </div>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
-                      <Badge className={isCorrect ? "bg-green-500" : "bg-red-500"}>
+                      <Badge className={isCorrect ? "bg-brand" : "bg-red-500"}>
                         {isCorrect ? t("results.correctAnswer") : t("results.wrong")}
                       </Badge>
                       {isExpanded ? (
@@ -488,5 +475,12 @@ export default function ResultsPage() {
         </div>
       </div>
     </div>
+  );
+}
+export default function CDLResultsPage() {
+  return (
+    
+      <CDLResultsPageContent />
+    
   );
 }

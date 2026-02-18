@@ -6,64 +6,65 @@ import { TestCard } from "@/components/TestCard";
 import { TrainingSetCard, TrainingSet } from "@/components/TrainingSetCard";
 import { PaywallModal } from "@/components/PaywallModal";
 import { Card, CardContent } from "@/components/ui/card";
-import { Zap, ChevronRight, CheckCircle } from "lucide-react";
+import { Zap, ChevronRight, CheckCircle, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { useStore } from "@/store/useStore";
 import { useHydration } from "@/hooks/useHydration";
 import { useAuth } from "@/contexts/AuthContext";
 import { auth } from "@/lib/firebase";
-import { states } from "@/data/states";
+
 import { useTranslation } from "@/contexts/LanguageContext";
 import { trackBeginCheckout, trackPurchase, trackViewItem } from "@/lib/analytics";
 
-function DashboardContent() {
+function CDLDashboardContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const hydrated = useHydration();
   const { user } = useAuth();
   const { t } = useTranslation();
   const isGuest = useStore((state) => state.isGuest);
-  const selectedState = useStore((state) => state.selectedState);
   const getTestSession = useStore((state) => state.getTestSession);
   const getTestAttemptStats = useStore((state) => state.getTestAttemptStats);
   const getCurrentTest = useStore((state) => state.getCurrentTest);
-  const isTestUnlocked = useStore((state) => state.isTestUnlocked);
-  const isTrainingSetUnlocked = useStore((state) => state.isTrainingSetUnlocked);
   const hasPremiumAccess = useStore((state) => state.hasPremiumAccess);
   const setPremiumStatus = useStore((state) => state.setPremiumStatus);
   const training = useStore((state) => state.training);
   const getTrainingSetProgress = useStore((state) => state.getTrainingSetProgress);
-  const getPassProbability = useStore((state) => state.getPassProbability);
+  const getCDLPassProbability = useStore((state) => state.getCDLPassProbability);
+  const getCDLProgress = useStore((state) => state.getCDLProgress);
   const isOnboardingComplete = useStore((state) => state.isOnboardingComplete);
 
-  // Paywall state
+  // CDL helper functions for ID mapping
+  const cdlTestId = (testNumber: number) => 100 + testNumber; // 1->101, 2->102, etc.
+  const cdlSetId = (setNumber: number) => 100 + setNumber; // 1->101, 2->102, etc.
+
+  // Paywall state (keeping for future premium features)
   const [paywallOpen, setPaywallOpen] = useState(false);
   const [paywallFeature, setPaywallFeature] = useState<"training_set_4" | "practice_test_4">("training_set_4");
   const [showPurchaseSuccess, setShowPurchaseSuccess] = useState(false);
 
-  const passProbability = hydrated ? getPassProbability() : 0;
+  const passProbability = hydrated ? getCDLPassProbability() : 0;
   const onboardingComplete = hydrated ? isOnboardingComplete() : true;
   const onboardingProgress = training.totalCorrectAllTime;
   const isPremium = hydrated ? hasPremiumAccess() : false;
 
-  // Get state name from code
-  const stateName = states.find((s) => s.code === selectedState)?.name || selectedState;
-
-  // Build training sets from store
-  const getTrainingSets = (): TrainingSet[] => {
-    return [1, 2, 3, 4].map((id) => {
-      const progress = getTrainingSetProgress(id);
+  // Build CDL training sets from store (12 sets)
+  const getCDLTrainingSets = (): TrainingSet[] => {
+    return Array.from({ length: 12 }, (_, i) => {
+      const id = i + 1;
+      const cdlId = cdlSetId(id);
+      const progress = getTrainingSetProgress(cdlId);
       return {
-        id,
-        name: t(`trainingSets.${id}`),
+        id: cdlId,
+        name: `CDL Training Set ${id}`,
         correctCount: progress.correct,
-        targetCount: progress.total,
+        targetCount: progress.total || 50, // 50 questions per set
       };
     });
   };
 
-  // Get tiger face image based on pass probability (100% only for happiest)
+  // Get tiger face image based on CDL pass probability (80% threshold)
   const getTigerFace = (probability: number): string => {
     if (probability >= 100) return "/tiger_face_01.png";
     if (probability >= 85) return "/tiger_face_02.png";
@@ -75,14 +76,7 @@ function DashboardContent() {
     return "/tiger_face_08.png";
   };
 
-  // Redirect to onboarding if no state selected
-  useEffect(() => {
-    if (hydrated && !selectedState) {
-      router.push("/onboarding/select-state");
-    }
-  }, [hydrated, selectedState, router]);
-
-  // Handle post-purchase verification
+  // Handle post-purchase verification (for future premium features)
   useEffect(() => {
     const sessionId = searchParams.get("session_id");
     const success = searchParams.get("success");
@@ -116,7 +110,7 @@ function DashboardContent() {
             });
             setShowPurchaseSuccess(true);
             // Clean up URL
-            router.replace("/dashboard");
+            router.replace("/cdl/dashboard");
           }
         })
         .catch((err) => console.error("Failed to verify purchase:", err));
@@ -124,18 +118,18 @@ function DashboardContent() {
 
     if (canceled === "true") {
       // Clean up URL
-      router.replace("/dashboard");
+      router.replace("/cdl/dashboard");
     }
   }, [searchParams, user?.uid, setPremiumStatus, router]);
 
-  // Handle paywall click
+  // Handle paywall click (for future premium features)
   const handlePremiumClick = (feature: "training_set_4" | "practice_test_4") => {
     trackViewItem();
     setPaywallFeature(feature);
     setPaywallOpen(true);
   };
 
-  // Handle upgrade (redirect to Stripe)
+  // Handle upgrade (for future premium features)
   const handleUpgrade = async () => {
     if (!user?.email || !user?.uid) {
       router.push("/signup");
@@ -182,17 +176,19 @@ function DashboardContent() {
     }
   };
 
-  // Get status for each test
-  const getTestStatus = (testNumber: number): "not-started" | "in-progress" | "completed" => {
-    const currentTest = getCurrentTest(testNumber);
+  // Get status for each CDL test
+  const getCDLTestStatus = (testNumber: number): "not-started" | "in-progress" | "completed" => {
+    const cdlId = cdlTestId(testNumber);
+    const currentTest = getCurrentTest(cdlId);
     if (currentTest && currentTest.questions.length > 0) return "in-progress";
-    const session = getTestSession(testNumber);
+    const session = getTestSession(cdlId);
     if (session) return "completed";
     return "not-started";
   };
 
-  const getTestProgress = (testNumber: number): number => {
-    const currentTest = getCurrentTest(testNumber);
+  const getCDLTestProgress = (testNumber: number): number => {
+    const cdlId = cdlTestId(testNumber);
+    const currentTest = getCurrentTest(cdlId);
     if (currentTest) {
       const answeredCount = Object.keys(currentTest.answers).length;
       const totalQuestions = currentTest.questions.length;
@@ -201,9 +197,9 @@ function DashboardContent() {
     return 0;
   };
 
-  const trainingSets = hydrated ? getTrainingSets() : [1, 2, 3, 4].map((id) => ({
-    id,
-    name: t(`trainingSets.${id}`),
+  const cdlTrainingSets = hydrated ? getCDLTrainingSets() : Array.from({ length: 12 }, (_, i) => ({
+    id: 101 + i,
+    name: `CDL Training Set ${i + 1}`,
     correctCount: 0,
     targetCount: 50,
   }));
@@ -213,7 +209,28 @@ function DashboardContent() {
       <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-brand-light to-white pointer-events-none" />
       <div className="relative container mx-auto px-4 py-8 max-w-6xl">
 
-        {/* Paywall Modal */}
+        {/* Back to CDL Landing Page */}
+        <div className="mb-6">
+          <Link
+            href="/cdl-practice-test"
+            className="inline-flex items-center gap-2 text-brand hover:text-brand-dark font-medium"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to CDL Practice Test
+          </Link>
+        </div>
+
+        {/* Page Title */}
+        <div className="mb-8">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+            CDL Practice Dashboard
+          </h1>
+          <p className="text-gray-600">
+            Master your Commercial Driver&apos;s License test with 600 practice questions and 12 comprehensive tests
+          </p>
+        </div>
+
+        {/* Paywall Modal (for future premium features) */}
         <PaywallModal
           open={paywallOpen}
           onOpenChange={setPaywallOpen}
@@ -231,10 +248,10 @@ function DashboardContent() {
                 <CheckCircle className="h-12 w-12 text-green-500" />
                 <div className="flex-1">
                   <p className="text-xl font-bold text-green-900">
-                    {t("dashboard.welcomePremium")}
+                    Welcome to Premium CDL!
                   </p>
                   <p className="text-sm text-green-700 mt-1">
-                    {t("dashboard.premiumUnlocked")}
+                    All premium CDL features are now unlocked
                   </p>
                 </div>
                 <button
@@ -250,7 +267,7 @@ function DashboardContent() {
 
         {/* Onboarding Card - shown during onboarding */}
         {!onboardingComplete && (
-          <Link href="/training" className="block">
+          <Link href="/cdl/training?set=1" className="block">
             <Card className="mb-6 bg-gradient-to-r from-brand-light to-brand-gradient-to border-brand-border-light hover:shadow-md transition-all cursor-pointer">
               <CardContent className="p-6">
                 <div className="flex items-center gap-4">
@@ -260,7 +277,7 @@ function DashboardContent() {
                       {onboardingProgress}/10
                     </p>
                     <p className="text-sm text-brand-dark mt-1">
-                      {10 - onboardingProgress} {t("dashboard.moreToUnlock")}
+                      {10 - onboardingProgress} more correct to unlock CDL tests
                     </p>
                   </div>
                   <ChevronRight className="h-6 w-6 text-brand-muted" />
@@ -278,10 +295,10 @@ function DashboardContent() {
                 <div className="text-4xl">📊</div>
                 <div className="flex-1">
                   <p className="text-lg text-gray-700">
-                    <span className="font-bold">{t("common.signUp")}</span> {t("dashboard.signUpPrompt")}
+                    <span className="font-bold">Sign Up</span> to track your CDL progress and view detailed statistics
                   </p>
                   <Link href="/signup" className="text-sm text-brand hover:text-brand-dark font-medium mt-1 inline-block">
-                    {t("dashboard.createFreeAccount")}
+                    Create Free Account
                   </Link>
                 </div>
               </div>
@@ -289,7 +306,7 @@ function DashboardContent() {
           </Card>
         )}
         {onboardingComplete && !isGuest && passProbability > 0 && (
-          <Link href="/stats" className="block">
+          <Link href="/cdl/stats" className="block">
             <Card className={`mb-6 cursor-pointer transition-shadow hover:shadow-lg ${
               passProbability >= 80
                 ? "bg-gradient-to-r from-emerald-50 to-green-50 border-emerald-200"
@@ -298,7 +315,7 @@ function DashboardContent() {
                   : passProbability >= 40
                     ? "bg-gradient-to-r from-amber-50 to-yellow-50 border-amber-200"
                     : passProbability >= 20
-                      ? "bg-gradient-to-r from-orange-50 to-amber-50 border-orange-200"
+                      ? "bg-gradient-to-r from-brand-light to-brand-gradient-to border-brand-border-light"
                       : "bg-gradient-to-r from-red-50 to-rose-50 border-red-200"
             }`}>
               <CardContent className="p-6">
@@ -313,14 +330,14 @@ function DashboardContent() {
                   <div className="flex-1">
                     <p className="text-xl font-bold text-gray-900">
                       {passProbability > 50
-                        ? <>{passProbability}% {t("dashboard.chanceOfPassing")}</>
-                        : <>{100 - passProbability}% {t("dashboard.chanceOfFailing")}</>
+                        ? <>{passProbability}% chance of passing CDL test</>
+                        : <>{100 - passProbability}% chance of failing CDL test</>
                       }
                     </p>
-                    <p className="text-sm text-gray-500 mt-1 md:hidden">{t("dashboard.learnHowToImprove")}</p>
+                    <p className="text-sm text-gray-500 mt-1 md:hidden">Learn how to improve</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-sm text-gray-500 hidden md:inline">{t("dashboard.viewStats")}</span>
+                    <span className="text-sm text-gray-500 hidden md:inline">View Stats</span>
                     <ChevronRight className={`h-6 w-6 ${
                     passProbability >= 80
                       ? "text-emerald-400"
@@ -329,7 +346,7 @@ function DashboardContent() {
                         : passProbability >= 40
                           ? "text-amber-400"
                           : passProbability >= 20
-                            ? "text-orange-400"
+                            ? "text-brand-muted"
                             : "text-red-400"
                   }`} />
                   </div>
@@ -339,22 +356,24 @@ function DashboardContent() {
           </Link>
         )}
 
-        {/* Training Sets - only shown after onboarding */}
+        {/* CDL Training Sets - only shown after onboarding */}
         {onboardingComplete && (
           <div className="mb-8">
             <div className="mb-3">
-              <h2 className="text-xl font-bold">{t("dashboard.training")}</h2>
+              <h2 className="text-xl font-bold">CDL Training</h2>
             </div>
-            <p className="text-sm text-gray-500 mb-4">{t("dashboard.trainingSubtitle")}</p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {trainingSets.map((set) => {
-                const isPremiumLocked = set.id === 4 && !isPremium && onboardingComplete;
+            <p className="text-sm text-gray-500 mb-4">Master CDL topics with instant feedback and spaced repetition</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              {cdlTrainingSets.map((set, index) => {
+                const setNumber = index + 1;
+                // All CDL training sets are free for now
                 return (
                   <TrainingSetCard
                     key={set.id}
                     set={set}
-                    isPremiumLocked={isPremiumLocked}
-                    onPremiumClick={() => handlePremiumClick("training_set_4")}
+                    isPremiumLocked={false}
+                    onPremiumClick={() => {}}
+                    href={`/cdl/training?set=${setNumber}`}
                   />
                 );
               })}
@@ -362,31 +381,33 @@ function DashboardContent() {
           </div>
         )}
 
-        {/* Practice Tests */}
+        {/* CDL Practice Tests */}
         <div className="mb-6">
-          <h2 className="text-xl font-bold mb-3">{t("dashboard.practiceTests")}</h2>
+          <h2 className="text-xl font-bold mb-3">CDL Practice Tests</h2>
           <p className="text-sm text-gray-500 mb-4">
-            {onboardingComplete ? t("dashboard.simulateExam") : t("dashboard.completeOnboarding")}
+            {onboardingComplete ? "Simulate the real CDL exam with 50-question tests (80% to pass)" : "Complete onboarding to unlock practice tests"}
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {[1, 2, 3, 4].map((testNumber) => {
-              const status = getTestStatus(testNumber);
-              const session = getTestSession(testNumber);
-              const attemptStats = getTestAttemptStats(testNumber);
-              const isPremiumLocked = testNumber === 4 && !isPremium && onboardingComplete;
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {Array.from({ length: 12 }, (_, i) => i + 1).map((testNumber) => {
+              const status = getCDLTestStatus(testNumber);
+              const cdlId = cdlTestId(testNumber);
+              const session = getTestSession(cdlId);
+              const attemptStats = getTestAttemptStats(cdlId);
               const locked = !onboardingComplete;
+              // All CDL tests are free for now
               return (
                 <TestCard
                   key={testNumber}
                   testNumber={testNumber}
-                  status={locked || isPremiumLocked ? "not-started" : status}
+                  status={locked ? "not-started" : status}
                   score={session?.score}
-                  progress={getTestProgress(testNumber)}
+                  progress={getCDLTestProgress(testNumber)}
                   totalQuestions={50}
                   bestScore={attemptStats?.bestScore}
                   locked={locked}
-                  isPremiumLocked={isPremiumLocked}
-                  onPremiumClick={() => handlePremiumClick("practice_test_4")}
+                  isPremiumLocked={false}
+                  onPremiumClick={() => {}}
+                  href={`/cdl/test/${cdlId}`}
                 />
               );
             })}
@@ -397,10 +418,12 @@ function DashboardContent() {
   );
 }
 
-export default function DashboardPage() {
+export default function CDLDashboardPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-white" />}>
-      <DashboardContent />
-    </Suspense>
+    
+      <Suspense fallback={<div className="min-h-screen bg-white" />}>
+        <CDLDashboardContent />
+      </Suspense>
+    
   );
 }

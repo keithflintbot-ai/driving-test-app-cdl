@@ -106,7 +106,7 @@ export default function Home() {
 
       {/* Hero Section */}
       <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-orange-50 to-white pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-brand-light to-white pointer-events-none" />
         <div className="relative max-w-4xl mx-auto px-6 pt-16 pb-20 md:pt-24 md:pb-28 text-center">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 tracking-tight">
             <T k="landing.heroTitle">Free DMV Practice Tests for All 50 States</T>
@@ -123,8 +123,8 @@ export default function Home() {
 
         <div className="grid md:grid-cols-2 gap-8 md:gap-12">
           <div className="relative pt-8">
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-16 bg-white border-2 border-orange-200 rounded-full flex items-center justify-center shadow-sm">
-              <Smartphone className="w-7 h-7 text-orange-500" />
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-16 bg-white border-2 border-brand-border-light rounded-full flex items-center justify-center shadow-sm">
+              <Smartphone className="w-7 h-7 text-brand" />
             </div>
             <div className="bg-gray-50 rounded-2xl p-8 pt-12 text-center">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">
@@ -204,7 +204,7 @@ export default function Home() {
                   <Link
                     key={state.slug}
                     href={`/${state.slug}-dmv-practice-test`}
-                    className="flex items-center justify-between bg-white border border-gray-200 rounded-xl p-4 hover:border-orange-300 hover:bg-orange-50 transition-colors"
+                    className="flex items-center justify-between bg-white border border-gray-200 rounded-xl p-4 hover:border-brand-border hover:bg-brand-light transition-colors"
                   >
                     <span className="font-medium text-gray-900 text-sm">
                       {state.name}
@@ -217,7 +217,7 @@ export default function Home() {
           <div className="text-center mt-8">
             <Link
               href="/practice-tests-by-state"
-              className="text-orange-600 hover:text-orange-700 font-medium hover:underline"
+              className="text-brand hover:text-brand-dark font-medium hover:underline"
             >
               <T k="landing.viewAllStates">View all 50 states</T> &rarr;
             </Link>
@@ -388,7 +388,7 @@ export default function Home() {
 
       {/* Final CTA */}
       <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-t from-orange-50 to-white pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-brand-light to-white pointer-events-none" />
         <div className="relative max-w-4xl mx-auto px-6 py-16 md:py-24 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
             <T k="landing.readyToPass">Ready to Pass Your Permit Test?</T>

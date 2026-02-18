@@ -19,6 +19,7 @@ interface TestCardProps {
   lockMessage?: string;
   isPremiumLocked?: boolean;
   onPremiumClick?: () => void;
+  href?: string;
 }
 
 export function TestCard({
@@ -30,6 +31,7 @@ export function TestCard({
   locked = false,
   isPremiumLocked = false,
   onPremiumClick,
+  href,
 }: TestCardProps) {
   const { t } = useTranslation();
   const bestPercentage = bestScore ? Math.round((bestScore / totalQuestions) * 100) : 0;
@@ -48,7 +50,7 @@ export function TestCard({
       } else if (bestPercentage >= 70) {
         return <Badge className="bg-green-500 hover:bg-green-500 text-xs">{t("testCard.passed")}</Badge>;
       } else {
-        return <Badge className="bg-orange-500 hover:bg-orange-500 text-xs">{t("testCard.keepPracticing")}</Badge>;
+        return <Badge className="bg-brand hover:bg-brand text-xs">{t("testCard.keepPracticing")}</Badge>;
       }
     }
 
@@ -65,14 +67,14 @@ export function TestCard({
       return <span className="text-gray-400">{t("common.locked")}</span>;
     }
     if (isPremiumLocked) {
-      return <span className="text-orange-600">{t("common.unlockWithPremium")}</span>;
+      return <span className="text-brand">{t("common.unlockWithPremium")}</span>;
     }
     if (status === "in-progress") {
       return <span className="text-yellow-600">{progress}% {t("testCard.done")}</span>;
     }
     if (status === "completed" && bestScore !== undefined) {
       return (
-        <span className={bestPercentage >= 70 ? 'text-green-600' : 'text-orange-600'}>
+        <span className={bestPercentage >= 70 ? 'text-green-600' : 'text-brand'}>
           {bestScore}/{totalQuestions}
         </span>
       );
@@ -85,8 +87,8 @@ export function TestCard({
       locked
         ? "bg-gray-100 border-gray-200 opacity-60"
         : isPremiumLocked
-          ? "bg-gradient-to-r from-orange-50 to-amber-50 border-orange-200 hover:shadow-md hover:border-orange-300 cursor-pointer"
-          : "bg-gray-50 hover:shadow-md hover:border-gray-300 cursor-pointer"
+          ? "bg-gradient-to-r from-brand-light to-brand-gradient-to border-brand-border-light hover:shadow-md hover:border-brand-border cursor-pointer"
+          : "bg-gray-50 hover:shadow-md cursor-pointer hover:border-brand-border"
     }`}>
       <CardContent className="p-4 flex items-center justify-between">
         <div className="flex flex-col">
@@ -98,7 +100,7 @@ export function TestCard({
             {getSubtext()}
           </p>
         </div>
-        {!locked && <ChevronRight className={`h-5 w-5 ${isPremiumLocked ? "text-orange-400" : "text-gray-400"}`} />}
+        {!locked && <ChevronRight className={`h-5 w-5 ${isPremiumLocked ? "text-brand-muted" : "text-gray-400"}`} />}
       </CardContent>
     </Card>
   );
@@ -116,7 +118,7 @@ export function TestCard({
   }
 
   return (
-    <Link href={`/test/${testNumber}`} className="block h-full">
+    <Link href={href || `/test/${testNumber}`} className="block h-full">
       {cardContent}
     </Link>
   );

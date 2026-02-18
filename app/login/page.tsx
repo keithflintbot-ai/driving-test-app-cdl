@@ -88,7 +88,7 @@ export default function LoginPage() {
 
   return (
     <div className="bg-white relative flex items-center justify-center py-12 px-4">
-      <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-orange-50 to-white pointer-events-none" />
+      <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-brand-light to-white pointer-events-none" />
       <Card className="relative w-full max-w-2xl">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center">{t("login.welcomeBack")}</CardTitle>
@@ -146,7 +146,7 @@ export default function LoginPage() {
                 <button
                   type="button"
                   onClick={() => setShowResetPassword(true)}
-                  className="text-sm text-orange-600 hover:underline"
+                  className="text-sm text-brand hover:underline"
                 >
                   {t("common.forgotPassword")}
                 </button>
@@ -168,7 +168,7 @@ export default function LoginPage() {
 
               <div className="text-center text-sm text-gray-600">
                 {t("common.noAccount")}{" "}
-                <Link href="/signup" className="text-orange-600 hover:underline font-semibold">
+                <Link href="/signup" className="text-brand hover:underline font-semibold">
                   {t("common.signUp")}
                 </Link>
               </div>

@@ -315,10 +315,10 @@ export default function StatsPage() {
   const SortButton = ({ field, children }: { field: SortField; children: React.ReactNode }) => (
     <button
       onClick={() => handleSort(field)}
-      className="flex items-center gap-1 font-semibold hover:text-orange-600 transition-colors"
+      className="flex items-center gap-1 font-semibold hover:text-brand transition-colors"
     >
       {children}
-      <ArrowUpDown className={`h-4 w-4 ${sortField === field ? "text-orange-600" : "text-gray-400"}`} />
+      <ArrowUpDown className={`h-4 w-4 ${sortField === field ? "text-brand" : "text-gray-400"}`} />
     </button>
   );
 
@@ -341,7 +341,7 @@ export default function StatsPage() {
 
   return (
     <div className="min-h-screen bg-white relative">
-      <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-orange-50 to-white pointer-events-none" />
+      <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-brand-light to-white pointer-events-none" />
       <div className="relative container mx-auto px-4 py-8 max-w-6xl">
         {/* Paywall Modal */}
         <PaywallModal
@@ -423,14 +423,14 @@ export default function StatsPage() {
         {/* Smart CTA - DO THIS */}
         {getRecommendation && (
           <Link href={getRecommendation.href} className="block">
-            <Card className="mb-6 border-orange-200 bg-orange-50 cursor-pointer hover:shadow-md transition-shadow">
+            <Card className="mb-6 border-brand-border-light bg-brand-light cursor-pointer hover:shadow-md transition-shadow">
               <CardContent className="p-6">
                 <div className="flex items-center gap-4">
                   <div className="flex-1">
                     <h2 className="text-lg font-bold text-gray-900">{getRecommendation.title}</h2>
                     <p className="text-sm text-gray-600 mt-1">{getRecommendation.description}</p>
                   </div>
-                  <ChevronRight className="h-6 w-6 text-orange-400 flex-shrink-0" />
+                  <ChevronRight className="h-6 w-6 text-brand-muted flex-shrink-0" />
                 </div>
               </CardContent>
             </Card>
@@ -450,7 +450,7 @@ export default function StatsPage() {
               onClick={() => handleSort(field)}
               className={`whitespace-nowrap text-sm px-3 py-1.5 rounded-full border transition-colors ${
                 sortField === field
-                  ? "bg-orange-100 border-orange-300 text-orange-700 font-medium"
+                  ? "bg-brand-light border-brand-border text-brand-dark font-medium"
                   : "bg-white border-gray-200 text-gray-600"
               }`}
             >
@@ -606,8 +606,8 @@ export default function StatsPage() {
                   </div>
                   <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/60">
                     <div className="text-center px-4">
-                      <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-orange-100 mb-3">
-                        <Lock className="h-6 w-6 text-orange-600" />
+                      <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-brand-light mb-3">
+                        <Lock className="h-6 w-6 text-brand" />
                       </div>
                       <h3 className="text-lg font-bold text-gray-900 mb-1">
                         {sortedQuestions.length - FREE_QUESTION_LIMIT} {t("stats.moreQuestions")}
@@ -883,8 +883,8 @@ export default function StatsPage() {
                 </div>
                 <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/60">
                   <div className="text-center">
-                    <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-orange-100 mb-3">
-                      <Lock className="h-6 w-6 text-orange-600" />
+                    <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-brand-light mb-3">
+                      <Lock className="h-6 w-6 text-brand" />
                     </div>
                     <h3 className="text-lg font-bold text-gray-900 mb-1">
                       {sortedQuestions.length - FREE_QUESTION_LIMIT} {t("stats.moreQuestions")}

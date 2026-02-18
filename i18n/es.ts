@@ -113,6 +113,7 @@ export const es: TranslationKeys = {
 
   // Question categories (human-friendly display names)
   categories: {
+    // DMV categories
     gdlLicensing: "Licencias y permisos",
     stateUnique: "Leyes estatales",
     duiStateLaws: "DUI y leyes estatales",
@@ -128,6 +129,19 @@ export const es: TranslationKeys = {
     duiBac: "DUI y BAC",
     seatbeltPhone: "Cinturón y celular",
     pointsPenalties: "Puntos y penalidades",
+    // CDL categories
+    alcoholDrugs: "Alcohol y Drogas",
+    basicControl: "Control Básico del Vehículo",
+    brakingSystems: "Sistemas de Frenos",
+    cargoHandling: "Manejo de Carga",
+    emergencyProcedures: "Procedimientos de Emergencia",
+    hazardPerception: "Percepción de Peligros",
+    mountainDriving: "Conducción en Montaña",
+    nightDriving: "Conducción Nocturna",
+    railroadCrossings: "Cruces Ferroviarios",
+    vehicleInspection: "Inspección del Vehículo",
+    vehicleSystems: "Sistemas del Vehículo",
+    weatherDriving: "Conducción en Mal Tiempo",
   } as Record<string, string>,
 
   // Training set names
