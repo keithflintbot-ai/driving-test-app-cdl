@@ -237,16 +237,6 @@ export default function CDLLandingPage() {
         </div>
       </div>
 
-      {/* Testimonial 2 */}
-      <div className="bg-white py-12">
-        <div className="max-w-2xl mx-auto px-6 text-center">
-          <p className="text-xl md:text-2xl text-gray-700 italic mb-4">
-            &quot;The questions were exactly like what I saw on the real CDL test&quot;
-          </p>
-          <p className="text-gray-500 text-sm">NewTrucker2026</p>
-        </div>
-      </div>
-
       {/* Just Launched CTA */}
       <div className="max-w-3xl mx-auto px-6 py-16 md:py-24 text-center">
         <div className="bg-brand-light border border-brand-border-light rounded-2xl p-8 md:p-12">
