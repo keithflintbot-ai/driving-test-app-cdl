@@ -161,6 +161,7 @@ export const en = {
     inProgress: "In Progress",
     fiftyQuestions: "50 questions",
     done: "done",
+    answered: "answered",
   },
 
   // Question card
