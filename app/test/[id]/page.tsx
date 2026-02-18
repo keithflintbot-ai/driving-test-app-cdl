@@ -142,6 +142,14 @@ export default function TestPage() {
 
   const canSubmit = answeredCount === totalQuestions;
 
+  // Auto-submit if all questions already answered on load (handles page refresh edge case)
+  useEffect(() => {
+    if (canSubmit && totalQuestions > 0 && !loading) {
+      handleSubmit();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [canSubmit, totalQuestions, loading]);
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -214,18 +222,6 @@ export default function TestPage() {
             onAnswerChange={handleAnswerChange}
           />
         </div>
-
-        {/* Submit Button - shown when all questions answered */}
-        {canSubmit && (
-          <div className="flex justify-center mt-4 mb-2">
-            <Button
-              onClick={handleSubmit}
-              className="bg-brand hover:bg-brand-dark text-white px-8 py-3 text-base font-semibold rounded-lg"
-            >
-              Submit Test
-            </Button>
-          </div>
-        )}
 
         {/* Progress Overview - View Only */}
         <div className="mt-8">
