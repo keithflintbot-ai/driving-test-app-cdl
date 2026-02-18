@@ -306,7 +306,7 @@ function CDLDashboardContent() {
           </Card>
         )}
         {onboardingComplete && !isGuest && passProbability > 0 && (
-          <Link href="/stats" className="block">
+          <Link href="/cdl/stats" className="block">
             <Card className={`mb-6 cursor-pointer transition-shadow hover:shadow-lg ${
               passProbability >= 80
                 ? "bg-gradient-to-r from-emerald-50 to-green-50 border-emerald-200"
