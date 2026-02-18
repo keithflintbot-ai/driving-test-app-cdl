@@ -36,6 +36,7 @@ function DashboardContent() {
   const getTrainingSetProgress = useStore((state) => state.getTrainingSetProgress);
   const getPassProbability = useStore((state) => state.getPassProbability);
   const isOnboardingComplete = useStore((state) => state.isOnboardingComplete);
+  const completeTest = useStore((state) => state.completeTest);
 
   // Paywall state
   const [paywallOpen, setPaywallOpen] = useState(false);
@@ -81,6 +82,23 @@ function DashboardContent() {
       router.push("/onboarding/select-state");
     }
   }, [hydrated, selectedState, router]);
+
+  // Auto-complete any test where all questions are answered (handles stuck state)
+  useEffect(() => {
+    if (!hydrated) return;
+    [1, 2, 3, 4].forEach((testId) => {
+      const test = getCurrentTest(testId);
+      if (!test || test.questions.length === 0) return;
+      const answeredCount = Object.keys(test.answers).length;
+      if (answeredCount === test.questions.length) {
+        let correctCount = 0;
+        test.questions.forEach((q, i) => {
+          if (test.answers[i] === q.correctAnswer) correctCount++;
+        });
+        completeTest(testId, correctCount, test.questions, test.answers);
+      }
+    });
+  }, [hydrated]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Handle post-purchase verification
   useEffect(() => {
