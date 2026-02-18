@@ -330,7 +330,7 @@ function DashboardContent() {
                   />
                   <div className="flex-1">
                     <p className="text-xl font-bold text-gray-900">
-                      {passProbability > 50
+                      {passProbability >= 50
                         ? <>{passProbability}% {t("dashboard.chanceOfPassing")}</>
                         : <>{100 - passProbability}% {t("dashboard.chanceOfFailing")}</>
                       }
