@@ -17,6 +17,21 @@ import { auth } from "@/lib/firebase";
 import { useTranslation } from "@/contexts/LanguageContext";
 import { trackBeginCheckout, trackPurchase, trackViewItem } from "@/lib/analytics";
 
+const CDL_TRAINING_SET_NAMES: { [key: number]: string } = {
+  1: "Vehicle Inspection",
+  2: "Safe Driving I",
+  3: "Safe Driving II",
+  4: "Vehicle Control",
+  5: "Cargo Handling",
+  6: "Emergency Procedures",
+  7: "Alcohol, Drugs & Night Driving",
+  8: "Weather & Night Driving",
+  9: "Mountain & Railroad Crossings",
+  10: "Hazard Perception",
+  11: "Braking Systems",
+  12: "Vehicle Systems",
+};
+
 function CDLDashboardContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -57,7 +72,7 @@ function CDLDashboardContent() {
       const progress = getTrainingSetProgress(cdlId);
       return {
         id: cdlId,
-        name: `CDL Training Set ${id}`,
+        name: CDL_TRAINING_SET_NAMES[id] || `CDL Training Set ${id}`,
         correctCount: progress.correct,
         targetCount: progress.total || 50, // 50 questions per set
       };
@@ -199,7 +214,7 @@ function CDLDashboardContent() {
 
   const cdlTrainingSets = hydrated ? getCDLTrainingSets() : Array.from({ length: 12 }, (_, i) => ({
     id: 101 + i,
-    name: `CDL Training Set ${i + 1}`,
+    name: CDL_TRAINING_SET_NAMES[i + 1] || `CDL Training Set ${i + 1}`,
     correctCount: 0,
     targetCount: 50,
   }));
