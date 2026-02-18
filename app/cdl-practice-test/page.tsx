@@ -120,13 +120,13 @@ export default function CDLLandingPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <Link
               href="/cdl/dashboard"
-              className="inline-flex items-center px-8 py-4 bg-brand hover:bg-brand-hover text-white font-semibold rounded-xl transition-colors shadow-lg hover:shadow-xl"
+              className="inline-flex items-center justify-center px-8 py-4 bg-brand hover:bg-brand-hover text-white font-semibold rounded-xl transition-colors shadow-lg hover:shadow-xl"
             >
               Start Free Practice Test
             </Link>
             <Link
               href="#how-it-works"
-              className="inline-flex items-center px-8 py-4 bg-white border-2 border-brand text-brand hover:bg-brand-light font-semibold rounded-xl transition-colors"
+              className="inline-flex items-center justify-center px-8 py-4 bg-white border-2 border-brand text-brand hover:bg-brand-light font-semibold rounded-xl transition-colors"
             >
               Learn How It Works
             </Link>
