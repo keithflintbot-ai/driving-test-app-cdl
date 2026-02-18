@@ -49,8 +49,8 @@ export function PaywallModal({
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <div className="flex items-center gap-2 mb-2">
-            <div className="p-2 bg-orange-100 rounded-full">
-              <Lock className="h-5 w-5 text-orange-600" />
+            <div className="p-2 bg-brand-light rounded-full">
+              <Lock className="h-5 w-5 text-brand" />
             </div>
             <DialogTitle className="text-xl">{t("paywall.unlockPremiumContent")}</DialogTitle>
           </div>
@@ -60,9 +60,9 @@ export function PaywallModal({
         </DialogHeader>
 
         <div className="py-4">
-          <div className="bg-gradient-to-r from-orange-50 to-amber-50 rounded-lg p-4 mb-4">
+          <div className="bg-gradient-to-r from-brand-light to-brand-gradient-to rounded-lg p-4 mb-4">
             <div className="flex items-center gap-2 mb-3">
-              <Sparkles className="h-5 w-5 text-orange-500" />
+              <Sparkles className="h-5 w-5 text-brand" />
               <span className="font-semibold text-gray-900">{t("paywall.tigerTestPremium")}</span>
             </div>
             <ul className="space-y-2">

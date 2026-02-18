@@ -93,6 +93,14 @@ interface AppState {
     averageScore: number;
   };
   getPassProbability: () => number;
+  getCDLProgress: () => {
+    testsCompleted: number;
+    questionsAnswered: number;
+    totalCorrect: number;
+    accuracy: number;
+    averageScore: number;
+  };
+  getCDLPassProbability: () => number;
   getQuestionPerformance: () => QuestionPerformance[];
 
   // Firebase sync
@@ -237,7 +245,7 @@ export const useStore = create<AppState>()(
       },
 
       completeTest: (testId: number, score: number, questions: Question[], answers: { [key: number]: string }) => {
-        const currentState = get().selectedState || 'CA';
+        const currentState = testId >= 101 ? 'CDL' : (get().selectedState || 'CA');
         const userAnswers: UserAnswer[] = questions.map((q, index) => ({
           questionId: q.questionId,
           userAnswer: answers[index] || '',
@@ -299,9 +307,10 @@ export const useStore = create<AppState>()(
 
       getTestSession: (testId: number) => {
         const { completedTests, selectedState } = get();
+        const stateFilter = testId >= 101 ? 'CDL' : selectedState;
         // Find most recent test session for the current state
         const sessions = completedTests.filter(
-          (t) => t.testNumber === testId && t.state === selectedState
+          (t) => t.testNumber === testId && t.state === stateFilter
         );
         // Return the most recent session
         return sessions.length > 0 ? sessions[sessions.length - 1] : undefined;
@@ -309,15 +318,17 @@ export const useStore = create<AppState>()(
 
       getTestAttemptStats: (testId: number) => {
         const { testAttempts, selectedState } = get();
+        const stateFilter = testId >= 101 ? 'CDL' : selectedState;
         return testAttempts.find(
-          (a) => a.testNumber === testId && a.state === selectedState
+          (a) => a.testNumber === testId && a.state === stateFilter
         );
       },
 
       getTestAverageScore: (testId: number) => {
         const { completedTests, selectedState } = get();
+        const stateFilter = testId >= 101 ? 'CDL' : selectedState;
         const testSessions = completedTests.filter(
-          (t) => t.testNumber === testId && t.state === selectedState
+          (t) => t.testNumber === testId && t.state === stateFilter
         );
 
         if (testSessions.length === 0) return 0;
@@ -330,7 +341,9 @@ export const useStore = create<AppState>()(
         // All tests require onboarding completion (10 correct training answers)
         // or prior app usage (backwards compatibility)
         if (!get().isOnboardingComplete()) return false;
-        // Test 4 requires premium
+        // CDL tests (101+) are all free - no premium gate
+        if (testId >= 101) return true;
+        // DMV Test 4 requires premium
         if (testId === 4 && !get().hasPremiumAccess()) return false;
         return true;
       },
@@ -550,6 +563,73 @@ export const useStore = create<AppState>()(
         // Practice tests (4 × 12.5% = 50%)
         for (let testNum = 1; testNum <= 4; testNum++) {
           const attempt = stateAttempts.find(a => a.testNumber === testNum);
+          if (attempt) {
+            const testScore = (attempt.bestScore / 50) * 100;
+            totalPassProbability += testScore * (WEIGHT_PER_COMPONENT / 100);
+          }
+        }
+
+        return Math.round(totalPassProbability);
+      },
+
+      getCDLProgress: () => {
+        const { completedTests, testAttempts } = get();
+        // CDL tests are stored with state === 'CDL' (set in completeTest when testId >= 101)
+        const cdlTests = completedTests.filter((t) => t.state === 'CDL');
+        const cdlAttempts = testAttempts.filter((a) => a.state === 'CDL');
+
+        const testsCompleted = cdlAttempts.length;
+
+        if (testsCompleted === 0) {
+          return {
+            testsCompleted: 0,
+            questionsAnswered: 0,
+            totalCorrect: 0,
+            accuracy: 0,
+            averageScore: 0,
+          };
+        }
+
+        const totalCorrect = cdlTests.reduce((sum, test) => sum + (test.score || 0), 0);
+        const questionsAnswered = cdlTests.reduce((sum, test) => sum + test.totalQuestions, 0);
+        const accuracy = questionsAnswered > 0 ? (totalCorrect / questionsAnswered) * 100 : 0;
+        const averageBestScore =
+          cdlAttempts.reduce((sum, a) => sum + a.bestScore, 0) / cdlAttempts.length;
+
+        return {
+          testsCompleted,
+          questionsAnswered,
+          totalCorrect,
+          accuracy: Math.round(accuracy),
+          averageScore: Math.round(averageBestScore * 10) / 10,
+        };
+      },
+
+      getCDLPassProbability: () => {
+        const { testAttempts, trainingSets } = get();
+        // CDL test attempts are stored with state === 'CDL'
+        const cdlAttempts = testAttempts.filter((a) => a.state === 'CDL');
+
+        // 12 CDL training sets + 12 CDL practice tests = 24 components
+        // Each component worth 100/24 ≈ 4.167% of total pass probability
+        const WEIGHT_PER_COMPONENT = 100 / 24;
+        let totalPassProbability = 0;
+
+        // CDL Training sets (IDs 101–112 in the store)
+        for (let setNum = 1; setNum <= 12; setNum++) {
+          const cdlSetId = 100 + setNum;
+          const setData = trainingSets[cdlSetId];
+          const masteredCount = setData?.masteredIds?.length || 0;
+          if (masteredCount > 0) {
+            const setScore = (masteredCount / 50) * 100;
+            totalPassProbability += setScore * (WEIGHT_PER_COMPONENT / 100);
+          }
+        }
+
+        // CDL Practice tests (IDs 101–112 stored under state 'CDL')
+        for (let testNum = 1; testNum <= 12; testNum++) {
+          const cdlTestId = 100 + testNum;
+          const attempt = cdlAttempts.find((a) => a.testNumber === cdlTestId);
           if (attempt) {
             const testScore = (attempt.bestScore / 50) * 100;
             totalPassProbability += testScore * (WEIGHT_PER_COMPONENT / 100);
@@ -810,7 +890,9 @@ export const useStore = create<AppState>()(
       isTrainingSetUnlocked: (setId: number) => {
         // All training sets require onboarding completion
         if (!get().isOnboardingComplete()) return false;
-        // Set 4 requires premium
+        // CDL sets (101+) are all free
+        if (setId >= 101) return true;
+        // DMV Set 4 requires premium
         if (setId === 4 && !get().hasPremiumAccess()) return false;
         return true;
       },

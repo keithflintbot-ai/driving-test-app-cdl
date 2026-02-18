@@ -53,12 +53,12 @@ export default function OnboardingSelectStatePage() {
 
   return (
     <div className="bg-white relative min-h-[80vh] flex items-center justify-center px-4">
-      <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-orange-50 to-white pointer-events-none" />
+      <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-brand-light to-white pointer-events-none" />
       <div className="relative text-center space-y-8">
         <div className="flex flex-wrap items-center justify-center gap-2 text-2xl md:text-3xl font-medium text-gray-800">
           <span>{t("onboarding.iNeedToPass")}</span>
           <Select onValueChange={setSelectedState} value={selectedState || undefined}>
-            <SelectTrigger className="w-auto inline-flex text-2xl md:text-3xl font-semibold text-orange-600 border-none shadow-none focus:ring-0 focus:ring-offset-0 px-1 underline decoration-orange-300 decoration-2 underline-offset-4 hover:decoration-orange-500 h-auto">
+            <SelectTrigger className="w-auto inline-flex text-2xl md:text-3xl font-semibold text-brand border-none shadow-none focus:ring-0 focus:ring-offset-0 px-1 underline decoration-brand-border decoration-2 underline-offset-4 hover:decoration-brand h-auto">
               <SelectValue placeholder={t("onboarding.selectLocation")} />
             </SelectTrigger>
             <SelectContent>
@@ -82,7 +82,7 @@ export default function OnboardingSelectStatePage() {
 
         <div className="text-center text-sm text-gray-600">
           {t("common.alreadyHaveAccount")}{" "}
-          <Link href="/login" className="text-orange-600 hover:underline font-semibold">
+          <Link href="/login" className="text-brand hover:underline font-semibold">
             {t("common.logIn")}
           </Link>
         </div>

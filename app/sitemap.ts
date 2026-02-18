@@ -46,5 +46,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  return [...corePages, ...stateDmvPages, ...stateDmvPagesEs, ...spanishIndexPage];
+  // CDL pages
+  const cdlPages: MetadataRoute.Sitemap = [
+    {
+      url: `${siteUrl}/cdl-practice-test`,
+      lastModified: new Date("2026-02-17"),
+      changeFrequency: "weekly" as const,
+      priority: 0.9,
+    },
+  ];
+
+  return [...corePages, ...cdlPages, ...stateDmvPages, ...stateDmvPagesEs, ...spanishIndexPage];
 }

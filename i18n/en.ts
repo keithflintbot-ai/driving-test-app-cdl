@@ -113,6 +113,7 @@ export const en = {
 
   // Question categories (human-friendly display names)
   categories: {
+    // DMV categories
     gdlLicensing: "Licensing & Permits",
     stateUnique: "State Laws",
     duiStateLaws: "DUI & State Laws",
@@ -128,6 +129,19 @@ export const en = {
     duiBac: "DUI & BAC",
     seatbeltPhone: "Seatbelt & Phone",
     pointsPenalties: "Points & Penalties",
+    // CDL categories
+    alcoholDrugs: "Alcohol & Drugs",
+    basicControl: "Basic Vehicle Control",
+    brakingSystems: "Braking Systems",
+    cargoHandling: "Cargo Handling",
+    emergencyProcedures: "Emergency Procedures",
+    hazardPerception: "Hazard Perception",
+    mountainDriving: "Mountain Driving",
+    nightDriving: "Night Driving",
+    railroadCrossings: "Railroad Crossings",
+    vehicleInspection: "Vehicle Inspection",
+    vehicleSystems: "Vehicle Systems",
+    weatherDriving: "Weather Driving",
   } as Record<string, string>,
 
   // Training set names

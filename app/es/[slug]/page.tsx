@@ -200,7 +200,7 @@ export default async function SpanishStateDMVPage({ params }: PageProps) {
 
   return (
     <div className="min-h-screen bg-white relative">
-      <div className="absolute inset-x-0 top-0 h-72 bg-gradient-to-b from-orange-50 to-white pointer-events-none" />
+      <div className="absolute inset-x-0 top-0 h-72 bg-gradient-to-b from-brand-light to-white pointer-events-none" />
 
       <script
         type="application/ld+json"
@@ -216,7 +216,7 @@ export default async function SpanishStateDMVPage({ params }: PageProps) {
         <nav className="text-sm text-gray-500 mb-6" aria-label="Breadcrumb">
           <ol className="flex items-center gap-1 flex-wrap">
             <li>
-              <Link href="/" className="hover:text-orange-600">
+              <Link href="/" className="hover:text-brand">
                 Inicio
               </Link>
             </li>
@@ -226,7 +226,7 @@ export default async function SpanishStateDMVPage({ params }: PageProps) {
             <li>
               <Link
                 href="/es/examenes-practica-por-estado"
-                className="hover:text-orange-600"
+                className="hover:text-brand"
               >
                 Exámenes por Estado
               </Link>
@@ -260,9 +260,9 @@ export default async function SpanishStateDMVPage({ params }: PageProps) {
 
         {/* State Stats Cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-          <Card className="bg-gradient-to-br from-orange-50 to-amber-50 border-orange-200">
+          <Card className="bg-gradient-to-br from-brand-light to-brand-gradient-to border-brand-border-light">
             <CardContent className="p-4 md:p-6 text-center">
-              <FileText className="h-6 w-6 md:h-8 md:w-8 text-orange-600 mx-auto mb-2" />
+              <FileText className="h-6 w-6 md:h-8 md:w-8 text-brand mx-auto mb-2" />
               <div className="text-2xl md:text-3xl font-bold text-gray-900 mb-1">
                 {state.writtenTestQuestions}
               </div>
@@ -270,9 +270,9 @@ export default async function SpanishStateDMVPage({ params }: PageProps) {
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-orange-50 to-amber-50 border-orange-200">
+          <Card className="bg-gradient-to-br from-brand-light to-brand-gradient-to border-brand-border-light">
             <CardContent className="p-4 md:p-6 text-center">
-              <Target className="h-6 w-6 md:h-8 md:w-8 text-orange-600 mx-auto mb-2" />
+              <Target className="h-6 w-6 md:h-8 md:w-8 text-brand mx-auto mb-2" />
               <div className="text-2xl md:text-3xl font-bold text-gray-900 mb-1">
                 {state.passingScore}%
               </div>
@@ -280,9 +280,9 @@ export default async function SpanishStateDMVPage({ params }: PageProps) {
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-orange-50 to-amber-50 border-orange-200">
+          <Card className="bg-gradient-to-br from-brand-light to-brand-gradient-to border-brand-border-light">
             <CardContent className="p-4 md:p-6 text-center">
-              <Clock className="h-6 w-6 md:h-8 md:w-8 text-orange-600 mx-auto mb-2" />
+              <Clock className="h-6 w-6 md:h-8 md:w-8 text-brand mx-auto mb-2" />
               <div className="text-2xl md:text-3xl font-bold text-gray-900 mb-1">
                 {state.minPermitAge}
               </div>
@@ -290,9 +290,9 @@ export default async function SpanishStateDMVPage({ params }: PageProps) {
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-orange-50 to-amber-50 border-orange-200">
+          <Card className="bg-gradient-to-br from-brand-light to-brand-gradient-to border-brand-border-light">
             <CardContent className="p-4 md:p-6 text-center">
-              <AlertCircle className="h-6 w-6 md:h-8 md:w-8 text-orange-600 mx-auto mb-2" />
+              <AlertCircle className="h-6 w-6 md:h-8 md:w-8 text-brand mx-auto mb-2" />
               <div className="text-2xl md:text-3xl font-bold text-gray-900 mb-1">
                 {rawPassing}/{state.writtenTestQuestions}
               </div>
@@ -378,7 +378,7 @@ export default async function SpanishStateDMVPage({ params }: PageProps) {
                   href={landingInfo.handbookUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-orange-600 hover:text-orange-700 font-medium"
+                  className="inline-flex items-center gap-2 text-brand hover:text-brand-dark font-medium"
                 >
                   <BookOpen className="h-4 w-4" />
                   Descargar el {landingInfo.handbookName}
@@ -438,18 +438,18 @@ export default async function SpanishStateDMVPage({ params }: PageProps) {
         </Card>
 
         {/* CTA Banner */}
-        <div className="text-center bg-gradient-to-br from-orange-600 to-orange-700 rounded-2xl p-8 md:p-12 mb-12">
+        <div className="text-center bg-gradient-to-br from-brand to-brand-hover rounded-2xl p-8 md:p-12 mb-12">
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
             ¿Listo para Aprobar tu Examen del DMV de {state.name}?
           </h2>
-          <p className="text-orange-100 text-lg mb-6">
+          <p className="text-brand-light text-lg mb-6">
             Únete a miles de conductores de {state.name} que aprobaron en su
             primer intento con TigerTest
           </p>
           <Link href="/onboarding/select-state">
             <Button
               size="lg"
-              className="text-lg px-8 py-6 bg-white text-orange-700 hover:bg-gray-100 font-bold rounded-xl"
+              className="text-lg px-8 py-6 bg-white text-brand-dark hover:bg-gray-100 font-bold rounded-xl"
             >
               Empezar a Practicar Ahora — Es Gratis
             </Button>
@@ -506,7 +506,7 @@ export default async function SpanishStateDMVPage({ params }: PageProps) {
                     <Link
                       key={neighbor.slug}
                       href={`/es/${neighbor.slug}-examen-practica-dmv`}
-                      className="flex items-center justify-between bg-gray-50 border border-gray-200 rounded-xl p-4 hover:border-orange-300 hover:bg-orange-50 transition-colors"
+                      className="flex items-center justify-between bg-gray-50 border border-gray-200 rounded-xl p-4 hover:border-brand-border hover:bg-brand-light transition-colors"
                     >
                       <span className="font-medium text-gray-900">
                         {neighbor.name}

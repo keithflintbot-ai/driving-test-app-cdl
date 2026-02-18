@@ -46,9 +46,7 @@ export function QuestionCard({
       return "border-gray-300 opacity-50";
     }
 
-    // During test - use active for touch feedback, hover only on desktop
-    // The [@media(hover:hover)] prefix ensures hover only applies on devices with true hover support
-    return "border-gray-300 [@media(hover:hover)]:hover:border-orange-500 [@media(hover:hover)]:hover:bg-orange-50 active:border-orange-500 active:bg-orange-50 cursor-pointer";
+    return "border-gray-300 [@media(hover:hover)]:hover:border-brand [@media(hover:hover)]:hover:bg-brand-light active:border-brand active:bg-brand-light cursor-pointer";
   };
 
   return (
@@ -90,9 +88,9 @@ export function QuestionCard({
         </div>
 
         {showResult && (
-          <div className="mt-6 p-4 bg-orange-50 border border-orange-200 rounded-lg">
-            <div className="font-semibold text-orange-900 mb-2">{t("questionCard.explanation")}</div>
-            <div className="text-orange-800">{question.explanation}</div>
+          <div className="mt-6 p-4 border rounded-lg bg-brand-light border-brand-border-light">
+            <div className="font-semibold mb-2 text-brand-darker">{t("questionCard.explanation")}</div>
+            <div className="text-brand-dark">{question.explanation}</div>
           </div>
         )}
       </CardContent>

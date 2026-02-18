@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
-import { Header } from "@/components/Header";
+import { HeaderSwitch } from "@/components/HeaderSwitch";
 import { Footer } from "@/components/Footer";
 import { Providers } from "@/components/Providers";
 
@@ -82,7 +82,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="antialiased flex flex-col min-h-screen">
         <Providers>
-          <Header />
+          <HeaderSwitch />
           <main className="flex-1">{children}</main>
           <Footer />
         </Providers>

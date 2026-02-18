@@ -178,7 +178,7 @@ export default function AdminPage() {
   if (authLoading || loading) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500" />
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand" />
       </div>
     );
   }
@@ -223,7 +223,7 @@ export default function AdminPage() {
           <Card>
             <CardContent className="p-6">
               <div className="flex items-center gap-4">
-                <Users className="h-8 w-8 text-orange-500" />
+                <Users className="h-8 w-8 text-brand" />
                 <div>
                   <p className="text-2xl font-bold">{stats?.totalUsers || 0}</p>
                   <p className="text-sm text-gray-500">Total Users</p>
@@ -358,10 +358,10 @@ export default function AdminPage() {
                 {sortedStateCounts.map(({ code, name, count }) => (
                   <div
                     key={code}
-                    className="inline-flex items-center gap-2 px-3 py-1.5 bg-orange-100 text-orange-800 rounded-full text-sm"
+                    className="inline-flex items-center gap-2 px-3 py-1.5 bg-brand-light text-brand-dark rounded-full text-sm"
                   >
                     <span className="font-medium">{name}</span>
-                    <span className="bg-orange-200 px-2 py-0.5 rounded-full text-xs font-bold">
+                    <span className="bg-brand-border-light px-2 py-0.5 rounded-full text-xs font-bold">
                       {count}
                     </span>
                   </div>

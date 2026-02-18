@@ -103,7 +103,7 @@ export default function SettingsPage() {
 
   return (
     <div className="min-h-screen bg-white relative">
-      <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-orange-50 to-white pointer-events-none" />
+      <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-brand-light to-white pointer-events-none" />
       <div className="relative container mx-auto px-4 py-8 max-w-6xl">
         {/* Header */}
         <div className="mb-8">
@@ -130,7 +130,7 @@ export default function SettingsPage() {
               <div className="space-y-4">
                 <div>
                   <div className="text-sm text-gray-600 mb-2">{t("settings.currentlyPracticingFor")}</div>
-                  <div className="text-2xl font-bold text-orange-600 mb-4">
+                  <div className="text-2xl font-bold text-brand mb-4">
                     {currentStateName}
                   </div>
                 </div>
@@ -151,7 +151,7 @@ export default function SettingsPage() {
                     ))}
                   </select>
                   <p className="text-xs text-gray-500 mt-2">
-                    <strong className="text-orange-600">Warning:</strong> {t("settings.switchStateWarning")}
+                    <strong className="text-brand">Warning:</strong> {t("settings.switchStateWarning")}
                   </p>
                 </div>
               </div>
@@ -243,7 +243,7 @@ export default function SettingsPage() {
       <Dialog open={stateChangeDialog} onOpenChange={setStateChangeDialog}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2 text-orange-600">
+            <DialogTitle className="flex items-center gap-2 text-brand">
               <AlertTriangle className="h-5 w-5" />
               {t("settings.switchState")}
             </DialogTitle>
@@ -252,7 +252,7 @@ export default function SettingsPage() {
                 {t("settings.switchStateConfirm")} {currentStateName} {t("settings.to")} {pendingStateName}.
               </p>
               <p className="text-gray-700">
-                <strong className="text-orange-600">{t("settings.switchStateWarningDetail")}</strong> {currentStateName} {t("settings.willNotBeSaved")} {t("settings.willBePermanentlyLost")}. {t("settings.thisIncludes")}
+                <strong className="text-brand">{t("settings.switchStateWarningDetail")}</strong> {currentStateName} {t("settings.willNotBeSaved")} {t("settings.willBePermanentlyLost")}. {t("settings.thisIncludes")}
               </p>
               <ul className="list-disc list-inside space-y-1 text-gray-700 ml-2">
                 <li>{t("settings.allTestScores")}</li>

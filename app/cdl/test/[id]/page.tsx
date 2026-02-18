@@ -8,26 +8,26 @@ import { Progress } from "@/components/ui/progress";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import { generateTest, shuffleQuestionOptions } from "@/lib/testGenerator";
+import { generateCDLTest } from "@/lib/cdlTestGenerator";
+import { shuffleQuestionOptions } from "@/lib/testGenerator";
 import { Question } from "@/types";
 import { useStore } from "@/store/useStore";
 import { useHydration } from "@/hooks/useHydration";
 import { useTranslation } from "@/contexts/LanguageContext";
 
-export default function TestPage() {
+
+function CDLTestPageContent() {
   const params = useParams();
   const router = useRouter();
   const testId = parseInt(params.id as string);
   const hydrated = useHydration();
   const initialized = useRef(false);
-  const { t, language } = useTranslation();
+  const { t } = useTranslation();
 
-  const selectedState = useStore((state) => state.selectedState);
   const getCurrentTest = useStore((state) => state.getCurrentTest);
   const startTest = useStore((state) => state.startTest);
   const setAnswer = useStore((state) => state.setAnswer);
   const completeTest = useStore((state) => state.completeTest);
-  const isTestUnlocked = useStore((state) => state.isTestUnlocked);
 
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -47,15 +47,13 @@ export default function TestPage() {
       return; // Wait for hydration or already initialized
     }
 
-    // Check if test is unlocked
-    if (!isTestUnlocked(testId)) {
-      router.push("/dashboard");
+    // Validate test ID range (101-112)
+    if (testId < 101 || testId > 112) {
+      router.push("/cdl/dashboard");
       return;
     }
 
     try {
-      const state = selectedState || "CA";
-
       // Check if we have a saved test session for this test
       const savedTest = getCurrentTest(testId);
       if (savedTest && savedTest.questions.length > 0) {
@@ -76,8 +74,9 @@ export default function TestPage() {
           setCurrentQuestionIndex(savedTest.questions.length - 1);
         }
       } else {
-        // Generate new test
-        const testQuestions = generateTest(testId, state, language).map(shuffleQuestionOptions);
+        // Generate new test - convert testId to actual CDL test number (101->1, 102->2, etc.)
+        const cdlTestNumber = testId - 100;
+        const testQuestions = generateCDLTest(cdlTestNumber).map(shuffleQuestionOptions);
         setQuestions(testQuestions);
         startTest(testId, testQuestions);
       }
@@ -85,10 +84,10 @@ export default function TestPage() {
       initialized.current = true;
       setLoading(false);
     } catch (error) {
-      console.error("Error loading questions:", error);
+      console.error("Error loading CDL questions:", error);
       setLoading(false);
     }
-  }, [hydrated, testId, selectedState, getCurrentTest, startTest, isTestUnlocked, router]);
+  }, [hydrated, testId, getCurrentTest, startTest, router]);
 
   const currentQuestion = questions[currentQuestionIndex];
   const totalQuestions = questions.length;
@@ -119,7 +118,7 @@ export default function TestPage() {
           }
         });
         completeTest(testId, correctCount, questions, updatedAnswers);
-        router.push(`/test/${testId}/results`);
+        router.push(`/cdl/test/${testId}/results`);
       }
     }, 300);
   };
@@ -137,7 +136,7 @@ export default function TestPage() {
     completeTest(testId, correctCount, questions, answers);
 
     // Navigate to results page with score
-    router.push(`/test/${testId}/results`);
+    router.push(`/cdl/test/${testId}/results`);
   };
 
   const canSubmit = answeredCount === totalQuestions;
@@ -160,8 +159,8 @@ export default function TestPage() {
           <CardContent className="p-8 text-center">
             <div className="text-xl font-semibold mb-2">{t("testPage.noQuestionsAvailable")}</div>
             <div className="text-gray-600 mb-4">{t("testPage.unableToLoad")}</div>
-            <Button className="bg-black text-white hover:bg-gray-800" onClick={() => router.push("/dashboard")}>
-              {t("common.backToDashboard")}
+            <Button className="bg-black text-white hover:bg-gray-800" onClick={() => router.push("/cdl/dashboard")}>
+              Back to CDL Dashboard
             </Button>
           </CardContent>
         </Card>
@@ -174,10 +173,10 @@ export default function TestPage() {
       <div className="container mx-auto px-4 py-8 max-w-6xl">
         {/* Back Button */}
         <div className="mb-6">
-          <Link href="/dashboard">
+          <Link href="/cdl/dashboard">
             <Button variant="ghost" className="mb-4">
               <ArrowLeft className="h-4 w-4 mr-2" />
-              {t("common.backToDashboard")}
+              Back to CDL Dashboard
             </Button>
           </Link>
         </div>
@@ -185,7 +184,7 @@ export default function TestPage() {
         {/* Header */}
         <div className="mb-6">
           <div className="flex items-center justify-between mb-4">
-            <h1 className="text-3xl font-bold">{t("testCard.test")} {testId}</h1>
+            <h1 className="text-3xl font-bold">CDL Test {testId}</h1>
             <div className="text-sm text-gray-600">
               {answeredCount} {t("questionCard.of")} {totalQuestions} {t("testPage.answered")}
             </div>
@@ -242,5 +241,12 @@ export default function TestPage() {
         </div>
       </div>
     </div>
+  );
+}
+export default function CDLTestPage() {
+  return (
+    
+      <CDLTestPageContent />
+    
   );
 }
