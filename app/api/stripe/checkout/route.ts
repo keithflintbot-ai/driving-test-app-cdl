@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getStripe, PREMIUM_PRICE_ID, PREMIUM_PRODUCT } from '@/lib/stripe';
-import { db } from '@/lib/firebase';
-import { doc, getDoc } from 'firebase/firestore';
-import type Stripe from 'stripe';
+import { getAdminDb, getAdminAuth } from '@/lib/firebase-admin';
 
 export async function POST(request: NextRequest) {
   try {
@@ -14,20 +12,30 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Verify Firebase auth token
+    const authHeader = request.headers.get('authorization');
+    if (!authHeader?.startsWith('Bearer ')) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+    const token = authHeader.split('Bearer ')[1];
+    const decodedToken = await getAdminAuth().verifyIdToken(token);
+
     const body = await request.json();
-    const { userId, email, returnUrl } = body;
+    const { email, returnUrl } = body;
+    const userId = decodedToken.uid;
 
     // Validate required fields
-    if (!userId || !email) {
+    if (!email) {
       return NextResponse.json(
-        { error: 'Missing required fields: userId and email' },
+        { error: 'Missing required field: email' },
         { status: 400 }
       );
     }
 
     // Check if user already has premium
-    const userDoc = await getDoc(doc(db, 'users', userId));
-    if (userDoc.exists()) {
+    const adminDb = getAdminDb();
+    const userDoc = await adminDb.collection('users').doc(userId).get();
+    if (userDoc.exists) {
       const userData = userDoc.data();
       if (userData?.subscription?.isPremium) {
         return NextResponse.json(
@@ -39,46 +47,55 @@ export async function POST(request: NextRequest) {
 
     const stripe = getStripe();
 
+    // Create or retrieve Stripe customer
+    let customerId: string;
+    const existingCustomers = await stripe.customers.list({
+      email,
+      limit: 1,
+    });
+
+    if (existingCustomers.data.length > 0) {
+      customerId = existingCustomers.data[0].id;
+    } else {
+      const customer = await stripe.customers.create({
+        email,
+        metadata: {
+          firebaseUserId: userId,
+        },
+      });
+      customerId = customer.id;
+    }
+
     // Determine the base URL for redirects
     const baseUrl = returnUrl || process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
 
-    // Build checkout session params (simplified - no customer management needed)
-    const sessionParams: Stripe.Checkout.SessionCreateParams = {
+    // Create Checkout Session
+    const session = await stripe.checkout.sessions.create({
+      customer: customerId,
       mode: 'payment',
-      customer_email: email,
+      payment_method_types: ['card'],
+      line_items: [
+        PREMIUM_PRICE_ID
+          ? { price: PREMIUM_PRICE_ID, quantity: 1 }
+          : {
+              price_data: {
+                currency: 'usd',
+                unit_amount: PREMIUM_PRODUCT.price,
+                product_data: {
+                  name: PREMIUM_PRODUCT.name,
+                  description: PREMIUM_PRODUCT.description,
+                },
+              },
+              quantity: 1,
+            },
+      ],
       success_url: `${baseUrl}/dashboard?session_id={CHECKOUT_SESSION_ID}&success=true`,
       cancel_url: `${baseUrl}/dashboard?canceled=true`,
       metadata: {
         userId,
         email,
       },
-      line_items: [
-        {
-          price_data: {
-            currency: 'usd',
-            unit_amount: PREMIUM_PRODUCT.price,
-            product_data: {
-              name: PREMIUM_PRODUCT.name,
-              description: PREMIUM_PRODUCT.description,
-            },
-          },
-          quantity: 1,
-        },
-      ],
-    };
-
-    // If a valid Stripe price ID is configured, use that instead
-    if (PREMIUM_PRICE_ID && PREMIUM_PRICE_ID.startsWith('price_')) {
-      sessionParams.line_items = [
-        {
-          price: PREMIUM_PRICE_ID,
-          quantity: 1,
-        },
-      ];
-    }
-
-    // Create Checkout Session
-    const session = await stripe.checkout.sessions.create(sessionParams);
+    });
 
     return NextResponse.json({ checkoutUrl: session.url });
   } catch (error) {

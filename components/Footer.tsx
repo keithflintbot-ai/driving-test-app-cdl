@@ -1,33 +1,87 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useTranslation } from "@/contexts/LanguageContext";
+import { states } from "@/data/states";
+
+const popularStateSlugs = [
+  "california", "texas", "florida", "new-york", "pennsylvania",
+  "illinois", "ohio", "georgia", "north-carolina", "michigan",
+  "new-jersey", "virginia", "washington", "arizona", "massachusetts",
+];
+
+const popularStates = popularStateSlugs
+  .map((slug) => states.find((s) => s.slug === slug))
+  .filter(Boolean);
 
 export function Footer() {
+  const { t, language } = useTranslation();
+  const pathname = usePathname();
+  const isEs = language === "es";
+  const isCDL = pathname?.startsWith("/cdl") || pathname === "/cdl-practice-test";
+
+  const dataTheme = isCDL ? "cdl" : undefined;
+
   return (
-    <footer className="border-t bg-gray-50 mt-auto">
+    <footer className="border-t bg-gray-50 mt-auto" data-theme={dataTheme}>
       <div className="container mx-auto px-4 py-6">
-        <p className="text-center text-sm text-gray-600">
-          This site was made with AI and{" "}
+        {!isCDL && (
+          <div className="flex flex-wrap justify-center gap-x-3 gap-y-1 text-sm text-gray-500">
+            {popularStates.map(
+              (state) =>
+                state && (
+                  <Link
+                    key={state.slug}
+                    href={
+                      isEs
+                        ? `/es/${state.slug}-examen-practica-dmv`
+                        : `/${state.slug}-dmv-practice-test`
+                    }
+                    className="hover:text-brand"
+                  >
+                    {state.name}
+                  </Link>
+                )
+            )}
+            <Link
+              href={
+                isEs
+                  ? "/es/examenes-practica-por-estado"
+                  : "/practice-tests-by-state"
+              }
+              className="text-brand hover:text-brand-dark font-medium"
+            >
+              {t("footer.allStates")}
+            </Link>
+          </div>
+        )}
+        <p className={`text-center text-sm text-gray-600 ${isCDL ? "" : "mt-4"}`}>
+          {t("footer.madeWith")}{" "}
           <span className="text-red-500" aria-label="love">
             ❤️
           </span>{" "}
-          by{" "}
+          {t("footer.by")}{" "}
           <a
-            href="https://account.venmo.com/u/brophenator"
+            href="https://x.com/JohnBr0"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-orange-600 hover:text-orange-700 font-medium hover:underline"
+            className="text-brand hover:text-brand-dark font-medium hover:underline"
           >
-            @brophenator
+            @JohnBr0
           </a>
-          . Consider a donation or{" "}
+          .
+        </p>
+        <p className="text-center text-sm text-gray-600 mt-1">
           <a
             href="https://www.johnbrophy.net/contact"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-orange-600 hover:text-orange-700 font-medium hover:underline"
+            className="text-brand hover:text-brand-dark font-medium hover:underline"
           >
-            send me
+            {t("footer.sendMe")}
           </a>{" "}
-          a quote for the homepage if you pass!
+          {t("footer.quoteIfPass")}
         </p>
       </div>
     </footer>

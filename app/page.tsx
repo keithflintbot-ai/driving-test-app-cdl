@@ -1,83 +1,28 @@
-"use client";
-
+import { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
 import { Smartphone, Monitor } from "lucide-react";
-import { useAuth } from "@/contexts/AuthContext";
-import { useStore } from "@/store/useStore";
+import { states } from "@/data/states";
+import { HomeHero, HomeCTA } from "@/components/HomeHero";
+import { T } from "@/components/T";
 
-const allPhrases = [
-  "in bed",
-  "while watching TV",
-  "on the toilet",
-  "in the waiting room",
-  "on your lunch break",
-  "the night before",
-  "in line at the grocery store",
-  "during a commercial break",
-  "between meetings",
-  "on the train",
-  "in the back of an Uber",
-  "while dinner's in the oven",
-  "while brushing your teeth",
-  "when you should be working",
-  "on the treadmill",
-  "when you can't sleep",
-];
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://tigertest.io";
 
-function shuffleArray<T>(array: T[]): T[] {
-  const shuffled = [...array];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-  return shuffled;
-}
-
-function useTypewriter(phrases: string[], typingSpeed = 80, deletingSpeed = 50, pauseDuration = 2000) {
-  const [shuffledPhrases] = useState(() => shuffleArray(phrases));
-  const [displayText, setDisplayText] = useState("");
-  const [phraseIndex, setPhraseIndex] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
-
-  useEffect(() => {
-    const currentPhrase = shuffledPhrases[phraseIndex];
-
-    const timeout = setTimeout(() => {
-      if (!isDeleting) {
-        if (displayText.length < currentPhrase.length) {
-          setDisplayText(currentPhrase.slice(0, displayText.length + 1));
-        } else {
-          setTimeout(() => setIsDeleting(true), pauseDuration);
-        }
-      } else {
-        if (displayText.length > 0) {
-          setDisplayText(displayText.slice(0, -1));
-        } else {
-          setIsDeleting(false);
-          setPhraseIndex((prev) => (prev + 1) % shuffledPhrases.length);
-        }
-      }
-    }, isDeleting ? deletingSpeed : typingSpeed);
-
-    return () => clearTimeout(timeout);
-  }, [displayText, isDeleting, phraseIndex, shuffledPhrases, typingSpeed, deletingSpeed, pauseDuration]);
-
-  return displayText;
-}
+export const metadata: Metadata = {
+  alternates: {
+    canonical: siteUrl,
+  },
+};
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "WebApplication",
-      name: "TigerTest - US Driving Test Practice",
+      name: "TigerTest - Free DMV Practice Tests",
       description:
         "Pass your US driving knowledge test with 200 state-specific practice questions. Free training mode, practice tests, and detailed analytics for all 50 states.",
-      url: "https://tigertest.io",
+      url: siteUrl,
       applicationCategory: "EducationalApplication",
       operatingSystem: "Any",
       offers: {
@@ -97,8 +42,8 @@ const jsonLd = {
     {
       "@type": "Organization",
       name: "TigerTest",
-      url: "https://tigertest.io",
-      logo: "https://tigertest.io/tiger.png",
+      url: siteUrl,
+      logo: `${siteUrl}/tiger.png`,
     },
     {
       "@type": "FAQPage",
@@ -108,15 +53,15 @@ const jsonLd = {
           name: "How many questions are on the DMV written test?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Most states have between 20-50 questions on the DMV written test. TigerTest offers 200 practice questions per state so you're fully prepared.",
+            text: "Most states have between 20-50 questions on the DMV written test. TigerTest offers 200 practice questions per state so you're fully prepared for every possible question topic.",
           },
         },
         {
           "@type": "Question",
-          name: "Is TigerTest really free?",
+          name: "Can I use TigerTest for free?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Yes, TigerTest is 100% free forever. All 50 states, all questions, no premium tiers or hidden costs.",
+            text: "Yes! You can take practice tests and train with questions for free across all 50 states.",
           },
         },
         {
@@ -124,7 +69,15 @@ const jsonLd = {
           name: "What score do I need to pass the DMV test?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Most states require a score of 80% or higher to pass. TigerTest tracks your progress and shows your pass probability as you practice.",
+            text: "Most states require a score of 80% or higher to pass. Some states like New York require only 70%, while states like Idaho and Maryland require 85%. TigerTest tracks your progress and shows your pass probability as you practice.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How should I study for the DMV permit test?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Start with TigerTest's training mode to learn questions with instant feedback. Once you feel confident, take practice tests to simulate the real exam. Most users pass after completing all 4 training sets and scoring 80%+ on practice tests.",
           },
         },
       ],
@@ -132,18 +85,18 @@ const jsonLd = {
   ],
 };
 
+// Popular states for the grid
+const popularStateSlugs = [
+  "california", "texas", "florida", "new-york", "pennsylvania",
+  "illinois", "ohio", "georgia", "north-carolina", "michigan",
+  "new-jersey", "virginia",
+];
+
+const popularStates = popularStateSlugs
+  .map((slug) => states.find((s) => s.slug === slug))
+  .filter(Boolean);
+
 export default function Home() {
-  const { user, loading } = useAuth();
-  const router = useRouter();
-  const startGuestSession = useStore((state) => state.startGuestSession);
-  const isGuest = useStore((state) => state.isGuest);
-  const animatedText = useTypewriter(allPhrases);
-
-  const handleTryFree = () => {
-    startGuestSession();
-    router.push("/onboarding/select-state");
-  };
-
   return (
     <div className="min-h-screen bg-white">
       <script
@@ -153,93 +106,32 @@ export default function Home() {
 
       {/* Hero Section */}
       <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-orange-50 to-white pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-brand-light to-white pointer-events-none" />
         <div className="relative max-w-4xl mx-auto px-6 pt-16 pb-20 md:pt-24 md:pb-28 text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 tracking-tight min-h-[10rem] md:min-h-[7rem] lg:min-h-[8rem]">
-            The DMV app for studying{" "}
-            <span className="text-orange-600">{animatedText}</span>
-            <span className="animate-pulse">|</span>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 tracking-tight">
+            <T k="landing.heroTitle">Free DMV Practice Tests for All 50 States</T>
           </h1>
-          <p className="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
-            200 state-specific questions. Tuned for mobile. No account needed.
-          </p>
-
-          {!loading && (
-            <>
-              {user || isGuest ? (
-                <Link href="/dashboard">
-                  <Button className="bg-gray-900 text-white hover:bg-gray-800 px-8 py-6 text-lg rounded-full">
-                    Go to Dashboard
-                  </Button>
-                </Link>
-              ) : (
-                <div className="flex flex-col items-center gap-3">
-                  <Link href="/signup">
-                    <Button className="bg-gray-900 text-white hover:bg-gray-800 px-8 py-6 text-lg rounded-full">
-                      Start practicing
-                    </Button>
-                  </Link>
-                  <button
-                    onClick={handleTryFree}
-                    className="text-sm text-gray-500 hover:text-gray-700 underline"
-                  >
-                    Try it first
-                  </button>
-                </div>
-              )}
-            </>
-          )}
-
-          {/* Product Screenshots */}
-          <div className="mt-16 flex flex-col md:flex-row items-center justify-center gap-8">
-            {/* Mobile Screenshot */}
-            <div className="relative">
-              <div className="rounded-2xl shadow-2xl overflow-hidden border border-gray-200 bg-white">
-                <Image
-                  src="/mobile.png"
-                  alt="TigerTest mobile training mode"
-                  width={280}
-                  height={560}
-                  className="w-[200px] md:w-[240px]"
-                />
-              </div>
-              <p className="text-sm text-gray-500 mt-6 text-center">Train on mobile</p>
-            </div>
-
-            {/* Desktop Screenshot */}
-            <div className="relative">
-              <div className="rounded-2xl shadow-2xl overflow-hidden border border-gray-200 bg-white">
-                <Image
-                  src="/desktop.png"
-                  alt="TigerTest desktop practice test"
-                  width={700}
-                  height={480}
-                  className="w-[320px] md:w-[500px]"
-                />
-              </div>
-              <p className="text-sm text-gray-500 mt-6 text-center">Test on desktop</p>
-            </div>
-          </div>
+          <HomeHero />
         </div>
       </div>
 
       {/* How it works */}
       <div className="max-w-5xl mx-auto px-6 pt-8 pb-16 md:pt-12 md:pb-24">
         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-16">
-          How it works
+          <T k="landing.howItWorks">How It Works</T>
         </h2>
 
         <div className="grid md:grid-cols-2 gap-8 md:gap-12">
           <div className="relative pt-8">
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-16 bg-white border-2 border-orange-200 rounded-full flex items-center justify-center shadow-sm">
-              <Smartphone className="w-7 h-7 text-orange-500" />
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-16 bg-white border-2 border-brand-border-light rounded-full flex items-center justify-center shadow-sm">
+              <Smartphone className="w-7 h-7 text-brand" />
             </div>
             <div className="bg-gray-50 rounded-2xl p-8 pt-12 text-center">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                Training mode
+                <T k="landing.trainingMode">Training Mode</T>
               </h3>
               <p className="text-gray-600">
-                Learn the questions on your phone while you&apos;re in bed, on the couch, or waiting around. Instant feedback after each answer helps you memorize faster.
+                <T k="landing.trainingModeDesc">Learn the questions on your phone while you&apos;re in bed, on the couch, or waiting around. Instant feedback after each answer helps you memorize faster.</T>
               </p>
             </div>
           </div>
@@ -250,21 +142,21 @@ export default function Home() {
             </div>
             <div className="bg-gray-50 rounded-2xl p-8 pt-12 text-center">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                Practice tests
+                <T k="landing.practiceTests">Practice Tests</T>
               </h3>
               <p className="text-gray-600">
-                When you&apos;re ready, take a full 50-question test. Sit down, focus, and simulate the real exam - just like you&apos;ll do at the DMV.
+                <T k="landing.practiceTestsDesc">When you&apos;re ready, take a full 50-question test. Sit down, focus, and simulate the real exam — just like you&apos;ll do at the DMV.</T>
               </p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Testimonial 2 */}
+      {/* Testimonial */}
       <div className="bg-gray-50 py-12">
         <div className="max-w-2xl mx-auto px-6 text-center">
           <p className="text-xl md:text-2xl text-gray-700 italic mb-4">
-            &quot;felt confident after just studying the previous day&quot;
+            &quot;<T k="landing.testimonial1">felt confident after just studying the previous day</T>&quot;
           </p>
           <p className="text-gray-500 text-sm">JayjayX12</p>
         </div>
@@ -275,19 +167,19 @@ export default function Home() {
         <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16">
           <div className="flex-1">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-              Questions written for your state,<br className="hidden sm:block" /> not generic filler
+              <T k="landing.stateSpecificTitle">Questions Written for Your State, Not Generic Filler</T>
             </h2>
             <p className="text-lg text-gray-600 mb-4">
-              Every state has different driving laws. TigerTest uses questions specific to your state&apos;s DMV handbook - the same material that&apos;s on your actual test.
+              <T k="landing.stateSpecificDesc">Every state has different driving laws. TigerTest uses questions specific to your state&apos;s DMV handbook — the same material that&apos;s on your actual test.</T>
             </p>
             <p className="text-gray-500">
-              All 50 states covered. 200 questions each.
+              <T k="landing.allStatesCovered">All 50 states covered. 200 questions each.</T>
             </p>
           </div>
           <div className="flex-shrink-0">
             <Image
               src="/tiger_face_01.png"
-              alt="Tiger mascot"
+              alt="TigerTest mascot"
               width={180}
               height={180}
               className="w-32 md:w-44"
@@ -296,11 +188,48 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Testimonial 3 */}
-      <div className="bg-gray-50 py-12">
+      {/* Choose Your State - SEO state grid */}
+      <div className="bg-gray-50 py-16 md:py-24">
+        <div className="max-w-5xl mx-auto px-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-4">
+            <T k="landing.chooseYourState">Choose Your State</T>
+          </h2>
+          <p className="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
+            <T k="landing.chooseYourStateDesc">Select your state below to start practicing with questions based on your state&apos;s official driver&apos;s manual and DMV requirements.</T>
+          </p>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+            {popularStates.map(
+              (state) =>
+                state && (
+                  <Link
+                    key={state.slug}
+                    href={`/${state.slug}-dmv-practice-test`}
+                    className="flex items-center justify-between bg-white border border-gray-200 rounded-xl p-4 hover:border-brand-border hover:bg-brand-light transition-colors"
+                  >
+                    <span className="font-medium text-gray-900 text-sm">
+                      {state.name}
+                    </span>
+                    <span className="text-xs text-gray-400">{state.writtenTestQuestions}Q</span>
+                  </Link>
+                )
+            )}
+          </div>
+          <div className="text-center mt-8">
+            <Link
+              href="/practice-tests-by-state"
+              className="text-brand hover:text-brand-dark font-medium hover:underline"
+            >
+              <T k="landing.viewAllStates">View all 50 states</T> &rarr;
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* Testimonial 2 */}
+      <div className="bg-white py-12">
         <div className="max-w-2xl mx-auto px-6 text-center">
           <p className="text-xl md:text-2xl text-gray-700 italic mb-4">
-            &quot;it really helped me prepare, and I passed my exam today&quot;
+            &quot;<T k="landing.testimonial2">it really helped me prepare, and I passed my exam today</T>&quot;
           </p>
           <p className="text-gray-500 text-sm">Big-Burrito-8765</p>
         </div>
@@ -309,10 +238,10 @@ export default function Home() {
       {/* Reddit proof section */}
       <div className="max-w-5xl mx-auto px-6 py-16 md:py-24">
         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-4">
-          Built for people who just need to pass
+          <T k="landing.builtForPeople">Built for People Who Just Need to Pass</T>
         </h2>
         <p className="text-gray-600 text-center mb-12 flex items-center justify-center gap-2">
-          From r/driving and r/DMV on
+          <T k="landing.fromReddit">From r/driving and r/DMV on</T>
           <Image
             src="/reddit.png"
             alt="Reddit"
@@ -329,22 +258,22 @@ export default function Home() {
             rel="noopener noreferrer"
             className="block bg-gray-50 border border-gray-200 rounded-xl p-6 hover:border-gray-300 transition-colors"
           >
-            <p className="text-gray-800 mb-3">&quot;Used this to help me study. Passed today! Thank you :)&quot;</p>
+            <p className="text-gray-800 mb-3">&quot;<T k="landing.testimonial3">Used this to help me study. Passed today! Thank you :)</T>&quot;</p>
             <p className="text-gray-500 text-sm">u/Naive_Usual1910</p>
           </a>
 
           <div className="bg-gray-50 border border-gray-200 rounded-xl p-6">
-            <p className="text-gray-800 mb-3">&quot;passed within seven minutes&quot;</p>
+            <p className="text-gray-800 mb-3">&quot;<T k="landing.testimonial4">passed within seven minutes</T>&quot;</p>
             <p className="text-gray-500 text-sm">vivacious-vi</p>
           </div>
 
           <div className="bg-gray-50 border border-gray-200 rounded-xl p-6">
-            <p className="text-gray-800 mb-3">&quot;it was very helpful... I passed the written test this morning&quot;</p>
+            <p className="text-gray-800 mb-3">&quot;<T k="landing.testimonial5">it was very helpful... I passed the written test this morning</T>&quot;</p>
             <p className="text-gray-500 text-sm">ideapad101</p>
           </div>
 
           <div className="bg-gray-50 border border-gray-200 rounded-xl p-6">
-            <p className="text-gray-800 mb-3">&quot;helped a lot&quot;</p>
+            <p className="text-gray-800 mb-3">&quot;<T k="landing.testimonial6">helped a lot</T>&quot;</p>
             <p className="text-gray-500 text-sm">WorthEducational523</p>
           </div>
 
@@ -354,51 +283,120 @@ export default function Home() {
             rel="noopener noreferrer"
             className="block bg-gray-50 border border-gray-200 rounded-xl p-6 hover:border-gray-300 transition-colors"
           >
-            <p className="text-gray-800 mb-3">&quot;i passed in 3 minutes&quot;</p>
+            <p className="text-gray-800 mb-3">&quot;<T k="landing.testimonial7">i passed in 3 minutes</T>&quot;</p>
             <p className="text-gray-500 text-sm">u/Curdled_Cave</p>
           </a>
 
           <div className="bg-gray-50 border border-gray-200 rounded-xl p-6">
-            <p className="text-gray-800 mb-3">&quot;felt confident after just studying the previous day&quot;</p>
+            <p className="text-gray-800 mb-3">&quot;<T k="landing.testimonial1">felt confident after just studying the previous day</T>&quot;</p>
             <p className="text-gray-500 text-sm">JayjayX12</p>
+          </div>
+        </div>
+      </div>
+
+      {/* How to Study for Your DMV Test - SEO content section */}
+      <div className="bg-gray-50 py-16 md:py-24">
+        <div className="max-w-3xl mx-auto px-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-12">
+            <T k="landing.howToPassTitle">How to Pass Your DMV Permit Test on the First Try</T>
+          </h2>
+
+          <div className="space-y-8 text-gray-600">
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                <T k="landing.howToPass1Title">1. Study Your State&apos;s Driver&apos;s Manual</T>
+              </h3>
+              <p>
+                <T k="landing.howToPass1Desc">Every state publishes an official driver&apos;s handbook covering traffic laws, road signs, and safe driving practices. This manual is the source material for all questions on the written knowledge test. TigerTest&apos;s 200 practice questions per state are based directly on this material.</T>
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                <T k="landing.howToPass2Title">2. Use Training Mode to Learn the Material</T>
+              </h3>
+              <p>
+                <T k="landing.howToPass2Desc">Start with TigerTest&apos;s training mode, which gives you instant feedback after each question. When you get a question wrong, it goes into a review queue so you see it again until you master it. Most users complete all 4 training sets in 2-3 study sessions.</T>
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                <T k="landing.howToPass3Title">3. Take Practice Tests to Build Confidence</T>
+              </h3>
+              <p>
+                <T k="landing.howToPass3Desc">Once you&apos;ve completed the training sets, take the 4 practice tests to simulate the real exam. Each test has 50 questions with the same format and time pressure you&apos;ll face at the DMV. Aim for 80% or higher on every practice test before scheduling your real exam.</T>
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                <T k="landing.howToPass4Title">4. Know What to Expect on Test Day</T>
+              </h3>
+              <p>
+                <T k="landing.howToPass4Desc">Most states administer the written knowledge test on a computer at a DMV office. The number of questions varies by state — from 20 questions in New York and Alaska to 50 questions in California, Florida, and Michigan. Passing scores range from 70% to 85% depending on your state. Bring valid identification and any required documents.</T>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* FAQ Section */}
+      <div className="max-w-3xl mx-auto px-6 py-16 md:py-24">
+        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-12">
+          <T k="landing.faqTitle">Frequently Asked Questions</T>
+        </h2>
+
+        <div className="space-y-8">
+          <div>
+            <h3 className="font-semibold text-lg text-gray-900 mb-2">
+              <T k="landing.faq1Q">How many questions are on the DMV written test?</T>
+            </h3>
+            <p className="text-gray-600">
+              <T k="landing.faq1A">Most states have between 20-50 questions on the DMV written test. TigerTest offers 200 practice questions per state so you&apos;re fully prepared for every possible question topic.</T>
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-semibold text-lg text-gray-900 mb-2">
+              <T k="landing.faq2Q">Can I use TigerTest for free?</T>
+            </h3>
+            <p className="text-gray-600">
+              <T k="landing.faq2A">Yes! You can take practice tests and train with questions for free across all 50 states.</T>
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-semibold text-lg text-gray-900 mb-2">
+              <T k="landing.faq3Q">What score do I need to pass the DMV test?</T>
+            </h3>
+            <p className="text-gray-600">
+              <T k="landing.faq3A">Most states require a score of 80% or higher to pass. Some states like New York require only 70%, while states like Idaho and Maryland require 85%. TigerTest tracks your progress and shows your pass probability as you practice.</T>
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-semibold text-lg text-gray-900 mb-2">
+              <T k="landing.faq4Q">How should I study for the DMV permit test?</T>
+            </h3>
+            <p className="text-gray-600">
+              <T k="landing.faq4A">Start with TigerTest&apos;s training mode to learn questions with instant feedback. Once you feel confident, take practice tests to simulate the real exam. Most users pass after completing all 4 training sets and scoring 80%+ on practice tests.</T>
+            </p>
           </div>
         </div>
       </div>
 
       {/* Final CTA */}
       <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-t from-orange-50 to-white pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-brand-light to-white pointer-events-none" />
         <div className="relative max-w-4xl mx-auto px-6 py-16 md:py-24 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-            Ready to pass your permit test?
+            <T k="landing.readyToPass">Ready to Pass Your Permit Test?</T>
           </h2>
           <p className="text-lg text-gray-600 mb-10">
-            Free to start. No account required.
+            <T k="landing.freeToStartLong">Free to start. No account required. 200 questions for your state.</T>
           </p>
-
-          {!loading && !user && !isGuest && (
-            <div className="flex flex-col items-center gap-3">
-              <Link href="/signup">
-                <Button className="bg-gray-900 text-white hover:bg-gray-800 px-8 py-6 text-lg rounded-full">
-                  Start practicing
-                </Button>
-              </Link>
-              <button
-                onClick={handleTryFree}
-                className="text-sm text-gray-500 hover:text-gray-700 underline"
-              >
-                Try it first
-              </button>
-            </div>
-          )}
-
-          {!loading && (user || isGuest) && (
-            <Link href="/dashboard">
-              <Button className="bg-gray-900 text-white hover:bg-gray-800 px-8 py-6 text-lg rounded-full">
-                Go to Dashboard
-              </Button>
-            </Link>
-          )}
+          <HomeCTA />
         </div>
       </div>
     </div>

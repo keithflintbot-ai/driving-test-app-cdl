@@ -29,6 +29,31 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
+
+    /* Brand theme tokens - DMV orange is default */
+    --brand: 24 95% 53%;
+    --brand-foreground: 0 0% 100%;
+    --brand-light: 33 100% 96%;
+    --brand-hover: 24 95% 45%;
+    --brand-dark: 24 90% 40%;
+    --brand-darker: 24 80% 25%;
+    --brand-muted: 24 90% 75%;
+    --brand-border: 24 80% 80%;
+    --brand-border-light: 24 60% 88%;
+    --brand-gradient-to: 45 100% 96%;
+  }
+
+  [data-theme="cdl"] {
+    --brand: 217 91% 60%;
+    --brand-foreground: 0 0% 100%;
+    --brand-light: 214 100% 97%;
+    --brand-hover: 217 91% 50%;
+    --brand-dark: 217 91% 40%;
+    --brand-darker: 217 80% 25%;
+    --brand-muted: 217 80% 75%;
+    --brand-border: 214 80% 80%;
+    --brand-border-light: 214 60% 88%;
+    --brand-gradient-to: 226 100% 97%;
   }
 
   .dark {
@@ -65,5 +90,8 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+  body.premium-theme {
+    background-color: #f5f3ef;
   }
 }

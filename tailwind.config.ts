@@ -6,10 +6,24 @@ export default {
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./contexts/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  safelist: [],
   theme: {
     extend: {
       colors: {
+        brand: {
+          DEFAULT: "hsl(var(--brand))",
+          foreground: "hsl(var(--brand-foreground))",
+          light: "hsl(var(--brand-light))",
+          hover: "hsl(var(--brand-hover))",
+          dark: "hsl(var(--brand-dark))",
+          darker: "hsl(var(--brand-darker))",
+          muted: "hsl(var(--brand-muted))",
+          border: "hsl(var(--brand-border))",
+          "border-light": "hsl(var(--brand-border-light))",
+          "gradient-to": "hsl(var(--brand-gradient-to))",
+        },
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {

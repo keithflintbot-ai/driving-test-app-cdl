@@ -8,31 +8,53 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const corePages: MetadataRoute.Sitemap = [
     {
       url: siteUrl,
-      lastModified: new Date(),
+      lastModified: new Date("2026-02-12"),
       changeFrequency: "weekly",
       priority: 1,
     },
     {
-      url: `${siteUrl}/login`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.5,
-    },
-    {
-      url: `${siteUrl}/signup`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.5,
+      url: `${siteUrl}/practice-tests-by-state`,
+      lastModified: new Date("2026-02-12"),
+      changeFrequency: "weekly",
+      priority: 0.9,
     },
   ];
 
-  // State landing pages
-  const statePages: MetadataRoute.Sitemap = states.map((state) => ({
-    url: `${siteUrl}/states/${state.slug}`,
-    lastModified: new Date(),
+  // State DMV practice test landing pages (primary SEO pages)
+  const stateDmvPages: MetadataRoute.Sitemap = states.map((state) => ({
+    url: `${siteUrl}/${state.slug}-dmv-practice-test`,
+    lastModified: new Date("2026-02-12"),
     changeFrequency: "monthly" as const,
     priority: 0.8,
   }));
 
-  return [...corePages, ...statePages];
+  // Spanish state DMV practice test landing pages
+  const stateDmvPagesEs: MetadataRoute.Sitemap = states.map((state) => ({
+    url: `${siteUrl}/es/${state.slug}-examen-practica-dmv`,
+    lastModified: new Date("2026-02-12"),
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  // Spanish index page
+  const spanishIndexPage: MetadataRoute.Sitemap = [
+    {
+      url: `${siteUrl}/es/examenes-practica-por-estado`,
+      lastModified: new Date("2026-02-12"),
+      changeFrequency: "weekly" as const,
+      priority: 0.8,
+    },
+  ];
+
+  // CDL pages
+  const cdlPages: MetadataRoute.Sitemap = [
+    {
+      url: `${siteUrl}/cdl-practice-test`,
+      lastModified: new Date("2026-02-17"),
+      changeFrequency: "weekly" as const,
+      priority: 0.9,
+    },
+  ];
+
+  return [...corePages, ...cdlPages, ...stateDmvPages, ...stateDmvPagesEs, ...spanishIndexPage];
 }

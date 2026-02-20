@@ -4,16 +4,19 @@ import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { Progress } from "@/components/ui/progress";
-import { ArrowLeft, ArrowUpDown, CheckCircle, XCircle, HelpCircle, ChevronRight } from "lucide-react";
+import { ArrowLeft, ArrowUpDown, CheckCircle, XCircle, HelpCircle, ChevronRight, Lock, X } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { useStore } from "@/store/useStore";
 import { useHydration } from "@/hooks/useHydration";
+import { useAuth } from "@/contexts/AuthContext";
+import { useTranslation } from "@/contexts/LanguageContext";
+import { auth } from "@/lib/firebase";
+import { PaywallModal } from "@/components/PaywallModal";
 import { states } from "@/data/states";
 import { Question } from "@/types";
-import questionsData from "@/data/questions.json";
+import { getQuestionsData } from "@/lib/testGenerator";
 
 type SortField = "question" | "timesAnswered" | "correct" | "wrong" | "accuracy";
 type SortDirection = "asc" | "desc";
@@ -28,29 +31,27 @@ interface QuestionWithPerformance {
 
 // Category to training set mapping
 const CATEGORY_TO_SET: { [key: string]: number } = {
-  "Signs": 1,
-  "Signals": 1,
-  "Traffic Signs": 1,
-  "Rules of the Road": 2,
-  "Right of Way": 2,
-  "Parking": 2,
-  "Safety": 3,
-  "Emergencies": 3,
-  "DUI": 3,
-  "State Laws": 4,
-  "Licensing": 4,
-};
-
-const SET_NAMES: { [key: number]: string } = {
-  1: "Signs & Signals",
-  2: "Rules of the Road",
-  3: "Safety & Emergencies",
-  4: "State Laws",
+  roadSigns: 1,
+  rulesOfRoad: 2,
+  safeDriving: 3,
+  specialSituations: 3,
+  alcoholDUI: 3,
+  duiStateLaws: 3,
+  duiBac: 3,
+  stateUnique: 4,
+  gdlLicensing: 4,
+  cellPhone: 4,
+  insurance: 4,
+  seatbeltPhone: 4,
+  pointsPenalties: 4,
+  speedLimits: 2,
+  general: 2,
 };
 
 export default function StatsPage() {
   const router = useRouter();
   const hydrated = useHydration();
+  const { t, language } = useTranslation();
 
   const selectedState = useStore((state) => state.selectedState);
   const isGuest = useStore((state) => state.isGuest);
@@ -58,9 +59,61 @@ export default function StatsPage() {
   const getQuestionPerformance = useStore((state) => state.getQuestionPerformance);
   const getTestAttemptStats = useStore((state) => state.getTestAttemptStats);
   const getTrainingSetProgress = useStore((state) => state.getTrainingSetProgress);
+  const hasPremiumAccess = useStore((state) => state.hasPremiumAccess);
+
+  const { user } = useAuth();
+  const isPremium = hydrated ? hasPremiumAccess() : false;
+  const FREE_QUESTION_LIMIT = 5;
 
   const [sortField, setSortField] = useState<SortField>("wrong");
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
+  const [paywallOpen, setPaywallOpen] = useState(false);
+  const [expandedQuestionId, setExpandedQuestionId] = useState<string | null>(null);
+
+  const handleUpgrade = async () => {
+    if (!user?.email || !user?.uid) {
+      router.push("/signup");
+      return;
+    }
+
+    try {
+      const idToken = await auth.currentUser?.getIdToken();
+      if (!idToken) {
+        alert("Authentication error. Please sign in again.");
+        return;
+      }
+
+      const response = await fetch("/api/stripe/checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${idToken}`,
+        },
+        body: JSON.stringify({
+          email: user.email,
+          returnUrl: window.location.origin,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.error) {
+        console.error("Checkout error:", data.error);
+        alert(`Error: ${data.error}`);
+        return;
+      }
+
+      if (data.checkoutUrl) {
+        window.location.href = data.checkoutUrl;
+      } else {
+        console.error("No checkout URL returned:", data);
+        alert("Failed to start checkout. Please try again.");
+      }
+    } catch (error) {
+      console.error("Checkout error:", error);
+      alert("Failed to start checkout. Please check your connection and try again.");
+    }
+  };
 
   // Get state name from code
   const stateName = states.find((s) => s.code === selectedState)?.name || selectedState;
@@ -96,11 +149,11 @@ export default function StatsPage() {
   // Get all questions for the current state
   const stateQuestions = useMemo(() => {
     if (!selectedState) return [];
-    const allQuestions = questionsData as Question[];
+    const allQuestions = getQuestionsData(language);
     return allQuestions.filter(
       (q) => q.state === "ALL" || q.state === selectedState
     );
-  }, [selectedState]);
+  }, [selectedState, language]);
 
   // Get performance data and merge with questions
   const questionsWithPerformance = useMemo((): QuestionWithPerformance[] => {
@@ -160,35 +213,35 @@ export default function StatsPage() {
     }));
 
     // Find first training set that hasn't been started (0 correct)
-    const unstartedSet = trainingProgress.find(t => t.progress.correct === 0);
+    const unstartedSet = trainingProgress.find(tp => tp.progress.correct === 0);
     if (unstartedSet) {
       return {
-        title: `Start "${SET_NAMES[unstartedSet.setNum]}"`,
-        description: "Complete all 4 training sets before taking practice tests",
+        title: `${t("stats.start")} "${t(`trainingSets.${unstartedSet.setNum}`)}"`,
+        description: t("stats.completeAllTrainingSets"),
         href: `/training?set=${unstartedSet.setNum}`,
       };
     }
 
     // Find first incomplete training set (started but not finished)
-    const incompleteSet = trainingProgress.find(t => t.progress.correct < t.progress.total);
+    const incompleteSet = trainingProgress.find(tp => tp.progress.correct < tp.progress.total);
     if (incompleteSet) {
       const pct = Math.round((incompleteSet.progress.correct / incompleteSet.progress.total) * 100);
       return {
-        title: `Finish "${SET_NAMES[incompleteSet.setNum]}"`,
-        description: `${pct}% complete - ${incompleteSet.progress.total - incompleteSet.progress.correct} questions left`,
+        title: `${t("stats.finish")} "${t(`trainingSets.${incompleteSet.setNum}`)}"`,
+        description: `${pct}% ${t("stats.complete")} - ${incompleteSet.progress.total - incompleteSet.progress.correct} ${t("stats.questionsLeft")}`,
         href: `/training?set=${incompleteSet.setNum}`,
       };
     }
 
     // All training sets complete - now check test performance
-    const testStats = [1, 2, 3, 4].map(t => getTestAttemptStats(t));
+    const testStats = [1, 2, 3, 4].map(n => getTestAttemptStats(n));
     const hasAnyTests = testStats.some(s => s && s.attemptCount > 0);
 
     // If user is doing well, they're ready
     if (passProbability >= 80) {
       return {
-        title: "You're ready!",
-        description: "Take a practice test to confirm",
+        title: t("stats.youreReady"),
+        description: t("stats.takePracticeTest"),
         href: "/dashboard",
       };
     }
@@ -196,8 +249,8 @@ export default function StatsPage() {
     // If no tests taken yet, recommend first test
     if (!hasAnyTests) {
       return {
-        title: "Take Practice Test 1",
-        description: "See where you stand with a full practice test",
+        title: t("stats.takePracticeTest1"),
+        description: t("stats.seeWhereYouStand"),
         href: "/test/1",
       };
     }
@@ -233,23 +286,22 @@ export default function StatsPage() {
     // Recommend training on worst category
     if (worstCategory && worstWrongCount > 0) {
       const setNumber = CATEGORY_TO_SET[worstCategory] || 1;
-      const setName = SET_NAMES[setNumber];
       const wrongPercent = Math.round(100 - worstAccuracy);
 
       return {
-        title: `Practice "${setName}"`,
-        description: `You're getting ${wrongPercent}% wrong on ${worstCategory.toLowerCase()} questions`,
+        title: `${t("stats.practice")} "${t(`trainingSets.${setNumber}`)}"`,
+        description: `${t("stats.youreGetting")} ${wrongPercent}% ${t("stats.wrongOn")} ${t(`categories.${worstCategory}`).toLowerCase()} ${t("stats.questions")}`,
         href: `/training?set=${setNumber}`,
       };
     }
 
     // Default
     return {
-      title: "Keep practicing",
-      description: "Continue training to improve your score",
+      title: t("stats.keepPracticing"),
+      description: t("stats.continueTraining"),
       href: "/dashboard",
     };
-  }, [hydrated, questionsWithPerformance, passProbability, getTestAttemptStats, getTrainingSetProgress]);
+  }, [hydrated, questionsWithPerformance, passProbability, getTestAttemptStats, getTrainingSetProgress, t]);
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
@@ -263,10 +315,10 @@ export default function StatsPage() {
   const SortButton = ({ field, children }: { field: SortField; children: React.ReactNode }) => (
     <button
       onClick={() => handleSort(field)}
-      className="flex items-center gap-1 font-semibold hover:text-orange-600 transition-colors"
+      className="flex items-center gap-1 font-semibold hover:text-brand transition-colors"
     >
       {children}
-      <ArrowUpDown className={`h-4 w-4 ${sortField === field ? "text-orange-600" : "text-gray-400"}`} />
+      <ArrowUpDown className={`h-4 w-4 ${sortField === field ? "text-brand" : "text-gray-400"}`} />
     </button>
   );
 
@@ -289,14 +341,24 @@ export default function StatsPage() {
 
   return (
     <div className="min-h-screen bg-white relative">
-      <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-orange-50 to-white pointer-events-none" />
+      <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-brand-light to-white pointer-events-none" />
       <div className="relative container mx-auto px-4 py-8 max-w-6xl">
+        {/* Paywall Modal */}
+        <PaywallModal
+          open={paywallOpen}
+          onOpenChange={setPaywallOpen}
+          feature="full_stats"
+          onUpgrade={handleUpgrade}
+          isGuest={isGuest}
+          onSignUp={() => router.push("/signup")}
+        />
+
         {/* Header */}
         <div className="mb-6">
           <Link href="/dashboard">
             <Button variant="ghost" className="mb-4 -ml-2">
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Back
+              {t("common.back")}
             </Button>
           </Link>
         </div>
@@ -331,10 +393,8 @@ export default function StatsPage() {
               <div className="flex-1">
                 <h1 className="text-2xl md:text-3xl font-bold">
                   {passProbability === 0
-                    ? "No data yet"
-                    : passProbability > 50
-                      ? `${passProbability}% chance of passing`
-                      : `${100 - passProbability}% chance of failing`
+                    ? t("stats.noDataYet")
+                    : `${passProbability >= 50 ? passProbability : 100 - passProbability}% ${passProbability >= 50 ? t("stats.chanceOfPassing") : t("stats.chanceOfFailing")}`
                   }
                 </h1>
                 {passProbability > 0 && (
@@ -361,14 +421,14 @@ export default function StatsPage() {
         {/* Smart CTA - DO THIS */}
         {getRecommendation && (
           <Link href={getRecommendation.href} className="block">
-            <Card className="mb-6 border-orange-200 bg-orange-50 cursor-pointer hover:shadow-md transition-shadow">
+            <Card className="mb-6 border-brand-border-light bg-brand-light cursor-pointer hover:shadow-md transition-shadow">
               <CardContent className="p-6">
                 <div className="flex items-center gap-4">
                   <div className="flex-1">
                     <h2 className="text-lg font-bold text-gray-900">{getRecommendation.title}</h2>
                     <p className="text-sm text-gray-600 mt-1">{getRecommendation.description}</p>
                   </div>
-                  <ChevronRight className="h-6 w-6 text-orange-400 flex-shrink-0" />
+                  <ChevronRight className="h-6 w-6 text-brand-muted flex-shrink-0" />
                 </div>
               </CardContent>
             </Card>
@@ -378,17 +438,17 @@ export default function StatsPage() {
         {/* Mobile Sort Controls */}
         <div className="md:hidden flex items-center gap-2 mb-4 overflow-x-auto pb-2 -mx-4 px-4">
           {[
-            { field: "timesAnswered" as SortField, label: "Answered" },
-            { field: "correct" as SortField, label: "Correct" },
-            { field: "wrong" as SortField, label: "Wrong" },
-            { field: "accuracy" as SortField, label: "Accuracy" },
+            { field: "timesAnswered" as SortField, label: t("stats.answered") },
+            { field: "correct" as SortField, label: t("stats.correctLabel") },
+            { field: "wrong" as SortField, label: t("stats.wrongLabel") },
+            { field: "accuracy" as SortField, label: t("stats.accuracy") },
           ].map(({ field, label }) => (
             <button
               key={field}
               onClick={() => handleSort(field)}
               className={`whitespace-nowrap text-sm px-3 py-1.5 rounded-full border transition-colors ${
                 sortField === field
-                  ? "bg-orange-100 border-orange-300 text-orange-700 font-medium"
+                  ? "bg-brand-light border-brand-border text-brand-dark font-medium"
                   : "bg-white border-gray-200 text-gray-600"
               }`}
             >
@@ -405,70 +465,267 @@ export default function StatsPage() {
           {sortedQuestions.length === 0 ? (
             <Card>
               <CardContent className="p-6 text-center text-gray-500">
-                No questions available.
+                {t("stats.noQuestionsAvailable")}
               </CardContent>
             </Card>
           ) : (
-            sortedQuestions.map((item) => (
-              <Card key={item.question.questionId} className="overflow-hidden">
-                <CardContent className="p-4">
-                  <div className="flex items-start gap-3 mb-3">
-                    <StatusIcon item={item} />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium leading-snug">{item.question.question}</p>
-                      <p className="text-xs text-gray-500 mt-1">
-                        {item.question.type === "Universal" ? "Universal" : `${selectedState}-specific`}
-                        {" "}&bull;{" "}
-                        {item.question.category}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between text-sm bg-gray-50 rounded-lg p-3">
-                    <div className="text-center">
-                      <div className={`font-semibold ${item.timesAnswered > 0 ? "text-gray-900" : "text-gray-400"}`}>
-                        {item.timesAnswered}
+            <>
+              {sortedQuestions.slice(0, FREE_QUESTION_LIMIT).map((item) => (
+                <Card
+                  key={item.question.questionId}
+                  className="overflow-hidden cursor-pointer"
+                  onClick={() => setExpandedQuestionId(
+                    expandedQuestionId === item.question.questionId ? null : item.question.questionId
+                  )}
+                >
+                  <CardContent className="p-4">
+                    <div className="flex items-start gap-3 mb-3">
+                      <StatusIcon item={item} />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium leading-snug">{item.question.question}</p>
+                        <p className="text-xs text-gray-500 mt-1">
+                          {t(`categories.${item.question.category}`)}
+                        </p>
                       </div>
-                      <div className="text-xs text-gray-500">Answered</div>
                     </div>
-                    <div className="text-center">
-                      <div className={`font-semibold ${item.correct > 0 ? "text-green-600" : "text-gray-400"}`}>
-                        {item.correct}
-                      </div>
-                      <div className="text-xs text-gray-500">Correct</div>
-                    </div>
-                    <div className="text-center">
-                      <div className={`font-semibold ${item.wrong > 0 ? "text-red-600" : "text-gray-400"}`}>
-                        {item.wrong}
-                      </div>
-                      <div className="text-xs text-gray-500">Wrong</div>
-                    </div>
-                    <div className="text-center">
-                      {item.timesAnswered > 0 ? (
-                        <div className={`font-semibold ${
-                          item.accuracy === 100
-                            ? "text-green-600"
-                            : item.accuracy >= 50
-                              ? "text-yellow-600"
-                              : "text-red-600"
-                        }`}>
-                          {item.accuracy}%
+                    {expandedQuestionId === item.question.questionId && (
+                      <div className="mb-3 space-y-2">
+                        <div className="flex items-center justify-between">
+                          <p className="text-xs font-semibold text-gray-500 uppercase">{t("stats.answers")}</p>
+                          <button
+                            onClick={(e) => { e.stopPropagation(); setExpandedQuestionId(null); }}
+                            className="p-1 rounded-full hover:bg-gray-100"
+                          >
+                            <X className="h-4 w-4 text-gray-400" />
+                          </button>
                         </div>
-                      ) : (
-                        <div className="font-semibold text-gray-400">-</div>
-                      )}
-                      <div className="text-xs text-gray-500">Accuracy</div>
+                        {["A", "B", "C", "D"].map((letter) => {
+                          const optionKey = `option${letter}` as keyof Question;
+                          const optionText = item.question[optionKey] as string;
+                          const isCorrect = item.question.correctAnswer === letter;
+                          return (
+                            <div
+                              key={letter}
+                              className={`flex items-start gap-2 p-2 rounded text-sm ${
+                                isCorrect
+                                  ? "bg-green-50 border border-green-200"
+                                  : "bg-gray-50 border border-gray-200"
+                              }`}
+                            >
+                              <span className={`font-semibold ${isCorrect ? "text-green-600" : "text-gray-500"}`}>
+                                {letter}.
+                              </span>
+                              <span className={isCorrect ? "text-green-700" : "text-gray-600"}>
+                                {optionText}
+                              </span>
+                              {isCorrect && (
+                                <CheckCircle className="h-4 w-4 text-green-600 ml-auto flex-shrink-0" />
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+                    <div className="flex items-center justify-between text-sm bg-gray-50 rounded-lg p-3">
+                      <div className="text-center">
+                        <div className={`font-semibold ${item.timesAnswered > 0 ? "text-gray-900" : "text-gray-400"}`}>
+                          {item.timesAnswered}
+                        </div>
+                        <div className="text-xs text-gray-500">{t("stats.answered")}</div>
+                      </div>
+                      <div className="text-center">
+                        <div className={`font-semibold ${item.correct > 0 ? "text-green-600" : "text-gray-400"}`}>
+                          {item.correct}
+                        </div>
+                        <div className="text-xs text-gray-500">{t("stats.correctLabel")}</div>
+                      </div>
+                      <div className="text-center">
+                        <div className={`font-semibold ${item.wrong > 0 ? "text-red-600" : "text-gray-400"}`}>
+                          {item.wrong}
+                        </div>
+                        <div className="text-xs text-gray-500">{t("stats.wrongLabel")}</div>
+                      </div>
+                      <div className="text-center">
+                        {item.timesAnswered > 0 ? (
+                          <div className={`font-semibold ${
+                            item.accuracy === 100
+                              ? "text-green-600"
+                              : item.accuracy >= 50
+                                ? "text-yellow-600"
+                                : "text-red-600"
+                          }`}>
+                            {item.accuracy}%
+                          </div>
+                        ) : (
+                          <div className="font-semibold text-gray-400">-</div>
+                        )}
+                        <div className="text-xs text-gray-500">{t("stats.accuracy")}</div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+              {!isPremium && sortedQuestions.length > FREE_QUESTION_LIMIT && (
+                <div className="relative">
+                  <div className="space-y-3 blur-sm pointer-events-none select-none" aria-hidden="true">
+                    {sortedQuestions.slice(FREE_QUESTION_LIMIT, FREE_QUESTION_LIMIT + 3).map((item) => (
+                      <Card key={item.question.questionId} className="overflow-hidden">
+                        <CardContent className="p-4">
+                          <div className="flex items-start gap-3 mb-3">
+                            <StatusIcon item={item} />
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm font-medium leading-snug">{item.question.question}</p>
+                              <p className="text-xs text-gray-500 mt-1">
+                                {t(`categories.${item.question.category}`)}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="flex items-center justify-between text-sm bg-gray-50 rounded-lg p-3">
+                            <div className="text-center">
+                              <div className="font-semibold text-gray-400">{item.timesAnswered}</div>
+                              <div className="text-xs text-gray-500">{t("stats.answered")}</div>
+                            </div>
+                            <div className="text-center">
+                              <div className="font-semibold text-gray-400">{item.correct}</div>
+                              <div className="text-xs text-gray-500">{t("stats.correctLabel")}</div>
+                            </div>
+                            <div className="text-center">
+                              <div className="font-semibold text-gray-400">{item.wrong}</div>
+                              <div className="text-xs text-gray-500">{t("stats.wrongLabel")}</div>
+                            </div>
+                            <div className="text-center">
+                              <div className="font-semibold text-gray-400">-</div>
+                              <div className="text-xs text-gray-500">{t("stats.accuracy")}</div>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/60">
+                    <div className="text-center px-4">
+                      <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-brand-light mb-3">
+                        <Lock className="h-6 w-6 text-brand" />
+                      </div>
+                      <h3 className="text-lg font-bold text-gray-900 mb-1">
+                        {sortedQuestions.length - FREE_QUESTION_LIMIT} {t("stats.moreQuestions")}
+                      </h3>
+                      <p className="text-sm text-gray-600 mb-4">
+                        {t("stats.unlockPremiumStats")}
+                      </p>
+                      <Button
+                        onClick={() => setPaywallOpen(true)}
+                        className="bg-black text-white hover:bg-gray-800"
+                      >
+                        {t("common.unlockWithPremium")}
+                      </Button>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
-            ))
+                </div>
+              )}
+              {isPremium && sortedQuestions.slice(FREE_QUESTION_LIMIT).map((item) => (
+                <Card
+                  key={item.question.questionId}
+                  className="overflow-hidden cursor-pointer"
+                  onClick={() => setExpandedQuestionId(
+                    expandedQuestionId === item.question.questionId ? null : item.question.questionId
+                  )}
+                >
+                  <CardContent className="p-4">
+                    <div className="flex items-start gap-3 mb-3">
+                      <StatusIcon item={item} />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium leading-snug">{item.question.question}</p>
+                        <p className="text-xs text-gray-500 mt-1">
+                          {t(`categories.${item.question.category}`)}
+                        </p>
+                      </div>
+                    </div>
+                    {expandedQuestionId === item.question.questionId && (
+                      <div className="mb-3 space-y-2">
+                        <div className="flex items-center justify-between">
+                          <p className="text-xs font-semibold text-gray-500 uppercase">{t("stats.answers")}</p>
+                          <button
+                            onClick={(e) => { e.stopPropagation(); setExpandedQuestionId(null); }}
+                            className="p-1 rounded-full hover:bg-gray-100"
+                          >
+                            <X className="h-4 w-4 text-gray-400" />
+                          </button>
+                        </div>
+                        {["A", "B", "C", "D"].map((letter) => {
+                          const optionKey = `option${letter}` as keyof Question;
+                          const optionText = item.question[optionKey] as string;
+                          const isCorrect = item.question.correctAnswer === letter;
+                          return (
+                            <div
+                              key={letter}
+                              className={`flex items-start gap-2 p-2 rounded text-sm ${
+                                isCorrect
+                                  ? "bg-green-50 border border-green-200"
+                                  : "bg-gray-50 border border-gray-200"
+                              }`}
+                            >
+                              <span className={`font-semibold ${isCorrect ? "text-green-600" : "text-gray-500"}`}>
+                                {letter}.
+                              </span>
+                              <span className={isCorrect ? "text-green-700" : "text-gray-600"}>
+                                {optionText}
+                              </span>
+                              {isCorrect && (
+                                <CheckCircle className="h-4 w-4 text-green-600 ml-auto flex-shrink-0" />
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+                    <div className="flex items-center justify-between text-sm bg-gray-50 rounded-lg p-3">
+                      <div className="text-center">
+                        <div className={`font-semibold ${item.timesAnswered > 0 ? "text-gray-900" : "text-gray-400"}`}>
+                          {item.timesAnswered}
+                        </div>
+                        <div className="text-xs text-gray-500">{t("stats.answered")}</div>
+                      </div>
+                      <div className="text-center">
+                        <div className={`font-semibold ${item.correct > 0 ? "text-green-600" : "text-gray-400"}`}>
+                          {item.correct}
+                        </div>
+                        <div className="text-xs text-gray-500">{t("stats.correctLabel")}</div>
+                      </div>
+                      <div className="text-center">
+                        <div className={`font-semibold ${item.wrong > 0 ? "text-red-600" : "text-gray-400"}`}>
+                          {item.wrong}
+                        </div>
+                        <div className="text-xs text-gray-500">{t("stats.wrongLabel")}</div>
+                      </div>
+                      <div className="text-center">
+                        {item.timesAnswered > 0 ? (
+                          <div className={`font-semibold ${
+                            item.accuracy === 100
+                              ? "text-green-600"
+                              : item.accuracy >= 50
+                                ? "text-yellow-600"
+                                : "text-red-600"
+                          }`}>
+                            {item.accuracy}%
+                          </div>
+                        ) : (
+                          <div className="font-semibold text-gray-400">-</div>
+                        )}
+                        <div className="text-xs text-gray-500">{t("stats.accuracy")}</div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </>
           )}
         </div>
 
         {/* Desktop Table View - HERES THE DATA */}
         <Card className="hidden md:block">
           <CardHeader>
-            <CardTitle>Question Performance ({sortedQuestions.length})</CardTitle>
+            <CardTitle>{t("stats.questionPerformance")} ({sortedQuestions.length})</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
@@ -476,19 +733,19 @@ export default function StatsPage() {
                 <thead>
                   <tr className="border-b">
                     <th className="text-left py-3 px-4 w-1/2">
-                      <SortButton field="question">Question</SortButton>
+                      <SortButton field="question">{t("stats.question")}</SortButton>
                     </th>
                     <th className="text-center py-3 px-4">
-                      <SortButton field="timesAnswered">Answered</SortButton>
+                      <SortButton field="timesAnswered">{t("stats.answered")}</SortButton>
                     </th>
                     <th className="text-center py-3 px-4">
-                      <SortButton field="correct">Correct</SortButton>
+                      <SortButton field="correct">{t("stats.correctLabel")}</SortButton>
                     </th>
                     <th className="text-center py-3 px-4">
-                      <SortButton field="wrong">Wrong</SortButton>
+                      <SortButton field="wrong">{t("stats.wrongLabel")}</SortButton>
                     </th>
                     <th className="text-center py-3 px-4">
-                      <SortButton field="accuracy">Accuracy</SortButton>
+                      <SortButton field="accuracy">{t("stats.accuracy")}</SortButton>
                     </th>
                   </tr>
                 </thead>
@@ -496,102 +753,153 @@ export default function StatsPage() {
                   {sortedQuestions.length === 0 ? (
                     <tr>
                       <td colSpan={5} className="text-center py-8 text-gray-500">
-                        No questions available.
+                        {t("stats.noQuestionsAvailable")}
                       </td>
                     </tr>
                   ) : (
-                    sortedQuestions.map((item) => (
-                      <tr
-                        key={item.question.questionId}
-                        className="border-b last:border-b-0 hover:bg-gray-50"
-                      >
-                        <td className="py-3 px-4">
-                          <HoverCard openDelay={200} closeDelay={100}>
-                            <HoverCardTrigger asChild>
-                              <div className="flex items-start gap-2 cursor-default">
-                                <StatusIcon item={item} />
-                                <div>
-                                  <p className="text-sm line-clamp-2">{item.question.question}</p>
-                                  <p className="text-xs text-gray-500 mt-1">
-                                    {item.question.type === "Universal" ? "Universal" : `${selectedState}-specific`}
-                                    {" "}&bull;{" "}
-                                    {item.question.category}
-                                  </p>
-                                </div>
-                              </div>
-                            </HoverCardTrigger>
-                            <HoverCardContent className="w-96" side="right" align="start">
-                              <div className="space-y-2">
-                                <p className="text-sm font-medium mb-3">{item.question.question}</p>
-                                <div className="space-y-2">
-                                  {["A", "B", "C", "D"].map((letter) => {
-                                    const optionKey = `option${letter}` as keyof Question;
-                                    const optionText = item.question[optionKey] as string;
-                                    const isCorrect = item.question.correctAnswer === letter;
-                                    return (
-                                      <div
-                                        key={letter}
-                                        className={`flex items-start gap-2 p-2 rounded text-sm ${
-                                          isCorrect
-                                            ? "bg-green-50 border border-green-200"
-                                            : "bg-gray-50 border border-gray-200"
-                                        }`}
-                                      >
-                                        <span className={`font-semibold ${isCorrect ? "text-green-600" : "text-gray-500"}`}>
-                                          {letter}.
-                                        </span>
-                                        <span className={isCorrect ? "text-green-700" : "text-gray-600"}>
-                                          {optionText}
-                                        </span>
-                                        {isCorrect && (
-                                          <CheckCircle className="h-4 w-4 text-green-600 ml-auto flex-shrink-0" />
-                                        )}
-                                      </div>
-                                    );
-                                  })}
-                                </div>
-                              </div>
-                            </HoverCardContent>
-                          </HoverCard>
-                        </td>
-                        <td className="text-center py-3 px-4">
-                          <span className={item.timesAnswered > 0 ? "font-semibold" : "text-gray-400"}>
-                            {item.timesAnswered}
-                          </span>
-                        </td>
-                        <td className="text-center py-3 px-4">
-                          <span className={item.correct > 0 ? "font-semibold text-green-600" : "text-gray-400"}>
-                            {item.correct}
-                          </span>
-                        </td>
-                        <td className="text-center py-3 px-4">
-                          <span className={item.wrong > 0 ? "font-semibold text-red-600" : "text-gray-400"}>
-                            {item.wrong}
-                          </span>
-                        </td>
-                        <td className="text-center py-3 px-4">
-                          {item.timesAnswered > 0 ? (
-                            <span
-                              className={`font-semibold ${
-                                item.accuracy === 100
-                                  ? "text-green-600"
-                                  : item.accuracy >= 50
-                                    ? "text-yellow-600"
-                                    : "text-red-600"
-                              }`}
-                            >
-                              {item.accuracy}%
-                            </span>
-                          ) : (
-                            <span className="text-gray-400">-</span>
+                    <>
+                      {(isPremium ? sortedQuestions : sortedQuestions.slice(0, FREE_QUESTION_LIMIT)).map((item) => (
+                        <tr
+                          key={item.question.questionId}
+                          className="border-b last:border-b-0 hover:bg-gray-50 cursor-pointer"
+                          onClick={() => setExpandedQuestionId(
+                            expandedQuestionId === item.question.questionId ? null : item.question.questionId
                           )}
-                        </td>
-                      </tr>
-                    ))
+                        >
+                          <td className="py-3 px-4">
+                            <div className="flex items-start gap-2">
+                              <StatusIcon item={item} />
+                              <div>
+                                <p className="text-sm line-clamp-2">{item.question.question}</p>
+                                <p className="text-xs text-gray-500 mt-1">
+                                  {t(`categories.${item.question.category}`)}
+                                </p>
+                                {expandedQuestionId === item.question.questionId && (
+                                  <div className="mt-3 space-y-2">
+                                    <div className="flex items-center justify-between">
+                                      <p className="text-xs font-semibold text-gray-500 uppercase">{t("stats.answers")}</p>
+                                      <button
+                                        onClick={(e) => { e.stopPropagation(); setExpandedQuestionId(null); }}
+                                        className="p-1 rounded-full hover:bg-gray-200"
+                                      >
+                                        <X className="h-4 w-4 text-gray-400" />
+                                      </button>
+                                    </div>
+                                    {["A", "B", "C", "D"].map((letter) => {
+                                      const optionKey = `option${letter}` as keyof Question;
+                                      const optionText = item.question[optionKey] as string;
+                                      const isCorrect = item.question.correctAnswer === letter;
+                                      return (
+                                        <div
+                                          key={letter}
+                                          className={`flex items-start gap-2 p-2 rounded text-sm ${
+                                            isCorrect
+                                              ? "bg-green-50 border border-green-200"
+                                              : "bg-gray-50 border border-gray-200"
+                                          }`}
+                                        >
+                                          <span className={`font-semibold ${isCorrect ? "text-green-600" : "text-gray-500"}`}>
+                                            {letter}.
+                                          </span>
+                                          <span className={isCorrect ? "text-green-700" : "text-gray-600"}>
+                                            {optionText}
+                                          </span>
+                                          {isCorrect && (
+                                            <CheckCircle className="h-4 w-4 text-green-600 ml-auto flex-shrink-0" />
+                                          )}
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          </td>
+                          <td className="text-center py-3 px-4">
+                            <span className={item.timesAnswered > 0 ? "font-semibold" : "text-gray-400"}>
+                              {item.timesAnswered}
+                            </span>
+                          </td>
+                          <td className="text-center py-3 px-4">
+                            <span className={item.correct > 0 ? "font-semibold text-green-600" : "text-gray-400"}>
+                              {item.correct}
+                            </span>
+                          </td>
+                          <td className="text-center py-3 px-4">
+                            <span className={item.wrong > 0 ? "font-semibold text-red-600" : "text-gray-400"}>
+                              {item.wrong}
+                            </span>
+                          </td>
+                          <td className="text-center py-3 px-4">
+                            {item.timesAnswered > 0 ? (
+                              <span
+                                className={`font-semibold ${
+                                  item.accuracy === 100
+                                    ? "text-green-600"
+                                    : item.accuracy >= 50
+                                      ? "text-yellow-600"
+                                      : "text-red-600"
+                                }`}
+                              >
+                                {item.accuracy}%
+                              </span>
+                            ) : (
+                              <span className="text-gray-400">-</span>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </>
                   )}
                 </tbody>
               </table>
             </div>
+            {!isPremium && sortedQuestions.length > FREE_QUESTION_LIMIT && (
+              <div className="relative mt-0">
+                <div className="overflow-hidden">
+                  <table className="w-full blur-sm pointer-events-none select-none" aria-hidden="true">
+                    <tbody>
+                      {sortedQuestions.slice(FREE_QUESTION_LIMIT, FREE_QUESTION_LIMIT + 3).map((item) => (
+                        <tr key={item.question.questionId} className="border-b">
+                          <td className="py-3 px-4 w-1/2">
+                            <div className="flex items-start gap-2">
+                              <StatusIcon item={item} />
+                              <div>
+                                <p className="text-sm line-clamp-2">{item.question.question}</p>
+                                <p className="text-xs text-gray-500 mt-1">{t(`categories.${item.question.category}`)}</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="text-center py-3 px-4"><span className="text-gray-400">{item.timesAnswered}</span></td>
+                          <td className="text-center py-3 px-4"><span className="text-gray-400">{item.correct}</span></td>
+                          <td className="text-center py-3 px-4"><span className="text-gray-400">{item.wrong}</span></td>
+                          <td className="text-center py-3 px-4"><span className="text-gray-400">-</span></td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/60">
+                  <div className="text-center">
+                    <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-brand-light mb-3">
+                      <Lock className="h-6 w-6 text-brand" />
+                    </div>
+                    <h3 className="text-lg font-bold text-gray-900 mb-1">
+                      {sortedQuestions.length - FREE_QUESTION_LIMIT} {t("stats.moreQuestions")}
+                    </h3>
+                    <p className="text-sm text-gray-600 mb-4">
+                      {t("stats.unlockPremiumStats")}
+                    </p>
+                    <Button
+                      onClick={() => setPaywallOpen(true)}
+                      className="bg-black text-white hover:bg-gray-800"
+                    >
+                      {t("common.unlockWithPremium")}
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>

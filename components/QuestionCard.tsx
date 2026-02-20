@@ -1,7 +1,10 @@
+"use client";
+
 import { Question } from "@/types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle2, XCircle } from "lucide-react";
+import { useTranslation } from "@/contexts/LanguageContext";
 
 interface QuestionCardProps {
   question: Question;
@@ -20,6 +23,7 @@ export function QuestionCard({
   onAnswerChange,
   showResult = false,
 }: QuestionCardProps) {
+  const { t } = useTranslation();
   const options = [
     { value: "A", label: question.optionA },
     { value: "B", label: question.optionB },
@@ -42,9 +46,7 @@ export function QuestionCard({
       return "border-gray-300 opacity-50";
     }
 
-    // During test - use active for touch feedback, hover only on desktop
-    // The [@media(hover:hover)] prefix ensures hover only applies on devices with true hover support
-    return "border-gray-300 [@media(hover:hover)]:hover:border-orange-500 [@media(hover:hover)]:hover:bg-orange-50 active:border-orange-500 active:bg-orange-50 cursor-pointer";
+    return "border-gray-300 [@media(hover:hover)]:hover:border-brand [@media(hover:hover)]:hover:bg-brand-light active:border-brand active:bg-brand-light cursor-pointer";
   };
 
   return (
@@ -52,9 +54,9 @@ export function QuestionCard({
       <CardHeader>
         <div className="flex items-center justify-between mb-4">
           <div className="text-sm text-gray-600">
-            Question {questionNumber} of {totalQuestions}
+            {t("questionCard.questionOf")} {questionNumber} {t("questionCard.of")} {totalQuestions}
           </div>
-          <Badge variant="outline">{question.category}</Badge>
+          <Badge variant="outline">{t(`categories.${question.category}`)}</Badge>
         </div>
         <CardTitle className="text-xl">{question.question}</CardTitle>
       </CardHeader>
@@ -86,9 +88,9 @@ export function QuestionCard({
         </div>
 
         {showResult && (
-          <div className="mt-6 p-4 bg-orange-50 border border-orange-200 rounded-lg">
-            <div className="font-semibold text-orange-900 mb-2">Explanation:</div>
-            <div className="text-orange-800">{question.explanation}</div>
+          <div className="mt-6 p-4 border rounded-lg bg-brand-light border-brand-border-light">
+            <div className="font-semibold mb-2 text-brand-darker">{t("questionCard.explanation")}</div>
+            <div className="text-brand-dark">{question.explanation}</div>
           </div>
         )}
       </CardContent>

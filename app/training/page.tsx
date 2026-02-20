@@ -4,8 +4,11 @@ import { useState, useEffect, Suspense, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { TrainingCard } from "@/components/TrainingCard";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeft, CheckCircle2 } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
+import Image from "next/image";
+import { ShareButton } from "@/components/ShareButton";
 import { useStore } from "@/store/useStore";
 import { getTrainingQuestion, getNextTrainingSetQuestion, shuffleQuestionOptions } from "@/lib/testGenerator";
 import { Question } from "@/types";
@@ -13,20 +16,15 @@ import { useHydration } from "@/hooks/useHydration";
 import { useSound } from "@/hooks/useSound";
 import { Fireworks } from "@/components/Fireworks";
 import Link from "next/link";
-
-// Training set names for display
-const TRAINING_SET_NAMES: { [key: number]: string } = {
-  1: "Signs & Signals",
-  2: "Rules of the Road",
-  3: "Safety & Emergencies",
-  4: "State Laws",
-};
+import { useTranslation } from "@/contexts/LanguageContext";
+import { states } from "@/data/states";
 
 function TrainingPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const hydrated = useHydration();
   const { playCorrectSound, playIncorrectSound } = useSound();
+  const { t, language } = useTranslation();
 
   const selectedState = useStore((state) => state.selectedState);
   const isGuest = useStore((state) => state.isGuest);
@@ -54,6 +52,7 @@ function TrainingPageContent() {
   const [showFireworks, setShowFireworks] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
   const [showSetComplete, setShowSetComplete] = useState(false);
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [prevCorrectCount, setPrevCorrectCount] = useState(training.totalCorrectAllTime);
 
   // Get current set progress
@@ -86,7 +85,8 @@ function TrainingPageContent() {
   const handleFireworksComplete = () => {
     setShowFireworks(false);
     if (isSetMode) {
-      setShowSetComplete(true);
+      // Set complete overlay is already showing — just dismiss fireworks
+      if (!showSetComplete) setShowSetComplete(true);
     } else {
       setShowCelebration(true);
     }
@@ -116,11 +116,13 @@ function TrainingPageContent() {
         selectedState,
         currentSetData.masteredIds,
         currentSetData.wrongQueue,
-        currentQuestionIdRef.current  // Use ref for reliable current question ID
+        currentQuestionIdRef.current,  // Use ref for reliable current question ID
+        language
       );
 
-      // If all questions are mastered, show fireworks then completion
+      // If all questions are mastered, show completion overlay with fireworks on top
       if (!question) {
+        setShowSetComplete(true);
         setShowFireworks(true);
         return;
       }
@@ -139,13 +141,14 @@ function TrainingPageContent() {
       question = getTrainingQuestion(
         selectedState,
         freshTraining.masteredQuestionIds,
-        freshTraining.lastQuestionId
+        freshTraining.lastQuestionId,
+        language
       );
 
       // If all questions are mastered, reset and start fresh
       if (!question) {
         resetMasteredQuestions();
-        question = getTrainingQuestion(selectedState, [], freshTraining.lastQuestionId);
+        question = getTrainingQuestion(selectedState, [], freshTraining.lastQuestionId, language);
       }
     }
 
@@ -198,7 +201,7 @@ function TrainingPageContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 to-amber-50">
+    <div className="min-h-screen bg-gradient-to-br from-brand-light to-brand-gradient-to">
       {/* Fireworks Animation */}
       {showFireworks && (
         <Fireworks duration={3000} onComplete={handleFireworksComplete} />
@@ -216,18 +219,18 @@ function TrainingPageContent() {
               />
             </div>
             <h2 className="text-3xl font-bold text-gray-900 mb-2">
-              Congratulations!
+              {t("trainingPage.congratulations")}
             </h2>
-            <p className="text-xl text-orange-600 font-semibold mb-4">
-              You unlocked Training & Tests!
+            <p className="text-xl text-brand font-semibold mb-4">
+              {t("trainingPage.youUnlocked")}
             </p>
             <p className="text-gray-600 mb-6">
-              You&apos;ve answered 10 questions correctly. Now you can pick specific topics to master!
+              {t("trainingPage.answeredTenCorrectly")}
             </p>
             <div className="flex flex-col gap-3">
               <Link href="/dashboard">
                 <Button className="w-full bg-black text-white hover:bg-gray-800 text-lg py-6">
-                  Choose a Training Set
+                  {t("trainingPage.chooseTrainingSet")}
                 </Button>
               </Link>
               <Button
@@ -235,43 +238,131 @@ function TrainingPageContent() {
                 className="w-full"
                 onClick={() => setShowCelebration(false)}
               >
-                Keep Going
+                {t("trainingPage.keepGoing")}
               </Button>
             </div>
           </div>
         </div>
       )}
 
-      {/* Set Complete Modal */}
+      {/* Set Complete - Full-bleed Score Card */}
       {showSetComplete && isSetMode && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm animate-in fade-in duration-300">
-          <div className="bg-white rounded-2xl p-8 mx-4 max-w-md text-center shadow-2xl animate-in zoom-in-95 duration-300">
-            <div className="mb-4">
-              <CheckCircle2 className="w-24 h-24 mx-auto text-green-500" />
-            </div>
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">
-              Set Complete!
-            </h2>
-            <p className="text-xl text-green-600 font-semibold mb-4">
-              {TRAINING_SET_NAMES[setNumber]} Mastered
-            </p>
-            <p className="text-gray-600 mb-6">
-              You&apos;ve correctly answered all 50 questions in this training set!
-            </p>
-            <div className="flex flex-col gap-3">
+        <div className="fixed inset-0 z-50 overflow-y-auto animate-in fade-in duration-300">
+          <div className="min-h-screen bg-gradient-to-b from-gray-950 to-green-950">
+            {/* Back button */}
+            <div className="max-w-6xl mx-auto px-4 pt-4">
               <Link href="/dashboard">
-                <Button className="w-full bg-black text-white hover:bg-gray-800 text-lg py-6">
-                  Back to Dashboard
+                <Button variant="ghost" className="text-gray-400 hover:text-white hover:bg-white/10 -ml-2">
+                  <ArrowLeft className="h-4 w-4 mr-2" />
+                  {t("common.backToDashboard")}
                 </Button>
               </Link>
-              {!isGuest && (
-                <Link href="/stats">
-                  <Button variant="outline" className="w-full">
-                    View Stats
-                  </Button>
-                </Link>
+            </div>
+
+            <div className="text-center px-6 pt-4 pb-10 max-w-lg mx-auto">
+              {/* Branding header */}
+              <div className="mb-6">
+                <div className="text-gray-300 text-lg font-bold tracking-widest">tigertest.io</div>
+                <div className="text-gray-500 text-xs uppercase tracking-widest mt-1">
+                  {language === "es" ? "ENTRENAMIENTO DMV" : "DMV TRAINING"}
+                </div>
+              </div>
+
+              {/* Tiger face */}
+              <div className="flex justify-center mb-5">
+                <Image
+                  src="/tiger_face_01.png"
+                  alt="Tiger mascot"
+                  width={160}
+                  height={160}
+                  className="w-[120px] h-[120px] md:w-[160px] md:h-[160px]"
+                />
+              </div>
+
+              {/* Tagline */}
+              <div className="text-base md:text-lg font-extrabold uppercase tracking-widest mb-4 text-green-300">
+                {language === "es" ? "DOMINÉ MI ENTRENAMIENTO DEL DMV" : "MASTERED MY DMV TRAINING"}
+              </div>
+
+              {/* Giant percentage */}
+              <div className="text-7xl md:text-8xl font-black mb-3 leading-none text-green-500">
+                100%
+              </div>
+
+              {/* 50 out of 50 correct */}
+              <div className="text-xl md:text-2xl text-gray-400 mb-5">
+                50 {t("results.outOf")} 50 {t("results.correctLabel")}
+              </div>
+
+              {/* MASTERED badge */}
+              <Badge className="text-lg px-6 py-2 mb-5 bg-green-600 hover:bg-green-700">
+                {language === "es" ? "DOMINADO" : "MASTERED"}
+              </Badge>
+
+              {/* State + Set name */}
+              <div className="text-gray-400 text-base mb-2">
+                {states.find((s) => s.code === selectedState)?.name || selectedState} · {t(`trainingSets.${setNumber}`)}
+              </div>
+
+              {/* Branding footer */}
+              <div className="text-gray-600 text-sm tracking-wider mb-8">tigertest.io</div>
+
+              {/* SHARE + TRY AGAIN buttons */}
+              <div className="flex gap-3 max-w-xs mx-auto">
+                {selectedState && setNumber && (
+                  <ShareButton
+                    score={50}
+                    totalQuestions={50}
+                    percentage={100}
+                    passed={true}
+                    setId={setNumber}
+                    stateCode={selectedState}
+                    className="flex-1 bg-white text-black hover:bg-gray-100 font-bold uppercase tracking-wide h-12 text-base"
+                  />
+                )}
+                <Button
+                  className="flex-1 bg-transparent text-white hover:bg-white/10 border border-white/30 font-bold uppercase tracking-wide h-12 text-base"
+                  onClick={() => setShowResetConfirm(true)}
+                >
+                  {t("results.tryAgain")}
+                </Button>
+              </div>
+
+              {/* Reset confirmation */}
+              {showResetConfirm && (
+                <div className="mt-4 bg-white/10 backdrop-blur-sm rounded-xl p-4 max-w-xs mx-auto animate-in fade-in duration-200">
+                  <p className="text-gray-200 text-sm mb-3">
+                    {t("trainingPage.resetConfirm")}
+                  </p>
+                  <div className="flex gap-2">
+                    <Button
+                      className="flex-1 bg-white text-black hover:bg-gray-200 font-semibold h-10 text-sm"
+                      onClick={handlePracticeAgain}
+                    >
+                      {t("trainingPage.resetYes")}
+                    </Button>
+                    <Button
+                      className="flex-1 bg-transparent text-white hover:bg-white/10 border border-white/30 font-semibold h-10 text-sm"
+                      onClick={() => setShowResetConfirm(false)}
+                    >
+                      {t("common.cancel")}
+                    </Button>
+                  </div>
+                </div>
               )}
             </div>
+
+            {/* See Stats link */}
+            {!isGuest && (
+              <div className="text-center py-5">
+                <Link
+                  href="/stats"
+                  className="text-gray-500 hover:text-gray-300 text-sm font-medium transition-colors"
+                >
+                  {t("results.viewStats")} →
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       )}
@@ -282,13 +373,13 @@ function TrainingPageContent() {
           <Link href="/dashboard">
             <Button variant="ghost" size="sm">
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Back
+              {t("common.back")}
             </Button>
           </Link>
-          {isSetMode && (
-            <span className="text-sm font-medium text-gray-600">
-              {TRAINING_SET_NAMES[setNumber]}
-            </span>
+          {!isGuest && (
+            <Link href="/stats" className="text-sm font-medium text-brand hover:text-brand-dark transition-colors">
+              {t("trainingPage.viewStats")}
+            </Link>
           )}
         </div>
 
@@ -304,9 +395,9 @@ function TrainingPageContent() {
         ) : (
           <Card className="w-full">
             <CardContent className="p-8 text-center">
-              <p className="text-gray-600 mb-4">No more questions available</p>
+              <p className="text-gray-600 mb-4">{t("trainingPage.noMoreQuestions")}</p>
               <Button className="bg-black text-white hover:bg-gray-800" onClick={() => router.push("/dashboard")}>
-                Back to Dashboard
+                {t("common.backToDashboard")}
               </Button>
             </CardContent>
           </Card>
@@ -318,15 +409,15 @@ function TrainingPageContent() {
             // Set-based progress
             <>
               <div className="flex items-center justify-center gap-1 text-sm md:text-lg text-gray-700">
-                <span className="font-bold text-xl md:text-2xl text-orange-600">{setProgress.correct}</span>
+                <span className="font-bold text-xl md:text-2xl text-brand">{setProgress.correct}</span>
                 <span className="text-gray-500">/{setProgress.total}</span>
                 <span className="text-gray-500 text-xs md:text-base ml-1">
-                  questions correct
+                  {t("trainingPage.questionsCorrect")}
                 </span>
               </div>
-              <div className="w-full bg-orange-200 rounded-full h-2 mt-2 max-w-md mx-auto">
+              <div className="w-full bg-brand-border-light rounded-full h-2 mt-2 max-w-md mx-auto">
                 <div
-                  className="bg-orange-600 h-2 rounded-full transition-all"
+                  className="bg-brand h-2 rounded-full transition-all"
                   style={{ width: `${(setProgress.correct / setProgress.total) * 100}%` }}
                 />
               </div>
@@ -335,15 +426,15 @@ function TrainingPageContent() {
             // Onboarding progress
             <>
               <div className="flex items-center justify-center gap-1 text-sm md:text-lg text-gray-700">
-                <span className="font-bold text-xl md:text-2xl text-orange-600">{training.totalCorrectAllTime}</span>
+                <span className="font-bold text-xl md:text-2xl text-brand">{training.totalCorrectAllTime}</span>
                 <span className="text-gray-500">/10</span>
                 <span className="text-gray-500 text-xs md:text-base ml-1">
-                  ({10 - training.totalCorrectAllTime} more to unlock)
+                  ({10 - training.totalCorrectAllTime} {t("trainingPage.moreToUnlock")})
                 </span>
               </div>
-              <div className="w-full bg-orange-200 rounded-full h-2 mt-2 max-w-md mx-auto">
+              <div className="w-full bg-brand-border-light rounded-full h-2 mt-2 max-w-md mx-auto">
                 <div
-                  className="bg-orange-600 h-2 rounded-full transition-all"
+                  className="bg-brand h-2 rounded-full transition-all"
                   style={{ width: `${Math.min(100, (training.totalCorrectAllTime / 10) * 100)}%` }}
                 />
               </div>
@@ -351,9 +442,9 @@ function TrainingPageContent() {
           ) : (
             // Post-onboarding without set - show current streak
             <div className="flex items-center justify-center gap-1 text-sm md:text-lg text-gray-700">
-              <span className="font-bold text-xl md:text-2xl text-orange-600">{training.currentStreak}</span>
+              <span className="font-bold text-xl md:text-2xl text-brand">{training.currentStreak}</span>
               <span className="text-gray-500 text-xs md:text-base ml-1">
-                streak
+                {t("trainingPage.streak")}
               </span>
             </div>
           )}
@@ -365,7 +456,7 @@ function TrainingPageContent() {
 
 export default function TrainingPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-gradient-to-br from-orange-50 to-amber-50" />}>
+    <Suspense fallback={<div className="min-h-screen bg-gradient-to-br from-brand-light to-brand-gradient-to" />}>
       <TrainingPageContent />
     </Suspense>
   );

@@ -12,21 +12,17 @@ import Image from "next/image";
 import { useStore } from "@/store/useStore";
 import { useHydration } from "@/hooks/useHydration";
 import { useAuth } from "@/contexts/AuthContext";
+import { auth } from "@/lib/firebase";
 import { states } from "@/data/states";
-
-// Training set definitions
-const TRAINING_SET_NAMES: { [key: number]: string } = {
-  1: "Signs & Signals",
-  2: "Rules of the Road",
-  3: "Safety & Emergencies",
-  4: "State Laws",
-};
+import { useTranslation } from "@/contexts/LanguageContext";
+import { trackBeginCheckout, trackPurchase, trackViewItem } from "@/lib/analytics";
 
 function DashboardContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const hydrated = useHydration();
   const { user } = useAuth();
+  const { t } = useTranslation();
   const isGuest = useStore((state) => state.isGuest);
   const selectedState = useStore((state) => state.selectedState);
   const getTestSession = useStore((state) => state.getTestSession);
@@ -40,6 +36,7 @@ function DashboardContent() {
   const getTrainingSetProgress = useStore((state) => state.getTrainingSetProgress);
   const getPassProbability = useStore((state) => state.getPassProbability);
   const isOnboardingComplete = useStore((state) => state.isOnboardingComplete);
+  const completeTest = useStore((state) => state.completeTest);
 
   // Paywall state
   const [paywallOpen, setPaywallOpen] = useState(false);
@@ -60,7 +57,7 @@ function DashboardContent() {
       const progress = getTrainingSetProgress(id);
       return {
         id,
-        name: TRAINING_SET_NAMES[id],
+        name: t(`trainingSets.${id}`),
         correctCount: progress.correct,
         targetCount: progress.total,
       };
@@ -86,6 +83,23 @@ function DashboardContent() {
     }
   }, [hydrated, selectedState, router]);
 
+  // Auto-complete any test where all questions are answered (handles stuck state)
+  useEffect(() => {
+    if (!hydrated) return;
+    [1, 2, 3, 4].forEach((testId) => {
+      const test = getCurrentTest(testId);
+      if (!test || test.questions.length === 0) return;
+      const answeredCount = Object.keys(test.answers).length;
+      if (answeredCount === test.questions.length) {
+        let correctCount = 0;
+        test.questions.forEach((q, i) => {
+          if (test.answers[i] === q.correctAnswer) correctCount++;
+        });
+        completeTest(testId, correctCount, test.questions, test.answers);
+      }
+    });
+  }, [hydrated]); // eslint-disable-line react-hooks/exhaustive-deps
+
   // Handle post-purchase verification
   useEffect(() => {
     const sessionId = searchParams.get("session_id");
@@ -94,14 +108,24 @@ function DashboardContent() {
 
     if (sessionId && success === "true" && user?.uid) {
       // Verify purchase with backend
-      fetch("/api/stripe/verify-purchase", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ sessionId, userId: user.uid }),
-      })
-        .then((res) => res.json())
+      const sendVerification = async () => {
+        const idToken = await auth.currentUser?.getIdToken();
+        if (!idToken) return;
+        return fetch("/api/stripe/verify-purchase", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${idToken}`,
+          },
+          body: JSON.stringify({ sessionId }),
+        });
+      };
+      sendVerification()
+        .then((res) => res?.json())
         .then((data) => {
+          if (!data) return;
           if (data.isPremium) {
+            trackPurchase(sessionId);
             setPremiumStatus({
               isPremium: true,
               purchasedAt: data.purchasedAt || new Date().toISOString(),
@@ -124,6 +148,7 @@ function DashboardContent() {
 
   // Handle paywall click
   const handlePremiumClick = (feature: "training_set_4" | "practice_test_4") => {
+    trackViewItem();
     setPaywallFeature(feature);
     setPaywallOpen(true);
   };
@@ -136,11 +161,19 @@ function DashboardContent() {
     }
 
     try {
+      const idToken = await auth.currentUser?.getIdToken();
+      if (!idToken) {
+        alert("Authentication error. Please sign in again.");
+        return;
+      }
+
       const response = await fetch("/api/stripe/checkout", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${idToken}`,
+        },
         body: JSON.stringify({
-          userId: user.uid,
           email: user.email,
           returnUrl: window.location.origin,
         }),
@@ -155,6 +188,7 @@ function DashboardContent() {
       }
 
       if (data.checkoutUrl) {
+        trackBeginCheckout();
         window.location.href = data.checkoutUrl;
       } else {
         console.error("No checkout URL returned:", data);
@@ -187,14 +221,14 @@ function DashboardContent() {
 
   const trainingSets = hydrated ? getTrainingSets() : [1, 2, 3, 4].map((id) => ({
     id,
-    name: TRAINING_SET_NAMES[id],
+    name: t(`trainingSets.${id}`),
     correctCount: 0,
     targetCount: 50,
   }));
 
   return (
     <div className="min-h-screen bg-white relative">
-      <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-orange-50 to-white pointer-events-none" />
+      <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-brand-light to-white pointer-events-none" />
       <div className="relative container mx-auto px-4 py-8 max-w-6xl">
 
         {/* Paywall Modal */}
@@ -215,10 +249,10 @@ function DashboardContent() {
                 <CheckCircle className="h-12 w-12 text-green-500" />
                 <div className="flex-1">
                   <p className="text-xl font-bold text-green-900">
-                    Welcome to Premium!
+                    {t("dashboard.welcomePremium")}
                   </p>
                   <p className="text-sm text-green-700 mt-1">
-                    Training Set 4 and Practice Test 4 are now unlocked
+                    {t("dashboard.premiumUnlocked")}
                   </p>
                 </div>
                 <button
@@ -235,19 +269,19 @@ function DashboardContent() {
         {/* Onboarding Card - shown during onboarding */}
         {!onboardingComplete && (
           <Link href="/training" className="block">
-            <Card className="mb-6 bg-gradient-to-r from-orange-50 to-amber-50 border-orange-200 hover:shadow-md transition-all cursor-pointer">
+            <Card className="mb-6 bg-gradient-to-r from-brand-light to-brand-gradient-to border-brand-border-light hover:shadow-md transition-all cursor-pointer">
               <CardContent className="p-6">
                 <div className="flex items-center gap-4">
-                  <Zap className="h-12 w-12 text-orange-500" />
+                  <Zap className="h-12 w-12 text-brand" />
                   <div className="flex-1">
-                    <p className="text-2xl font-bold text-orange-900">
+                    <p className="text-2xl font-bold text-brand-darker">
                       {onboardingProgress}/10
                     </p>
-                    <p className="text-sm text-orange-700 mt-1">
-                      {10 - onboardingProgress} more to unlock training & tests
+                    <p className="text-sm text-brand-dark mt-1">
+                      {10 - onboardingProgress} {t("dashboard.moreToUnlock")}
                     </p>
                   </div>
-                  <ChevronRight className="h-6 w-6 text-orange-400" />
+                  <ChevronRight className="h-6 w-6 text-brand-muted" />
                 </div>
               </CardContent>
             </Card>
@@ -256,16 +290,16 @@ function DashboardContent() {
 
         {/* Pass Probability / Stats Card - shown after onboarding when there's data */}
         {onboardingComplete && isGuest && (
-          <Card className="mb-6 bg-gradient-to-r from-orange-50 to-amber-50 border-orange-200">
+          <Card className="mb-6 bg-gradient-to-r from-brand-light to-brand-gradient-to border-brand-border-light">
             <CardContent className="p-6">
               <div className="flex items-center gap-4">
                 <div className="text-4xl">📊</div>
                 <div className="flex-1">
                   <p className="text-lg text-gray-700">
-                    <span className="font-bold">Sign up</span> to track your pass probability and detailed statistics
+                    <span className="font-bold">{t("common.signUp")}</span> {t("dashboard.signUpPrompt")}
                   </p>
-                  <Link href="/signup" className="text-sm text-orange-600 hover:text-orange-800 font-medium mt-1 inline-block">
-                    Create free account →
+                  <Link href="/signup" className="text-sm text-brand hover:text-brand-dark font-medium mt-1 inline-block">
+                    {t("dashboard.createFreeAccount")}
                   </Link>
                 </div>
               </div>
@@ -296,15 +330,12 @@ function DashboardContent() {
                   />
                   <div className="flex-1">
                     <p className="text-xl font-bold text-gray-900">
-                      {passProbability > 50
-                        ? <>{passProbability}% chance of passing</>
-                        : <>{100 - passProbability}% chance of failing</>
-                      }
+                      {passProbability >= 50 ? <>{passProbability}% {t("dashboard.chanceOfPassing")}</> : <>{100 - passProbability}% {t("dashboard.chanceOfFailing")}</>}
                     </p>
-                    <p className="text-sm text-gray-500 mt-1 md:hidden">Learn how to improve</p>
+                    <p className="text-sm text-gray-500 mt-1 md:hidden">{t("dashboard.learnHowToImprove")}</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-sm text-gray-500 hidden md:inline">View stats</span>
+                    <span className="text-sm text-gray-500 hidden md:inline">{t("dashboard.viewStats")}</span>
                     <ChevronRight className={`h-6 w-6 ${
                     passProbability >= 80
                       ? "text-emerald-400"
@@ -327,9 +358,9 @@ function DashboardContent() {
         {onboardingComplete && (
           <div className="mb-8">
             <div className="mb-3">
-              <h2 className="text-xl font-bold">Training</h2>
+              <h2 className="text-xl font-bold">{t("dashboard.training")}</h2>
             </div>
-            <p className="text-sm text-gray-500 mb-4">Get all 50 questions correct to complete each set</p>
+            <p className="text-sm text-gray-500 mb-4">{t("dashboard.trainingSubtitle")}</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {trainingSets.map((set) => {
                 const isPremiumLocked = set.id === 4 && !isPremium && onboardingComplete;
@@ -348,9 +379,9 @@ function DashboardContent() {
 
         {/* Practice Tests */}
         <div className="mb-6">
-          <h2 className="text-xl font-bold mb-3">Practice Tests</h2>
+          <h2 className="text-xl font-bold mb-3">{t("dashboard.practiceTests")}</h2>
           <p className="text-sm text-gray-500 mb-4">
-            {onboardingComplete ? "Simulate the real exam experience" : "Complete onboarding to unlock"}
+            {onboardingComplete ? t("dashboard.simulateExam") : t("dashboard.completeOnboarding")}
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {[1, 2, 3, 4].map((testNumber) => {

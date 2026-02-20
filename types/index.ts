@@ -1,6 +1,25 @@
 // Question types
 export type QuestionType = "Universal" | "State-Specific";
 
+// Test mode
+export type TestMode = "dmv" | "cdl";
+
+// CDL question categories
+export type CDLQuestionCategory =
+  | "vehicleInspection"
+  | "safeDriving"
+  | "basicControl"
+  | "cargoHandling"
+  | "emergencyProcedures"
+  | "alcoholDrugs"
+  | "nightDriving"
+  | "weatherDriving"
+  | "mountainDriving"
+  | "railroadCrossings"
+  | "hazardPerception"
+  | "brakingSystems"
+  | "vehicleSystems";
+
 export type QuestionCategory =
   | "general"
   | "speedLimits"
@@ -9,7 +28,20 @@ export type QuestionCategory =
   | "insurance"
   | "seatbeltPhone"
   | "pointsPenalties"
-  | "stateUnique";
+  | "stateUnique"
+  | "vehicleInspection"
+  | "safeDriving"
+  | "basicControl"
+  | "cargoHandling"
+  | "emergencyProcedures"
+  | "alcoholDrugs"
+  | "nightDriving"
+  | "weatherDriving"
+  | "mountainDriving"
+  | "railroadCrossings"
+  | "hazardPerception"
+  | "brakingSystems"
+  | "vehicleSystems";
 
 export interface Question {
   type: QuestionType;

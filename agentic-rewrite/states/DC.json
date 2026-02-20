@@ -1,0 +1,522 @@
+[
+  {
+    "id": "DC-001",
+    "state": "DC",
+    "category": "gdlLicensing",
+    "question": "At what minimum age can you apply for a learner's permit in Washington DC?",
+    "answers": [
+      "16 years of age",
+      "15 years of age",
+      "15 years and 6 months",
+      "17 years of age"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "DC-002",
+    "state": "DC",
+    "category": "gdlLicensing",
+    "question": "How long must a learner's permit be held before advancing to an intermediate license in DC?",
+    "answers": [
+      "3 months minimum",
+      "6 months minimum",
+      "9 months minimum",
+      "12 months minimum"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "DC-003",
+    "state": "DC",
+    "category": "gdlLicensing",
+    "question": "How many total hours of supervised driving practice are required for DC permit holders?",
+    "answers": [
+      "50 hours total",
+      "30 hours total",
+      "40 hours total",
+      "60 hours total"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "DC-004",
+    "state": "DC",
+    "category": "gdlLicensing",
+    "question": "How many nighttime supervised driving hours are required during DC's intermediate stage?",
+    "answers": [
+      "5 hours at night",
+      "15 hours at night",
+      "20 hours at night",
+      "10 hours at night"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "DC-005",
+    "state": "DC",
+    "category": "gdlLicensing",
+    "question": "At what age can a DC driver obtain a full unrestricted license?",
+    "answers": [
+      "18 years old",
+      "17 years old",
+      "19 years old",
+      "21 years old"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "DC-006",
+    "state": "DC",
+    "category": "gdlLicensing",
+    "question": "What passenger restriction applies to intermediate license holders in DC?",
+    "answers": [
+      "Only one passenger at a time",
+      "No more than 2 passengers under 21",
+      "Family members only allowed",
+      "No passengers under 18"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "DC-007",
+    "state": "DC",
+    "category": "gdlLicensing",
+    "question": "What is the Sunday through Thursday nighttime curfew for intermediate license holders in DC during the school year?",
+    "answers": [
+      "10 PM to 5 AM",
+      "Midnight to 6 AM",
+      "11 PM to 6 AM",
+      "9 PM to 5 AM"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "DC-008",
+    "state": "DC",
+    "category": "gdlLicensing",
+    "question": "What is the weekend nighttime curfew for intermediate license holders in DC during the school year?",
+    "answers": [
+      "11 PM to 5 AM",
+      "10 PM to 6 AM",
+      "1 AM to 5 AM",
+      "12:01 AM to 6 AM"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "DC-009",
+    "state": "DC",
+    "category": "gdlLicensing",
+    "question": "What electronic device restriction applies to intermediate license holders in DC?",
+    "answers": [
+      "No use of any electronic devices",
+      "Hands-free devices only",
+      "GPS navigation is allowed",
+      "Texting only is prohibited"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "DC-010",
+    "state": "DC",
+    "category": "gdlLicensing",
+    "question": "What must a DC learner's permit holder always have in the vehicle while driving?",
+    "answers": [
+      "Proof of insurance only",
+      "A licensed supervising driver",
+      "A copy of the driver's manual",
+      "Emergency roadside kit"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "DC-011",
+    "state": "DC",
+    "category": "gdlLicensing",
+    "question": "What happens if a provisional driver under 18 violates curfew restrictions in DC?",
+    "answers": [
+      "Verbal warning only",
+      "No consequence until third offense",
+      "License suspension or delay",
+      "Parents receive a fine"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "DC-012",
+    "state": "DC",
+    "category": "gdlLicensing",
+    "question": "What is the summer nighttime curfew for intermediate license holders in DC?",
+    "answers": [
+      "11 PM to 5 AM",
+      "10 PM to 6 AM",
+      "1 AM to 5 AM",
+      "12:01 AM to 6 AM"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "DC-013",
+    "state": "DC",
+    "category": "cellPhone",
+    "question": "What type of cell phone use is permitted for adult drivers in DC?",
+    "answers": [
+      "Hands-free devices only",
+      "Brief handheld calls under 1 min",
+      "Handheld at red lights only",
+      "Any use while stopped in traffic"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "DC-014",
+    "state": "DC",
+    "category": "cellPhone",
+    "question": "What cell phone restriction applies to minor drivers in DC?",
+    "answers": [
+      "Handheld use only is banned",
+      "No wireless use at all, even hands-free",
+      "Same rules as adult drivers",
+      "Texting only is prohibited"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "DC-015",
+    "state": "DC",
+    "category": "cellPhone",
+    "question": "When can any DC driver use a handheld phone while driving?",
+    "answers": [
+      "At red lights only",
+      "In slow-moving traffic",
+      "To contact emergency services",
+      "When parked but engine running"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "DC-016",
+    "state": "DC",
+    "category": "cellPhone",
+    "question": "How is handheld phone use while driving classified in DC?",
+    "answers": [
+      "Secondary offense only",
+      "Warning for first violation",
+      "Civil infraction only",
+      "Primary offense with points"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "DC-017",
+    "state": "DC",
+    "category": "cellPhone",
+    "question": "What must you do with your phone before starting to drive in DC?",
+    "answers": [
+      "Put it in hands-free mode or away",
+      "Turn it completely off",
+      "Place it in the glove box",
+      "Give it to a passenger"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "DC-018",
+    "state": "DC",
+    "category": "cellPhone",
+    "question": "What is the penalty for texting while driving in DC?",
+    "answers": [
+      "Verbal warning for first offense",
+      "Fine and points on your license",
+      "License suspension immediately",
+      "Required driving course only"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "DC-019",
+    "state": "DC",
+    "category": "duiStateLaws",
+    "question": "What is the legal BAC limit for adult drivers age 21 and over in DC?",
+    "answers": [
+      "0.10%",
+      "0.05%",
+      "0.08%",
+      "0.06%"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "DC-020",
+    "state": "DC",
+    "category": "duiStateLaws",
+    "question": "What is the BAC policy for drivers under 21 in DC?",
+    "answers": [
+      "0.02% BAC limit",
+      "0.04% BAC limit",
+      "0.08% same as adults",
+      "Any detectable alcohol"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "DC-021",
+    "state": "DC",
+    "category": "duiStateLaws",
+    "question": "What does DC's implied consent law require of drivers?",
+    "answers": [
+      "Consent to BAC testing if arrested",
+      "Consent to vehicle searches",
+      "Consent to field sobriety tests",
+      "Waiver of attorney rights"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "DC-022",
+    "state": "DC",
+    "category": "duiStateLaws",
+    "question": "What is the license suspension for refusing a BAC test for the first time in DC?",
+    "answers": [
+      "6 months",
+      "Up to 1 year",
+      "90 days",
+      "30 days"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "DC-023",
+    "state": "DC",
+    "category": "duiStateLaws",
+    "question": "What is the BAC limit for commercial vehicle drivers in DC?",
+    "answers": [
+      "0.08%",
+      "0.02%",
+      "0.04%",
+      "0.06%"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "DC-024",
+    "state": "DC",
+    "category": "duiStateLaws",
+    "question": "What can happen to your license for a first-time DUI conviction in DC?",
+    "answers": [
+      "No effect on your license",
+      "Warning letter sent to you",
+      "Points added but no suspension",
+      "Revocation or suspension"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "DC-025",
+    "state": "DC",
+    "category": "duiStateLaws",
+    "question": "What are the three alcohol-related driving offenses recognized in DC?",
+    "answers": [
+      "DUI, DWI, and OWI",
+      "DUI, DWI, and DWAI",
+      "DUI, OUI, and OWI",
+      "DWI, OWI, and DUAC"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "DC-026",
+    "state": "DC",
+    "category": "duiStateLaws",
+    "question": "Which DC alcohol offense is specifically tied to a BAC of 0.08% or higher?",
+    "answers": [
+      "DUI (Driving Under the Influence)",
+      "DWI (Driving While Intoxicated)",
+      "OWI (Operating While Impaired)",
+      "DWAI (Driving While Ability Impaired)"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "DC-027",
+    "state": "DC",
+    "category": "insurance",
+    "question": "What type of negligence system does DC use for auto accidents?",
+    "answers": [
+      "Comparative negligence",
+      "Modified comparative negligence",
+      "Contributory negligence",
+      "No-fault system"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "DC-028",
+    "state": "DC",
+    "category": "insurance",
+    "question": "What must you carry as proof while driving in DC?",
+    "answers": [
+      "Vehicle title document",
+      "Emission inspection receipt",
+      "Proof of registration only",
+      "Valid insurance documentation"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "DC-029",
+    "state": "DC",
+    "category": "insurance",
+    "question": "What happens if you are caught driving without insurance in DC?",
+    "answers": [
+      "Fine and vehicle may be impounded",
+      "Verbal warning for first offense",
+      "No penalty if you have a license",
+      "Points added to license only"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "DC-030",
+    "state": "DC",
+    "category": "insurance",
+    "question": "What type of auto insurance is mandatory for all DC drivers?",
+    "answers": [
+      "Comprehensive coverage",
+      "Liability insurance",
+      "Collision coverage",
+      "Gap insurance"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "DC-031",
+    "state": "DC",
+    "category": "stateUnique",
+    "question": "What is the default speed limit on DC streets unless otherwise posted?",
+    "answers": [
+      "25 mph",
+      "30 mph",
+      "20 mph",
+      "15 mph"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "DC-032",
+    "state": "DC",
+    "category": "stateUnique",
+    "question": "What is the speed limit in DC alleys?",
+    "answers": [
+      "10 mph",
+      "20 mph",
+      "25 mph",
+      "15 mph"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "DC-033",
+    "state": "DC",
+    "category": "stateUnique",
+    "question": "What does DC law require when your windshield wipers are in use?",
+    "answers": [
+      "Headlights must be turned on",
+      "Hazard lights must flash",
+      "Speed must be reduced by half",
+      "Windows must be fully closed"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "DC-034",
+    "state": "DC",
+    "category": "stateUnique",
+    "question": "What penalty applies for traffic violations in DC school or work zones?",
+    "answers": [
+      "Triple the normal fine",
+      "Double the normal fine",
+      "Same fine plus community service",
+      "Same fine plus license points"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "DC-035",
+    "state": "DC",
+    "category": "stateUnique",
+    "question": "What must drivers do when entering a traffic circle or rotary in DC?",
+    "answers": [
+      "Honk to alert other drivers",
+      "Enter quickly to merge with flow",
+      "Yield to traffic already in the circle",
+      "Stop completely before entering"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "DC-036",
+    "state": "DC",
+    "category": "stateUnique",
+    "question": "What does DC use to enforce traffic and red-light violations?",
+    "answers": [
+      "Only police officers on patrol",
+      "Volunteer crossing guards",
+      "Random traffic checkpoints",
+      "Automated cameras at intersections"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "DC-037",
+    "state": "DC",
+    "category": "stateUnique",
+    "question": "What is the speed limit in DC school zones during posted hours?",
+    "answers": [
+      "15 mph",
+      "20 mph",
+      "10 mph",
+      "25 mph"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "DC-038",
+    "state": "DC",
+    "category": "stateUnique",
+    "question": "What must you do when an emergency vehicle with flashing lights approaches in DC?",
+    "answers": [
+      "Stop in the current lane",
+      "Yield to the right-hand edge of the road",
+      "Speed up to clear the way",
+      "Pull into the nearest parking space"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "DC-039",
+    "state": "DC",
+    "category": "stateUnique",
+    "question": "Who must wear a seatbelt in a vehicle in DC?",
+    "answers": [
+      "Only front seat occupants",
+      "Only the driver at all times",
+      "All occupants including backseat",
+      "Only passengers under 18"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "DC-040",
+    "state": "DC",
+    "category": "stateUnique",
+    "question": "When are you allowed to pass a stopped school bus in DC?",
+    "answers": [
+      "When driving on a divided highway",
+      "When no children are visible",
+      "When directed by a police officer",
+      "Never while red lights flash"
+    ],
+    "correctIndex": 3
+  }
+]

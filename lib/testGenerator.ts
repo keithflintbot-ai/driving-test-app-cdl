@@ -1,5 +1,12 @@
 import { Question } from "@/types";
-import questionsData from "@/data/questions.json";
+import type { Language } from "@/i18n";
+import questionsDataEn from "@/data/questions.json";
+import questionsDataEs from "@/data/questions_es.json";
+
+// Get questions data for the specified language
+export function getQuestionsData(language: Language = 'en'): Question[] {
+  return (language === 'es' ? questionsDataEs : questionsDataEn) as Question[];
+}
 
 // Helper to shuffle array
 function shuffle<T>(array: T[]): T[] {
@@ -16,9 +23,9 @@ function shuffle<T>(array: T[]): T[] {
 function hasPositionDependentAnswers(question: Question): boolean {
   const options = [question.optionA, question.optionB, question.optionC, question.optionD];
 
-  // Pattern to detect references to other answer options
-  // Matches: "A and B", "B and C", "Both A and B", "A, B, and C", etc.
-  const positionReferencePattern = /\b(A|B|C|D)\s+(and|or|,)\s+(A|B|C|D)\b|\bBoth\s+(A|B|C|D)\s+and\s+(A|B|C|D)\b|\bAll of the above\b|\bNone of the above\b/i;
+  // Pattern to detect references to other answer options (English and Spanish)
+  // Matches: "A and B", "B and C", "Both A and B", "A, B, and C", "A y B", "Todas las anteriores", etc.
+  const positionReferencePattern = /\b(A|B|C|D)\s+(and|or|y|o|,)\s+(A|B|C|D)\b|\bBoth\s+(A|B|C|D)\s+and\s+(A|B|C|D)\b|\bAll of the above\b|\bNone of the above\b|\bTodas las anteriores\b|\bNinguna de las anteriores\b/i;
 
   return options.some(option => positionReferencePattern.test(option));
 }
@@ -58,8 +65,8 @@ export function shuffleQuestionOptions(question: Question): Question {
 
 // Get questions for a specific test
 // Each test has a FIXED set of questions, but the order is randomized on each attempt
-export function generateTest(testNumber: number, state: string): Question[] {
-  const allQuestions = questionsData as Question[];
+export function generateTest(testNumber: number, state: string, language: Language = 'en'): Question[] {
+  const allQuestions = getQuestionsData(language);
 
   // Get universal questions (type: "Universal", state: "ALL")
   // Sort by questionId for deterministic assignment to tests
@@ -125,8 +132,8 @@ function intersperseQuestions(universal: Question[], state: Question[]): Questio
 
 // Get the fixed 50 questions for a training set
 // Training set N has the same questions as Test N, in a fixed order
-export function getTrainingSetQuestions(setNumber: number, state: string): Question[] {
-  const allQuestions = questionsData as Question[];
+export function getTrainingSetQuestions(setNumber: number, state: string, language: Language = 'en'): Question[] {
+  const allQuestions = getQuestionsData(language);
 
   // Get universal questions (type: "Universal", state: "ALL")
   const universalQuestions = allQuestions
@@ -165,9 +172,10 @@ export function getNextTrainingSetQuestion(
   state: string,
   masteredIds: string[],
   wrongQueue: string[] = [],
-  currentQuestionId: string | null = null
+  currentQuestionId: string | null = null,
+  language: Language = 'en'
 ): Question | null {
-  const questions = getTrainingSetQuestions(setNumber, state);
+  const questions = getTrainingSetQuestions(setNumber, state, language);
 
   // Find questions not yet mastered
   let unmasteredQuestions = questions.filter(q => !masteredIds.includes(q.questionId));
@@ -207,9 +215,10 @@ export function getNextTrainingSetQuestion(
 export function getTrainingQuestion(
   state: string,
   masteredQuestionIds: string[] = [],
-  lastQuestionId: string | null = null
+  lastQuestionId: string | null = null,
+  language: Language = 'en'
 ): Question | null {
-  const allQuestions = questionsData as Question[];
+  const allQuestions = getQuestionsData(language);
 
   // Get questions for this state (universal + state-specific)
   const stateQuestions = allQuestions.filter(

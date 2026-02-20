@@ -1,26 +1,65 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { QuestionCard } from "@/components/QuestionCard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Trophy, XCircle, ChevronDown, ChevronUp, TrendingUp, Sparkles, ArrowLeft } from "lucide-react";
+import { ChevronDown, ChevronUp, TrendingUp, Sparkles, ArrowLeft, BarChart3, ChevronRight } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useStore } from "@/store/useStore";
 import { useHydration } from "@/hooks/useHydration";
 import { Cloud } from "lucide-react";
 import { Fireworks } from "@/components/Fireworks";
+import { ShareButton } from "@/components/ShareButton";
+import { useTranslation } from "@/contexts/LanguageContext";
+import { states } from "@/data/states";
+
+function getTigerFace(percentage: number): string {
+  if (percentage >= 100) return "/tiger_face_01.png";
+  if (percentage >= 85) return "/tiger_face_02.png";
+  if (percentage >= 70) return "/tiger_face_03.png";
+  if (percentage >= 55) return "/tiger_face_04.png";
+  if (percentage >= 40) return "/tiger_face_05.png";
+  if (percentage >= 25) return "/tiger_face_06.png";
+  if (percentage >= 10) return "/tiger_face_07.png";
+  return "/tiger_face_08.png";
+}
+
+function getTagline(percentage: number, lang: string): string {
+  if (lang === "es") {
+    if (percentage >= 100) return "PUNTUACIÓN PERFECTA";
+    if (percentage >= 90) return "LISTO PARA EL DMV";
+    if (percentage >= 80) return "APROBÉ MI EXAMEN DEL DMV";
+    if (percentage >= 70) return "APROBÉ POR POCO";
+    if (percentage >= 50) return "CASI LO LOGRAS";
+    if (percentage >= 30) return "SIGUE ESTUDIANDO";
+    if (percentage >= 10) return "APENAS COMENZANDO";
+    return "TODO EXPERTO FUE PRINCIPIANTE";
+  }
+
+  if (percentage >= 100) return "PERFECT SCORE";
+  if (percentage >= 90) return "READY FOR THE DMV";
+  if (percentage >= 80) return "PASSED MY DMV PRACTICE TEST";
+  if (percentage >= 70) return "BARELY PASSED";
+  if (percentage >= 50) return "ALMOST THERE";
+  if (percentage >= 30) return "KEEP STUDYING";
+  if (percentage >= 10) return "JUST GETTING STARTED";
+  return "EVERY EXPERT WAS ONCE A BEGINNER";
+}
 
 export default function ResultsPage() {
   const params = useParams();
   const router = useRouter();
   const testId = parseInt(params.id as string);
   const hydrated = useHydration();
+  const { t, language } = useTranslation();
 
   const getTestSession = useStore((state) => state.getTestSession);
   const getTestAttemptStats = useStore((state) => state.getTestAttemptStats);
+  const getQuestionPerformance = useStore((state) => state.getQuestionPerformance);
   const isGuest = useStore((state) => state.isGuest);
   const [expandedQuestions, setExpandedQuestions] = useState<Set<number>>(new Set());
   const [loading, setLoading] = useState(true);
@@ -49,6 +88,32 @@ export default function ResultsPage() {
     }
   }, [testSession, testId, router, hydrated]);
 
+  // Compute weak categories from THIS test's wrong answers
+  const weakCategories = useMemo(() => {
+    if (!testSession) return [];
+    const categoryStats: { [cat: string]: { correct: number; wrong: number } } = {};
+    testSession.answers.forEach((answer, index) => {
+      const q = testSession.questions[index];
+      if (!q) return;
+      const cat = q.category;
+      if (!categoryStats[cat]) categoryStats[cat] = { correct: 0, wrong: 0 };
+      if (answer.isCorrect) {
+        categoryStats[cat].correct++;
+      } else {
+        categoryStats[cat].wrong++;
+      }
+    });
+    return Object.entries(categoryStats)
+      .filter(([, stats]) => stats.wrong > 0)
+      .map(([category, stats]) => ({
+        category,
+        wrong: stats.wrong,
+        total: stats.correct + stats.wrong,
+        accuracy: Math.round((stats.correct / (stats.correct + stats.wrong)) * 100),
+      }))
+      .sort((a, b) => a.accuracy - b.accuracy);
+  }, [testSession]);
+
   if (!testSession) {
     return null;
   }
@@ -63,6 +128,7 @@ export default function ResultsPage() {
   const totalQuestions = questions.length;
   const percentage = totalQuestions > 0 ? Math.round((score / totalQuestions) * 100) : 0;
   const passed = percentage >= 70;
+  const stateName = states.find((s) => s.code === testSession.state)?.name || testSession.state;
 
   // Calculate improvement metrics
   const firstScore = attemptStats?.firstScore || score;
@@ -95,7 +161,7 @@ export default function ResultsPage() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="text-xl font-semibold mb-2">Loading results...</div>
+          <div className="text-xl font-semibold mb-2">{t("results.loadingResults")}</div>
         </div>
       </div>
     );
@@ -108,101 +174,124 @@ export default function ResultsPage() {
         <Fireworks duration={3000} onComplete={() => setShowFireworks(false)} />
       )}
 
-      <div className="container mx-auto px-4 py-8 max-w-6xl">
-        {/* Back Button */}
-        <div className="mb-6">
+      {/* Full-bleed Score Card */}
+      <div className={`${passed ? "bg-gradient-to-b from-gray-950 to-green-950" : "bg-gradient-to-b from-gray-950 to-brand-darker"}`}>
+        {/* Back button */}
+        <div className="max-w-6xl mx-auto px-4 pt-4">
           <Link href="/dashboard">
-            <Button variant="ghost" className="mb-4">
+            <Button variant="ghost" className="text-gray-400 hover:text-white hover:bg-white/10 -ml-2">
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Dashboard
+              {t("common.backToDashboard")}
             </Button>
           </Link>
         </div>
 
-        {/* Results Header - Main Score */}
-        <Card className={`mb-6 ${passed ? "bg-gradient-to-br from-green-50 to-emerald-50 border-green-200" : "bg-gradient-to-br from-orange-50 to-amber-50 border-orange-300"}`}>
-          <CardContent className="pt-8 pb-8">
-            <div className="text-center">
-              <div className={`inline-flex items-center justify-center w-24 h-24 rounded-full mb-6 ${
-                passed ? "bg-green-100 border-4 border-green-300" : "bg-orange-100 border-4 border-orange-300"
-              }`}>
-                {passed ? (
-                  <Trophy className="w-12 h-12 text-green-600" />
-                ) : (
-                  <XCircle className="w-12 h-12 text-orange-600" />
-                )}
-              </div>
-
-              <h1 className="text-4xl md:text-5xl font-bold mb-3">
-                {passed ? "Congratulations!" : "Keep Practicing!"}
-              </h1>
-
-              <p className="text-lg text-gray-700 mb-6 max-w-2xl mx-auto">
-                {passed
-                  ? "You passed the test with flying colors!"
-                  : "You need 70% to pass. Review the questions below and try again."}
-              </p>
-
-              {/* Main Score Display */}
-              <div className="mb-6">
-                <div className={`text-7xl md:text-8xl font-bold mb-3 ${passed ? "text-green-600" : "text-orange-600"}`}>
-                  {percentage}%
-                </div>
-                <div className="text-2xl text-gray-700 mb-4">
-                  {score} out of {totalQuestions} correct
-                </div>
-                <Badge
-                  className={`text-lg px-6 py-2 ${
-                    passed ? "bg-green-600 hover:bg-green-700" : "bg-orange-600 hover:bg-orange-700"
-                  }`}
-                >
-                  {passed ? "PASSED" : "FAILED"}
-                </Badge>
-              </div>
-
-              {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row gap-3 justify-center mt-8 max-w-2xl mx-auto">
-                <Button className="bg-black text-white hover:bg-gray-800 flex-1 sm:flex-initial" onClick={() => router.push("/dashboard")}>
-                  Back to Dashboard
-                </Button>
-                <Button
-                  className="bg-white text-black hover:bg-gray-100 border-2 border-gray-300 flex-1 sm:flex-initial"
-                  onClick={() => router.push(`/test/${testId}`)}
-                >
-                  Retake Test
-                </Button>
-                {!isGuest && (
-                  <Button
-                    className="bg-white text-black hover:bg-gray-100 border-2 border-gray-300 flex-1 sm:flex-initial"
-                    onClick={() => router.push("/stats")}
-                  >
-                    View Stats
-                  </Button>
-                )}
-              </div>
+        <div className="text-center px-6 pt-4 pb-10 max-w-lg mx-auto">
+          {/* Branding header */}
+          <div className="mb-6">
+            <div className="text-gray-300 text-lg font-bold tracking-widest">tigertest.io</div>
+            <div className="text-gray-500 text-xs uppercase tracking-widest mt-1">
+              {language === "es" ? "EXAMEN DE PRÁCTICA DEL DMV" : "DMV PRACTICE TEST"}
             </div>
-          </CardContent>
-        </Card>
+          </div>
 
+          {/* Tiger face */}
+          <div className="flex justify-center mb-5">
+            <Image
+              src={getTigerFace(percentage)}
+              alt="Tiger mascot"
+              width={160}
+              height={160}
+              className="w-[120px] h-[120px] md:w-[160px] md:h-[160px]"
+              priority
+            />
+          </div>
+
+          {/* Tagline */}
+          <div className={`text-base md:text-lg font-extrabold uppercase tracking-widest mb-4 ${passed ? "text-green-300" : "text-brand-border"}`}>
+            {getTagline(percentage, language)}
+          </div>
+
+          {/* Giant percentage */}
+          <div className={`text-7xl md:text-8xl font-black mb-3 leading-none ${passed ? "text-green-500" : "text-brand"}`}>
+            {percentage}%
+          </div>
+
+          {/* X out of 50 correct */}
+          <div className="text-xl md:text-2xl text-gray-400 mb-5">
+            {score} {t("results.outOf")} {totalQuestions} {t("results.correctLabel")}
+          </div>
+
+          {/* PASSED/FAILED badge */}
+          <Badge
+            className={`text-lg px-6 py-2 mb-5 ${
+              passed ? "bg-green-600 hover:bg-green-700" : "bg-brand hover:bg-brand-dark"
+            }`}
+          >
+            {passed ? t("results.passed") : t("results.failed")}
+          </Badge>
+
+          {/* State + Test label */}
+          <div className="text-gray-400 text-base mb-2">
+            {stateName} · {language === "es" ? `Examen ${testId}` : `Test ${testId}`}
+          </div>
+
+          {/* Branding footer */}
+          <div className="text-gray-600 text-sm tracking-wider mb-8">tigertest.io</div>
+
+          {/* SHARE + TRY AGAIN buttons */}
+          <div className="flex gap-3 max-w-xs mx-auto">
+            <ShareButton
+              score={score}
+              totalQuestions={totalQuestions}
+              percentage={percentage}
+              passed={passed}
+              testId={testId}
+              stateCode={testSession.state}
+              className="flex-1 bg-white text-black hover:bg-gray-100 font-bold uppercase tracking-wide h-12 text-base"
+            />
+            <Button
+              className="flex-1 bg-transparent text-white hover:bg-white/10 border border-white/30 font-bold uppercase tracking-wide h-12 text-base"
+              onClick={() => router.push(`/test/${testId}`)}
+            >
+              {t("results.tryAgain")}
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      {/* See Stats arrow */}
+      <div className="text-center py-5 bg-gray-50">
+        <button
+          onClick={() => document.getElementById("stats-section")?.scrollIntoView({ behavior: "smooth" })}
+          className="text-gray-500 hover:text-gray-700 flex flex-col items-center gap-1 mx-auto transition-colors"
+        >
+          <span className="text-sm font-medium">{t("results.viewStats")}</span>
+          <ChevronDown className="h-4 w-4 animate-bounce" />
+        </button>
+      </div>
+
+      {/* Stats & Details Section */}
+      <div id="stats-section" className="container mx-auto px-4 pb-8 max-w-6xl">
         {/* Guest Signup Prompt */}
         {isGuest && (
-          <Card className="mb-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
+          <Card className="mb-6 bg-gradient-to-r from-brand-light to-brand-gradient-to border-brand-border-light">
             <CardContent className="py-6">
               <div className="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
                 <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                    <Cloud className="w-6 h-6 text-blue-600" />
+                  <div className="w-12 h-12 bg-brand-light rounded-full flex items-center justify-center">
+                    <Cloud className="w-6 h-6 text-brand" />
                   </div>
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-1">Save Your Progress</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-1">{t("results.saveYourProgress")}</h3>
                   <p className="text-gray-600">
-                    Your score is only saved on this device. Create a free account to save your progress to the cloud and track your improvement over time.
+                    {t("results.scoreOnlyOnDevice")}
                   </p>
                 </div>
                 <Link href="/signup">
-                  <Button className="bg-blue-600 text-white hover:bg-blue-700 whitespace-nowrap">
-                    Sign Up Free
+                  <Button className="bg-brand text-white hover:bg-brand-hover whitespace-nowrap">
+                    {t("results.signUpFree")}
                   </Button>
                 </Link>
               </div>
@@ -214,38 +303,38 @@ export default function ResultsPage() {
         {attemptStats && attemptStats.attemptCount > 1 && (
           <Card className="mb-6">
             <CardHeader>
-              <CardTitle className="text-center">Your Progress</CardTitle>
-              <p className="text-center text-sm text-gray-600">Attempt #{attemptNumber}</p>
+              <CardTitle className="text-center">{t("results.yourProgress")}</CardTitle>
+              <p className="text-center text-sm text-gray-600">{t("results.attempt")} #{attemptNumber}</p>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                 {/* First Attempt */}
                 <Card className="bg-gray-50 border-gray-200">
                   <CardContent className="pt-6 text-center">
-                    <div className="text-sm font-medium text-gray-600 mb-2">First Attempt</div>
+                    <div className="text-sm font-medium text-gray-600 mb-2">{t("results.firstAttempt")}</div>
                     <div className="text-4xl font-bold text-gray-700 mb-1">
                       {firstPercentage}%
                     </div>
                     <div className="text-sm text-gray-500">
-                      {firstScore}/{totalQuestions} correct
+                      {firstScore}/{totalQuestions} {t("results.correctLabel")}
                     </div>
                   </CardContent>
                 </Card>
 
                 {/* This Attempt */}
-                <Card className="bg-orange-50 border-orange-200 border-2">
+                <Card className="bg-brand-light border-brand-border-light border-2">
                   <CardContent className="pt-6 text-center">
-                    <div className="text-sm font-medium text-orange-700 mb-2">This Attempt</div>
-                    <div className="text-4xl font-bold text-orange-600 mb-1">
+                    <div className="text-sm font-medium text-brand-dark mb-2">{t("results.thisAttempt")}</div>
+                    <div className="text-4xl font-bold text-brand mb-1">
                       {percentage}%
                     </div>
                     <div className="text-sm text-gray-600">
-                      {score}/{totalQuestions} correct
+                      {score}/{totalQuestions} {t("results.correctLabel")}
                     </div>
                     {isNewBest && (
                       <div className="flex items-center justify-center gap-1 text-yellow-600 font-semibold mt-2">
                         <Sparkles className="h-4 w-4" />
-                        <span className="text-sm">NEW BEST!</span>
+                        <span className="text-sm">{t("results.newBest")}</span>
                       </div>
                     )}
                   </CardContent>
@@ -254,12 +343,12 @@ export default function ResultsPage() {
                 {/* Best Score */}
                 <Card className="bg-green-50 border-green-200">
                   <CardContent className="pt-6 text-center">
-                    <div className="text-sm font-medium text-green-700 mb-2">Best Score</div>
+                    <div className="text-sm font-medium text-green-700 mb-2">{t("results.bestScore")}</div>
                     <div className="text-4xl font-bold text-green-600 mb-1">
                       {bestPercentage}%
                     </div>
                     <div className="text-sm text-gray-600">
-                      {bestScore}/{totalQuestions} correct
+                      {bestScore}/{totalQuestions} {t("results.correctLabel")}
                     </div>
                   </CardContent>
                 </Card>
@@ -270,7 +359,7 @@ export default function ResultsPage() {
                 <div className="flex items-center justify-center gap-2 bg-green-50 border-2 border-green-300 rounded-lg p-4">
                   <TrendingUp className="h-6 w-6 text-green-600" />
                   <span className="text-lg font-semibold text-green-700">
-                    Improved by {improvement}% since first attempt! 🚀
+                    {t("results.improvedBy")} {improvement}% {t("results.sinceFirstAttempt")} 🚀
                   </span>
                 </div>
               )}
@@ -278,15 +367,59 @@ export default function ResultsPage() {
           </Card>
         )}
 
+        {/* Weak Areas Insight → Stats CTA */}
+        {!isGuest && weakCategories.length > 0 && (
+          <Link href="/stats" className="block">
+            <Card className="mb-6 border-brand-border-light bg-gradient-to-r from-brand-light to-brand-gradient-to cursor-pointer hover:shadow-md transition-shadow">
+              <CardContent className="p-6">
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 w-10 h-10 bg-brand-light rounded-full flex items-center justify-center">
+                    <BarChart3 className="h-5 w-5 text-brand" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-bold text-gray-900 mb-2">
+                      {passed ? t("results.yourPerformanceBreakdown") : t("results.topicsToFocusOn")}
+                    </h3>
+                    <div className="space-y-2">
+                      {weakCategories.slice(0, 3).map(({ category, wrong, total, accuracy }) => (
+                        <div key={category} className="flex items-center gap-3">
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center justify-between text-sm">
+                              <span className="text-gray-700 font-medium">{t(`categories.${category}`)}</span>
+                              <span className={`font-semibold ${accuracy >= 70 ? "text-green-600" : accuracy >= 50 ? "text-yellow-600" : "text-red-600"}`}>
+                                {accuracy}%
+                              </span>
+                            </div>
+                            <div className="w-full bg-gray-200 rounded-full h-1.5 mt-1">
+                              <div
+                                className={`h-1.5 rounded-full ${accuracy >= 70 ? "bg-green-500" : accuracy >= 50 ? "bg-yellow-500" : "bg-red-500"}`}
+                                style={{ width: `${accuracy}%` }}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <p className="text-sm text-brand font-medium mt-3">
+                      {t("results.viewFullStats")}
+                    </p>
+                  </div>
+                  <ChevronRight className="h-5 w-5 text-brand-muted flex-shrink-0 mt-1" />
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+        )}
+
         {/* Question Review */}
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-2xl font-bold">Review Questions</h2>
+          <h2 className="text-2xl font-bold">{t("results.reviewQuestions")}</h2>
           <div className="flex gap-2">
             <Button size="sm" className="bg-white text-black hover:bg-gray-100 border-2 border-gray-300" onClick={expandAll}>
-              Expand All
+              {t("results.expandAll")}
             </Button>
             <Button size="sm" className="bg-white text-black hover:bg-gray-100 border-2 border-gray-300" onClick={collapseAll}>
-              Collapse All
+              {t("results.collapseAll")}
             </Button>
           </div>
         </div>
@@ -315,10 +448,10 @@ export default function ResultsPage() {
                       <div className="flex-1">
                         <div className="font-medium">{question.question}</div>
                         <div className="text-sm text-gray-600 mt-1">
-                          Your answer: <span className="font-semibold">{userAnswer || "Not answered"}</span>
+                          {t("results.yourAnswer")}: <span className="font-semibold">{userAnswer || t("results.notAnswered")}</span>
                           {!isCorrect && (
                             <span className="ml-2">
-                              • Correct: <span className="font-semibold text-green-600">{question.correctAnswer}</span>
+                              • {t("results.correctAnswer")}: <span className="font-semibold text-green-600">{question.correctAnswer}</span>
                             </span>
                           )}
                         </div>
@@ -326,7 +459,7 @@ export default function ResultsPage() {
                     </div>
                     <div className="flex items-center gap-3">
                       <Badge className={isCorrect ? "bg-green-500" : "bg-red-500"}>
-                        {isCorrect ? "Correct" : "Wrong"}
+                        {isCorrect ? t("results.correctAnswer") : t("results.wrong")}
                       </Badge>
                       {isExpanded ? (
                         <ChevronUp className="w-5 h-5 text-gray-400" />

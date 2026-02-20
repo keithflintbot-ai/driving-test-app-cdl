@@ -16,6 +16,7 @@ import {
 import { ArrowLeft, Loader2, User, AlertTriangle, MapPin } from "lucide-react";
 import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
+import { useTranslation } from "@/contexts/LanguageContext";
 import { useStore } from "@/store/useStore";
 import { useHydration } from "@/hooks/useHydration";
 import { states } from "@/data/states";
@@ -24,6 +25,7 @@ export default function SettingsPage() {
   const router = useRouter();
   const hydrated = useHydration();
   const { user } = useAuth();
+  const { t } = useTranslation();
   const photoURL = useStore((state) => state.photoURL);
   const setPhotoURL = useStore((state) => state.setPhotoURL);
   const resetAllData = useStore((state) => state.resetAllData);
@@ -101,17 +103,17 @@ export default function SettingsPage() {
 
   return (
     <div className="min-h-screen bg-white relative">
-      <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-orange-50 to-white pointer-events-none" />
+      <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-brand-light to-white pointer-events-none" />
       <div className="relative container mx-auto px-4 py-8 max-w-6xl">
         {/* Header */}
         <div className="mb-8">
           <Link href="/dashboard">
             <Button variant="ghost" className="mb-4">
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Dashboard
+              {t("common.backToDashboard")}
             </Button>
           </Link>
-          <h1 className="text-4xl font-bold">Settings</h1>
+          <h1 className="text-4xl font-bold">{t("settings.settings")}</h1>
         </div>
 
         {/* State Selection and Profile Photo Grid */}
@@ -121,21 +123,21 @@ export default function SettingsPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <MapPin className="h-5 w-5" />
-                State Selection
+                {t("settings.stateSelection")}
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 <div>
-                  <div className="text-sm text-gray-600 mb-2">Currently practicing for:</div>
-                  <div className="text-2xl font-bold text-orange-600 mb-4">
+                  <div className="text-sm text-gray-600 mb-2">{t("settings.currentlyPracticingFor")}</div>
+                  <div className="text-2xl font-bold text-brand mb-4">
                     {currentStateName}
                   </div>
                 </div>
 
                 <div>
                   <label className="text-sm font-medium text-gray-700 mb-2 block">
-                    Change State
+                    {t("settings.changeState")}
                   </label>
                   <select
                     value={selectedState || ""}
@@ -149,7 +151,7 @@ export default function SettingsPage() {
                     ))}
                   </select>
                   <p className="text-xs text-gray-500 mt-2">
-                    <strong className="text-orange-600">Warning:</strong> Switching states will permanently delete your current state&apos;s progress.
+                    <strong className="text-brand">Warning:</strong> {t("settings.switchStateWarning")}
                   </p>
                 </div>
               </div>
@@ -159,7 +161,7 @@ export default function SettingsPage() {
           {/* Profile Photo Card */}
           <Card className="bg-gray-50">
             <CardHeader>
-              <CardTitle>Profile Photo</CardTitle>
+              <CardTitle>{t("settings.profilePhoto")}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="flex flex-col items-center gap-6">
@@ -171,7 +173,7 @@ export default function SettingsPage() {
 
                 {/* User Email */}
                 <div className="text-center">
-                  <div className="text-sm text-gray-600 mb-1">Account</div>
+                  <div className="text-sm text-gray-600 mb-1">{t("settings.account")}</div>
                   <div className="font-medium">{user.email}</div>
                 </div>
 
@@ -186,12 +188,12 @@ export default function SettingsPage() {
                       {loadingGooglePhoto ? (
                         <>
                           <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                          Loading...
+                          {t("common.loading")}
                         </>
                       ) : (
                         <>
                           <User className="h-4 w-4 mr-2" />
-                          Use Google Photo
+                          {t("settings.useGooglePhoto")}
                         </>
                       )}
                     </Button>
@@ -200,7 +202,7 @@ export default function SettingsPage() {
 
                 {!user.photoURL && (
                   <div className="text-sm text-gray-500 text-center">
-                    Sign in with Google to use your Google profile photo
+                    {t("settings.signInWithGoogle")}
                   </div>
                 )}
               </div>
@@ -213,16 +215,15 @@ export default function SettingsPage() {
           <CardHeader>
             <CardTitle className="text-red-600 flex items-center gap-2">
               <AlertTriangle className="h-5 w-5" />
-              Danger Zone
+              {t("settings.dangerZone")}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               <div>
-                <h3 className="font-semibold mb-2">Reset All Data</h3>
+                <h3 className="font-semibold mb-2">{t("settings.resetAllData")}</h3>
                 <p className="text-sm text-gray-600 mb-4">
-                  This will permanently delete all your test progress, scores, attempts, and training data.
-                  Your account and state selection will remain, but all progress will be reset to zero.
+                  {t("settings.resetAllDataDesc")}
                 </p>
                 <Button
                   onClick={handleResetData}
@@ -230,7 +231,7 @@ export default function SettingsPage() {
                   className="w-full"
                 >
                   <AlertTriangle className="h-4 w-4 mr-2" />
-                  Reset All Data
+                  {t("settings.resetAllData")}
                 </Button>
               </div>
             </div>
@@ -242,33 +243,33 @@ export default function SettingsPage() {
       <Dialog open={stateChangeDialog} onOpenChange={setStateChangeDialog}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2 text-orange-600">
+            <DialogTitle className="flex items-center gap-2 text-brand">
               <AlertTriangle className="h-5 w-5" />
-              Switch State?
+              {t("settings.switchState")}
             </DialogTitle>
             <DialogDescription className="space-y-3 pt-2 text-left">
               <p className="font-semibold text-gray-900 text-base">
-                You&apos;re about to switch from {currentStateName} to {pendingStateName}.
+                {t("settings.switchStateConfirm")} {currentStateName} {t("settings.to")} {pendingStateName}.
               </p>
               <p className="text-gray-700">
-                <strong className="text-orange-600">Important:</strong> Your progress for {currentStateName} will <strong>NOT be saved</strong> and will be <strong>permanently lost</strong>. This includes:
+                <strong className="text-brand">{t("settings.switchStateWarningDetail")}</strong> {currentStateName} {t("settings.willNotBeSaved")} {t("settings.willBePermanentlyLost")}. {t("settings.thisIncludes")}
               </p>
               <ul className="list-disc list-inside space-y-1 text-gray-700 ml-2">
-                <li>All test scores and attempts</li>
-                <li>In-progress tests</li>
-                <li>Training mode statistics</li>
+                <li>{t("settings.allTestScores")}</li>
+                <li>{t("settings.inProgressTests")}</li>
+                <li>{t("settings.trainingModeStats")}</li>
               </ul>
               <p className="text-gray-700">
-                You&apos;ll start fresh with {pendingStateName} and <strong>cannot recover</strong> your {currentStateName} progress.
+                {t("settings.startFreshWith")} {pendingStateName} {t("settings.cannotRecover")} {currentStateName} {t("settings.progressSuffix")}
               </p>
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="gap-2 sm:gap-0">
             <Button className="bg-white text-black hover:bg-gray-100 border-2 border-gray-300" onClick={() => setStateChangeDialog(false)}>
-              Cancel
+              {t("common.cancel")}
             </Button>
             <Button variant="destructive" onClick={confirmStateChange}>
-              Yes, Switch State
+              {t("settings.yesSwitchState")}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -280,32 +281,32 @@ export default function SettingsPage() {
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2 text-red-600">
               <AlertTriangle className="h-5 w-5" />
-              Reset All Data?
+              {t("settings.resetAllDataConfirm")}
             </DialogTitle>
             <DialogDescription className="space-y-3 pt-2 text-left">
               <p className="font-semibold text-gray-900 text-base">
-                This will permanently delete ALL your data across ALL states.
+                {t("settings.permanentlyDeleteAll")}
               </p>
               <p className="text-gray-700">
-                You will lose:
+                {t("settings.youWillLose")}
               </p>
               <ul className="list-disc list-inside space-y-1 text-gray-700 ml-2">
-                <li>All test progress and scores</li>
-                <li>All training mode statistics</li>
-                <li>All attempt history</li>
-                <li>Data for every state you&apos;ve practiced</li>
+                <li>{t("settings.allTestProgress")}</li>
+                <li>{t("settings.allTrainingStats")}</li>
+                <li>{t("settings.allAttemptHistory")}</li>
+                <li>{t("settings.dataForEveryState")}</li>
               </ul>
               <p className="text-red-600 font-semibold">
-                This action cannot be undone.
+                {t("settings.cannotBeUndone")}
               </p>
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="gap-2 sm:gap-0">
             <Button className="bg-white text-black hover:bg-gray-100 border-2 border-gray-300" onClick={() => setResetDialog(false)}>
-              Cancel
+              {t("common.cancel")}
             </Button>
             <Button variant="destructive" onClick={confirmReset}>
-              Yes, Reset Everything
+              {t("settings.yesResetEverything")}
             </Button>
           </DialogFooter>
         </DialogContent>

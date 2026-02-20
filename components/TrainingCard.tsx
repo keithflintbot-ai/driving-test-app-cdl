@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { CheckCircle2, XCircle } from "lucide-react";
 import { Question } from "@/types";
 import { useState, useEffect } from "react";
+import { useTranslation } from "@/contexts/LanguageContext";
 
 interface TrainingCardProps {
   question: Question;
@@ -17,9 +18,7 @@ export function TrainingCard({
   onAnswerSelect,
   onNext,
 }: TrainingCardProps) {
-  // Prevent ghost clicks on mobile: when tapping "Next Question", the delayed
-  // click event can fire on the new question's answer options. We disable
-  // answer selection briefly after component mounts to prevent this.
+  const { t } = useTranslation();
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
@@ -42,9 +41,7 @@ export function TrainingCard({
       if (!isReady) {
         return "border-gray-300";
       }
-      // Use [@media(hover:hover)] to prevent sticky hover states on touch devices
-      // Use active: for touch feedback on mobile
-      return "border-gray-300 [@media(hover:hover)]:hover:border-orange-500 [@media(hover:hover)]:hover:bg-orange-50 active:border-orange-500 active:bg-orange-50 cursor-pointer";
+      return "border-gray-300 [@media(hover:hover)]:hover:border-brand [@media(hover:hover)]:hover:bg-brand-light active:border-brand active:bg-brand-light cursor-pointer";
     }
 
     if (optionLetter === question.correctAnswer) {
@@ -61,10 +58,8 @@ export function TrainingCard({
   return (
     <Card className="w-full max-w-3xl mx-auto">
       <CardContent className="p-4 md:p-8">
-        {/* Question text */}
         <h2 className="text-lg md:text-2xl font-semibold mb-4 md:mb-6">{question.question}</h2>
 
-        {/* Options */}
         <div className="space-y-2 md:space-y-3 mb-4 md:mb-6">
           {options.map((option) => (
             <div
@@ -86,11 +81,10 @@ export function TrainingCard({
           ))}
         </div>
 
-        {/* Feedback */}
         {answered && (
           <div className="space-y-3 md:space-y-4">
             <Button onClick={onNext} className="w-full bg-black text-white hover:bg-gray-800" size="lg">
-              Next Question
+              {t("trainingCard.nextQuestion")}
             </Button>
 
             <div
@@ -103,7 +97,7 @@ export function TrainingCard({
                   isCorrect ? "text-green-700" : "text-red-700"
                 }`}
               >
-                {isCorrect ? "Correct!" : "Incorrect"}
+                {isCorrect ? t("trainingCard.correct") : t("trainingCard.incorrect")}
               </div>
               <p className="text-gray-700 text-sm md:text-base">{question.explanation}</p>
             </div>

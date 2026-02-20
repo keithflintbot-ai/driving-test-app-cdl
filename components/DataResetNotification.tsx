@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Sparkles } from "lucide-react";
+import { useTranslation } from "@/contexts/LanguageContext";
 
 interface DataResetNotificationProps {
   open: boolean;
@@ -20,24 +21,26 @@ export function DataResetNotification({
   open,
   onDismiss,
 }: DataResetNotificationProps) {
+  const { t } = useTranslation();
+
   return (
     <Dialog open={open} onOpenChange={(isOpen) => !isOpen && onDismiss()}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <div className="flex items-center gap-2">
             <Sparkles className="h-5 w-5 text-yellow-500" />
-            <DialogTitle>Questions Improved!</DialogTitle>
+            <DialogTitle>{t("dataReset.questionsImproved")}</DialogTitle>
           </div>
           <DialogDescription className="pt-2">
-            We&apos;ve completely rewritten and improved all 2,000+ practice questions.
+            {t("dataReset.rewrittenQuestions")}
           </DialogDescription>
         </DialogHeader>
         <div className="py-4 space-y-3">
           <p className="text-sm text-gray-600">
-            The new questions are better balanced, more accurate, and focus on understanding rather than memorization.
+            {t("dataReset.betterBalanced")}
           </p>
           <p className="text-sm text-gray-600">
-            Your previous progress has been reset so you can start fresh with the improved content.
+            {t("dataReset.progressReset")}
           </p>
         </div>
         <DialogFooter>
@@ -45,7 +48,7 @@ export function DataResetNotification({
             onClick={onDismiss}
             className="w-full bg-black text-white hover:bg-gray-800"
           >
-            Got it, let&apos;s go!
+            {t("dataReset.gotItLetsGo")}
           </Button>
         </DialogFooter>
       </DialogContent>

@@ -5,10 +5,10 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import { useAdmin } from "@/hooks/useAdmin";
 import { db } from "@/lib/firebase";
-import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
+import { deleteDoc, doc } from "firebase/firestore";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { states } from "@/data/states";
-import { ArrowLeft, Users, RefreshCw, Trash2, HelpCircle, Activity, ClipboardCheck } from "lucide-react";
+import { ArrowLeft, Users, RefreshCw, Trash2, HelpCircle, Activity, ClipboardCheck, Share2 } from "lucide-react";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -22,7 +22,7 @@ interface UserData {
   testsCompleted: number;
   trainingQuestionsAnswered: number;
   testQuestionsAnswered: number;
-  activeDates: string[];
+  isPremium: boolean;
 }
 
 interface Stats {
@@ -35,6 +35,9 @@ interface Stats {
   activeUsers7d: number;
   totalTestsCompleted: number;
   avgQuestionsPerUser: number;
+  payingUsers: number;
+  totalShareClicks: number;
+  shareClicksDaily: Record<string, number>;
 }
 
 export default function AdminPage() {
@@ -48,216 +51,34 @@ export default function AdminPage() {
   const [deleting, setDeleting] = useState<string | null>(null);
   const [dailyActiveUsers, setDailyActiveUsers] = useState<{ date: string; count: number; displayDate: string }[]>([]);
 
-  // Helper function to calculate daily active users for the last 30 days
-  const calculateDailyActiveUsers = (userData: UserData[]) => {
-    const days: { date: string; count: number; displayDate: string }[] = [];
-    const today = new Date();
-
-    for (let i = 29; i >= 0; i--) {
-      const date = new Date(today);
-      date.setDate(date.getDate() - i);
-      // Use local timezone for date string (matches how activeDates are stored)
-      const dateStr = date.toLocaleDateString('en-CA'); // YYYY-MM-DD in local timezone
-      const startOfDay = new Date(date);
-      startOfDay.setHours(0, 0, 0, 0);
-      const endOfDay = new Date(date);
-      endOfDay.setHours(23, 59, 59, 999);
-
-      // Count users who were active on this date
-      // Use activeDates if available, otherwise fall back to lastUpdated for legacy data
-      const activeCount = userData.filter(u => {
-        // First check activeDates (accurate tracking)
-        if (u.activeDates && u.activeDates.length > 0) {
-          return u.activeDates.includes(dateStr);
-        }
-        // Fall back to lastUpdated for users without activeDates yet
-        if (u.lastUpdated) {
-          const lastUpdated = new Date(u.lastUpdated);
-          return lastUpdated >= startOfDay && lastUpdated <= endOfDay;
-        }
-        return false;
-      }).length;
-
-      days.push({
-        date: dateStr,
-        count: activeCount,
-        displayDate: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
-      });
-    }
-
-    return days;
-  };
-
-  // Helper function to process Firestore data
-  const processFirestoreDoc = (docId: string, data: ReturnType<typeof Object>) => {
-    // Calculate training questions from:
-    // 1. Initial onboarding training (training.masteredQuestionIds)
-    // 2. Post-onboarding training sets (trainingSets[1-4])
-    const training = data.training || {};
-    const onboardingMastered = training.masteredQuestionIds || [];
-
-    const trainingSets = data.trainingSets || {};
-    let trainingQuestionsAnswered = onboardingMastered.length;
-    for (const setId of [1, 2, 3, 4]) {
-      const setData = trainingSets[setId] || {};
-      const masteredIds = setData.masteredIds || [];
-      const wrongQueue = setData.wrongQueue || [];
-      trainingQuestionsAnswered += masteredIds.length + wrongQueue.length;
-    }
-
-    // Calculate test questions answered from completed tests
-    const completedTests = data.completedTests || [];
-    let testQuestionsAnswered = completedTests.reduce((sum: number, test: { totalQuestions?: number; answers?: unknown[] }) => {
-      return sum + (test.answers?.length || test.totalQuestions || 0);
-    }, 0);
-
-    // Add questions from in-progress tests (currentTests)
-    const currentTests = data.currentTests || {};
-    for (const testId of Object.keys(currentTests)) {
-      const testData = currentTests[testId];
-      if (testData?.answers) {
-        testQuestionsAnswered += Object.keys(testData.answers).length;
-      }
-    }
-
-    return {
-      uid: docId,
-      email: data.email || "Unknown",
-      selectedState: data.selectedState || null,
-      lastUpdated: data.lastUpdated || null,
-      createdAt: data.createdAt || null,
-      testsCompleted: completedTests.length,
-      trainingQuestionsAnswered,
-      testQuestionsAnswered,
-      activeDates: data.activeDates || [],
-    };
-  };
-
   const fetchUsers = async () => {
     setLoading(true);
     setError(null);
 
     try {
-      let userData: UserData[] = [];
-      let useApiData = false;
-
-      // Try to fetch from API first (includes all Firebase Auth users)
-      try {
-        const idToken = await user?.getIdToken();
-        if (idToken) {
-          const response = await fetch("/api/admin/users", {
-            headers: {
-              Authorization: `Bearer ${idToken}`,
-            },
-          });
-
-          if (response.ok) {
-            const { users: apiUsers } = await response.json();
-            useApiData = true;
-
-            // Also fetch detailed Firestore data for stats calculation
-            const usersSnapshot = await getDocs(collection(db, "users"));
-            const firestoreDataMap = new Map<string, ReturnType<typeof usersSnapshot.docs[0]["data"]>>();
-            usersSnapshot.docs.forEach(doc => {
-              firestoreDataMap.set(doc.id, doc.data());
-            });
-
-            // Map API users to UserData with detailed stats from Firestore
-            userData = apiUsers.map((apiUser: { uid: string; email: string; selectedState: string | null; lastUpdated: string | null; createdAt: string | null; testsCompleted: number; activeDates?: string[] }) => {
-              const firestoreData = firestoreDataMap.get(apiUser.uid);
-              if (firestoreData) {
-                const processed = processFirestoreDoc(apiUser.uid, firestoreData);
-                return {
-                  ...processed,
-                  email: apiUser.email,
-                  createdAt: apiUser.createdAt,
-                };
-              }
-              return {
-                uid: apiUser.uid,
-                email: apiUser.email,
-                selectedState: apiUser.selectedState,
-                lastUpdated: apiUser.lastUpdated,
-                createdAt: apiUser.createdAt,
-                testsCompleted: 0,
-                trainingQuestionsAnswered: 0,
-                testQuestionsAnswered: 0,
-                activeDates: apiUser.activeDates || [],
-              };
-            });
-          }
-        }
-      } catch (apiError) {
-        console.warn("API fetch failed, falling back to Firestore:", apiError);
+      const idToken = await user?.getIdToken();
+      if (!idToken) {
+        setError("Not authenticated");
+        return;
       }
 
-      // Fallback to direct Firestore query if API failed
-      if (!useApiData) {
-        const usersSnapshot = await getDocs(collection(db, "users"));
-        userData = usersSnapshot.docs.map(doc => processFirestoreDoc(doc.id, doc.data()));
+      const response = await fetch("/api/admin/users", {
+        headers: {
+          Authorization: `Bearer ${idToken}`,
+        },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || errorData.details || `API error: ${response.status}`);
       }
 
-      // Sort by createdAt (newest first), fall back to lastUpdated
-      userData.sort((a, b) => {
-        const aDate = a.createdAt || a.lastUpdated;
-        const bDate = b.createdAt || b.lastUpdated;
-        if (!aDate) return 1;
-        if (!bDate) return -1;
-        return new Date(bDate).getTime() - new Date(aDate).getTime();
-      });
+      const data = await response.json();
 
-      // Calculate stats by state and totals
-      const stateCounts: Record<string, number> = {};
-      let totalTrainingQuestions = 0;
-      let totalTestQuestions = 0;
-      let totalTestsCompleted = 0;
-
-      userData.forEach(u => {
-        if (u.selectedState) {
-          stateCounts[u.selectedState] = (stateCounts[u.selectedState] || 0) + 1;
-        }
-        totalTrainingQuestions += u.trainingQuestionsAnswered;
-        totalTestQuestions += u.testQuestionsAnswered;
-        totalTestsCompleted += u.testsCompleted;
-      });
-
-      // Count active users in last 7 days
-      // Use activeDates if available, otherwise fall back to lastUpdated
-      const sevenDaysAgo = new Date();
-      sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-      const last7Days = Array.from({ length: 7 }, (_, i) => {
-        const date = new Date();
-        date.setDate(date.getDate() - i);
-        return date.toLocaleDateString('en-CA'); // YYYY-MM-DD in local timezone
-      });
-      const activeUsers7d = userData.filter(u => {
-        if (u.activeDates && u.activeDates.length > 0) {
-          return u.activeDates.some(d => last7Days.includes(d));
-        }
-        if (u.lastUpdated) {
-          return new Date(u.lastUpdated) >= sevenDaysAgo;
-        }
-        return false;
-      }).length;
-
-      const totalQuestionsAnswered = totalTrainingQuestions + totalTestQuestions;
-      const avgQuestionsPerUser = userData.length > 0
-        ? Math.round(totalQuestionsAnswered / userData.length)
-        : 0;
-
-      setUsers(userData);
-      setStats({
-        totalUsers: userData.length,
-        usersWithState: userData.filter(u => u.selectedState).length,
-        byState: stateCounts,
-        totalQuestionsAnswered,
-        totalTrainingQuestions,
-        totalTestQuestions,
-        activeUsers7d,
-        totalTestsCompleted,
-        avgQuestionsPerUser,
-      });
-      setDailyActiveUsers(calculateDailyActiveUsers(userData));
+      // API returns pre-computed stats, DAU chart data, and user list
+      setUsers(data.users);
+      setStats(data.stats);
+      setDailyActiveUsers(data.dailyActiveUsers);
     } catch (err) {
       console.error("Error fetching users:", err);
       setError(err instanceof Error ? err.message : "Failed to load users");
@@ -301,6 +122,9 @@ export default function AdminPage() {
           activeUsers7d: wasActive ? stats.activeUsers7d - 1 : stats.activeUsers7d,
           totalTestsCompleted: stats.totalTestsCompleted - deletedUser.testsCompleted,
           avgQuestionsPerUser: newTotalUsers > 0 ? Math.round(newTotalQuestions / newTotalUsers) : 0,
+          payingUsers: stats.payingUsers - (deletedUser.isPremium ? 1 : 0),
+          totalShareClicks: stats.totalShareClicks,
+          shareClicksDaily: stats.shareClicksDaily,
         });
       }
     } catch (err) {
@@ -354,7 +178,7 @@ export default function AdminPage() {
   if (authLoading || loading) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500" />
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand" />
       </div>
     );
   }
@@ -395,16 +219,16 @@ export default function AdminPage() {
         </div>
 
         {/* Summary Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
           <Card>
             <CardContent className="p-6">
               <div className="flex items-center gap-4">
-                <Users className="h-8 w-8 text-orange-500" />
+                <Users className="h-8 w-8 text-brand" />
                 <div>
                   <p className="text-2xl font-bold">{stats?.totalUsers || 0}</p>
                   <p className="text-sm text-gray-500">Total Users</p>
                   <p className="text-xs text-gray-400">
-                    {stats?.avgQuestionsPerUser || 0} avg qs/user
+                    {stats?.payingUsers || 0} paying · {stats?.avgQuestionsPerUser || 0} avg qs/user
                   </p>
                 </div>
               </div>
@@ -447,6 +271,24 @@ export default function AdminPage() {
                   <p className="text-sm text-gray-500">Tests Completed</p>
                   <p className="text-xs text-gray-400">
                     {stats?.totalUsers ? (stats.totalTestsCompleted / stats.totalUsers).toFixed(1) : 0} avg/user
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="p-6">
+              <div className="flex items-center gap-4">
+                <Share2 className="h-8 w-8 text-pink-500" />
+                <div>
+                  <p className="text-2xl font-bold">{stats?.totalShareClicks || 0}</p>
+                  <p className="text-sm text-gray-500">Share Clicks</p>
+                  <p className="text-xs text-gray-400">
+                    {(() => {
+                      const today = new Date().toISOString().split('T')[0];
+                      const todayCount = stats?.shareClicksDaily?.[today] || 0;
+                      return todayCount > 0 ? `${todayCount} today` : 'none today';
+                    })()}
                   </p>
                 </div>
               </div>
@@ -516,10 +358,10 @@ export default function AdminPage() {
                 {sortedStateCounts.map(({ code, name, count }) => (
                   <div
                     key={code}
-                    className="inline-flex items-center gap-2 px-3 py-1.5 bg-orange-100 text-orange-800 rounded-full text-sm"
+                    className="inline-flex items-center gap-2 px-3 py-1.5 bg-brand-light text-brand-dark rounded-full text-sm"
                   >
                     <span className="font-medium">{name}</span>
-                    <span className="bg-orange-200 px-2 py-0.5 rounded-full text-xs font-bold">
+                    <span className="bg-brand-border-light px-2 py-0.5 rounded-full text-xs font-bold">
                       {count}
                     </span>
                   </div>

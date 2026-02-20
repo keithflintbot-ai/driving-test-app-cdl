@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
+import { useTranslation } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { useStore } from "@/store/useStore";
 import { states } from "@/data/states";
@@ -20,6 +21,7 @@ export default function OnboardingSelectStatePage() {
   const [loading, setLoading] = useState(false);
   const { user } = useAuth();
   const router = useRouter();
+  const { t } = useTranslation();
   const storeSelectedState = useStore((state) => state.selectedState);
   const setStoreState = useStore((state) => state.setSelectedState);
   const isGuest = useStore((state) => state.isGuest);
@@ -51,13 +53,13 @@ export default function OnboardingSelectStatePage() {
 
   return (
     <div className="bg-white relative min-h-[80vh] flex items-center justify-center px-4">
-      <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-orange-50 to-white pointer-events-none" />
+      <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-brand-light to-white pointer-events-none" />
       <div className="relative text-center space-y-8">
         <div className="flex flex-wrap items-center justify-center gap-2 text-2xl md:text-3xl font-medium text-gray-800">
-          <span>I need to pass the</span>
+          <span>{t("onboarding.iNeedToPass")}</span>
           <Select onValueChange={setSelectedState} value={selectedState || undefined}>
-            <SelectTrigger className="w-auto inline-flex text-2xl md:text-3xl font-semibold text-orange-600 border-none shadow-none focus:ring-0 focus:ring-offset-0 px-1 underline decoration-orange-300 decoration-2 underline-offset-4 hover:decoration-orange-500 h-auto">
-              <SelectValue placeholder="select state" />
+            <SelectTrigger className="w-auto inline-flex text-2xl md:text-3xl font-semibold text-brand border-none shadow-none focus:ring-0 focus:ring-offset-0 px-1 underline decoration-brand-border decoration-2 underline-offset-4 hover:decoration-brand h-auto">
+              <SelectValue placeholder={t("onboarding.selectLocation")} />
             </SelectTrigger>
             <SelectContent>
               {states.map((state) => (
@@ -67,7 +69,7 @@ export default function OnboardingSelectStatePage() {
               ))}
             </SelectContent>
           </Select>
-          <span>driving test.</span>
+          <span>{t("onboarding.drivingTest")}</span>
         </div>
 
         <Button
@@ -75,13 +77,13 @@ export default function OnboardingSelectStatePage() {
           disabled={!selectedState || loading}
           className="bg-black text-white hover:bg-gray-800 px-8 py-3 text-lg"
         >
-          {loading ? "Loading..." : "Let's go"}
+          {loading ? t("common.loading") : t("onboarding.letsGo")}
         </Button>
 
         <div className="text-center text-sm text-gray-600">
-          Already have an account?{" "}
-          <Link href="/login" className="text-orange-600 hover:underline font-semibold">
-            Log in
+          {t("common.alreadyHaveAccount")}{" "}
+          <Link href="/login" className="text-brand hover:underline font-semibold">
+            {t("common.logIn")}
           </Link>
         </div>
       </div>
