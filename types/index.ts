@@ -80,6 +80,15 @@ export interface TestAttemptStats {
   lastAttemptDate: Date;
 }
 
+// Per-question performance tracking
+export interface QuestionPerformance {
+  questionId: string;
+  timesAnswered: number;
+  timesCorrect: number;
+  timesWrong: number;
+  accuracy: number; // percentage
+}
+
 // State selection
 export interface State {
   name: string;
@@ -89,4 +98,12 @@ export interface State {
   writtenTestQuestions: number; // Number of questions on actual DMV test
   passingScore: number; // Percentage needed to pass
   minPermitAge: string; // Minimum age for learner's permit
+}
+
+// Subscription/Premium types
+export interface Subscription {
+  isPremium: boolean;
+  purchasedAt: string | null; // ISO timestamp
+  stripeCustomerId: string | null;
+  stripePaymentId: string | null;
 }

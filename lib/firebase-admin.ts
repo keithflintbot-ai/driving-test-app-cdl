@@ -21,16 +21,19 @@ function initializeFirebaseAdmin(): App {
   if (serviceAccount) {
     try {
       const parsed = JSON.parse(serviceAccount);
+      console.log('Firebase Admin: Using service account for project:', parsed.project_id);
       return initializeApp({
         credential: cert(parsed),
         projectId: parsed.project_id,
       });
     } catch (error) {
       console.error('Failed to parse FIREBASE_SERVICE_ACCOUNT_KEY:', error);
+      throw new Error(`Invalid FIREBASE_SERVICE_ACCOUNT_KEY: ${error instanceof Error ? error.message : 'Parse error'}`);
     }
   }
 
   // Fall back to default credentials (works in GCP environments)
+  console.log('Firebase Admin: No service account key found, using default credentials');
   return initializeApp({
     projectId: 'driving-test-app-a5c67',
   });

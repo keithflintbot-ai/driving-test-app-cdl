@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import { Question, TestSession, UserAnswer, TestAttemptStats } from '@/types';
+import { Question, TestSession, UserAnswer, TestAttemptStats, QuestionPerformance, Subscription } from '@/types';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
@@ -70,6 +70,9 @@ interface AppState {
   getTrainingSetProgress: (setId: number) => { correct: number; total: number; complete: boolean };
   resetTrainingSet: (setId: number) => void;
 
+  // Training answer history (for question performance tracking)
+  trainingAnswerHistory: { questionId: string; isCorrect: boolean }[];
+
   // Activity tracking for DAU
   activeDates: string[];
 
@@ -85,6 +88,7 @@ interface AppState {
     averageScore: number;
   };
   getPassProbability: () => number;
+  getQuestionPerformance: () => QuestionPerformance[];
 
   // Firebase sync
   userId: string | null;
@@ -99,6 +103,12 @@ interface AppState {
 
   // Guest to user conversion
   convertGuestToUser: (userId: string) => Promise<void>;
+
+  // Subscription/Premium
+  subscription: Subscription;
+  hasPremiumAccess: () => boolean;
+  setPremiumStatus: (status: { isPremium: boolean; purchasedAt: string; stripeCustomerId: string; stripePaymentId: string }) => void;
+  isTrainingSetUnlocked: (setId: number) => boolean;
 }
 
 export const useStore = create<AppState>()(
@@ -125,9 +135,16 @@ export const useStore = create<AppState>()(
         lastQuestionId: null,
       },
       trainingSets: {},
+      trainingAnswerHistory: [],
       activeDates: [],
       userId: null,
       photoURL: null,
+      subscription: {
+        isPremium: false,
+        purchasedAt: null,
+        stripeCustomerId: null,
+        stripePaymentId: null,
+      },
 
       // Actions
       startGuestSession: () => {
@@ -161,6 +178,7 @@ export const useStore = create<AppState>()(
             lastQuestionId: null,
           },
           trainingSets: {},
+          trainingAnswerHistory: [],
         });
         // Save to Firestore
         get().saveToFirestore();
@@ -299,9 +317,12 @@ export const useStore = create<AppState>()(
       },
 
       isTestUnlocked: (testId: number) => {
-        // All tests (1, 2, 3, 4) require onboarding completion (10 correct training answers)
+        // All tests require onboarding completion (10 correct training answers)
         // or prior app usage (backwards compatibility)
-        return get().isOnboardingComplete();
+        if (!get().isOnboardingComplete()) return false;
+        // Test 4 requires premium
+        if (testId === 4 && !get().hasPremiumAccess()) return false;
+        return true;
       },
 
       // Training mode functions
@@ -333,6 +354,8 @@ export const useStore = create<AppState>()(
               masteredQuestionIds: newMasteredIds,
               lastQuestionId: questionId,
             },
+            // Track answer in history for question performance
+            trainingAnswerHistory: [...state.trainingAnswerHistory, { questionId, isCorrect }],
           };
         });
         get().saveToFirestore();
@@ -391,6 +414,8 @@ export const useStore = create<AppState>()(
               ...state.trainingSets,
               [setId]: { masteredIds: newMasteredIds, wrongQueue: newWrongQueue },
             },
+            // Track answer in history for question performance
+            trainingAnswerHistory: [...state.trainingAnswerHistory, { questionId, isCorrect }],
           };
         });
         get().saveToFirestore();
@@ -524,6 +549,57 @@ export const useStore = create<AppState>()(
         return Math.round(totalPassProbability);
       },
 
+      getQuestionPerformance: () => {
+        const { completedTests, selectedState, trainingAnswerHistory } = get();
+        // Filter tests by current state
+        const stateTests = completedTests.filter((t) => t.state === selectedState);
+
+        // Aggregate answers by questionId
+        const performanceMap: { [questionId: string]: { correct: number; wrong: number } } = {};
+
+        // Include practice test answers
+        for (const test of stateTests) {
+          for (const answer of test.answers) {
+            if (!performanceMap[answer.questionId]) {
+              performanceMap[answer.questionId] = { correct: 0, wrong: 0 };
+            }
+            if (answer.isCorrect) {
+              performanceMap[answer.questionId].correct++;
+            } else {
+              performanceMap[answer.questionId].wrong++;
+            }
+          }
+        }
+
+        // Include training mode answers
+        for (const answer of trainingAnswerHistory) {
+          if (!performanceMap[answer.questionId]) {
+            performanceMap[answer.questionId] = { correct: 0, wrong: 0 };
+          }
+          if (answer.isCorrect) {
+            performanceMap[answer.questionId].correct++;
+          } else {
+            performanceMap[answer.questionId].wrong++;
+          }
+        }
+
+        // Convert to QuestionPerformance array
+        const performance: QuestionPerformance[] = Object.entries(performanceMap).map(
+          ([questionId, data]) => {
+            const timesAnswered = data.correct + data.wrong;
+            return {
+              questionId,
+              timesAnswered,
+              timesCorrect: data.correct,
+              timesWrong: data.wrong,
+              accuracy: timesAnswered > 0 ? Math.round((data.correct / timesAnswered) * 100) : 0,
+            };
+          }
+        );
+
+        return performance;
+      },
+
       // Firebase sync functions
       loadUserData: async (userId: string) => {
         try {
@@ -546,9 +622,16 @@ export const useStore = create<AppState>()(
                 lastQuestionId: data.training?.lastQuestionId || null,
               },
               trainingSets: data.trainingSets || {},
+              trainingAnswerHistory: data.trainingAnswerHistory || [],
               activeDates: data.activeDates || [],
               photoURL: data.photoURL || null,
               userId,
+              subscription: data.subscription || {
+                isPremium: false,
+                purchasedAt: null,
+                stripeCustomerId: null,
+                stripePaymentId: null,
+              },
             });
           } else {
             // New user - set userId
@@ -578,7 +661,7 @@ export const useStore = create<AppState>()(
       },
 
       saveToFirestore: async () => {
-        const { userId, isGuest, selectedState, currentTests, completedTests, testAttempts, training, trainingSets, activeDates, photoURL } = get();
+        const { userId, isGuest, selectedState, currentTests, completedTests, testAttempts, training, trainingSets, trainingAnswerHistory, activeDates, photoURL, subscription } = get();
         if (!userId || isGuest) return; // Don't save if no user is logged in or guest mode
 
         try {
@@ -592,8 +675,8 @@ export const useStore = create<AppState>()(
             return acc;
           }, {} as any);
 
-          // Track today's date for DAU (using UTC to ensure consistency)
-          const today = new Date().toISOString().split('T')[0];
+          // Track today's date for DAU (using local timezone for user-friendly tracking)
+          const today = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD in local timezone
           const updatedActiveDates = activeDates.includes(today) ? activeDates : [...activeDates, today];
 
           // Update local state with new active date
@@ -620,7 +703,9 @@ export const useStore = create<AppState>()(
             })),
             training,
             trainingSets,
+            trainingAnswerHistory,
             activeDates: updatedActiveDates,
+            subscription,
             lastUpdated: new Date().toISOString(),
           });
         } catch (error) {
@@ -644,6 +729,7 @@ export const useStore = create<AppState>()(
             lastQuestionId: null,
           },
           trainingSets: {},
+          trainingAnswerHistory: [],
           activeDates: [],
         });
         get().saveToFirestore();
@@ -667,9 +753,16 @@ export const useStore = create<AppState>()(
             lastQuestionId: null,
           },
           trainingSets: {},
+          trainingAnswerHistory: [],
           activeDates: [],
           userId: null,
           photoURL: null,
+          subscription: {
+            isPremium: false,
+            purchasedAt: null,
+            stripeCustomerId: null,
+            stripePaymentId: null,
+          },
         });
       },
 
@@ -679,6 +772,36 @@ export const useStore = create<AppState>()(
         set({ userId, isGuest: false });
         // Save all existing guest progress to Firestore
         await get().saveToFirestore();
+      },
+
+      // Premium access check
+      hasPremiumAccess: () => {
+        const { subscription, userId, isGuest } = get();
+        // Guests never have premium
+        if (isGuest || !userId) return false;
+        return subscription?.isPremium === true;
+      },
+
+      // Set premium status after purchase
+      setPremiumStatus: (status) => {
+        set({
+          subscription: {
+            isPremium: status.isPremium,
+            purchasedAt: status.purchasedAt,
+            stripeCustomerId: status.stripeCustomerId,
+            stripePaymentId: status.stripePaymentId,
+          },
+        });
+        get().saveToFirestore();
+      },
+
+      // Check if a training set is unlocked
+      isTrainingSetUnlocked: (setId: number) => {
+        // All training sets require onboarding completion
+        if (!get().isOnboardingComplete()) return false;
+        // Set 4 requires premium
+        if (setId === 4 && !get().hasPremiumAccess()) return false;
+        return true;
       },
     }),
     {
@@ -719,8 +842,16 @@ export const useStore = create<AppState>()(
               lastQuestionId: null,
             },
             trainingSets: {},
+            trainingAnswerHistory: [],
+            activeDates: [],
             userId: null,
             photoURL: null,
+            subscription: {
+              isPremium: false,
+              purchasedAt: null,
+              stripeCustomerId: null,
+              stripePaymentId: null,
+            },
           };
         }
         return persistedState as AppState;

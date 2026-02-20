@@ -29,6 +29,7 @@ function TrainingPageContent() {
   const { playCorrectSound, playIncorrectSound } = useSound();
 
   const selectedState = useStore((state) => state.selectedState);
+  const isGuest = useStore((state) => state.isGuest);
   const training = useStore((state) => state.training);
   const trainingSets = useStore((state) => state.trainingSets);
   const answerTrainingQuestion = useStore((state) => state.answerTrainingQuestion);
@@ -37,6 +38,7 @@ function TrainingPageContent() {
   const resetMasteredQuestions = useStore((state) => state.resetMasteredQuestions);
   const resetTrainingSet = useStore((state) => state.resetTrainingSet);
   const isOnboardingComplete = useStore((state) => state.isOnboardingComplete);
+  const isTrainingSetUnlocked = useStore((state) => state.isTrainingSetUnlocked);
 
   // Get set number from URL if present
   const setParam = searchParams.get('set');
@@ -60,12 +62,18 @@ function TrainingPageContent() {
   const setMasteredIds = setData?.masteredIds || [];
   const setWrongQueue = setData?.wrongQueue || [];
 
-  // Redirect to onboarding if no state selected
+  // Redirect to onboarding if no state selected, or to dashboard if premium required
   useEffect(() => {
     if (hydrated && !selectedState) {
       router.push("/onboarding/select-state");
+      return;
     }
-  }, [hydrated, selectedState, router]);
+    // Check if trying to access set 4 without premium
+    if (hydrated && setNumber === 4 && !isTrainingSetUnlocked(4)) {
+      router.push("/dashboard");
+      return;
+    }
+  }, [hydrated, selectedState, setNumber, isTrainingSetUnlocked, router]);
 
   // Detect when user unlocks practice tests (crosses 10 correct answers) - onboarding only
   useEffect(() => {
@@ -251,17 +259,18 @@ function TrainingPageContent() {
               You&apos;ve correctly answered all 50 questions in this training set!
             </p>
             <div className="flex flex-col gap-3">
-              <Button
-                className="w-full bg-black text-white hover:bg-gray-800 text-lg py-6"
-                onClick={handlePracticeAgain}
-              >
-                Practice Again
-              </Button>
               <Link href="/dashboard">
-                <Button variant="outline" className="w-full">
+                <Button className="w-full bg-black text-white hover:bg-gray-800 text-lg py-6">
                   Back to Dashboard
                 </Button>
               </Link>
+              {!isGuest && (
+                <Link href="/stats">
+                  <Button variant="outline" className="w-full">
+                    View Stats
+                  </Button>
+                </Link>
+              )}
             </div>
           </div>
         </div>
@@ -322,7 +331,7 @@ function TrainingPageContent() {
                 />
               </div>
             </>
-          ) : (
+          ) : !isOnboardingComplete() ? (
             // Onboarding progress
             <>
               <div className="flex items-center justify-center gap-1 text-sm md:text-lg text-gray-700">
@@ -339,6 +348,14 @@ function TrainingPageContent() {
                 />
               </div>
             </>
+          ) : (
+            // Post-onboarding without set - show current streak
+            <div className="flex items-center justify-center gap-1 text-sm md:text-lg text-gray-700">
+              <span className="font-bold text-xl md:text-2xl text-orange-600">{training.currentStreak}</span>
+              <span className="text-gray-500 text-xs md:text-base ml-1">
+                streak
+              </span>
+            </div>
           )}
         </div>
       </div>
