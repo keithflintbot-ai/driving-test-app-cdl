@@ -96,7 +96,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold mb-4">Children's Privacy</h2>
+            <h2 className="text-2xl font-semibold mb-4">Children&apos;s Privacy</h2>
             <p className="text-gray-700 leading-relaxed">
               TigerTest is intended for users preparing for their driver&apos;s permit test (typically ages 15+). We do not knowingly collect data from children under 13. If you believe a child under 13 has created an account, please contact us.
             </p>
