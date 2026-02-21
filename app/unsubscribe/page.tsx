@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-export default function UnsubscribePage() {
+function UnsubscribeContent() {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
   const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
@@ -62,10 +62,10 @@ export default function UnsubscribePage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <h1 className="text-2xl font-semibold mb-3">You're unsubscribed</h1>
+            <h1 className="text-2xl font-semibold mb-3">You&apos;re unsubscribed</h1>
             <p className="text-gray-600 mb-8">{message}</p>
             <p className="text-sm text-gray-500 mb-6">
-              You won't receive any more emails from us. You can still use TigerTest - just log in anytime.
+              You won&apos;t receive any more emails from us. You can still use TigerTest - just log in anytime.
             </p>
             <Link href="/dashboard">
               <Button className="bg-gray-900 text-white hover:bg-gray-800">
@@ -93,5 +93,17 @@ export default function UnsubscribePage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function UnsubscribePage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="w-12 h-12 border-4 border-gray-200 border-t-brand rounded-full animate-spin"></div>
+      </div>
+    }>
+      <UnsubscribeContent />
+    </Suspense>
   );
 }

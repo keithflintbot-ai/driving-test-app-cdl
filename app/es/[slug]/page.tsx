@@ -248,7 +248,7 @@ export default async function SpanishStateDMVPage({ params }: PageProps) {
             el primer intento. Practica con 200 preguntas específicas de{" "}
             {state.name} basadas en el manual oficial de conducir.
           </p>
-          <Link href="/onboarding/select-state">
+          <Link href={`/signup?state=${state.code}`}>
             <Button
               size="lg"
               className="text-lg px-8 py-6 bg-gray-900 text-white hover:bg-gray-800 font-bold rounded-xl"
@@ -446,7 +446,7 @@ export default async function SpanishStateDMVPage({ params }: PageProps) {
             Únete a miles de conductores de {state.name} que aprobaron en su
             primer intento con TigerTest
           </p>
-          <Link href="/onboarding/select-state">
+          <Link href={`/signup?state=${state.code}`}>
             <Button
               size="lg"
               className="text-lg px-8 py-6 bg-white text-brand-dark hover:bg-gray-100 font-bold rounded-xl"
@@ -525,7 +525,7 @@ export default async function SpanishStateDMVPage({ params }: PageProps) {
             ¿Listo para empezar a estudiar para tu examen de permiso de{" "}
             {state.name}?
           </p>
-          <Link href="/onboarding/select-state">
+          <Link href={`/signup?state=${state.code}`}>
             <Button
               size="lg"
               className="text-lg px-8 py-6 bg-gray-900 text-white hover:bg-gray-800 font-bold rounded-xl"

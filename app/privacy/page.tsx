@@ -19,7 +19,7 @@ export default function PrivacyPage() {
           <section>
             <h2 className="text-2xl font-semibold mb-4">Overview</h2>
             <p className="text-gray-700 leading-relaxed">
-              TigerTest ("we", "our", or "us") operates tigertest.io. This page explains how we collect, use, and protect your personal information.
+              TigerTest (&quot;we&quot;, &quot;our&quot;, or &quot;us&quot;) operates tigertest.io. This page explains how we collect, use, and protect your personal information.
             </p>
           </section>
 
@@ -67,7 +67,7 @@ export default function PrivacyPage() {
             <ul className="list-disc pl-6 space-y-2 text-gray-700 mt-3">
               <li>Access your personal data</li>
               <li>Delete your account and data</li>
-              <li>Opt out of marketing emails (click "Unsubscribe" in any email)</li>
+              <li>Opt out of marketing emails (click &quot;Unsubscribe&quot; in any email)</li>
               <li>Request a copy of your data</li>
             </ul>
             <p className="text-gray-700 leading-relaxed mt-4">
@@ -96,16 +96,16 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold mb-4">Children's Privacy</h2>
+            <h2 className="text-2xl font-semibold mb-4">Children&apos;s Privacy</h2>
             <p className="text-gray-700 leading-relaxed">
-              TigerTest is intended for users preparing for their driver's permit test (typically ages 15+). We do not knowingly collect data from children under 13. If you believe a child under 13 has created an account, please contact us.
+              TigerTest is intended for users preparing for their driver&apos;s permit test (typically ages 15+). We do not knowingly collect data from children under 13. If you believe a child under 13 has created an account, please contact us.
             </p>
           </section>
 
           <section>
             <h2 className="text-2xl font-semibold mb-4">Changes to This Policy</h2>
             <p className="text-gray-700 leading-relaxed">
-              We may update this privacy policy from time to time. We'll notify you of significant changes via email or a notice on the site.
+              We may update this privacy policy from time to time. We&apos;ll notify you of significant changes via email or a notice on the site.
             </p>
           </section>
 
