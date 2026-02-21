@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, Suspense } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
 import { useTranslation } from "@/contexts/LanguageContext";
@@ -24,20 +24,27 @@ function SignupPageContent() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [selectedState, setSelectedState] = useState<string | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const { signup, loginWithGoogle } = useAuth();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { t } = useTranslation();
   const setStoreState = useStore((state) => state.setSelectedState);
   const storeSelectedState = useStore((state) => state.selectedState);
   const isGuest = useStore((state) => state.isGuest);
 
-  // If guest already has a state selected, skip step 1
+  // Check for state query param (e.g. /signup?state=OH)
+  const stateParam = searchParams.get("state");
+  const preselectedState = stateParam && states.find((s) => s.code === stateParam) ? stateParam : null;
+
+  const [selectedState, setSelectedState] = useState<string | null>(preselectedState);
+
+  // If guest already has a state selected, or state was provided via URL, skip step 1
   const guestHasState = isGuest && storeSelectedState;
-  const [step, setStep] = useState<1 | 2>(guestHasState ? 2 : 1);
+  const hasPreselectedState = !!preselectedState;
+  const [step, setStep] = useState<1 | 2>(guestHasState || hasPreselectedState ? 2 : 1);
 
   const handleStateSelect = () => {
     if (!selectedState) {
@@ -50,7 +57,7 @@ function SignupPageContent() {
   };
 
   const handleGoogleSignIn = async () => {
-    // For guests, use existing state; otherwise require selection
+    // For guests, use existing state; for preselected from URL or manual selection
     const stateToUse = guestHasState ? storeSelectedState : selectedState;
     if (!stateToUse) {
       setError(t("signup.pleaseSelectLocation"));
@@ -64,7 +71,7 @@ function SignupPageContent() {
       await loginWithGoogle();
       // Only set state if not a guest (guests already have state set)
       if (!guestHasState) {
-        setStoreState(stateToUse!);
+        setStoreState(stateToUse);
       }
       // Wait for user data to load before redirecting
       await new Promise(resolve => setTimeout(resolve, 800));
